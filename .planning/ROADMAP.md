@@ -151,7 +151,10 @@ Plans:
   2. Typed pub/sub `Store` manages route, search query, active genre filter, sound mute state, and high scores with targeted subscriber updates
   3. `HashRouter` handles `#/`, `#/game/:id`, and `#/embed` with browser back and forward history navigation
   4. View Transitions API wrapper executes smooth transitions between views with instant fallback on unsupported browsers
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 09-01-PLAN.md — Core types, BaseComponent lifecycle class, and typed pub/sub Store
+- [ ] 09-02-PLAN.md — View transitions wrapper and zero-dependency HashRouter
 **UI hint**: yes
 
 ### Phase 10: Hub Views & Component Library
