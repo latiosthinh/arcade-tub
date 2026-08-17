@@ -2,7 +2,7 @@
 
 ## Overview
 
-Build 5 arcade minigames for YouTube Playables from shared scaffold to polished release. Phase 1 sets up the monorepo, shared adapter, and hub. Phases 2–6 implement one game each. Phase 7 polishes, integrates saves, and prepares deployment.
+Arcade Carnival delivers 5 browser-based HTML5 Canvas arcade minigames packaged for YouTube Playables with a shared game engine, playables adapter, and central launcher. Milestone v1.0 shipped all 5 games and infrastructure. Milestone v2.0 overhauls the webapp with a custom retro-modern cyber-arcade design system, lightweight component architecture, client-side routing, responsive mobile-first navigation, and procedural UI audio.
 
 ## Phases
 
@@ -13,6 +13,11 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 - [x] **Phase 5: Crate Catch** - Catcher/stacker minigame
 - [x] **Phase 6: Type Strike** - Typing defense minigame
 - [x] **Phase 7: Polish & Deploy** - Cross-game polish, saves, packaging, deploy
+- [ ] **Phase 8: Design System & Visual Foundation** - Cyber-arcade CSS tokens, shared styles, CRT overlay
+- [ ] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
+- [ ] **Phase 10: Hub Views & Component Library** - Header, responsive nav, search/filters, game cards
+- [ ] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
+- [ ] **Phase 12: Audio Feedback & Production Verification** - Procedural UI audio, bundle audit, test suite verification
 
 ## Phase Details
 
@@ -123,6 +128,65 @@ Plans:
 - [x] 07-02-PLAN.md — Game sound integration, hub high scores, and navigation polish
 - [x] 07-03-PLAN.md — Bundle size audit, production asset packaging, and end-to-end verification
 
+### Phase 8: Design System & Visual Foundation
+**Goal**: Establish retro-modern cyber-arcade CSS token palette, shared stylesheet structure across hub, embed kit, and game shells, and persistent CRT visual overlay
+**Depends on**: Phase 7
+**Requirements**: DS-01, DS-02, DS-03
+**Success Criteria** (what must be TRUE):
+  1. Hub, embed kit, and standalone game shells share unified color palette, surface colors, neon glows, and arcade typography defined in `tokens.css`
+  2. CRT scanline / bloom visual overlay renders across the hub and preserves user toggle preference across sessions in `localStorage`
+  3. Design token stylesheet is imported cleanly without breaking iframe boundaries or introducing CSS specificity conflicts
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 9: Core Architecture & Routing
+**Goal**: Implement zero-dependency component lifecycle base class, reactive pub/sub state management, hash-based URL routing, and view transitions wrapper
+**Depends on**: Phase 8
+**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04
+**Success Criteria** (what must be TRUE):
+  1. `BaseComponent` lifecycle (`mount`, `update`, `destroy`) cleanly attaches DOM nodes and removes event listeners without memory leaks
+  2. Typed pub/sub `Store` manages route, search query, active genre filter, sound mute state, and high scores with targeted subscriber updates
+  3. `HashRouter` handles `#/`, `#/game/:id`, and `#/embed` with browser back and forward history navigation
+  4. View Transitions API wrapper executes smooth transitions between views with instant fallback on unsupported browsers
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 10: Hub Views & Component Library
+**Goal**: Build modular hub components including brand header, responsive desktop sidebar / mobile bottom dock, search & filter chips, and interactive game cards
+**Depends on**: Phase 9
+**Requirements**: COMP-01, COMP-02, COMP-03, COMP-04
+**Success Criteria** (what must be TRUE):
+  1. `AppHeader` displays brand logo, search input with `/` shortcut focus, sound toggle, and embed docs link
+  2. Responsive navigation renders sidebar on desktop (>=768px) and touch-friendly bottom navigation bar on mobile (<768px, >=48px touch targets)
+  3. Search bar and `FilterChips` filter game cards dynamically without input focus loss or full DOM rebuilds
+  4. `GameCard` renders arcade genre badges, persistent high score display, play-on-hover neon glow, and keyboard focus rings
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 11: Game Player View & Embed Kit
+**Goal**: Implement dedicated game player view with skeleton loading, robust iframe lifecycle management, canvas focus delegation, and theater mode
+**Depends on**: Phase 10
+**Requirements**: PLAY-01, PLAY-02, PLAY-03, PLAY-04
+**Success Criteria** (what must be TRUE):
+  1. Navigating to `#/game/:id` displays `GameView` with skeleton placeholder until game iframe signals load completion
+  2. Iframe teardown unbinds message listeners, resets `src` to `about:blank`, and stops running `requestAnimationFrame` loops on view exit
+  3. Game canvas receives automatic focus on iframe mount, with `Escape` shortcut exiting player view back to catalog
+  4. Theater mode toggle button and `T` keyboard shortcut expand game viewport to maximized layout
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 12: Audio Feedback & Production Verification
+**Goal**: Integrate procedural UI sound effects via Web Audio, verify bundle size budgets, and ensure 100% test pass rate
+**Depends on**: Phase 11
+**Requirements**: POL-01, POL-02
+**Success Criteria** (what must be TRUE):
+  1. Procedural Web Audio synthesizer plays audio feedback on button clicks, card hovers, game launch, and view transitions
+  2. Sound mute toggle silences all UI audio and synchronizes mute state with running game frames
+  3. Total gzipped distribution bundle size remains strictly under 200KB
+  4. 100% of all 191+ Vitest unit tests pass across engine, adapter, and games with zero regressions
+**Plans**: TBD
+**UI hint**: yes
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -134,3 +198,8 @@ Plans:
 | 5. Crate Catch | 2/2 | Complete | 2026-08-17 |
 | 6. Type Strike | 2/2 | Complete | 2026-08-17 |
 | 7. Polish & Deploy | 3/3 | Complete | 2026-08-17 |
+| 8. Design System & Visual Foundation | 0/0 | Not started | - |
+| 9. Core Architecture & Routing | 0/0 | Not started | - |
+| 10. Hub Views & Component Library | 0/0 | Not started | - |
+| 11. Game Player View & Embed Kit | 0/0 | Not started | - |
+| 12. Audio Feedback & Production Verification | 0/0 | Not started | - |

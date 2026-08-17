@@ -38,4 +38,23 @@
 - Heavy image/video asset pack — bundle budget constraint (<200KB)
 
 ## Traceability
-*To be filled by gsd-roadmapper*
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| DS-01 | Phase 8 | Pending |
+| DS-02 | Phase 8 | Pending |
+| DS-03 | Phase 8 | Pending |
+| ARCH-01 | Phase 9 | Pending |
+| ARCH-02 | Phase 9 | Pending |
+| ARCH-03 | Phase 9 | Pending |
+| ARCH-04 | Phase 9 | Pending |
+| COMP-01 | Phase 10 | Pending |
+| COMP-02 | Phase 10 | Pending |
+| COMP-03 | Phase 10 | Pending |
+| COMP-04 | Phase 10 | Pending |
+| PLAY-01 | Phase 11 | Pending |
+| PLAY-02 | Phase 11 | Pending |
+| PLAY-03 | Phase 11 | Pending |
+| PLAY-04 | Phase 11 | Pending |
+| POL-01 | Phase 12 | Pending |
+| POL-02 | Phase 12 | Pending |
