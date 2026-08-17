@@ -2,41 +2,29 @@
 
 ## Current Position
 
-Phase: Phase 20 - Catalog Integration & Release Audit
-Plan: 02
-Status: Phase 20 complete, milestone ready
-Last activity: 2026-08-18 — Phase 20 (Catalog Integration & Release Audit) complete (2/2 plans executed)
-
-```
-Progress: [▓▓▓▓▓▓▓▓▓░] 8/8 phases complete (v3.0)
-```
-
-## Performance Metrics
-
-| Metric | Target | Current |
-|--------|--------|---------|
-| Requirement coverage | 100% | 16/16 requirements mapped |
-| Unit tests pass rate | 100% | 471/471 tests passing (100% pass rate) |
-| Total bundle size | < 200KB gzipped | ~105.93KB gzipped |
+Phase: All planned phases complete (Milestone v3.0 complete)
+Plan: —
+Status: Shipped Milestone v3.0
+Last activity: 2026-08-18 — Milestone v3.0 archived
 
 ## Accumulated Context
 
-### Shipped in v1.0 & v2.0
-- 5 Complete HTML5 Canvas Arcade Minigames (Safe Cracker, Brick Blitz, Sky Hopper, Crate Catch, Type Strike)
-- Shared `packages/playables-adapter/` & `packages/game-engine/`
-- Full-featured Cyber-Arcade Hub with Client-side Hash Routing, View Transitions, Genre Filters, Live Search, Procedural UI Audio
-- Real SVG Gameplay Screenshots on Game Cards
-- 43 test files, 284 unit tests passing (100% pass rate)
-- Dist bundle size: 54.02 KB gzipped total (< 200 KB budget)
-
 ### Shipped in v3.0
-- **Phase 13: Memory Cards Minigame** (CardGrid, GameState, 3D flip CardRenderer, ParticleSystem, MemoryCardsScene, 100% tests)
-- **Phase 14: Memory Boxes Minigame** (SequenceGenerator, BoxGrid, BoxRenderer, TonePlayer Web Audio synthesizer, ParticleSystem, MemoryBoxesScene, 100% tests)
-- **Phase 16: Space Racer Minigame** (Ship, TrackHazardManager, WarpRenderer, RacerAudio, SpaceRacerScene, 100% tests)
-- **Phase 17: Virus Defense Minigame** (Turret, PathogenSwarm, NucleusState, GameState, BioArenaRenderer, DefenseAudio, Particles, VirusDefenseScene, 100% tests)
-- **Phase 18: Flappy Fish Minigame** (Fish, PipeManager, GameState, FishRenderer, FishAudio, Particles, FlappyFishScene, 100% tests)
-- **Phase 19: 2048 Neon Minigame** (Grid2048, GameState, TileRenderer, Audio2048, Particles, Game2048Scene, 100% tests)
-
-### Active Milestone: v3.0 (Phases 13-20)
-- Remaining games to build: Pop Balloon (P15)
-- Catalog Integration, Hub SVG Screenshots, Multi-page Build & Release Audit (P20)
+- 12 Complete HTML5 Canvas Arcade Minigames:
+  1. `games/safe-cracker`: Safe Cracker clicker/timing
+  2. `games/brick-blitz`: Brick Blitz breakout
+  3. `games/sky-hopper`: Sky Hopper vertical platformer
+  4. `games/crate-catch`: Crate Catch 2-lane catcher/stacker
+  5. `games/type-strike`: Type Strike typing defense
+  6. `games/memory-cards`: Memory Cards cyber match
+  7. `games/memory-boxes`: Memory Boxes sequence memory
+  8. `games/pop-balloon`: Pop Balloon clicker action
+  9. `games/space-racer`: Space Racer speed runner
+  10. `games/virus-defense`: Virus Defense 360° shooter
+  11. `games/flappy-fish`: Flappy Fish hydrodynamic flapper
+  12. `games/game-2048`: 2048 Neon sliding tile puzzle
+- Shared `@arcade-carnival/game-engine` & `@arcade-carnival/playables-adapter`
+- Responsive Cyber-Arcade Hub with Client-side Hash Routing, live filtering, and authentic vector SVG screenshots
+- 73 test files, 471 unit tests passing (100% pass rate)
+- Dist bundle size: 105.93 KB gzipped total (< 200 KB budget across 12 games)
+- Audit: `.planning/v3.0-MILESTONE-AUDIT.md` (passed)

@@ -1,21 +1,40 @@
 # Milestones
 
+## v3.0: Game Catalog Expansion (7 New Games) (Shipped 2026-08-18)
+
+**Goal:** Expand Arcade Carnival catalog from 5 to 12 complete HTML5 Canvas arcade minigames with procedural Web Audio, standalone builds, persistent high scores, and cyber-arcade SVG screenshots.
+
+**Shipped:**
+- 7 New Canvas minigames:
+  1. `games/memory-cards/`: Cyber memory match cards with 3D flip effect and streak combo multipliers.
+  2. `games/memory-boxes/`: Simon-says sequence memory matrix with tone synthesis and speed bonuses.
+  3. `games/pop-balloon/`: Rapid neon balloon clicker with color combo chains and spike bomb hazard avoidance.
+  4. `games/space-racer/`: High-speed pseudo-3D warp starfield racer with turbo boost gates and asteroid dodging.
+  5. `games/virus-defense/`: 360° rotational turret shooter defending central cell nucleus against pathogen swarms.
+  6. `games/flappy-fish/`: Hydrodynamic underwater obstacle flapper with glowing coral reef barriers and pearl pickups.
+  7. `games/game-2048/`: Neon sliding tile puzzle with color-tiered values, slide/pop animations, and swipe touch input.
+- Central catalog updated to 12 games with authentic vector SVG screenshots and genre filter chips.
+- 73 test files, 471 unit tests passing (100% pass rate).
+- Total distribution bundle: 105.93 KB gzipped across all 12 games + hub + embed (< 200 KB budget).
+- Audit: `.planning/v3.0-MILESTONE-AUDIT.md` (passed).
+
+---
+
 ## v2.0: Unique UI/UX Refactor (Shipped 2026-08-17)
 
 **Goal:** Overhaul webapp from YouTube-dark clone to a distinct, memorable Arcade Carnival visual brand with modern vanilla TS UX architecture.
 
 **Shipped:**
-- Cyber-arcade CSS token system (`tokens.css`, `theme.css`) and persistent CRT scanline/bloom overlay (`crt.css`, `crt.ts`)
-- Lightweight zero-dependency reactive architecture: `BaseComponent` lifecycle, typed `Store`, `HashRouter` (`#/`, `#/game/:id`, `#/embed`), and View Transitions API wrapper
-- Modular UI component library: `AppHeader` (`/` shortcut search), responsive desktop `AppSidebar` & mobile `BottomNav` (>=48px touch targets), `FilterChips`, `GameCard` with neon hover glow & high score display, and live filtered `GameGrid`
-- Dedicated `GameView` player with skeleton shimmer loader, iframe lifecycle isolation (`about:blank` + pause on teardown), auto-focus delegation, `Escape` catalog exit, and theater mode (`T` shortcut)
-- `EmbedView` interactive integration kit with live sandbox preview and embed code generators
-- Procedural Web Audio UI sound effects synthesizer (`ui-audio.ts`) with reactive trigger integration
-- 43 test files, 284 unit tests passing (100% pass rate)
-- Total bundle: 54.02 KB gzipped (< 200 KB budget, 73% under limit)
-- Roadmap archive: `.planning/milestones/v2.0-ROADMAP.md`
-- Requirements archive: `.planning/milestones/v2.0-REQUIREMENTS.md`
+- Cyber-arcade CSS design token system (`tokens.css`, `theme.css`)
+- Zero-dependency `BaseComponent` lifecycle + typed pub/sub `Store`
+- Client-side `HashRouter` (`#/`, `#/game/:id`, `#/embed`) with View Transitions API wrapper
+- Dedicated `GameView` player with skeleton loader, clean iframe lifecycle management, and theater mode
+- Zero-asset procedural UI Web Audio synthesizer (`ui-audio.ts`)
+- 43 test files, 283 unit tests passing
+- Total bundle: 55.68 KB gzipped (< 200 KB budget)
 - Audit: `.planning/v2.0-MILESTONE-AUDIT.md` (passed)
+
+---
 
 ## v1.0: Arcade Carnival (Shipped 2026-08-17)
 
@@ -23,10 +42,7 @@
 
 **Shipped:**
 - 5 Canvas minigames: Safe Cracker, Brick Blitz, Sky Hopper, Crate Catch, Type Strike
-- Shared `@arcade-carnival/game-engine` (GameLoop, InputManager, SceneManager, procedural Web Audio)
-- Shared `@arcade-carnival/playables-adapter` (YouTube Playables lifecycle + localStorage fallback)
-- Central hub launcher (`index.html`, `src/hub.ts`, `src/hub.css`) with search, filter, theater mode
-- Embed kit (`embed.html`) with `<arcade-game>` web component
+- Shared `@arcade-carnival/game-engine` & `@arcade-carnival/playables-adapter`
 - 27 test files, 191 unit tests passing
-- Total bundle 37.84 KB gzipped (< 200 KB per-game budget)
+- Total bundle: 37.84 KB gzipped
 - Audit: `.planning/v1.0-MILESTONE-AUDIT.md` (passed)
