@@ -26,7 +26,11 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
   3. Playables adapter exports `initPlayables()`, `reportScore()`, `saveData()`, `loadData()` with localStorage fallback
   4. `pnpm build` produces per-game static bundles in `dist/`
   5. `pnpm typecheck` passes with zero errors
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 01-01-PLAN.md — Monorepo scaffold, workspace config, Vite multi-page build
+- [ ] 01-02-PLAN.md — Playables adapter + game engine implementations
+- [ ] 01-03-PLAN.md — Hub menu page with arcade-themed game cards
 
 ### Phase 2: Safe Cracker
 **Goal**: Fully playable Safe Cracker game — rotating dial indicator, timed target zones, scoring, speed ramp, game over
