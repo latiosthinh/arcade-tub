@@ -120,7 +120,7 @@ describe('CatalogView Component (src/views/CatalogView.ts)', () => {
     container.remove();
   });
 
-  it('renders filter chips, featured hero banner, section header, and game grid', () => {
+  it('renders filter chips, section header, and game grid', () => {
     const catalog = new CatalogView(store);
     catalog.mount(container);
 
@@ -129,29 +129,11 @@ describe('CatalogView Component (src/views/CatalogView.ts)', () => {
     const chips = catalog.element.querySelector('.ac-chips-bar');
     expect(chips).toBeTruthy();
 
-    const hero = catalog.element.querySelector('.ac-hero-banner');
-    expect(hero).toBeTruthy();
-
-    const heroTitle = catalog.element.querySelector('.ac-hero-title');
-    expect(heroTitle?.textContent).toBe('Sky Hopper');
-
-    const heroScore = catalog.element.querySelector('.ac-hero-score-val');
-    expect(heroScore?.textContent).toBe((25000).toLocaleString());
+    const header = catalog.element.querySelector('.ac-section-header');
+    expect(header).toBeTruthy();
 
     const grid = catalog.element.querySelector('.ac-game-grid');
     expect(grid).toBeTruthy();
-
-    catalog.destroy();
-  });
-
-  it('clicking Play Instant on Hero navigates to featured game', () => {
-    const catalog = new CatalogView(store);
-    catalog.mount(container);
-
-    const playBtn = catalog.element.querySelector<HTMLButtonElement>('.ac-btn-hero-play')!;
-    playBtn.click();
-
-    expect(window.location.hash).toBe('#/game/sky-hopper');
 
     catalog.destroy();
   });

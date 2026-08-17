@@ -42,7 +42,7 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
         <div class="ac-card-title-row">
           <h4 class="ac-card-title">${this.game.title}</h4>
         </div>
-        <div class="ac-card-genre">${this.game.genre} • ${this.game.plays}</div>
+        <div class="ac-card-genre">${this.game.genre}</div>
         <div class="ac-card-score-row">
           <span class="ac-card-score-badge">🏆 Best: <strong class="ac-card-score-value">${formattedScore}</strong></span>
           <span class="ac-card-rating">${this.game.rating}</span>
