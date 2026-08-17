@@ -4,32 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crate Catch — Arcade Carnival</title>
+  <link rel="stylesheet" href="../../src/styles/tokens.css" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; position: relative; }
+    body { background: var(--bg-primary); display: flex; justify-content: center; align-items: center; height: 100vh; position: relative; }
     canvas { display: block; }
     .hub-btn {
       position: absolute;
       top: 16px;
       left: 16px;
       z-index: 1000;
-      color: #2ed573;
-      background: rgba(26, 26, 46, 0.85);
-      border: 2px solid #2ed573;
-      border-radius: 6px;
+      color: var(--neon-green);
+      background: var(--bg-overlay);
+      border: 2px solid var(--neon-green);
+      border-radius: var(--radius-sm);
       padding: 8px 14px;
-      font-family: 'Courier New', monospace, sans-serif;
-      font-size: 14px;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
       font-weight: bold;
       text-decoration: none;
-      box-shadow: 0 0 10px rgba(46, 213, 115, 0.3);
+      box-shadow: var(--glow-green);
       transition: all 0.2s ease;
       cursor: pointer;
     }
     .hub-btn:hover, .hub-btn:focus-visible {
-      background: #2ed573;
-      color: #1a1a2e;
-      box-shadow: 0 0 16px rgba(46, 213, 115, 0.8);
+      background: var(--neon-green);
+      color: var(--bg-primary);
+      box-shadow: 0 0 16px rgba(0, 255, 136, 0.8);
       outline: 2px solid #ffffff;
     }
   </style>
