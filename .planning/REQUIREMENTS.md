@@ -21,8 +21,8 @@
 - [x] **VD-02**: Virus defense canvas presentation (cellular arena, rotating laser cannon, pathogen explosion debris, wave HUD, high score saving)
 
 ## Flappy Fish
-- [ ] **FF-01**: Flappy fish physics model (hydrodynamic flap velocity, gravity & water drag, coral reef gap collision detection, score trigger on pipe pass, 100% unit tests)
-- [ ] **FF-02**: Flappy fish canvas presentation (underwater bubble ambient, animated fin flap, glowing coral pillars, high score saving)
+- [x] **FF-01**: Flappy fish physics model (hydrodynamic flap velocity, gravity & water drag, coral reef gap collision detection, score trigger on pipe pass, 100% unit tests)
+- [x] **FF-02**: Flappy fish canvas presentation (underwater bubble ambient, animated fin flap, glowing coral pillars, high score saving)
 
 ## 2048 Neon
 - [ ] **G2048-01**: 2048 puzzle matrix model (4x4 directional slide & merge algorithms, random 2/4 tile spawn, score calculation, gameover & 2048 win detection, 100% unit tests)
@@ -50,8 +50,8 @@
 | SR-02 | Phase 16 | Complete |
 | VD-01 | Phase 17 | Complete |
 | VD-02 | Phase 17 | Complete |
-| FF-01 | Phase 18 | Pending |
-| FF-02 | Phase 18 | Pending |
+| FF-01 | Phase 18 | Complete |
+| FF-02 | Phase 18 | Complete |
 | G2048-01 | Phase 19 | Pending |
 | G2048-02 | Phase 19 | Pending |
 | HUB-01 | Phase 20 | Pending |
