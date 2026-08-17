@@ -1,0 +1,5 @@
+packages:
+  - "packages/*"
+  - "games/*"
+allowBuilds:
+  esbuild: set this to true or false

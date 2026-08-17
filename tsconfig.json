@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/playables-adapter" },
+    { "path": "packages/game-engine" },
+    { "path": "games/safe-cracker" },
+    { "path": "games/brick-blitz" },
+    { "path": "games/sky-hopper" },
+    { "path": "games/crate-catch" },
+    { "path": "games/type-strike" }
+  ]
+}

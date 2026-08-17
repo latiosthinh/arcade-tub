@@ -1,0 +1,14 @@
+{
+  "name": "arcade-carnival",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0",
+    "typescript": "^5.8.0"
+  }
+}
