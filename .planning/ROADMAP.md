@@ -166,7 +166,10 @@ Plans:
   2. Responsive navigation renders sidebar on desktop (>=768px) and touch-friendly bottom navigation bar on mobile (<768px, >=48px touch targets)
   3. Search bar and `FilterChips` filter game cards dynamically without input focus loss or full DOM rebuilds
   4. `GameCard` renders arcade genre badges, persistent high score display, play-on-hover neon glow, and keyboard focus rings
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 10-01-PLAN.md — Game catalog data, AppHeader with `/` search shortcut, AppSidebar, and responsive BottomNav
+- [ ] 10-02-PLAN.md — FilterChips, GameCard with high score display & glow, GameGrid, and CatalogView container feed
 **UI hint**: yes
 
 ### Phase 11: Game Player View & Embed Kit
