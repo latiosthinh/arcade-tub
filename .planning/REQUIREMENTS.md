@@ -13,8 +13,8 @@
 - [ ] **PB-02**: Pop balloon canvas presentation (colorful neon balloons with shine & wobble, pop particles, floating points HUD, high score saving)
 
 ## Space Racer
-- [ ] **SR-01**: Space racer kinematics & logic (ship steering, speed acceleration, obstacle asteroid collisions, turbo boost gates, distance/time scoring, 100% unit tests)
-- [ ] **SR-02**: Space racer canvas presentation (warp starfield pseudo-3D perspective, turbo trail flames, collision shake, high score saving)
+- [x] **SR-01**: Space racer kinematics & logic (ship steering, speed acceleration, obstacle asteroid collisions, turbo boost gates, distance/time scoring, 100% unit tests)
+- [x] **SR-02**: Space racer canvas presentation (warp starfield pseudo-3D perspective, turbo trail flames, collision shake, high score saving)
 
 ## Virus Defense
 - [ ] **VD-01**: Virus defense combat model (360° turret targeting, projectile trajectory, multi-vector pathogen swarm kinematics, nucleus HP, 100% unit tests)
@@ -46,8 +46,8 @@
 | MB-02 | Phase 14 | Complete |
 | PB-01 | Phase 15 | Pending |
 | PB-02 | Phase 15 | Pending |
-| SR-01 | Phase 16 | Pending |
-| SR-02 | Phase 16 | Pending |
+| SR-01 | Phase 16 | Complete |
+| SR-02 | Phase 16 | Complete |
 | VD-01 | Phase 17 | Pending |
 | VD-02 | Phase 17 | Pending |
 | FF-01 | Phase 18 | Pending |
