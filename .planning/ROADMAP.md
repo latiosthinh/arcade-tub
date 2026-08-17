@@ -168,8 +168,8 @@ Plans:
   4. `GameCard` renders arcade genre badges, persistent high score display, play-on-hover neon glow, and keyboard focus rings
 **Plans**: 2 plans
 Plans:
-- [ ] 10-01-PLAN.md — Game catalog data, AppHeader with `/` search shortcut, AppSidebar, and responsive BottomNav
-- [ ] 10-02-PLAN.md — FilterChips, GameCard with high score display & glow, GameGrid, and CatalogView container feed
+- [x] 10-01-PLAN.md — Game catalog data, AppHeader with `/` search shortcut, AppSidebar, and responsive BottomNav
+- [x] 10-02-PLAN.md — FilterChips, GameCard with high score display & glow, GameGrid, and CatalogView container feed
 **UI hint**: yes
 
 ### Phase 11: Game Player View & Embed Kit
@@ -181,7 +181,10 @@ Plans:
   2. Iframe teardown unbinds message listeners, resets `src` to `about:blank`, and stops running `requestAnimationFrame` loops on view exit
   3. Game canvas receives automatic focus on iframe mount, with `Escape` shortcut exiting player view back to catalog
   4. Theater mode toggle button and `T` keyboard shortcut expand game viewport to maximized layout
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 11-01-PLAN.md — GameView component, player & skeleton styles, focus delegation, and theater mode
+- [ ] 11-02-PLAN.md — EmbedView component, main app SPA bootstrapper, index.html integration, and routing tests
 **UI hint**: yes
 
 ### Phase 12: Audio Feedback & Production Verification
