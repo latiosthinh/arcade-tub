@@ -84,7 +84,10 @@ Plans:
   3. Direct hits destroy pathogens with debris particle effects and audio feedback
   4. Pathogens breaching center damage nucleus HP; game over triggers when nucleus HP reaches 0
   5. 100% unit tests pass for angle targeting math, projectile trajectory, and wave spawn curves
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 17-01-PLAN.md — Turret model with 360-degree aiming, PathogenSwarm kinematics & types, NucleusState health & antibodies, GameState lifecycle & combo math, unit test suite
+- [ ] 17-02-PLAN.md — Cellular bio-cyber BioArenaRenderer, DefenseAudio procedural synthesizer, bio-luminescent ParticleSystem, VirusDefenseScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 18: Flappy Fish Minigame
