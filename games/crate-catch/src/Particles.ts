@@ -35,12 +35,13 @@ export class ParticleSystem {
       const angle = Math.random() * Math.PI * 2;
       const speed = 100 + Math.random() * 180;
       const life = 0.3 + Math.random() * 0.4;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#ff4757';
       this.addParticle({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 4 + Math.random() * 4,
         life,
         maxLife: life,
@@ -55,12 +56,13 @@ export class ParticleSystem {
     for (let i = 0; i < count; i++) {
       const offsetX = (Math.random() - 0.5) * width;
       const life = 0.2 + Math.random() * 0.2;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#d35400';
       this.addParticle({
         x: x + offsetX,
         y,
         vx: (Math.random() - 0.5) * 80,
         vy: -30 - Math.random() * 40,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 3 + Math.random() * 3,
         life,
         maxLife: life,
@@ -73,12 +75,13 @@ export class ParticleSystem {
     const colors = ['#f1c40f', '#ffeaa7', '#00cec9', '#ffffff'];
     for (let i = 0; i < count; i++) {
       const life = 0.25 + Math.random() * 0.25;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#f1c40f';
       this.addParticle({
         x: x + (Math.random() - 0.5) * 10,
         y: y + (Math.random() - 0.5) * 10,
         vx: (Math.random() - 0.5) * 160,
         vy: -40 - Math.random() * 110,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 2 + Math.random() * 2.5,
         life,
         maxLife: life,
@@ -91,12 +94,13 @@ export class ParticleSystem {
     const colors = ['#f9ca24', '#f6e58d', '#ffffff', '#f39c12'];
     for (let i = 0; i < count; i++) {
       const life = 0.3 + Math.random() * 0.3;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#f9ca24';
       this.addParticle({
         x: x + (Math.random() - 0.5) * 24,
         y: y + (Math.random() - 0.5) * 20,
         vx: (Math.random() - 0.5) * 40,
         vy: -20 - Math.random() * 40,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 2.5 + Math.random() * 2.5,
         life,
         maxLife: life,
@@ -148,6 +152,7 @@ export class ParticleSystem {
   update(dt: number): void {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
+      if (!p) continue;
       p.life -= dt;
       if (p.life <= 0) {
         this.particles.splice(i, 1);
@@ -171,6 +176,7 @@ export class ParticleSystem {
 
     for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
       const ft = this.floatingTexts[i];
+      if (!ft) continue;
       ft.life -= dt;
       if (ft.life <= 0) {
         this.floatingTexts.splice(i, 1);
