@@ -16,4 +16,4 @@
 - [x] **REQ-09**: Vitest unit tests for core game logic (scoring, collision, timing)
 - [x] **REQ-10**: Production build outputs static assets per game (deployable independently or as bundle)
 - **REQ-11**: 60fps on mid-range devices; total bundle per game < 200KB gzipped
-- **REQ-12**: Accessible — ARIA labels on hub, high-contrast game UI, keyboard-navigable menus
+- [x] **REQ-12**: Accessible — ARIA labels on hub, high-contrast game UI, keyboard-navigable menus

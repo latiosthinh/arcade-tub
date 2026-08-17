@@ -3,24 +3,24 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-08-17T16:10:00.000Z"
+last_updated: "2026-08-17T16:15:00.000Z"
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 16
-  completed_plans: 14
-  percent: 88
+  completed_plans: 15
+  percent: 94
 ---
 
 # State: Arcade Carnival
 
 ## Current Phase
 
-Phase 7: Polish & Deploy — Plan 01 Complete
+Phase 7: Polish & Deploy — Plan 02 Complete
 
 ## Status
 
-STATUS: Phase 7 Plan 01 Complete. Procedural Web Audio synthesizer and presets implemented in `@arcade-carnival/game-engine`. Next: Plan 02 (Sound wiring across 5 games, high score aggregation, navigation polish).
+STATUS: Phase 7 Plan 02 Complete. Procedural Web Audio SFX wired into all 5 games, universal "← Arcade Hub" buttons added, and Arcade Hub enhanced with high score badges, keyboard navigation, and shortcuts modal. Next: Plan 03 (Production bundle verification, Playables validation, and packaging).
 
 ## History
 
@@ -38,6 +38,7 @@ STATUS: Phase 7 Plan 01 Complete. Procedural Web Audio synthesizer and presets i
 - 2026-08-17: Phase 6 Plan 01 completed (Type Strike word tiers, enemy kinematics, typing engine target locking, prefix advancement).
 - 2026-08-17: Phase 6 Plan 02 completed (Type Strike scene, GameState, laser strike particles, CRT scanline rendering, and main bootstrap).
 - 2026-08-17: Phase 7 Plan 01 completed (AudioSynthesizer procedural Web Audio API singleton with zero assets and preset sound effects).
+- 2026-08-17: Phase 7 Plan 02 completed (Audio SFX wired across all 5 games, Back to Hub links added, hub keyboard shortcuts and high scores).
 
 ## Decisions
 
@@ -56,3 +57,4 @@ STATUS: Phase 7 Plan 01 Complete. Procedural Web Audio synthesizer and presets i
 - Sky Hopper modes: Story (target 5,000m airship mothership + 2500 clear bonus) vs Infinite (endless climb scored by altitude + kills).
 - Sky Hopper particle pool capped at 250 particles.
 - Type Strike: 60s round countdown, 3 base shields, dynamic drone speed scaling over elapsed time, laser particle pool capped at 300.
+- Hub Navigation: 1-5 keys launch games, arrow keys cycle focus, Enter triggers focused game, M toggles mute, ? / H opens shortcut help modal.

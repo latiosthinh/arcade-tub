@@ -120,7 +120,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 07-01-PLAN.md — Procedural Web Audio synthesizer singleton and sound presets
-- [ ] 07-02-PLAN.md — Game sound integration, hub high scores, and navigation polish
+- [x] 07-02-PLAN.md — Game sound integration, hub high scores, and navigation polish
 - [ ] 07-03-PLAN.md — Bundle size audit, production asset packaging, and end-to-end verification
 
 ## Progress
@@ -133,4 +133,4 @@ Plans:
 | 4. Sky Hopper | 2/2 | Complete | 2026-08-17 |
 | 5. Crate Catch | 2/2 | Complete | 2026-08-17 |
 | 6. Type Strike | 2/2 | Complete | 2026-08-17 |
-| 7. Polish & Deploy | 1/3 | In Progress | - |
+| 7. Polish & Deploy | 2/3 | In Progress | - |
