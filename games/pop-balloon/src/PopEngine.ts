@@ -57,7 +57,7 @@ export class PopEngine {
     // Iterate in reverse order so top-most rendered balloons get hit first
     for (let i = balloons.length - 1; i >= 0; i--) {
       const b = balloons[i];
-      if (b.isAlive && b.containsPoint(px, py)) {
+      if (b && b.isAlive && b.containsPoint(px, py)) {
         b.pop();
         return this.processPop(b);
       }

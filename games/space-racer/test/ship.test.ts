@@ -26,37 +26,40 @@ describe('Ship Kinematics and State', () => {
     expect(ship.tilt).toBe(0);
   });
 
-  it('steers left and right with acceleration and damping', () => {
-    ship.steer(-1, 0.1);
-    expect(ship.vx).toBeLessThan(0);
-    expect(ship.tilt).toBeLessThan(0);
+  it('shifts lanes with shiftLane and smoothly glides towards lane position', () => {
+    expect(ship.currentLane).toBe(1); // 400 defaults to lane index 1 (325)
+    ship.shiftLane(1);
+    expect(ship.currentLane).toBe(2);
+    expect(ship.targetX).toBe(475);
 
     ship.update(0.1);
-    expect(ship.x).toBeLessThan(400);
+    expect(ship.x).toBeGreaterThan(400);
 
-    ship.steer(0, 0.1); // No input -> friction slows it down
-    ship.update(0.1);
-    expect(Math.abs(ship.vx)).toBeLessThan(600);
+    ship.shiftLane(-1);
+    expect(ship.currentLane).toBe(1);
+    expect(ship.targetX).toBe(325);
   });
 
   it('clamps ship position strictly within track boundaries', () => {
-    for (let i = 0; i < 50; i++) {
-      ship.steer(1, 0.1);
-      ship.update(0.1);
+    for (let i = 0; i < 5; i++) {
+      ship.shiftLane(1);
     }
-    expect(ship.x).toBe(700);
+    expect(ship.currentLane).toBe(3);
+    expect(ship.targetX).toBe(625);
 
-    for (let i = 0; i < 100; i++) {
-      ship.steer(-1, 0.1);
-      ship.update(0.1);
+    for (let i = 0; i < 5; i++) {
+      ship.shiftLane(-1);
     }
-    expect(ship.x).toBe(100);
+    expect(ship.currentLane).toBe(0);
+    expect(ship.targetX).toBe(175);
   });
 
   it('smoothly follows target X coordinate with setTargetX', () => {
     ship.setTargetX(600, 0.1);
+    expect(ship.targetX).toBe(625);
+    ship.update(0.1);
     expect(ship.x).toBeGreaterThan(400);
-    expect(ship.x).toBeLessThanOrEqual(600);
+    expect(ship.x).toBeLessThanOrEqual(625);
     expect(ship.tilt).toBeGreaterThan(0);
   });
 

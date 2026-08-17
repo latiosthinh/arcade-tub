@@ -53,7 +53,7 @@ describe('GameState', () => {
     expect(state.status).toBe('gameover');
     expect(state.highScore).toBe(500);
 
-    expect(playablesAdapter.saveData).toHaveBeenCalledWith('pop-balloon-highscore', 500);
+    expect(playablesAdapter.saveData).toHaveBeenCalledWith('pop-balloon-highscore', '500');
     expect(playablesAdapter.reportScore).toHaveBeenCalledWith(500);
   });
 

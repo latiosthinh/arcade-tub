@@ -70,8 +70,10 @@ export class TileRenderer {
     } else {
       // Direct grid representation
       for (let r = 0; r < 4; r++) {
+        const row = cells[r];
+        if (!row) continue;
         for (let c = 0; c < 4; c++) {
-          const val = cells[r][c];
+          const val = row[c] ?? 0;
           if (val > 0) {
             nextTiles.push({
               id: `tile-${++this.tileIdCounter}`,
@@ -148,8 +150,10 @@ export class TileRenderer {
   public syncDirect(cells: number[][]): void {
     const list: AnimatedTile[] = [];
     for (let r = 0; r < 4; r++) {
+      const row = cells[r];
+      if (!row) continue;
       for (let c = 0; c < 4; c++) {
-        const val = cells[r][c];
+        const val = row[c] ?? 0;
         if (val > 0) {
           list.push({
             id: `tile-static-${r}-${c}`,

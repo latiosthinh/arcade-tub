@@ -71,9 +71,9 @@ export class PopAudio {
     }
 
     // Pentatonic scale starting at C5 (523.25Hz)
-    const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51];
+    const scale: number[] = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51];
     const noteIndex = Math.min(scale.length - 1, Math.max(0, streak - 1));
-    const freq = scale[noteIndex];
+    const freq = scale[noteIndex] ?? 523.25;
 
     const t = ctx.currentTime;
     const osc = ctx.createOscillator();

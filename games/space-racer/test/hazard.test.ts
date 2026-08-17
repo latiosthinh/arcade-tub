@@ -32,9 +32,9 @@ describe('TrackHazardManager', () => {
     expect(active[0].z).toBeLessThan(1.0);
   });
 
-  it('auto-culls obstacles that move past the camera (z < -0.1)', () => {
+  it('auto-culls obstacles that move past the camera (z < -0.45)', () => {
     const obs = manager.spawnObstacle('asteroid', 400);
-    obs.z = -0.15;
+    obs.z = -0.5;
     manager.update(0.01, 100);
     expect(manager.getObstacles().length).toBe(0);
   });

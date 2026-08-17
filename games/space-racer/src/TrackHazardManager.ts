@@ -1,4 +1,4 @@
-import { Ship } from './Ship.js';
+import { Ship, RACER_LANES } from './Ship.js';
 
 export type ObstacleType = 'asteroid' | 'plasma-mine' | 'boost-ring';
 
@@ -6,7 +6,7 @@ export interface TrackObstacle {
   id: number;
   type: ObstacleType;
   x: number; // Screen X at bottom camera plane (100..700)
-  z: number; // 1.0 (horizon) down to 0.0 (camera) and < -0.1 (culled)
+  z: number; // 1.0 (horizon) down through 0.0 (camera) to -0.4 (past camera)
   radius: number;
   rotation: number;
   rotationSpeed: number;
@@ -54,7 +54,7 @@ export class TrackHazardManager {
       this.obstacles.shift();
     }
 
-    const posX = x !== undefined ? Math.max(this.minX, Math.min(this.maxX, x)) : this.minX + Math.random() * (this.maxX - this.minX);
+    const posX = x !== undefined ? x : RACER_LANES[Math.floor(Math.random() * RACER_LANES.length)]!;
 
     const radius = type === 'boost-ring' ? 45 : type === 'plasma-mine' ? 35 : 30 + Math.random() * 15;
 
@@ -75,22 +75,18 @@ export class TrackHazardManager {
   }
 
   public spawnWave(difficulty: number): void {
-    // Determine number of obstacles: 1 to 3, always leaving at least one open lane out of 4
-    const lanes = [
-      this.minX + (this.maxX - this.minX) * 0.15,
-      this.minX + (this.maxX - this.minX) * 0.38,
-      this.minX + (this.maxX - this.minX) * 0.62,
-      this.minX + (this.maxX - this.minX) * 0.85,
-    ];
+    // 4 standard lane centers
+    const lanes = [...RACER_LANES];
 
-    const count = Math.min(3, Math.floor(1 + difficulty * 2.5));
+    // Determine number of obstacles: 1 to 2, or max 3 at extreme speed, ALWAYS leaving at least 1 open lane
+    const count = Math.min(2, Math.floor(1 + difficulty * 2.0));
     const shuffledLanes = [...lanes].sort(() => Math.random() - 0.5);
 
-    // Pick 1 lane for boost ring occasionally (20% chance)
+    // Pick 1 lane for boost ring occasionally (25% chance)
     const hasRing = Math.random() < 0.25;
 
     for (let i = 0; i < count; i++) {
-      const laneX = shuffledLanes[i];
+      const laneX = shuffledLanes[i]!;
       let type: ObstacleType = 'asteroid';
       if (hasRing && i === 0) {
         type = 'boost-ring';
@@ -104,7 +100,7 @@ export class TrackHazardManager {
   public update(dt: number, speed: number): void {
     // Advance obstacles along Z
     // Z decreases from 1.0 down towards 0.0 at a rate proportional to speed
-    const zSpeed = (speed / 1000) * 0.85;
+    const zSpeed = (speed / 1000) * 1.1;
 
     for (let i = this.obstacles.length - 1; i >= 0; i--) {
       const obs = this.obstacles[i];
@@ -112,15 +108,15 @@ export class TrackHazardManager {
       obs.z -= zSpeed * dt;
       obs.rotation += obs.rotationSpeed * dt;
 
-      // Auto-cull past camera
-      if (obs.z < -0.1) {
+      // Auto-cull after sliding past bottom of screen
+      if (obs.z < -0.45) {
         this.obstacles.splice(i, 1);
       }
     }
 
     // Timer-based spawning
     this.spawnTimer += dt;
-    const effectiveInterval = Math.max(0.6, this.spawnInterval / (speed / 300));
+    const effectiveInterval = Math.max(0.65, this.spawnInterval / (speed / 300));
     if (this.spawnTimer >= effectiveInterval) {
       this.spawnTimer = 0;
       const difficulty = Math.min(1.0, Math.max(0.1, (speed - 300) / 600));
@@ -135,10 +131,10 @@ export class TrackHazardManager {
     for (const obs of this.obstacles) {
       if (obs.collided) continue;
 
-      // Check collision at camera plane (z between -0.05 and 0.08)
-      if (obs.z <= 0.08 && obs.z >= -0.05) {
+      // Check collision at camera plane (z between -0.04 and 0.08)
+      if (obs.z <= 0.08 && obs.z >= -0.04) {
         const dx = Math.abs(ship.x - obs.x);
-        const combinedWidth = shipHalfWidth + obs.radius * 0.7;
+        const combinedWidth = shipHalfWidth + obs.radius * 0.6;
 
         if (dx <= combinedWidth) {
           obs.collided = true;

@@ -43,9 +43,13 @@ export class SpaceRacerScene implements GameScene {
   private setupInputs(): void {
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        this.leftPressed = true;
+        if (this.state.status === 'playing') {
+          this.ship.shiftLane(-1);
+        }
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        this.rightPressed = true;
+        if (this.state.status === 'playing') {
+          this.ship.shiftLane(1);
+        }
       } else if (e.key === ' ' || e.key === 'Enter') {
         if (this.state.status === 'ready') {
           this.state.start();
@@ -66,49 +70,33 @@ export class SpaceRacerScene implements GameScene {
       }
     });
 
-    window.addEventListener('keyup', (e) => {
-      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        this.leftPressed = false;
-      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        this.rightPressed = false;
-      }
-    });
-
-    const handlePointer = (clientX: number, isDown: boolean) => {
+    const handlePointer = (clientX: number) => {
       const rect = this.canvas.getBoundingClientRect();
       const scaleX = this.canvas.width / rect.width;
-      this.pointerX = (clientX - rect.left) * scaleX;
-      this.isPointerDown = isDown;
+      const posX = (clientX - rect.left) * scaleX;
 
-      if (isDown) {
-        if (this.state.status === 'ready') {
-          this.state.start();
-          this.audio.startEngine();
-        } else if (this.state.status === 'gameover') {
-          this.state.restart(this.ship, this.hazardManager);
-          this.particles.clear();
-          this.audio.startEngine();
-        }
+      if (this.state.status === 'ready') {
+        this.state.start();
+        this.audio.startEngine();
+        return;
+      } else if (this.state.status === 'gameover') {
+        this.state.restart(this.ship, this.hazardManager);
+        this.particles.clear();
+        this.audio.startEngine();
+        return;
+      }
+
+      if (this.state.status === 'playing') {
+        this.ship.setTargetX(posX, 0.016);
       }
     };
 
-    this.canvas.addEventListener('mousedown', (e) => handlePointer(e.clientX, true));
-    window.addEventListener('mousemove', (e) => {
-      if (this.isPointerDown) handlePointer(e.clientX, true);
-    });
-    window.addEventListener('mouseup', () => { this.isPointerDown = false; });
+    this.canvas.addEventListener('mousedown', (e) => handlePointer(e.clientX));
 
     this.canvas.addEventListener('touchstart', (e) => {
       const touch = e.touches[0];
-      if (touch) handlePointer(touch.clientX, true);
+      if (touch) handlePointer(touch.clientX);
     }, { passive: false });
-
-    this.canvas.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      if (touch) handlePointer(touch.clientX, true);
-    }, { passive: false });
-
-    window.addEventListener('touchend', () => { this.isPointerDown = false; });
   }
 
   public update(dt: number): void {
@@ -126,16 +114,6 @@ export class SpaceRacerScene implements GameScene {
     if (this.state.status !== 'playing') {
       this.particles.update(dt);
       return;
-    }
-
-    // Process steering
-    if (this.isPointerDown) {
-      this.ship.setTargetX(this.pointerX, dt);
-    } else {
-      let dir = 0;
-      if (this.leftPressed) dir -= 1;
-      if (this.rightPressed) dir += 1;
-      this.ship.steer(dir, dt);
     }
 
     const prevShield = this.ship.shieldHp;

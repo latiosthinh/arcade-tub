@@ -60,7 +60,7 @@ export class Grid2048 {
   }
 
   public getCell(r: number, c: number): number {
-    return this.cells[r][c];
+    return this.cells[r]?.[c] ?? 0;
   }
 
   public setCells(newCells: number[][]): void {
@@ -70,8 +70,10 @@ export class Grid2048 {
   public getEmptyCells(): Array<{ row: number; col: number }> {
     const empty: Array<{ row: number; col: number }> = [];
     for (let r = 0; r < 4; r++) {
+      const row = this.cells[r];
+      if (!row) continue;
       for (let c = 0; c < 4; c++) {
-        if (this.cells[r][c] === 0) {
+        if (row[c] === 0) {
           empty.push({ row: r, col: c });
         }
       }
@@ -85,18 +87,25 @@ export class Grid2048 {
 
     const randomIndex = Math.floor(rng() * empty.length);
     const cell = empty[Math.min(randomIndex, empty.length - 1)];
+    if (!cell) return null;
     const value = rng() < 0.9 ? 2 : 4;
 
-    this.cells[cell.row][cell.col] = value;
+    const row = this.cells[cell.row];
+    if (row) {
+      row[cell.col] = value;
+    }
     return { row: cell.row, col: cell.col, value };
   }
 
   public getMaxTile(): number {
     let max = 0;
     for (let r = 0; r < 4; r++) {
+      const row = this.cells[r];
+      if (!row) continue;
       for (let c = 0; c < 4; c++) {
-        if (this.cells[r][c] > max) {
-          max = this.cells[r][c];
+        const val = row[c] ?? 0;
+        if (val > max) {
+          max = val;
         }
       }
     }
@@ -105,8 +114,11 @@ export class Grid2048 {
 
   public hasWon(target: number = 2048): boolean {
     for (let r = 0; r < 4; r++) {
+      const row = this.cells[r];
+      if (!row) continue;
       for (let c = 0; c < 4; c++) {
-        if (this.cells[r][c] >= target) {
+        const val = row[c] ?? 0;
+        if (val >= target) {
           return true;
         }
       }
@@ -118,10 +130,13 @@ export class Grid2048 {
     if (this.getEmptyCells().length > 0) return true;
 
     for (let r = 0; r < 4; r++) {
+      const row = this.cells[r];
+      const nextRow = this.cells[r + 1];
+      if (!row) continue;
       for (let c = 0; c < 4; c++) {
-        const val = this.cells[r][c];
-        if (c + 1 < 4 && this.cells[r][c + 1] === val) return true;
-        if (r + 1 < 4 && this.cells[r + 1][c] === val) return true;
+        const val = row[c];
+        if (c + 1 < 4 && row[c + 1] === val) return true;
+        if (nextRow && nextRow[c] === val) return true;
       }
     }
     return false;
@@ -184,7 +199,7 @@ export class Grid2048 {
 
       // Filter non-zero items in order
       const nonZero = lineCoords
-        .map((coord) => ({ ...coord, val: this.cells[coord.r][coord.c] }))
+        .map((coord) => ({ ...coord, val: this.cells[coord.r]?.[coord.c] ?? 0 }))
         .filter((item) => item.val !== 0);
 
       const mergedLine: Array<{ val: number; from: Array<{ r: number; c: number }> }> = [];
@@ -196,6 +211,7 @@ export class Grid2048 {
           continue;
         }
         const current = nonZero[k];
+        if (!current) continue;
         const next = nonZero[k + 1];
 
         if (next && current.val === next.val) {
@@ -220,26 +236,30 @@ export class Grid2048 {
       // Reconstruct target line and record movements/merges
       for (let targetIndex = 0; targetIndex < 4; targetIndex++) {
         const targetCoord = lineCoords[targetIndex];
+        if (!targetCoord) continue;
         const targetItem = mergedLine[targetIndex];
         const targetVal = targetItem ? targetItem.val : 0;
 
-        if (this.cells[targetCoord.r][targetCoord.c] !== targetVal) {
+        const targetRow = this.cells[targetCoord.r];
+        if (targetRow && targetRow[targetCoord.c] !== targetVal) {
           moved = true;
         }
 
         if (targetItem) {
           if (targetItem.from.length === 1) {
             const src = targetItem.from[0];
-            if (src.r !== targetCoord.r || src.c !== targetCoord.c) {
+            if (src && (src.r !== targetCoord.r || src.c !== targetCoord.c)) {
               moved = true;
             }
-            moves.push({
-              fromRow: src.r,
-              fromCol: src.c,
-              toRow: targetCoord.r,
-              toCol: targetCoord.c,
-              value: targetVal,
-            });
+            if (src) {
+              moves.push({
+                fromRow: src.r,
+                fromCol: src.c,
+                toRow: targetCoord.r,
+                toCol: targetCoord.c,
+                value: targetVal,
+              });
+            }
           } else if (targetItem.from.length === 2) {
             moved = true;
             merges.push({
@@ -264,8 +284,12 @@ export class Grid2048 {
       // Apply new row/column to actual cells
       for (let targetIndex = 0; targetIndex < 4; targetIndex++) {
         const targetCoord = lineCoords[targetIndex];
+        if (!targetCoord) continue;
         const targetItem = mergedLine[targetIndex];
-        this.cells[targetCoord.r][targetCoord.c] = targetItem ? targetItem.val : 0;
+        const row = this.cells[targetCoord.r];
+        if (row) {
+          row[targetCoord.c] = targetItem ? targetItem.val : 0;
+        }
       }
     }
 

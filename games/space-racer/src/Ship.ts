@@ -1,3 +1,5 @@
+export const RACER_LANES = [175, 325, 475, 625];
+
 export interface ShipConfig {
   minX?: number;
   maxX?: number;
@@ -15,6 +17,8 @@ export class Ship {
   public x: number;
   public y: number;
   public vx: number = 0;
+  public targetX: number;
+  public currentLane: number = 1;
   public width: number;
   public height: number;
   public minX: number;
@@ -36,6 +40,7 @@ export class Ship {
     this.minX = config.minX ?? 100;
     this.maxX = config.maxX ?? 700;
     this.x = config.initialX ?? 400;
+    this.targetX = this.x;
     this.y = config.y ?? 520;
     this.width = config.width ?? 60;
     this.height = config.height ?? 40;
@@ -44,36 +49,70 @@ export class Ship {
     this.friction = config.friction ?? 8.0;
     this.maxShieldHp = config.maxShieldHp ?? 3;
     this.shieldHp = this.maxShieldHp;
+
+    // Find closest initial lane
+    this.initLaneFromX(this.x);
+  }
+
+  private initLaneFromX(x: number): void {
+    let closestLane = 0;
+    let minDiff = Infinity;
+    for (let i = 0; i < RACER_LANES.length; i++) {
+      const diff = Math.abs(RACER_LANES[i]! - x);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestLane = i;
+      }
+    }
+    this.currentLane = closestLane;
+    this.targetX = RACER_LANES[this.currentLane]!;
+  }
+
+  public shiftLane(direction: -1 | 1): void {
+    this.currentLane = Math.max(0, Math.min(RACER_LANES.length - 1, this.currentLane + direction));
+    this.targetX = RACER_LANES[this.currentLane]!;
+  }
+
+  public setLane(laneIndex: number): void {
+    this.currentLane = Math.max(0, Math.min(RACER_LANES.length - 1, laneIndex));
+    this.targetX = RACER_LANES[this.currentLane]!;
   }
 
   public steer(dir: number, dt: number): void {
     if (dir !== 0) {
-      this.vx += dir * this.acceleration * dt;
-      this.vx = Math.max(-this.maxSpeed, Math.min(this.maxSpeed, this.vx));
+      this.shiftLane(dir > 0 ? 1 : -1);
     } else {
-      // Apply friction damping
       const damp = Math.exp(-this.friction * dt);
       this.vx *= damp;
       if (Math.abs(this.vx) < 1.0) this.vx = 0;
     }
-    this.tilt = Math.max(-1.0, Math.min(1.0, this.vx / this.maxSpeed));
   }
 
   public setTargetX(targetX: number, dt: number): void {
     const clampedTarget = Math.max(this.minX, Math.min(this.maxX, targetX));
-    const dx = clampedTarget - this.x;
-    const speed = Math.min(Math.abs(dx) * 12, this.maxSpeed);
-    this.vx = Math.sign(dx) * speed;
-    this.x += this.vx * dt;
-    this.clamp();
-    this.tilt = Math.max(-1.0, Math.min(1.0, this.vx / (this.maxSpeed * 0.7)));
+    this.targetX = clampedTarget;
+    // Find matching lane
+    this.initLaneFromX(clampedTarget);
   }
 
   public update(dt: number): void {
-    this.x += this.vx * dt;
+    // Smoothly glide to target lane X without overshooting
+    const dx = this.targetX - this.x;
+    if (Math.abs(dx) > 1.0) {
+      const rawVx = dx * 14;
+      this.vx = Math.sign(rawVx) * Math.min(this.maxSpeed, Math.abs(rawVx));
+      this.x += this.vx * dt;
+      if ((dx > 0 && this.x > this.targetX) || (dx < 0 && this.x < this.targetX)) {
+        this.x = this.targetX;
+        this.vx = 0;
+      }
+    } else {
+      this.x = this.targetX;
+      this.vx = 0;
+    }
     this.clamp();
 
-    // Tilt follows normalized velocity
+    // Tilt follows velocity
     this.tilt = Math.max(-1.0, Math.min(1.0, this.vx / this.maxSpeed));
 
     // Update invulnerability
@@ -131,7 +170,9 @@ export class Ship {
   }
 
   public reset(): void {
-    this.x = (this.minX + this.maxX) / 2;
+    this.currentLane = 1;
+    this.targetX = RACER_LANES[this.currentLane]!;
+    this.x = this.targetX;
     this.vx = 0;
     this.shieldHp = this.maxShieldHp;
     this.isInvulnerable = false;

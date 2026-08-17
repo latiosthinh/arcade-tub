@@ -24,11 +24,14 @@ export class GameState {
 
   private loadHighScore(): void {
     const saved = loadData(STORAGE_KEY);
-    if (typeof saved === 'number' && !isNaN(saved) && saved >= 0) {
-      this.highScore = saved;
-    } else {
-      this.highScore = 0;
+    if (saved !== null) {
+      const parsed = parseInt(saved, 10);
+      if (!isNaN(parsed) && parsed >= 0) {
+        this.highScore = parsed;
+        return;
+      }
     }
+    this.highScore = 0;
   }
 
   start(): void {
@@ -93,7 +96,7 @@ export class GameState {
     this.status = 'gameover';
     if (this.score > this.highScore) {
       this.highScore = this.score;
-      saveData(STORAGE_KEY, this.highScore);
+      saveData(STORAGE_KEY, String(this.highScore));
     }
     reportScore(this.score);
   }

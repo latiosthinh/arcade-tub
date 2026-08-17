@@ -43,15 +43,17 @@ export class WarpRenderer {
   }
 
   public project(worldX: number, z: number): { x: number; y: number; scale: number } {
-    // z is 1.0 (horizon) to 0.0 (camera plane)
-    const clampedZ = Math.max(0.001, z);
-    const depthProgress = 1.0 - clampedZ; // 0.0 at horizon, 1.0 at camera
+    // z is 1.0 (horizon) down through 0.0 (player position) to -0.4 (past camera / off-screen)
+    const clampedZ = Math.max(-0.4, z);
+    const depthProgress = 1.0 - clampedZ;
+    // Horizon is at 220, player plane is at 520 (when z=0, depthProgress=1.0).
+    // When z < 0, depthProgress > 1.0 and y moves past 520 down to 700+ off the bottom of the window.
     const y = this.horizonY + depthProgress * (this.bottomY - this.horizonY);
 
-    // Perspective expansion
-    const scale = 1.0 / (clampedZ * 3.5 + 0.5);
+    // Scale expands exponentially as object approaches and passes camera
+    const scale = Math.max(0.15, 1.0 / (Math.max(0.04, clampedZ + 0.2) * 2.8 + 0.15));
     const normalizedOffset = (worldX - this.vpX);
-    const x = this.vpX + normalizedOffset * depthProgress * 1.1;
+    const x = this.vpX + normalizedOffset * Math.pow(Math.max(0.01, depthProgress), 1.15) * 1.25;
 
     return { x, y, scale };
   }
@@ -73,7 +75,7 @@ export class WarpRenderer {
       const sx = this.vpX + star.x * scale;
       const sy = this.horizonY + star.y * scale;
 
-      if (sx >= 0 && sx <= width && sy >= 0 && sy <= this.bottomY + 50) {
+      if (sx >= 0 && sx <= width && sy >= 0 && sy <= this.bottomY + 120) {
         ctx.fillStyle = depth < 0.3 ? '#ffffff' : '#38bdf8';
         ctx.beginPath();
         ctx.arc(sx, sy, star.size * Math.min(2.5, scale * 0.5), 0, Math.PI * 2);
@@ -94,7 +96,7 @@ export class WarpRenderer {
     ctx.lineTo(800, this.horizonY);
     ctx.stroke();
 
-    // Perspective lane lines
+    // Perspective lane lines extending past the bottom of the canvas
     for (let i = 0; i < leftRails.length; i++) {
       const bottomX = leftRails[i] ?? 400;
       const isEdge = i === 0 || i === leftRails.length - 1;
@@ -104,7 +106,7 @@ export class WarpRenderer {
 
       ctx.beginPath();
       ctx.moveTo(this.vpX, this.horizonY);
-      ctx.lineTo(bottomX, this.bottomY + 60);
+      ctx.lineTo(bottomX + (bottomX - this.vpX) * 0.4, this.bottomY + 120);
       ctx.stroke();
     }
 
@@ -114,10 +116,10 @@ export class WarpRenderer {
     ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
     ctx.lineWidth = 1;
 
-    for (let d = offset; d < 800; d += barSpacing) {
+    for (let d = offset; d < 900; d += barSpacing) {
       const progress = d / 800;
-      const y = this.horizonY + Math.pow(progress, 2.2) * (this.bottomY + 60 - this.horizonY);
-      const span = progress * 600;
+      const y = this.horizonY + Math.pow(progress, 2.0) * (this.bottomY + 80 - this.horizonY);
+      const span = progress * 700;
       ctx.beginPath();
       ctx.moveTo(this.vpX - span / 2, y);
       ctx.lineTo(this.vpX + span / 2, y);
@@ -131,7 +133,7 @@ export class WarpRenderer {
     const sorted = [...obstacles].sort((a, b) => b.z - a.z);
 
     for (const obs of sorted) {
-      if (obs.z > 1.0 || obs.z < -0.1) continue;
+      if (obs.z > 1.0 || obs.z < -0.4) continue;
 
       const p = this.project(obs.x, obs.z);
       const drawRadius = obs.radius * (p.scale * 0.45);

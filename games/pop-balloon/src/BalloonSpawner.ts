@@ -61,7 +61,7 @@ export class BalloonSpawner {
   }
 
   spawn(elapsedTime: number): Balloon {
-    if (this.activeBalloons.length >= this.maxActiveBalloons) {
+    if (this.activeBalloons.length >= this.maxActiveBalloons && this.activeBalloons[0]) {
       return this.activeBalloons[0];
     }
 
