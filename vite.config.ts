@@ -27,6 +27,7 @@ export default defineConfig({
         'space-racer': resolve(__dirname, 'games/space-racer/index.html'),
         'virus-defense': resolve(__dirname, 'games/virus-defense/index.html'),
         'flappy-fish': resolve(__dirname, 'games/flappy-fish/index.html'),
+        'game-2048': resolve(__dirname, 'games/game-2048/index.html'),
       },
     },
   },
