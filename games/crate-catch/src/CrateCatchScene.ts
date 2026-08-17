@@ -463,15 +463,22 @@ export class CrateCatchScene implements GameScene {
       ctx.lineWidth = 2;
       ctx.stroke();
     } else {
-      // Wooden Crates
-      let baseCol = '#b9770e';
-      let borderCol = '#784212';
+      // Color coded according to track lane (Front = Yellow/Amber, Back = Blue/Cyan)
+      const isBackLane = item.lane === 'back';
+      let baseCol = isBackLane ? '#0984e3' : '#d35400';
+      let borderCol = isBackLane ? '#74b9ff' : '#f1c40f';
+      let crossCol = isBackLane ? '#00cec9' : '#f39c12';
+      let rivetCol = isBackLane ? '#dff9fb' : '#ffeaa7';
+
       if (type === 'crate_golden') {
-        baseCol = '#f1c40f';
-        borderCol = '#d35400';
+        baseCol = isBackLane ? '#00cec9' : '#f1c40f';
+        borderCol = isBackLane ? '#55efc4' : '#ffeaa7';
+        crossCol = '#ffffff';
+        rivetCol = '#ffffff';
       } else if (type === 'crate_large') {
-        baseCol = '#935116';
-        borderCol = '#512e0f';
+        baseCol = isBackLane ? '#1b4f72' : '#935116';
+        borderCol = isBackLane ? '#00cec9' : '#f39c12';
+        crossCol = isBackLane ? '#74b9ff' : '#f1c40f';
       }
 
       ctx.fillStyle = baseCol;
@@ -481,6 +488,7 @@ export class CrateCatchScene implements GameScene {
       ctx.strokeRect(x, y, width, height);
 
       // Diagonal cross brace on crate
+      ctx.strokeStyle = crossCol;
       ctx.beginPath();
       ctx.moveTo(x, y);
       ctx.lineTo(x + width, y + height);
@@ -489,7 +497,7 @@ export class CrateCatchScene implements GameScene {
       ctx.stroke();
 
       // Corner metal brackets
-      ctx.fillStyle = '#2c3e50';
+      ctx.fillStyle = rivetCol;
       ctx.fillRect(x, y, 4, 4);
       ctx.fillRect(x + width - 4, y, 4, 4);
       ctx.fillRect(x, y + height - 4, 4, 4);
@@ -561,14 +569,22 @@ export class CrateCatchScene implements GameScene {
       ctx.rotate(angle);
       ctx.translate(-crateW / 2, -crateH);
 
-      let baseCol = '#b9770e';
-      let borderCol = '#784212';
+      // Color coded according to crate's lane (Front = Yellow/Amber, Back = Blue/Cyan)
+      const isBackLane = c.lane === 'back';
+      let baseCol = isBackLane ? '#0984e3' : '#d35400';
+      let borderCol = isBackLane ? '#74b9ff' : '#f1c40f';
+      let crossCol = isBackLane ? '#00cec9' : '#f39c12';
+      let rivetCol = isBackLane ? '#dff9fb' : '#ffeaa7';
+
       if (c.type === 'crate_golden') {
-        baseCol = '#f1c40f';
-        borderCol = '#d35400';
+        baseCol = isBackLane ? '#00cec9' : '#f1c40f';
+        borderCol = isBackLane ? '#55efc4' : '#ffeaa7';
+        crossCol = '#ffffff';
+        rivetCol = '#ffffff';
       } else if (c.type === 'crate_large') {
-        baseCol = '#935116';
-        borderCol = '#512e0f';
+        baseCol = isBackLane ? '#1b4f72' : '#935116';
+        borderCol = isBackLane ? '#00cec9' : '#f39c12';
+        crossCol = isBackLane ? '#74b9ff' : '#f1c40f';
       }
 
       ctx.fillStyle = baseCol;
@@ -578,6 +594,7 @@ export class CrateCatchScene implements GameScene {
       ctx.strokeRect(0, 0, crateW, crateH);
 
       // Diagonal cross
+      ctx.strokeStyle = crossCol;
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(crateW, crateH);
@@ -586,7 +603,7 @@ export class CrateCatchScene implements GameScene {
       ctx.stroke();
 
       // Corner rivets
-      ctx.fillStyle = '#2c3e50';
+      ctx.fillStyle = rivetCol;
       ctx.fillRect(0, 0, 3, 3);
       ctx.fillRect(crateW - 3, 0, 3, 3);
       ctx.fillRect(0, crateH - 3, 3, 3);

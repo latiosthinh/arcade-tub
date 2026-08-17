@@ -235,6 +235,10 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
           <feGaussianBlur stdDeviation="2.5" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
+        <filter id="cc-glow-blue">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
 
       <!-- Industrial Background -->
@@ -250,11 +254,13 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
       <text x="305" y="18" text-anchor="end" fill="#ee5253" font-family="'Courier New', monospace" font-size="10" font-weight="bold">CRATES: 18/20</text>
 
       <!-- Dual Conveyor Belts (Tracks) -->
-      <!-- Back Track -->
-      <rect x="0" y="95" width="320" height="6" fill="#2d3436" />
-      <!-- Front Track (Active) -->
-      <rect x="0" y="150" width="320" height="10" fill="#2d3436" stroke="#636e72" stroke-width="1" />
-      <line x1="0" y1="155" x2="320" y2="155" stroke="#ffeaa7" stroke-dasharray="8 8" stroke-width="2" />
+      <!-- Back Track (Blue) -->
+      <rect x="0" y="95" width="320" height="6" fill="#10314b" stroke="#0984e3" stroke-width="1" />
+      <line x1="0" y1="98" x2="320" y2="98" stroke="#74b9ff" stroke-dasharray="6 6" stroke-width="2" />
+
+      <!-- Front Track (Yellow) -->
+      <rect x="0" y="150" width="320" height="10" fill="#4a3c10" stroke="#f39c12" stroke-width="1" />
+      <line x1="0" y1="155" x2="320" y2="155" stroke="#f1c40f" stroke-dasharray="8 8" stroke-width="2" />
 
       <!-- Falling Crates & Hazard Bomb -->
       <!-- Falling Bomb -->
@@ -265,35 +271,42 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
         <text x="6" y="14" fill="#ffffff" font-size="9" font-weight="bold">💣</text>
       </g>
 
-      <!-- Falling Golden Crate -->
-      <g transform="translate(180, 40)">
-        <rect x="0" y="0" width="26" height="20" rx="2" fill="#f1c40f" stroke="#d35400" stroke-width="1.5" filter="url(#cc-glow-orange)" />
-        <line x1="0" y1="0" x2="26" y2="20" stroke="#d35400" stroke-width="1" />
-        <line x1="26" y1="0" x2="0" y2="20" stroke="#d35400" stroke-width="1" />
+      <!-- Falling Back-Lane Blue Crate -->
+      <g transform="translate(100, 50)">
+        <rect x="0" y="0" width="22" height="16" rx="2" fill="#0984e3" stroke="#74b9ff" stroke-width="1.5" filter="url(#cc-glow-blue)" />
+        <line x1="0" y1="0" x2="22" y2="16" stroke="#00cec9" stroke-width="1" />
+        <line x1="22" y1="0" x2="0" y2="16" stroke="#00cec9" stroke-width="1" />
       </g>
 
-      <!-- Catcher Cart on Track -->
+      <!-- Falling Front-Lane Golden/Amber Crate -->
+      <g transform="translate(200, 35)">
+        <rect x="0" y="0" width="26" height="20" rx="2" fill="#d35400" stroke="#f1c40f" stroke-width="1.5" filter="url(#cc-glow-orange)" />
+        <line x1="0" y1="0" x2="26" y2="20" stroke="#f39c12" stroke-width="1" />
+        <line x1="26" y1="0" x2="0" y2="20" stroke="#f39c12" stroke-width="1" />
+      </g>
+
+      <!-- Catcher Cart on Front Track with Stacked Crates -->
       <g transform="translate(145, 140)">
         <!-- Wheels -->
         <circle cx="8" cy="16" r="5" fill="#1e272e" stroke="#95a5a6" stroke-width="2" />
         <circle cx="48" cy="16" r="5" fill="#1e272e" stroke="#95a5a6" stroke-width="2" />
         <!-- Cart Base Platform -->
-        <rect x="0" y="4" width="56" height="10" rx="3" fill="#d35400" stroke="#e67e22" stroke-width="1.5" />
+        <rect x="0" y="4" width="56" height="10" rx="3" fill="#b33939" stroke="#f1c40f" stroke-width="1.5" />
         <!-- Cart Glow Light -->
         <circle cx="28" cy="9" r="2" fill="#00ff88" />
 
-        <!-- Stacked Crates on Cart (3 High with slight physics tilt) -->
+        <!-- Stacked Crates on Cart (Front & Back colored) -->
         <g transform="translate(6, -16)">
-          <rect x="0" y="0" width="44" height="16" rx="2" fill="#cd853f" stroke="#8b4513" stroke-width="1.5" />
-          <line x1="0" y1="0" x2="44" y2="16" stroke="#8b4513" stroke-width="1" />
+          <rect x="0" y="0" width="44" height="16" rx="2" fill="#d35400" stroke="#f1c40f" stroke-width="1.5" />
+          <line x1="0" y1="0" x2="44" y2="16" stroke="#f39c12" stroke-width="1" />
         </g>
         <g transform="translate(9, -32) rotate(-2, 20, 8)">
-          <rect x="0" y="0" width="38" height="16" rx="2" fill="#b8860b" stroke="#704214" stroke-width="1.5" />
-          <line x1="0" y1="0" x2="38" y2="16" stroke="#704214" stroke-width="1" />
+          <rect x="0" y="0" width="38" height="16" rx="2" fill="#0984e3" stroke="#74b9ff" stroke-width="1.5" />
+          <line x1="0" y1="0" x2="38" y2="16" stroke="#00cec9" stroke-width="1" />
         </g>
         <g transform="translate(13, -48) rotate(3, 16, 8)">
-          <rect x="0" y="0" width="32" height="15" rx="2" fill="#f39c12" stroke="#b9770e" stroke-width="1.5" />
-          <line x1="0" y1="0" x2="32" y2="15" stroke="#b9770e" stroke-width="1" />
+          <rect x="0" y="0" width="32" height="15" rx="2" fill="#f1c40f" stroke="#ffeaa7" stroke-width="1.5" />
+          <line x1="0" y1="0" x2="32" y2="15" stroke="#ffffff" stroke-width="1" />
         </g>
       </g>
     </svg>

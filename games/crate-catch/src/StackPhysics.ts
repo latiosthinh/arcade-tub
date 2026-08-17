@@ -10,6 +10,7 @@ export type FallingItemType =
 export interface StackedCrate {
   id: string;
   type: FallingItemType;
+  lane?: 'front' | 'back';
   width: number;
   height: number;
   basePoints: number;
@@ -40,13 +41,14 @@ export class StackPhysics {
   }
 
   addCrate(
-    item: { id: string; type: FallingItemType; width: number; height: number; basePoints: number },
+    item: { id: string; type: FallingItemType; width: number; height: number; basePoints: number; lane?: 'front' | 'back' },
     landingOffsetX: number = 0
   ): void {
     const clampedOffset = Math.max(-15, Math.min(15, landingOffsetX));
     this.crates.push({
       id: item.id,
       type: item.type,
+      lane: item.lane,
       width: item.width,
       height: item.height,
       basePoints: item.basePoints,
