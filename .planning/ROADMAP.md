@@ -42,7 +42,10 @@ Plans:
   3. Speed increases every 3000 points
   4. Game over when timer hits 0; high score saved to localStorage
   5. Escape pauses; restart button on game-over screen
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 02-01-PLAN.md — Core game models, dial collision math, game state, and unit tests
+- [ ] 02-02-PLAN.md — Particle system, canvas scene rendering, input binding, and adapter wiring
 
 ### Phase 3: Brick Blitz
 **Goal**: Fully playable Brick Blitz breakout game — paddle, ball, bricks, lives, levels
