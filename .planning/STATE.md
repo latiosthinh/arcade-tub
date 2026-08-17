@@ -2,17 +2,17 @@
 
 ## Current Position
 
-Phase: Phase 10: Hub Views & Component Library
+Phase: Phase 11: Game Player View & Embed Kit
 Plan: Complete (2/2 plans executed)
 Status: Complete
-Last activity: 2026-08-17 — Phase 10 Hub Views & Component Library completed
+Last activity: 2026-08-17 — Phase 11 Game Player View & Embed Kit completed
 
 ## Performance Metrics
 
 | Metric | Target | Current | Status |
-|--------|--------|---------|--------|
-| Unit Tests | 191+ | 252 | Passing (100%) |
-| Bundle Size | < 200 KB gzipped | 37.84 KB gzipped | Within Budget |
+|---|---|---|---|
+| Unit Tests | 191+ | 268 | Passing (100%) |
+| Bundle Size | < 200 KB gzipped | 37.9 KB gzipped | Within Budget |
 | Zero Dependencies | 0 runtime deps | 0 runtime deps | Clean |
 
 ## Accumulated Context
@@ -48,14 +48,23 @@ Last activity: 2026-08-17 — Phase 10 Hub Views & Component Library completed
 - Master game grid and catalog feed container (`src/components/GameGrid.ts`, `src/views/CatalogView.ts`, `src/styles/components/catalog.css`) with non-destructive live filtering
 - 38 test files, 252 unit tests passing (100% pass rate)
 
+### Shipped in Phase 11
+- Dedicated `GameView` (`src/views/GameView.ts`, `src/styles/components/player.css`) with skeleton shimmer loading, iframe lifecycle isolation (`about:blank` + pause on teardown), auto-focus delegation, Escape catalog exit, and theater mode toggle (`T` shortcut)
+- `EmbedView` interactive kit (`src/views/EmbedView.ts`, `src/styles/components/embed.css`) with live arcade preview sandbox, game tab switching, and integration code guides
+- Central SPA entry point (`src/main.ts`) wiring `Store`, `HashRouter`, `AppShell`, and view transitions
+- Updated `index.html` referencing `/src/main.ts` and modular component stylesheets
+- 41 test files, 268 unit tests passing (100% pass rate)
+
 ### Decisions
 - Retain vanilla TypeScript and native CSS architecture (no frameworks or third-party runtime libraries).
 - BaseComponent manages lifecycle (`mount`, `update`, `destroy`) and stores listener unbind functions to prevent memory leaks.
 - Store enforces `Object.freeze` on initial and updated state objects.
 - HashRouter uses `#/` prefix and compiles param patterns with regex capturing groups while safely decoding URI components.
 - GameGrid preserves child GameCard DOM instances during search/filter by toggling `.is-hidden` to avoid input focus loss and thrashing.
+- GameView pauses and resets `iframe.src = 'about:blank'` on destroy to prevent memory/audio context leaks in detached DOM nodes.
+- HashRouter explicitly calls `destroy()` on outgoing views before mounting incoming views.
 
 ## Session Continuity
 
-- Current focus: Phase 11 (Game Player View & Embed Kit)
-- Next action: `/gsd-plan-phase 11`
+- Current focus: Phase 12 (Audio Feedback & Production Verification)
+- Next action: Plan Phase 12

@@ -16,7 +16,7 @@ Arcade Carnival delivers 5 browser-based HTML5 Canvas arcade minigames packaged 
 - [x] **Phase 8: Design System & Visual Foundation** - Cyber-arcade CSS tokens, shared styles, CRT overlay
 - [x] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
 - [x] **Phase 10: Hub Views & Component Library** - Header, responsive nav, search/filters, game cards
-- [ ] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
+- [x] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
 - [ ] **Phase 12: Audio Feedback & Production Verification** - Procedural UI audio, bundle audit, test suite verification
 
 ## Phase Details
@@ -183,8 +183,8 @@ Plans:
   4. Theater mode toggle button and `T` keyboard shortcut expand game viewport to maximized layout
 **Plans**: 2 plans
 Plans:
-- [ ] 11-01-PLAN.md — GameView component, player & skeleton styles, focus delegation, and theater mode
-- [ ] 11-02-PLAN.md — EmbedView component, main app SPA bootstrapper, index.html integration, and routing tests
+- [x] 11-01-PLAN.md — GameView component, player & skeleton styles, focus delegation, and theater mode
+- [x] 11-02-PLAN.md — EmbedView component, main app SPA bootstrapper, index.html integration, and routing tests
 **UI hint**: yes
 
 ### Phase 12: Audio Feedback & Production Verification
@@ -213,5 +213,5 @@ Plans:
 | 8. Design System & Visual Foundation | 2/2 | Complete | 2026-08-17 |
 | 9. Core Architecture & Routing | 2/2 | Complete | 2026-08-17 |
 | 10. Hub Views & Component Library | 2/2 | Complete | 2026-08-17 |
-| 11. Game Player View & Embed Kit | 0/0 | Not started | - |
+| 11. Game Player View & Embed Kit | 2/2 | Complete | 2026-08-17 |
 | 12. Audio Feedback & Production Verification | 0/0 | Not started | - |

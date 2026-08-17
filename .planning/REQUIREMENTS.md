@@ -18,10 +18,10 @@
 - [x] **COMP-04**: Redesigned GameCard with genre badges, persistent high score display, play-on-hover glow, and keyboard focus outlines
 
 ## Player View & Lifecycle
-- [ ] **PLAY-01**: GameView component with skeleton loader while game iframe initializes
-- [ ] **PLAY-02**: Clean iframe lifecycle management (explicit teardown, `about:blank`, removing message listeners, stopping zombie loops)
-- [ ] **PLAY-03**: Auto-focus game canvas on iframe mount with keyboard delegation (Escape to exit player view)
-- [ ] **PLAY-04**: Theater mode toggle with keyboard shortcut (`T`) expanding game viewport
+- [x] **PLAY-01**: GameView component with skeleton loader while game iframe initializes
+- [x] **PLAY-02**: Clean iframe lifecycle management (explicit teardown, `about:blank`, removing message listeners, stopping zombie loops)
+- [x] **PLAY-03**: Auto-focus game canvas on iframe mount with keyboard delegation (Escape to exit player view)
+- [x] **PLAY-04**: Theater mode toggle with keyboard shortcut (`T`) expanding game viewport
 
 ## Audio & Polish
 - [ ] **POL-01**: Procedural Web Audio UI sound effects (button click, card hover, game launch, view transition) via existing AudioSynthesizer
@@ -52,9 +52,9 @@
 | COMP-02 | Phase 10 | Complete |
 | COMP-03 | Phase 10 | Complete |
 | COMP-04 | Phase 10 | Complete |
-| PLAY-01 | Phase 11 | Pending |
-| PLAY-02 | Phase 11 | Pending |
-| PLAY-03 | Phase 11 | Pending |
-| PLAY-04 | Phase 11 | Pending |
+| PLAY-01 | Phase 11 | Complete |
+| PLAY-02 | Phase 11 | Complete |
+| PLAY-03 | Phase 11 | Complete |
+| PLAY-04 | Phase 11 | Complete |
 | POL-01 | Phase 12 | Pending |
 | POL-02 | Phase 12 | Pending |
