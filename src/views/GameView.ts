@@ -94,7 +94,7 @@ export class GameView extends BaseComponent<AppState> {
         <div class="ac-details-left">
           <h3 class="ac-details-title">${game.title}</h3>
           <div class="ac-details-stats">
-            <span>${game.rating}</span> • <span>${game.plays}</span> • <span>Verified Arcade</span>
+            <span>${game.rating}</span> • <span>Verified Arcade</span>
           </div>
           <p class="ac-details-desc">${game.description}</p>
           <div class="ac-features-tags">

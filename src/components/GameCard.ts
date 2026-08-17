@@ -1,5 +1,6 @@
 import { BaseComponent } from '../core/Component';
 import type { GameItem } from '../data/games';
+import { GAME_SCREENSHOTS } from '../data/screenshots';
 import { uiAudio } from '../audio/ui-audio';
 
 export interface GameCardState {
@@ -29,10 +30,13 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
 
   private render(): void {
     const formattedScore = this.highScore > 0 ? this.highScore.toLocaleString() : '---';
+    const screenshot = GAME_SCREENSHOTS[this.game.id] || `<span class="ac-card-icon">${this.game.icon}</span>`;
 
     this.element.innerHTML = `
       <div class="ac-card-thumb" style="background: ${this.game.bannerBg}">
-        <span class="ac-card-icon">${this.game.icon}</span>
+        <div class="ac-card-screenshot-container">
+          ${screenshot}
+        </div>
         ${this.game.badge ? `<span class="ac-card-badge">${this.game.badge}</span>` : ''}
         <div class="ac-card-play-overlay">
           <div class="ac-card-play-circle">▶</div>

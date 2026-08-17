@@ -38,6 +38,27 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.ac-card-screenshot-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ac-card:hover .ac-card-screenshot-container {
+  transform: scale(1.04);
+}
+
+.ac-game-screenshot {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .ac-card-icon {

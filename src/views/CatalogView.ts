@@ -34,6 +34,12 @@ export class CatalogView extends BaseComponent<AppState> {
     this.gameGrid = new GameGrid(this.store);
     this.gameGrid.mount(this.element);
 
+    // 4. Subscribe to store changes to automatically update filter chips and game grid
+    const unsubStore = this.store.subscribe((state) => {
+      this.update(state);
+    });
+    this.unbinds.push(unsubStore);
+
     this.update(this.store.getState());
   }
 
