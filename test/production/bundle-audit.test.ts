@@ -31,6 +31,13 @@ describe('Production Bundle Audit (< 200KB Gzipped Budget)', () => {
       'games/sky-hopper/index.html',
       'games/crate-catch/index.html',
       'games/type-strike/index.html',
+      'games/memory-cards/index.html',
+      'games/memory-boxes/index.html',
+      'games/pop-balloon/index.html',
+      'games/space-racer/index.html',
+      'games/virus-defense/index.html',
+      'games/flappy-fish/index.html',
+      'games/game-2048/index.html',
     ];
 
     for (const entry of requiredEntries) {
