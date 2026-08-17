@@ -48,7 +48,7 @@ export class ParticleSystem {
       const speed = 70 + Math.random() * 90;
       const life = 0.5 + Math.random() * 0.4;
       const colors = ['#ffffff', '#ffd700', '#00f0ff', '#e0f7fa'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#ffffff';
 
       this.particles.push({
         x,
@@ -72,7 +72,7 @@ export class ParticleSystem {
       const speed = 80 + Math.random() * 140;
       const life = 0.6 + Math.random() * 0.5;
       const colors = ['#ff007f', '#00f0ff', '#39ff14', '#ff8800', '#ffffff'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#ff007f';
 
       this.particles.push({
         x,
@@ -94,6 +94,7 @@ export class ParticleSystem {
 
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
+      if (!p) continue;
       p.life -= dt;
 
       if (p.life <= 0) {

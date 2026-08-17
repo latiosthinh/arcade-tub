@@ -1,4 +1,4 @@
-import { Fish } from './Fish';
+import { Fish } from './Fish.js';
 
 export interface CoralPillar {
   id: number;
