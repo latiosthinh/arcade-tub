@@ -13,6 +13,7 @@
     { "path": "games/pop-balloon" },
     { "path": "games/space-racer" },
     { "path": "games/virus-defense" },
-    { "path": "games/flappy-fish" }
+    { "path": "games/flappy-fish" },
+    { "path": "games/game-2048" }
   ]
 }
