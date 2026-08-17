@@ -8,10 +8,14 @@ export default defineConfig({
       '@arcade-carnival/game-engine': resolve(__dirname, 'packages/game-engine/src/index.ts'),
     },
   },
+  preview: {
+    allowedHosts: true,
+  },
   build: {
     rollupOptions: {
       input: {
         hub: resolve(__dirname, 'index.html'),
+        embed: resolve(__dirname, 'embed.html'),
         'safe-cracker': resolve(__dirname, 'games/safe-cracker/index.html'),
         'brick-blitz': resolve(__dirname, 'games/brick-blitz/index.html'),
         'sky-hopper': resolve(__dirname, 'games/sky-hopper/index.html'),

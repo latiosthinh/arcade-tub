@@ -85,3 +85,6 @@ export function onPause(cb: () => void): void {
 export function onResume(cb: () => void): void {
   _resumeCallbacks.push(cb);
 }
+
+export * from './embed';
+
