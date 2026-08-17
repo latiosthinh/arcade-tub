@@ -44,7 +44,7 @@ Plans:
   5. Escape pauses; restart button on game-over screen
 **Plans**: 2 plans
 Plans:
-- [ ] 02-01-PLAN.md — Core game models, dial collision math, game state, and unit tests
+- [x] 02-01-PLAN.md — Core game models, dial collision math, game state, and unit tests
 - [ ] 02-02-PLAN.md — Particle system, canvas scene rendering, input binding, and adapter wiring
 
 ### Phase 3: Brick Blitz
@@ -112,7 +112,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-08-17 |
-| 2. Safe Cracker | 0/TBD | Not started | - |
+| 2. Safe Cracker | 1/2 | In progress | - |
 | 3. Brick Blitz | 0/TBD | Not started | - |
 | 4. Sky Hopper | 0/TBD | Not started | - |
 | 5. Crate Catch | 0/TBD | Not started | - |
