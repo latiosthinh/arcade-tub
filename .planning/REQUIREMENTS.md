@@ -1,19 +1,41 @@
-# Requirements: Arcade Carnival
+# Milestone v2.0 Requirements: Unique UI/UX Refactor
 
-## Functional
+## Design System & Tokens
+- [ ] **DS-01**: Retro-modern cyber-arcade CSS token palette (colors, surfaces, neon glow, typography, borders)
+- [ ] **DS-02**: Shared design tokens file imported across hub (`index.html`), embed kit (`embed.html`), and game shells
+- [ ] **DS-03**: CRT scanline / bloom visual overlay toggle with persistent preference in localStorage
 
-- [x] **REQ-01**: Hub page lists all 5 games with thumbnails; clicking launches the game in-browser
-- [x] **REQ-02**: Each game lives in its own folder with independent entry point and build
-- [x] **REQ-03**: Games implement mechanics faithful to spec (see PROJECT.md game table)
-- [x] **REQ-04**: Shared Playables adapter handles YouTube lifecycle (game ready, pause, resume, save/load score)
-- [x] **REQ-05**: Keyboard controls per game: Safe Cracker (mouse click + right-click hold), Brick Blitz (A/D/arrows + Space), Sky Hopper (A/D/arrows + W/Up to throw), Crate Catch (arrows/WASD + Space), Type Strike (full keyboard typing)
-- [x] **REQ-06**: Score tracking with local high-score persistence (localStorage, bridged to Playables save API when available)
-- [x] **REQ-07**: Each game has pause (Escape) and game-over state with restart option
+## Core Architecture & Routing
+- [ ] **ARCH-01**: BaseComponent lifecycle (`mount`, `update`, `destroy`, event listener unbinds) eliminating full-page innerHTML rebuilds
+- [ ] **ARCH-02**: Typed lightweight pub/sub Store managing route, search, active filter, audio mute, and high scores
+- [ ] **ARCH-03**: Zero-dependency HashRouter supporting routes `#/` (catalog), `#/game/:id` (player), `#/embed` with browser back/forward history
+- [ ] **ARCH-04**: View Transitions wrapper using `document.startViewTransition()` with graceful fallback for seamless view morphs
 
-## Non-Functional
+## Hub Views & Components
+- [ ] **COMP-01**: AppHeader with brand logo, search input with focus shortcut (`/`), sound toggle, and embed docs link
+- [ ] **COMP-02**: Sidebar navigation for desktop and bottom navigation bar for mobile (<768px) with touch-friendly targets (48px min)
+- [ ] **COMP-03**: Search bar and FilterChips with active state indicators and live catalog filtering without DOM thrashing
+- [ ] **COMP-04**: Redesigned GameCard with genre badges, persistent high score display, play-on-hover glow, and keyboard focus outlines
 
-- [x] **REQ-08**: TypeScript strict mode, no `any`
-- [x] **REQ-09**: Vitest unit tests for core game logic (scoring, collision, timing)
-- [x] **REQ-10**: Production build outputs static assets per game (deployable independently or as bundle)
-- [x] **REQ-11**: 60fps on mid-range devices; total bundle per game < 200KB gzipped
-- [x] **REQ-12**: Accessible — ARIA labels on hub, high-contrast game UI, keyboard-navigable menus
+## Player View & Lifecycle
+- [ ] **PLAY-01**: GameView component with skeleton loader while game iframe initializes
+- [ ] **PLAY-02**: Clean iframe lifecycle management (explicit teardown, `about:blank`, removing message listeners, stopping zombie loops)
+- [ ] **PLAY-03**: Auto-focus game canvas on iframe mount with keyboard delegation (Escape to exit player view)
+- [ ] **PLAY-04**: Theater mode toggle with keyboard shortcut (`T`) expanding game viewport
+
+## Audio & Polish
+- [ ] **POL-01**: Procedural Web Audio UI sound effects (button click, card hover, game launch, view transition) via existing AudioSynthesizer
+- [ ] **POL-02**: Bundle budget verification (< 200KB gzipped total) and 100% test pass rate across all 191+ tests
+
+## Future Requirements (Deferred)
+- **FUT-01**: Full dark/light arcade theme switcher
+- **FUT-02**: Custom animated SVG badges for achievements
+- **FUT-03**: Full-bleed featured game hero banner carousel
+
+## Out of Scope
+- Framework migration (React/Vue/Svelte) — strict zero-dependency constraint
+- User accounts / backend auth / cloud leaderboard — static-first platform constraint
+- Heavy image/video asset pack — bundle budget constraint (<200KB)
+
+## Traceability
+*To be filled by gsd-roadmapper*
