@@ -6,10 +6,10 @@
 - [x] **DS-03**: CRT scanline / bloom visual overlay toggle with persistent preference in localStorage
 
 ## Core Architecture & Routing
-- [ ] **ARCH-01**: BaseComponent lifecycle (`mount`, `update`, `destroy`, event listener unbinds) eliminating full-page innerHTML rebuilds
-- [ ] **ARCH-02**: Typed lightweight pub/sub Store managing route, search, active filter, audio mute, and high scores
-- [ ] **ARCH-03**: Zero-dependency HashRouter supporting routes `#/` (catalog), `#/game/:id` (player), `#/embed` with browser back/forward history
-- [ ] **ARCH-04**: View Transitions wrapper using `document.startViewTransition()` with graceful fallback for seamless view morphs
+- [x] **ARCH-01**: BaseComponent lifecycle (`mount`, `update`, `destroy`, event listener unbinds) eliminating full-page innerHTML rebuilds
+- [x] **ARCH-02**: Typed lightweight pub/sub Store managing route, search, active filter, audio mute, and high scores
+- [x] **ARCH-03**: Zero-dependency HashRouter supporting routes `#/` (catalog), `#/game/:id` (player), `#/embed` with browser back/forward history
+- [x] **ARCH-04**: View Transitions wrapper using `document.startViewTransition()` with graceful fallback for seamless view morphs
 
 ## Hub Views & Components
 - [ ] **COMP-01**: AppHeader with brand logo, search input with focus shortcut (`/`), sound toggle, and embed docs link
@@ -44,10 +44,10 @@
 | DS-01 | Phase 8 | Complete |
 | DS-02 | Phase 8 | Complete |
 | DS-03 | Phase 8 | Complete |
-| ARCH-01 | Phase 9 | Pending |
-| ARCH-02 | Phase 9 | Pending |
-| ARCH-03 | Phase 9 | Pending |
-| ARCH-04 | Phase 9 | Pending |
+| ARCH-01 | Phase 9 | Complete |
+| ARCH-02 | Phase 9 | Complete |
+| ARCH-03 | Phase 9 | Complete |
+| ARCH-04 | Phase 9 | Complete |
 | COMP-01 | Phase 10 | Pending |
 | COMP-02 | Phase 10 | Pending |
 | COMP-03 | Phase 10 | Pending |

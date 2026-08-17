@@ -2,16 +2,16 @@
 
 ## Current Position
 
-Phase: Phase 8: Design System & Visual Foundation
+Phase: Phase 9: Core Architecture & Routing
 Plan: Complete (2/2 plans executed)
 Status: Complete
-Last activity: 2026-08-17 — Phase 8 Design System & Visual Foundation completed
+Last activity: 2026-08-17 — Phase 9 Core Architecture & Routing completed
 
 ## Performance Metrics
 
 | Metric | Target | Current | Status |
 |--------|--------|---------|--------|
-| Unit Tests | 191+ | 199 | Passing (100%) |
+| Unit Tests | 191+ | 221 | Passing (100%) |
 | Bundle Size | < 200 KB gzipped | 37.84 KB gzipped | Within Budget |
 | Zero Dependencies | 0 runtime deps | 0 runtime deps | Clean |
 
@@ -32,12 +32,20 @@ Last activity: 2026-08-17 — Phase 8 Design System & Visual Foundation complete
 - Integrated shared design tokens across hub (`index.html`, `src/hub.css`), embed kit (`embed.html`), and all 5 standalone games (`games/*/index.html`)
 - 29 test files, 199 unit tests passing (100% pass rate)
 
+### Shipped in Phase 9
+- Core types and `BaseComponent` lifecycle base class (`src/core/Component.ts`) with auto-unbinding listeners and clean DOM detachment
+- Typed reactive pub/sub `Store` (`src/core/Store.ts`) enforcing immutable state snapshots
+- View Transitions API wrapper (`src/core/transitions.ts`) with fallback
+- Zero-dependency client-side `HashRouter` (`src/core/Router.ts`) with parameterized routes and history navigation
+- 33 test files, 221 unit tests passing (100% pass rate)
+
 ### Decisions
 - Retain vanilla TypeScript and native CSS architecture (no frameworks or third-party runtime libraries).
-- Shared design tokens in `src/styles/tokens.css` imported across hub, embed kit, and standalone game entry points.
-- Isolate iframe cleanup with `about:blank` navigation and explicit teardown to avoid memory and animation frame leaks.
+- BaseComponent manages lifecycle (`mount`, `update`, `destroy`) and stores listener unbind functions to prevent memory leaks.
+- Store enforces `Object.freeze` on initial and updated state objects.
+- HashRouter uses `#/` prefix and compiles param patterns with regex capturing groups while safely decoding URI components.
 
 ## Session Continuity
 
-- Current focus: Phase 9 (Core Architecture & Routing)
-- Next action: `/gsd-plan-phase 9`
+- Current focus: Phase 10 (Hub Views & Component Library)
+- Next action: `/gsd-plan-phase 10`

@@ -14,7 +14,7 @@ Arcade Carnival delivers 5 browser-based HTML5 Canvas arcade minigames packaged 
 - [x] **Phase 6: Type Strike** - Typing defense minigame
 - [x] **Phase 7: Polish & Deploy** - Cross-game polish, saves, packaging, deploy
 - [x] **Phase 8: Design System & Visual Foundation** - Cyber-arcade CSS tokens, shared styles, CRT overlay
-- [ ] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
+- [x] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
 - [ ] **Phase 10: Hub Views & Component Library** - Header, responsive nav, search/filters, game cards
 - [ ] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
 - [ ] **Phase 12: Audio Feedback & Production Verification** - Procedural UI audio, bundle audit, test suite verification
@@ -153,8 +153,8 @@ Plans:
   4. View Transitions API wrapper executes smooth transitions between views with instant fallback on unsupported browsers
 **Plans**: 2 plans
 Plans:
-- [ ] 09-01-PLAN.md — Core types, BaseComponent lifecycle class, and typed pub/sub Store
-- [ ] 09-02-PLAN.md — View transitions wrapper and zero-dependency HashRouter
+- [x] 09-01-PLAN.md — Core types, BaseComponent lifecycle class, and typed pub/sub Store
+- [x] 09-02-PLAN.md — View transitions wrapper and zero-dependency HashRouter
 **UI hint**: yes
 
 ### Phase 10: Hub Views & Component Library
@@ -205,7 +205,7 @@ Plans:
 | 6. Type Strike | 2/2 | Complete | 2026-08-17 |
 | 7. Polish & Deploy | 3/3 | Complete | 2026-08-17 |
 | 8. Design System & Visual Foundation | 2/2 | Complete | 2026-08-17 |
-| 9. Core Architecture & Routing | 0/0 | Not started | - |
+| 9. Core Architecture & Routing | 2/2 | Complete | 2026-08-17 |
 | 10. Hub Views & Component Library | 0/0 | Not started | - |
 | 11. Game Player View & Embed Kit | 0/0 | Not started | - |
 | 12. Audio Feedback & Production Verification | 0/0 | Not started | - |
