@@ -22,6 +22,7 @@ export default defineConfig({
         'crate-catch': resolve(__dirname, 'games/crate-catch/index.html'),
         'type-strike': resolve(__dirname, 'games/type-strike/index.html'),
         'memory-cards': resolve(__dirname, 'games/memory-cards/index.html'),
+        'memory-boxes': resolve(__dirname, 'games/memory-boxes/index.html'),
       },
     },
   },
