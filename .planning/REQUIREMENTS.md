@@ -5,8 +5,8 @@
 - [x] **MC-02**: Memory Cards canvas presentation (holographic card flip animations, particle sparkles on match, audio feedback, high score saving)
 
 ## Memory Boxes
-- [ ] **MB-01**: Memory boxes sequence model (increasing pattern sequence generator, step-by-step playback state, player input matching, life tracking, 100% unit tests)
-- [ ] **MB-02**: Memory Boxes canvas presentation (neon grid buttons with light-up pulses, audio tone synthesis, round fanfare, high score saving)
+- [x] **MB-01**: Memory boxes sequence model (increasing pattern sequence generator, step-by-step playback state, player input matching, life tracking, 100% unit tests)
+- [x] **MB-02**: Memory Boxes canvas presentation (neon grid buttons with light-up pulses, audio tone synthesis, round fanfare, high score saving)
 
 ## Pop Balloon
 - [ ] **PB-01**: Pop balloon physics & logic (balloon ascent mechanics, point values by color, combo chain timer, hazard spike bomb explosions, 100% unit tests)
@@ -42,8 +42,8 @@
 |-------------|-------|--------|
 | MC-01 | Phase 13 | Complete |
 | MC-02 | Phase 13 | Complete |
-| MB-01 | Phase 14 | Pending |
-| MB-02 | Phase 14 | Pending |
+| MB-01 | Phase 14 | Complete |
+| MB-02 | Phase 14 | Complete |
 | PB-01 | Phase 15 | Pending |
 | PB-02 | Phase 15 | Pending |
 | SR-01 | Phase 16 | Pending |

@@ -3,7 +3,7 @@
 ## Phases
 
 - [x] **Phase 13: Memory Cards Minigame** - Cyber card matching with streak combos, round timer, flip animations, and sound effects
-- [ ] **Phase 14: Memory Boxes Minigame** - Sequence memory reproduction game with increasing pattern steps, neon pulse feedback, and tone synthesis
+- [x] **Phase 14: Memory Boxes Minigame** - Sequence memory reproduction game with increasing pattern steps, neon pulse feedback, and tone synthesis
 - [ ] **Phase 15: Pop Balloon Minigame** - Fast-action ascending balloon pop mechanics with color combo multipliers, hazard bombs, and particle effects
 - [ ] **Phase 16: Space Racer Minigame** - High-speed orbital obstacle dodging with speed kinematics, turbo boost gates, and pseudo-3D warp starfield
 - [ ] **Phase 17: Virus Defense Minigame** - 360-degree turret radial defense against mutating pathogen swarms with trajectory physics and nucleus health
@@ -39,7 +39,10 @@ Plans:
   3. Success advances player to longer sequence with round fanfare and score increase
   4. Mistake deducts a life and triggers failure sound effect; game ends at zero lives
   5. 100% unit tests pass for sequence generation, step verification, and life state
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 14-01-PLAN.md — SequenceGenerator model, BoxGrid matrix, GameState turn state machine & scoring math, unit test suite
+- [x] 14-02-PLAN.md — Neon grid BoxRenderer, synthesized audio pitch tone player, particle wave effects, MemoryBoxesScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 15: Pop Balloon Minigame
@@ -125,7 +128,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 13. Memory Cards Minigame | 2/2 | Complete | 2026-08-18 |
-| 14. Memory Boxes Minigame | 0/0 | Not started | - |
+| 14. Memory Boxes Minigame | 2/2 | Complete | 2026-08-18 |
 | 15. Pop Balloon Minigame | 0/0 | Not started | - |
 | 16. Space Racer Minigame | 0/0 | Not started | - |
 | 17. Virus Defense Minigame | 0/0 | Not started | - |
