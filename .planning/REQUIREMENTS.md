@@ -25,8 +25,8 @@
 - [x] **FF-02**: Flappy fish canvas presentation (underwater bubble ambient, animated fin flap, glowing coral pillars, high score saving)
 
 ## 2048 Neon
-- [ ] **G2048-01**: 2048 puzzle matrix model (4x4 directional slide & merge algorithms, random 2/4 tile spawn, score calculation, gameover & 2048 win detection, 100% unit tests)
-- [ ] **G2048-02**: 2048 canvas presentation (smooth tile slide & merge pop animations, color-tiered neon value tiles, keyboard & swipe touch input, high score saving)
+- [x] **G2048-01**: 2048 puzzle matrix model (4x4 directional slide & merge algorithms, random 2/4 tile spawn, score calculation, gameover & 2048 win detection, 100% unit tests)
+- [x] **G2048-02**: 2048 canvas presentation (smooth tile slide & merge pop animations, color-tiered neon value tiles, keyboard & swipe touch input, high score saving)
 
 ## Hub Integration & Packaging
 - [ ] **HUB-01**: Register all 7 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
@@ -52,8 +52,8 @@
 | VD-02 | Phase 17 | Complete |
 | FF-01 | Phase 18 | Complete |
 | FF-02 | Phase 18 | Complete |
-| G2048-01 | Phase 19 | Pending |
-| G2048-02 | Phase 19 | Pending |
+| G2048-01 | Phase 19 | Complete |
+| G2048-02 | Phase 19 | Complete |
 | HUB-01 | Phase 20 | Pending |
 | HUB-02 | Phase 20 | Pending |
 
