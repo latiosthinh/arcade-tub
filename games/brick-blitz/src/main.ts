@@ -1,15 +1,15 @@
-const canvas = document.getElementById('game') as HTMLCanvasElement;
-canvas.width = 800;
-canvas.height = 600;
+import { GameLoop } from '@arcade-carnival/game-engine';
+import { initPlayables, onPause, onResume } from '@arcade-carnival/playables-adapter';
+import { BrickBlitzScene } from './BrickBlitzScene.js';
 
-const ctx = canvas.getContext('2d');
-if (ctx) {
-  ctx.fillStyle = '#0984e3';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 48px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Brick Blitz', canvas.width / 2, canvas.height / 2 - 30);
-  ctx.font = '24px sans-serif';
-  ctx.fillText('Coming Soon', canvas.width / 2, canvas.height / 2 + 30);
-}
+initPlayables();
+
+const canvas = document.getElementById('game') as HTMLCanvasElement;
+const loop = new GameLoop(canvas);
+const scene = new BrickBlitzScene(canvas);
+
+onPause(() => scene.pause());
+onResume(() => scene.resume());
+
+loop.setScene(scene);
+loop.start();
