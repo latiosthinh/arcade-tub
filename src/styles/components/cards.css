@@ -71,21 +71,6 @@
   transform: scale(1.1);
 }
 
-.ac-card-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(255, 0, 127, 0.25);
-  border: var(--border-pink);
-  color: var(--neon-pink);
-  border-radius: var(--radius-sm);
-  padding: 2px 8px;
-  font-size: var(--text-xs);
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
 .ac-card-play-overlay {
   position: absolute;
   inset: 0;

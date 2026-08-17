@@ -37,7 +37,6 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
         <div class="ac-card-screenshot-container">
           ${screenshot}
         </div>
-        ${this.game.badge ? `<span class="ac-card-badge">${this.game.badge}</span>` : ''}
         <div class="ac-card-play-overlay">
           <div class="ac-card-play-circle">▶</div>
         </div>
