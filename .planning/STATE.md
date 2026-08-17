@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-08-17T15:50:00.000Z"
+last_updated: "2026-08-17T16:05:00.000Z"
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 9
-  completed_plans: 9
+  completed_phases: 6
+  total_plans: 13
+  completed_plans: 13
   percent: 100
 ---
 
@@ -16,11 +16,11 @@ progress:
 
 ## Current Phase
 
-Phase 4: Sky Hopper — Plan 02 Complete (Phase 4 finished)
+Phase 6: Type Strike — Plan 02 Complete (Phase 6 finished)
 
 ## Status
 
-STATUS: Phase 4 Complete (Plans 01 & 02). Ready for Phase 5: Crate Catch.
+STATUS: Phase 6 Complete (Plans 01 & 02). All 5 games implemented. Ready for Phase 7: Polish & Deploy.
 
 ## History
 
@@ -34,6 +34,9 @@ STATUS: Phase 4 Complete (Plans 01 & 02). Ready for Phase 5: Crate Catch.
 - 2026-08-17: Phase 3 Plan 02 completed (Brick Blitz scene, game state, particles, input controls, Playables adapter wiring).
 - 2026-08-17: Phase 4 Plan 01 completed (Sky Hopper character physics, camera scroll, platform & obstacle generators).
 - 2026-08-17: Phase 4 Plan 02 completed (Sky Hopper scene, GameState, Story/Infinite modes, particles, Playables integration).
+- 2026-08-17: Phase 5 Plan 01 & 02 completed (Crate Catch two-lane physics, crate stacking, steampunk factory, Playables adapter).
+- 2026-08-17: Phase 6 Plan 01 completed (Type Strike word tiers, enemy kinematics, typing engine target locking, prefix advancement).
+- 2026-08-17: Phase 6 Plan 02 completed (Type Strike scene, GameState, laser strike particles, CRT scanline rendering, and main bootstrap).
 
 ## Decisions
 
@@ -51,3 +54,4 @@ STATUS: Phase 4 Complete (Plans 01 & 02). Ready for Phase 5: Crate Catch.
 - Sky Hopper altitude conversion: altitude meters = (500 - playerWorldY) / 10.
 - Sky Hopper modes: Story (target 5,000m airship mothership + 2500 clear bonus) vs Infinite (endless climb scored by altitude + kills).
 - Sky Hopper particle pool capped at 250 particles.
+- Type Strike: 60s round countdown, 3 base shields, dynamic drone speed scaling over elapsed time, laser particle pool capped at 300.

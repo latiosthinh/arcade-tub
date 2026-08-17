@@ -10,8 +10,8 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 - [x] **Phase 2: Safe Cracker** - Clicker/timing minigame
 - [x] **Phase 3: Brick Blitz** - Breakout minigame
 - [x] **Phase 4: Sky Hopper** - Vertical platformer minigame
-- [ ] **Phase 5: Crate Catch** - Catcher/stacker minigame
-- [ ] **Phase 6: Type Strike** - Typing defense minigame
+- [x] **Phase 5: Crate Catch** - Catcher/stacker minigame
+- [x] **Phase 6: Type Strike** - Typing defense minigame
 - [ ] **Phase 7: Polish & Deploy** - Cross-game polish, saves, packaging, deploy
 
 ## Phase Details
@@ -87,7 +87,10 @@ Plans:
   3. Bombs explode on contact, scatter crates
   4. Space banks stacked crates for points (100/150/200 by size); stack height = multiplier
   5. Game ends when too many crates lost
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 05-01-PLAN.md — Core 2-lane cart kinematics, vertical stacking physics, wobble math, and falling items manager
+- [ ] 05-02-PLAN.md — Game state, steampunk particle effects, canvas factory scene, HUD, and Playables integration
 
 ### Phase 6: Type Strike
 **Goal**: Fully playable Type Strike typing defense — enemies with words, typing destroys them, streak multiplier
@@ -99,7 +102,10 @@ Plans:
   3. Streak multiplier increases per correct word; resets on miss
   4. 60-second rounds
   5. Game over if enemy reaches the left edge; high score saved
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 06-01-PLAN.md — Core dictionary tiers, enemy kinematics, typing engine target locking, prefix advancement, and unit tests
+- [x] 06-02-PLAN.md — Game state, laser strike particles, cyberpunk canvas terminal scene, HUD, overlays, and Playables integration
 
 ### Phase 7: Polish & Deploy
 **Goal**: Cross-game polish, persistent high scores via Playables save API, deploy pipeline, final QA
@@ -121,6 +127,6 @@ Plans:
 | 2. Safe Cracker | 2/2 | Complete | 2026-08-17 |
 | 3. Brick Blitz | 2/2 | Complete | 2026-08-17 |
 | 4. Sky Hopper | 2/2 | Complete | 2026-08-17 |
-| 5. Crate Catch | 0/TBD | Not started | - |
-| 6. Type Strike | 0/TBD | Not started | - |
+| 5. Crate Catch | 2/2 | Complete | 2026-08-17 |
+| 6. Type Strike | 2/2 | Complete | 2026-08-17 |
 | 7. Polish & Deploy | 0/TBD | Not started | - |
