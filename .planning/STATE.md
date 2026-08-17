@@ -2,17 +2,16 @@
 
 ## Current Position
 
-Phase: Phase 12: Audio Feedback & Production Verification
-Plan: Complete (2/2 plans executed)
-Status: Complete
-Last activity: 2026-08-17 — Phase 12 Audio Feedback & Production Verification completed
+Phase: Milestone v2.0 Complete & Archived
+Status: Ready for next milestone (`/gsd-new-milestone`)
+Last activity: 2026-08-17 — Milestone v2.0 Unique UI/UX Refactor archived
 
 ## Performance Metrics
 
 | Metric | Target | Current | Status |
 |---|---|---|---|
 | Unit Tests | 191+ | 284 | Passing (100%) |
-| Bundle Size | < 200 KB gzipped | 54.0 KB gzipped | Within Budget |
+| Bundle Size | < 200 KB gzipped | 54.02 KB gzipped | Within Budget (73% under) |
 | Zero Dependencies | 0 runtime deps | 0 runtime deps | Clean |
 
 ## Accumulated Context
@@ -24,42 +23,20 @@ Last activity: 2026-08-17 — Phase 12 Audio Feedback & Production Verification 
 - Central Arcade Hub (`index.html`) with YouTube-dark styling
 - 27 test files, 191 unit tests passing (100% pass rate)
 - Dist bundle size: 37.84 KB gzipped total (< 200 KB per game budget)
-- Audit: `.planning/v1.0-MILESTONE-AUDIT.md` (passed)
+- Archive: `.planning/milestones/v1.0-ROADMAP.md` (v1.0), `.planning/v1.0-MILESTONE-AUDIT.md` (passed)
 
-### Shipped in Phase 8
-- Cyber-arcade CSS design token palette (`src/styles/tokens.css`) and base theme (`src/styles/theme.css`)
-- CRT scanline, vignette, and phosphor bloom overlay (`src/styles/crt.css`) with controller (`src/crt.ts`) and localStorage toggle
-- Integrated shared design tokens across hub (`index.html`, `src/hub.css`), embed kit (`embed.html`), and all 5 standalone games (`games/*/index.html`)
-- 29 test files, 199 unit tests passing (100% pass rate)
-
-### Shipped in Phase 9
-- Core types and `BaseComponent` lifecycle base class (`src/core/Component.ts`) with auto-unbinding listeners and clean DOM detachment
-- Typed reactive pub/sub `Store` (`src/core/Store.ts`) enforcing immutable state snapshots
-- View Transitions API wrapper (`src/core/transitions.ts`) with fallback
-- Zero-dependency client-side `HashRouter` (`src/core/Router.ts`) with parameterized routes and history navigation
-- 33 test files, 221 unit tests passing (100% pass rate)
-
-### Shipped in Phase 10
-- Game catalog data model (`src/data/games.ts`) with safe personal high score loading
-- Top navigation bar component (`src/components/AppHeader.ts`, `src/styles/components/header.css`) with `/` search shortcut, reactive audio mute toggle, CRT toggle, and embed anchor
-- Responsive navigation (`src/components/AppSidebar.ts`, `src/components/BottomNav.ts`, `src/styles/components/nav.css`) for desktop and mobile docks (>=48px touch targets)
-- Genre filter toolbar (`src/components/FilterChips.ts`, `src/styles/components/chips.css`)
-- Interactive game cards (`src/components/GameCard.ts`, `src/styles/components/cards.css`) with persistent high score display, keyboard accessibility, and neon hover glow
-- Master game grid and catalog feed container (`src/components/GameGrid.ts`, `src/views/CatalogView.ts`, `src/styles/components/catalog.css`) with non-destructive live filtering
-- 38 test files, 252 unit tests passing (100% pass rate)
-
-### Shipped in Phase 11
-- Dedicated `GameView` (`src/views/GameView.ts`, `src/styles/components/player.css`) with skeleton shimmer loading, iframe lifecycle isolation (`about:blank` + pause on teardown), auto-focus delegation, Escape catalog exit, and theater mode toggle (`T` shortcut)
-- `EmbedView` interactive kit (`src/views/EmbedView.ts`, `src/styles/components/embed.css`) with live arcade preview sandbox, game tab switching, and integration code guides
-- Central SPA entry point (`src/main.ts`) wiring `Store`, `HashRouter`, `AppShell`, and view transitions
-- Updated `index.html` referencing `/src/main.ts` and modular component stylesheets
-- 41 test files, 268 unit tests passing (100% pass rate)
-
-### Shipped in Phase 12
-- Procedural Web Audio UI sound effects synthesizer (`src/audio/ui-audio.ts`) with click, hover, launch, transition, CRT toggle, error, and success presets
-- Reactive UI audio trigger integration across `AppHeader`, `FilterChips`, `GameCard`, `GameView`, and `main.ts` router transitions
-- Enhanced bundle audit verification script (`scripts/audit-bundle.js`) and test (`test/production/bundle-audit.test.ts`) enforcing < 200KB total and < 50KB per-file limits (Actual: 54.02KB gzipped total)
-- 43 test files, 284 unit tests passing (100% pass rate) with zero TypeScript errors
+### Shipped in v2.0
+- Unique retro-modern cyber-arcade visual theme and token palette (`src/styles/tokens.css`, `theme.css`)
+- Persistent CRT scanline, bloom, and vignette overlay (`src/styles/crt.css`, `src/crt.ts`)
+- Zero-dependency component architecture (`BaseComponent`), reactive `Store`, client-side `HashRouter` (`#/`, `#/game/:id`, `#/embed`), and View Transitions API wrapper
+- Modular UI component library (`AppHeader`, `AppSidebar`, `BottomNav`, `FilterChips`, `GameCard`, `GameGrid`, `CatalogView`)
+- Dedicated `GameView` player with skeleton loading shimmer, iframe memory isolation (`about:blank` + pause on destroy), auto-focus delegation, `Escape` key exit, and theater mode (`T` key)
+- `EmbedView` interactive preview sandbox and code generation kit
+- Procedural Web Audio UI sound effects synthesizer (`src/audio/ui-audio.ts`)
+- Production bundle size verification: 54.02 KB gzipped total (< 200 KB limit)
+- 43 test files, 284 unit tests passing (100% pass rate)
+- Archive: `.planning/milestones/v2.0-ROADMAP.md`, `.planning/milestones/v2.0-REQUIREMENTS.md`
+- Audit: `.planning/v2.0-MILESTONE-AUDIT.md` (passed)
 
 ### Decisions
 - Retain vanilla TypeScript and native CSS architecture (no frameworks or third-party runtime libraries).
@@ -73,5 +50,5 @@ Last activity: 2026-08-17 — Phase 12 Audio Feedback & Production Verification 
 
 ## Session Continuity
 
-- Current focus: Milestone v2.0 complete
-- Next action: Audit milestone v2.0 or package release
+- Current focus: Milestone v2.0 archived
+- Next action: Run `/gsd-new-milestone` to start next cycle (v2.1 or v3.0)

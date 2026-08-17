@@ -3,17 +3,34 @@
 ## Purpose
 Collection of 5 browser-based arcade minigames packaged for YouTube Playables. Each game lives in its own folder, shares a common Playables adapter layer, and launches from a hub menu. Original names and UI — no third-party IP.
 
-## Current Milestone: v2.0 Unique UI/UX Refactor
+## Current State: v2.0 Shipped (2026-08-17)
 
-**Goal:** Overhaul webapp from YouTube-dark clone to a distinct, memorable Arcade Carnival visual brand with modern vanilla TS UX architecture.
+**Current Release:** v2.0: Unique UI/UX Refactor
+- Cyber-arcade visual brand with design tokens and CRT toggle
+- Zero-dependency reactive vanilla TS component architecture (`BaseComponent`, `Store`, `HashRouter`, View Transitions)
+- Mobile-first responsive navigation (bottom bar on mobile, sidebar on desktop)
+- Isolated game iframe player with skeleton loader, theater mode, and clean teardown
+- Procedural Web Audio UI sound effects
+- 284 unit tests passing, 54.02 KB gzipped production bundle
 
-**Target features:**
+<details>
+<summary>v2.0 Milestone Details</summary>
+
+**Target features delivered:**
 - Unique visual identity & design system (retro-modern arcade theme, custom typography, tokens)
 - Lightweight component-based Hub architecture (clean DOM updates, no full innerHTML rebuilds)
 - Modern UX: smooth view transitions, URL hash routing (back/forward button support), loading states
 - Responsive redesign with mobile-first navigation (bottom bar on mobile, full touch support)
 - Unified embed kit & docs page using shared design tokens
 - Zero-dependency constraint preserved (vanilla TS + CSS)
+
+</details>
+
+## Next Milestone Goals (v2.1 / Future Backlog)
+- Dark/Light arcade theme toggle variant (`FUT-01`)
+- Custom animated SVG achievement badges (`FUT-02`)
+- Full-bleed featured game hero carousel (`FUT-03`)
+- Additional minigame expansion candidates
 
 ## Games
 | Folder | Game | Genre | Mechanic Summary |
