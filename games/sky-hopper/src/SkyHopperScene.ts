@@ -228,16 +228,13 @@ export class SkyHopperScene implements GameScene {
 
     // Abyss fall check
     if (this.camera.isOutOfBounds(this.player.y)) {
-      if (this.gameState.status === 'playing') {
-        audio.playError();
-      }
+      audio.playError();
       this.gameState.triggerGameOver();
     }
 
     // Altitude & score
-    const prevStatus = this.gameState.status;
     this.gameState.updateAltitude(this.player.y);
-    if (prevStatus === 'playing' && this.gameState.status === 'victory') {
+    if ((this.gameState.status as string) === 'victory') {
       audio.playVictory();
     }
 
