@@ -39,6 +39,15 @@ importers:
         specifier: workspace:*
         version: link:../../packages/playables-adapter
 
+  games/memory-boxes:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
   games/memory-cards:
     dependencies:
       '@arcade-carnival/game-engine':

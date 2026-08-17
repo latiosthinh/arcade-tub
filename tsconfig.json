@@ -8,6 +8,7 @@
     { "path": "games/sky-hopper" },
     { "path": "games/crate-catch" },
     { "path": "games/type-strike" },
-    { "path": "games/memory-cards" }
+    { "path": "games/memory-cards" },
+    { "path": "games/memory-boxes" }
   ]
 }
