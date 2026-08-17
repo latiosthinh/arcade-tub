@@ -9,14 +9,14 @@ const ACTIVE_CLASS = 'crt-active';
 
 /**
  * Checks if CRT overlay is currently enabled.
- * Default is true (enabled) unless explicitly saved as 'off'.
+ * Default is false (disabled) unless explicitly saved as 'on'.
  */
 export function isCrtEnabled(): boolean {
   try {
     const val = localStorage.getItem(STORAGE_KEY);
-    return val !== 'off';
+    return val === 'on';
   } catch {
-    return true;
+    return false;
   }
 }
 

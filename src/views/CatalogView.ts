@@ -31,15 +31,15 @@ export class CatalogView extends BaseComponent<AppState> {
     heroBanner.style.background = featured.bannerBg;
     heroBanner.innerHTML = `
       <div class="ac-hero-content">
-        <div class="ac-hero-badge">⭐ FEATURED PLAYABLE</div>
+        <div class="ac-hero-badge">⭐ FEATURED GAME</div>
         <h2 class="ac-hero-title">${featured.title}</h2>
         <p class="ac-hero-desc">${featured.description}</p>
         <div class="ac-hero-meta">
           <span>${featured.rating}</span> • <span>${featured.plays}</span> • <span class="ac-hero-score">High Score: <strong class="ac-hero-score-val">${initialScore > 0 ? initialScore.toLocaleString() : '---'}</strong></span>
         </div>
         <div class="ac-hero-actions">
-          <button class="ac-btn-hero-play" type="button" aria-label="Play ${featured.title} Instant">
-            ▶ Play Instant
+          <button class="ac-btn-hero-play" type="button" aria-label="Play ${featured.title}">
+            ▶ Play Now
           </button>
         </div>
       </div>
@@ -61,7 +61,7 @@ export class CatalogView extends BaseComponent<AppState> {
     const sectionHeader = document.createElement('div');
     sectionHeader.className = 'ac-section-header';
     sectionHeader.innerHTML = `
-      <h3 class="ac-section-title">Instant Playables (${GAMES.length} Games)</h3>
+      <h3 class="ac-section-title">Arcade Games (${GAMES.length} Games)</h3>
       <span class="ac-section-sub">No install required • 60 FPS Canvas Arcade Games</span>
     `;
     this.element.appendChild(sectionHeader);

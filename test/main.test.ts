@@ -36,9 +36,6 @@ describe('App Shell and Router Integration', () => {
     const layout = document.createElement('div');
     layout.className = 'ac-layout';
 
-    const sidebar = new AppSidebar(store);
-    sidebar.mount(layout);
-
     viewContainer = document.createElement('main');
     viewContainer.id = 'view-container';
     viewContainer.className = 'ac-main';
@@ -51,7 +48,6 @@ describe('App Shell and Router Integration', () => {
 
     store.subscribe((state) => {
       header.update(state);
-      sidebar.update(state);
       bottomNav.update(state);
     });
 
@@ -88,9 +84,8 @@ describe('App Shell and Router Integration', () => {
     vi.restoreAllMocks();
   });
 
-  it('initializes AppShell with Header, Sidebar, BottomNav, and view-container', () => {
+  it('initializes AppShell with Header, BottomNav, and view-container', () => {
     expect(container.querySelector('.ac-header')).not.toBeNull();
-    expect(container.querySelector('.ac-sidebar')).not.toBeNull();
     expect(container.querySelector('.ac-bottom-nav')).not.toBeNull();
     expect(container.querySelector('#view-container')).not.toBeNull();
   });

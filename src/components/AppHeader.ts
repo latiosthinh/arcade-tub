@@ -22,7 +22,7 @@ export class AppHeader extends BaseComponent<AppState> {
         <a href="#/" class="ac-logo" aria-label="Arcade Carnival Home">
           <span class="ac-logo-icon">🕹️</span>
           <span class="ac-logo-text">ARCADE CARNIVAL</span>
-          <span class="ac-logo-badge">PLAYABLES</span>
+          <span class="ac-logo-badge">ARCADE</span>
         </a>
       </div>
 

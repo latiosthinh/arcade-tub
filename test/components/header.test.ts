@@ -152,17 +152,17 @@ describe('AppHeader Component (src/components/AppHeader.ts)', () => {
     const header = new AppHeader(store);
     header.mount(document.getElementById('container')!);
 
-    // Default CRT is enabled (or toggle turns it off)
+    // Default CRT is disabled, so first click turns it ON
     const crtToggle = header.element.querySelector('.ac-crt-toggle') as HTMLButtonElement;
     crtToggle.click();
 
     expect(crtAudioSpy).toHaveBeenCalled();
-    expect(localStorage.getItem('arcade_crt_mode')).toBe('off');
-    expect(document.body.classList.contains('crt-active')).toBe(false);
-
-    crtToggle.click();
     expect(localStorage.getItem('arcade_crt_mode')).toBe('on');
     expect(document.body.classList.contains('crt-active')).toBe(true);
+
+    crtToggle.click();
+    expect(localStorage.getItem('arcade_crt_mode')).toBe('off');
+    expect(document.body.classList.contains('crt-active')).toBe(false);
 
     header.destroy();
   });

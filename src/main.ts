@@ -3,7 +3,6 @@ import { HashRouter } from './core/Router';
 import type { AppState, Component } from './core/types';
 import { GAMES, getPersonalHighScore } from './data/games';
 import { AppHeader } from './components/AppHeader';
-import { AppSidebar } from './components/AppSidebar';
 import { BottomNav } from './components/BottomNav';
 import { CatalogView } from './views/CatalogView';
 import { GameView } from './views/GameView';
@@ -34,7 +33,7 @@ function bootstrap(): void {
     throw new Error('[ArcadeCarnival] Missing #app root container in DOM.');
   }
 
-  // Initialize CRT scanline/bloom overlay
+  // Initialize CRT scanline/bloom overlay (disabled by default)
   initCrtOverlay();
 
   // 1. Initialize reactive Store with persisted mute preference
@@ -54,9 +53,6 @@ function bootstrap(): void {
   const layout = document.createElement('div');
   layout.className = 'ac-layout';
 
-  const sidebar = new AppSidebar(store);
-  sidebar.mount(layout);
-
   const viewContainer = document.createElement('main');
   viewContainer.id = 'view-container';
   viewContainer.className = 'ac-main';
@@ -71,7 +67,6 @@ function bootstrap(): void {
   store.subscribe((state) => {
     uiAudio.setMuted(state.isMuted);
     header.update(state);
-    sidebar.update(state);
     bottomNav.update(state);
   });
 

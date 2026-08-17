@@ -11,43 +11,43 @@ describe('CRT Overlay Controller', () => {
     }
   });
 
-  it('isCrtEnabled returns true by default or when not explicitly off', () => {
-    expect(isCrtEnabled()).toBe(true);
+  it('isCrtEnabled returns false by default and true when explicitly on', () => {
+    expect(isCrtEnabled()).toBe(false);
     localStorage.setItem('arcade_crt_mode', 'on');
     expect(isCrtEnabled()).toBe(true);
     localStorage.setItem('arcade_crt_mode', 'off');
     expect(isCrtEnabled()).toBe(false);
   });
 
-  it('initCrtOverlay attaches overlay element and adds crt-active class by default', () => {
+  it('initCrtOverlay attaches overlay element and leaves crt-active class off by default', () => {
     initCrtOverlay();
     const overlay = document.getElementById('arcade-crt-overlay');
     expect(overlay).not.toBeNull();
-    expect(document.body.classList.contains('crt-active')).toBe(true);
+    expect(document.body.classList.contains('crt-active')).toBe(false);
   });
 
-  it('initCrtOverlay respects stored off preference', () => {
-    localStorage.setItem('arcade_crt_mode', 'off');
+  it('initCrtOverlay respects stored on preference', () => {
+    localStorage.setItem('arcade_crt_mode', 'on');
     initCrtOverlay();
-    expect(document.body.classList.contains('crt-active')).toBe(false);
+    expect(document.body.classList.contains('crt-active')).toBe(true);
   });
 
   it('toggleCrt switches state, updates localStorage, and alters DOM class', () => {
     initCrtOverlay();
-    expect(isCrtEnabled()).toBe(true);
-    expect(document.body.classList.contains('crt-active')).toBe(true);
-
-    const newState = toggleCrt();
-    expect(newState).toBe(false);
     expect(isCrtEnabled()).toBe(false);
-    expect(localStorage.getItem('arcade_crt_mode')).toBe('off');
     expect(document.body.classList.contains('crt-active')).toBe(false);
 
-    const nextState = toggleCrt();
-    expect(nextState).toBe(true);
+    const newState = toggleCrt();
+    expect(newState).toBe(true);
     expect(isCrtEnabled()).toBe(true);
     expect(localStorage.getItem('arcade_crt_mode')).toBe('on');
     expect(document.body.classList.contains('crt-active')).toBe(true);
+
+    const nextState = toggleCrt();
+    expect(nextState).toBe(false);
+    expect(isCrtEnabled()).toBe(false);
+    expect(localStorage.getItem('arcade_crt_mode')).toBe('off');
+    expect(document.body.classList.contains('crt-active')).toBe(false);
   });
 
   it('toggleCrt accepts explicit force boolean', () => {

@@ -59,7 +59,7 @@ export class GameView extends BaseComponent<AppState> {
     this.element.innerHTML = `
       <header class="ac-player-header">
         <div class="ac-player-header-left">
-          <button class="ac-btn-back" type="button" aria-label="Back to Playables Catalog">
+          <button class="ac-btn-back" type="button" aria-label="Back to Games Catalog">
             ← Back to Games
           </button>
           <div class="ac-player-title-info">
@@ -94,7 +94,7 @@ export class GameView extends BaseComponent<AppState> {
         <div class="ac-details-left">
           <h3 class="ac-details-title">${game.title}</h3>
           <div class="ac-details-stats">
-            <span>${game.rating}</span> • <span>${game.plays}</span> • <span>YouTube Playables Verified</span>
+            <span>${game.rating}</span> • <span>${game.plays}</span> • <span>Verified Arcade</span>
           </div>
           <p class="ac-details-desc">${game.description}</p>
           <div class="ac-features-tags">
@@ -105,7 +105,7 @@ export class GameView extends BaseComponent<AppState> {
           <div class="ac-score-card">
             <div class="ac-score-label">PERSONAL HIGH SCORE</div>
             <div class="ac-score-num">${initialScore > 0 ? initialScore.toLocaleString() : '---'}</div>
-            <div class="ac-score-hint">Scores auto-save locally & synchronize via Playables API</div>
+            <div class="ac-score-hint">Scores auto-save locally in your browser</div>
           </div>
         </div>
       </div>
