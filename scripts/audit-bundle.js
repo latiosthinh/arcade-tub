@@ -5,8 +5,14 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, '..', 'dist');
-const MAX_BUDGET_KB = 200;
-const MAX_BUDGET_BYTES = MAX_BUDGET_KB * 1024;
+
+// Global total bundle budget < 200KB gzipped
+const MAX_TOTAL_BUDGET_KB = 200;
+const MAX_TOTAL_BUDGET_BYTES = MAX_TOTAL_BUDGET_KB * 1024;
+
+// Per-file individual budget < 50KB gzipped
+const MAX_FILE_BUDGET_KB = 50;
+const MAX_FILE_BUDGET_BYTES = MAX_FILE_BUDGET_KB * 1024;
 
 if (!fs.existsSync(distDir)) {
   console.error(`Error: dist directory does not exist at ${distDir}. Run build first.`);
@@ -29,7 +35,7 @@ function getAllFiles(dir, fileList = []) {
 const allFiles = getAllFiles(distDir);
 let hasError = false;
 
-console.log(`\n=== Production Bundle Audit (< ${MAX_BUDGET_KB}KB Limit) ===\n`);
+console.log(`\n=== Production Bundle Audit (< ${MAX_TOTAL_BUDGET_KB}KB Total / < ${MAX_FILE_BUDGET_KB}KB Per-file Limit) ===\n`);
 console.log('File'.padEnd(45) + 'Raw Size'.padEnd(15) + 'Gzip Size'.padEnd(15) + 'Status');
 console.log('-'.repeat(85));
 
@@ -47,19 +53,24 @@ for (const filePath of allFiles) {
 
   const rawFormatted = `${(rawSize / 1024).toFixed(2)} KB`;
   const gzipFormatted = `${(gzipSize / 1024).toFixed(2)} KB`;
-  const isOverBudget = gzipSize > MAX_BUDGET_BYTES;
+  const isOverBudget = gzipSize > MAX_FILE_BUDGET_BYTES;
 
   if (isOverBudget) {
     hasError = true;
   }
 
-  const status = isOverBudget ? '❌ EXCEEDS LIMIT' : '✅ PASS';
+  const status = isOverBudget ? '❌ EXCEEDS FILE LIMIT' : '✅ PASS';
   console.log(
     relPath.padEnd(45) +
     rawFormatted.padEnd(15) +
     gzipFormatted.padEnd(15) +
     status
   );
+}
+
+const isTotalOverBudget = totalGzip > MAX_TOTAL_BUDGET_BYTES;
+if (isTotalOverBudget) {
+  hasError = true;
 }
 
 console.log('-'.repeat(85));
@@ -69,7 +80,7 @@ console.log(
   `${(totalGzip / 1024).toFixed(2)} KB`.padEnd(15) +
   (hasError ? '❌ FAIL' : '✅ PASS')
 );
-console.log(`\nAudit result: ${hasError ? 'FAILED' : 'PASSED'} - All entries under ${MAX_BUDGET_KB}KB.`);
+console.log(`\nAudit result: ${hasError ? 'FAILED' : 'PASSED'} - Total distribution ${(totalGzip / 1024).toFixed(2)}KB gzipped (limit: ${MAX_TOTAL_BUDGET_KB}KB).`);
 
 if (hasError) {
   process.exit(1);
