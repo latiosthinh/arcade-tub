@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready
-last_updated: "2026-08-17T15:35:00.000Z"
+status: in_progress
+last_updated: "2026-08-17T15:40:00.000Z"
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 7
+  completed_plans: 6
+  percent: 85
 ---
 
 # State: Arcade Carnival
 
 ## Current Phase
 
-Phase 2: Safe Cracker — Complete
+Phase 3: Brick Blitz — In Progress (Plan 01 complete)
 
 ## Status
 
-STATUS: Phase 2 Complete. Ready for Phase 3 planning.
+STATUS: Phase 3 Plan 01 Complete. Ready for Phase 3 Plan 02.
 
 ## History
 
@@ -30,6 +30,7 @@ STATUS: Phase 2 Complete. Ready for Phase 3 planning.
 - 2026-08-17: Phase 1 Plan 03 completed (Hub menu shell & arcade theme).
 - 2026-08-17: Phase 2 Plan 01 completed (Safe Cracker core game models, dial collision math, game state).
 - 2026-08-17: Phase 2 Plan 02 completed (Safe Cracker visual presentation, particles, scene, controls, Playables adapter integration).
+- 2026-08-17: Phase 3 Plan 01 completed (Brick Blitz physics, paddle angular deflection, ball trajectory, brick AABB collisions).
 
 ## Decisions
 
@@ -42,3 +43,4 @@ STATUS: Phase 2 Complete. Ready for Phase 3 planning.
 - Hub UI uses CSS Grid with per-game CSS variables (`--accent`) for arcade neon styling and hover animations
 - Safe Cracker math: Dial wraps at 2*PI, target zone arcs narrow per difficulty level, speed multiplier scales with floor(score/3000)*0.35 + streak*0.05
 - Capped active particles at 200 in ParticleSystem to bound memory/render load
+- Brick Blitz math: Max paddle deflection angle is 60 degrees (PI/3), circle-to-AABB collision resolution inverts dominant penetration axis.

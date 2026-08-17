@@ -57,7 +57,10 @@ Plans:
   3. 3 lives; +1UP block grants extra life
   4. Level clears when all bricks destroyed; next level loads new layout
   5. Score: 5/block, 50/bonus, 500/level clear
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 03-01-PLAN.md — Core breakout physics, ball/paddle math, brick AABB collisions, and unit tests
+- [ ] 03-02-PLAN.md — Game state, level progression, particle effects, canvas scene, and adapter wiring
 
 ### Phase 4: Sky Hopper
 **Goal**: Fully playable Sky Hopper vertical platformer — platforms, obstacles, power-ups, story + infinite modes
@@ -113,7 +116,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-08-17 |
 | 2. Safe Cracker | 2/2 | Complete | 2026-08-17 |
-| 3. Brick Blitz | 0/TBD | Not started | - |
+| 3. Brick Blitz | 1/2 | In progress | - |
 | 4. Sky Hopper | 0/TBD | Not started | - |
 | 5. Crate Catch | 0/TBD | Not started | - |
 | 6. Type Strike | 0/TBD | Not started | - |
