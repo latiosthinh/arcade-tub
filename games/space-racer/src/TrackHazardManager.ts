@@ -1,4 +1,4 @@
-import { Ship } from './Ship';
+import { Ship } from './Ship.js';
 
 export type ObstacleType = 'asteroid' | 'plasma-mine' | 'boost-ring';
 
@@ -108,6 +108,7 @@ export class TrackHazardManager {
 
     for (let i = this.obstacles.length - 1; i >= 0; i--) {
       const obs = this.obstacles[i];
+      if (!obs) continue;
       obs.z -= zSpeed * dt;
       obs.rotation += obs.rotationSpeed * dt;
 

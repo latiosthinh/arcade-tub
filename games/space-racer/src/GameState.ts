@@ -1,6 +1,6 @@
-import { Ship } from './Ship';
-import { TrackHazardManager, TrackObstacle } from './TrackHazardManager';
-import { HighwaySpeedPhysics } from './HighwaySpeedPhysics';
+import { Ship } from './Ship.js';
+import { TrackHazardManager, TrackObstacle } from './TrackHazardManager.js';
+import { HighwaySpeedPhysics } from './HighwaySpeedPhysics.js';
 
 export type GameStatus = 'ready' | 'playing' | 'paused' | 'gameover';
 
