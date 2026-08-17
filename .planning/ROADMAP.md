@@ -132,7 +132,10 @@ Plans:
   3. Multi-page Vite production build succeeds without errors
   4. Total gzipped bundle size remains under 200KB limit
   5. 100% unit test pass rate across all games and shared packages in workspace
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 20-01-PLAN.md — Register 7 new games in GAMES metadata catalog, create authentic SVG screenshots, update FilterChips and GameGrid categories, update catalog unit tests
+- [ ] 20-02-PLAN.md — Multi-page bundle audit test assertions for 12 games, production Vite build, bundle size audit (<200KB limit), and 100% test pass verification
 **UI hint**: yes
 
 ## Progress Table
