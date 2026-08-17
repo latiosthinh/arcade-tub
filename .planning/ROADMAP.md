@@ -6,7 +6,7 @@
 - [x] **Phase 14: Memory Boxes Minigame** - Sequence memory reproduction game with increasing pattern steps, neon pulse feedback, and tone synthesis
 - [ ] **Phase 15: Pop Balloon Minigame** - Fast-action ascending balloon pop mechanics with color combo multipliers, hazard bombs, and particle effects
 - [x] **Phase 16: Space Racer Minigame** - High-speed orbital obstacle dodging with speed kinematics, turbo boost gates, and pseudo-3D warp starfield
-- [ ] **Phase 17: Virus Defense Minigame** - 360-degree turret radial defense against mutating pathogen swarms with trajectory physics and nucleus health
+- [x] **Phase 17: Virus Defense Minigame** - 360-degree turret radial defense against mutating pathogen swarms with trajectory physics and nucleus health
 - [ ] **Phase 18: Flappy Fish Minigame** - Underwater hydrodynamic flapping physics, glowing coral reef obstacles, and pearl bubble score collection
 - [ ] **Phase 19: 2048 Neon Minigame** - 4x4 sliding number tile puzzle with directional merge logic, spawn algorithms, neon value styling, and swipe support
 - [ ] **Phase 20: Catalog Integration & Release Audit** - Hub metadata registration, SVG screenshots, multi-page Vite build, bundle budget audit (<200KB), and 100% test verification
@@ -86,8 +86,8 @@ Plans:
   5. 100% unit tests pass for angle targeting math, projectile trajectory, and wave spawn curves
 **Plans**: 2 plans
 Plans:
-- [ ] 17-01-PLAN.md — Turret model with 360-degree aiming, PathogenSwarm kinematics & types, NucleusState health & antibodies, GameState lifecycle & combo math, unit test suite
-- [ ] 17-02-PLAN.md — Cellular bio-cyber BioArenaRenderer, DefenseAudio procedural synthesizer, bio-luminescent ParticleSystem, VirusDefenseScene wiring & Vite rollup input
+- [x] 17-01-PLAN.md — Turret model with 360-degree aiming, PathogenSwarm kinematics & types, NucleusState health & antibodies, GameState lifecycle & combo math, unit test suite
+- [x] 17-02-PLAN.md — Cellular bio-cyber BioArenaRenderer, DefenseAudio procedural synthesizer, bio-luminescent ParticleSystem, VirusDefenseScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 18: Flappy Fish Minigame
@@ -137,7 +137,7 @@ Plans:
 | 14. Memory Boxes Minigame | 2/2 | Complete | 2026-08-18 |
 | 15. Pop Balloon Minigame | 0/0 | Not started | - |
 | 16. Space Racer Minigame | 2/2 | Complete | 2026-08-18 |
-| 17. Virus Defense Minigame | 0/0 | Not started | - |
+| 17. Virus Defense Minigame | 2/2 | Complete | 2026-08-18 |
 | 18. Flappy Fish Minigame | 0/0 | Not started | - |
 | 19. 2048 Neon Minigame | 0/0 | Not started | - |
 | 20. Catalog Integration & Release Audit | 0/0 | Not started | - |

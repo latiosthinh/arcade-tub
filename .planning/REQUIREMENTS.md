@@ -17,8 +17,8 @@
 - [x] **SR-02**: Space racer canvas presentation (warp starfield pseudo-3D perspective, turbo trail flames, collision shake, high score saving)
 
 ## Virus Defense
-- [ ] **VD-01**: Virus defense combat model (360° turret targeting, projectile trajectory, multi-vector pathogen swarm kinematics, nucleus HP, 100% unit tests)
-- [ ] **VD-02**: Virus defense canvas presentation (cellular arena, rotating laser cannon, pathogen explosion debris, wave HUD, high score saving)
+- [x] **VD-01**: Virus defense combat model (360° turret targeting, projectile trajectory, multi-vector pathogen swarm kinematics, nucleus HP, 100% unit tests)
+- [x] **VD-02**: Virus defense canvas presentation (cellular arena, rotating laser cannon, pathogen explosion debris, wave HUD, high score saving)
 
 ## Flappy Fish
 - [ ] **FF-01**: Flappy fish physics model (hydrodynamic flap velocity, gravity & water drag, coral reef gap collision detection, score trigger on pipe pass, 100% unit tests)
@@ -48,8 +48,8 @@
 | PB-02 | Phase 15 | Pending |
 | SR-01 | Phase 16 | Complete |
 | SR-02 | Phase 16 | Complete |
-| VD-01 | Phase 17 | Pending |
-| VD-02 | Phase 17 | Pending |
+| VD-01 | Phase 17 | Complete |
+| VD-02 | Phase 17 | Complete |
 | FF-01 | Phase 18 | Pending |
 | FF-02 | Phase 18 | Pending |
 | G2048-01 | Phase 19 | Pending |
