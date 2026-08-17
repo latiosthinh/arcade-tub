@@ -10,6 +10,7 @@
     { "path": "games/type-strike" },
     { "path": "games/memory-cards" },
     { "path": "games/memory-boxes" },
-    { "path": "games/pop-balloon" }
+    { "path": "games/pop-balloon" },
+    { "path": "games/space-racer" }
   ]
 }
