@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-08-17T15:45:00.000Z"
+last_updated: "2026-08-17T15:50:00.000Z"
 progress:
   total_phases: 7
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  completed_phases: 3
+  total_plans: 9
+  completed_plans: 9
   percent: 100
 ---
 
@@ -16,11 +16,11 @@ progress:
 
 ## Current Phase
 
-Phase 3: Brick Blitz — Plan 02 Complete (Phase 3 finished)
+Phase 4: Sky Hopper — Plan 02 Complete (Phase 4 finished)
 
 ## Status
 
-STATUS: Phase 3 Complete (Plans 01 & 02). Ready for Phase 4: Sky Hopper.
+STATUS: Phase 4 Complete (Plans 01 & 02). Ready for Phase 5: Crate Catch.
 
 ## History
 
@@ -32,6 +32,8 @@ STATUS: Phase 3 Complete (Plans 01 & 02). Ready for Phase 4: Sky Hopper.
 - 2026-08-17: Phase 2 Plan 02 completed (Safe Cracker visual presentation, particles, scene, controls, Playables adapter integration).
 - 2026-08-17: Phase 3 Plan 01 completed (Brick Blitz physics, paddle angular deflection, ball trajectory, brick AABB collisions).
 - 2026-08-17: Phase 3 Plan 02 completed (Brick Blitz scene, game state, particles, input controls, Playables adapter wiring).
+- 2026-08-17: Phase 4 Plan 01 completed (Sky Hopper character physics, camera scroll, platform & obstacle generators).
+- 2026-08-17: Phase 4 Plan 02 completed (Sky Hopper scene, GameState, Story/Infinite modes, particles, Playables integration).
 
 ## Decisions
 
@@ -46,3 +48,6 @@ STATUS: Phase 3 Complete (Plans 01 & 02). Ready for Phase 4: Sky Hopper.
 - Capped active particles at 200 in ParticleSystem to bound memory/render load
 - Brick Blitz math: Max paddle deflection angle is 60 degrees (PI/3), circle-to-AABB collision resolution inverts dominant penetration axis.
 - Brick Blitz particles: capped at 300 debris and sparks, screen shake on life loss.
+- Sky Hopper altitude conversion: altitude meters = (500 - playerWorldY) / 10.
+- Sky Hopper modes: Story (target 5,000m airship mothership + 2500 clear bonus) vs Infinite (endless climb scored by altitude + kills).
+- Sky Hopper particle pool capped at 250 particles.

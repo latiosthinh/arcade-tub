@@ -9,7 +9,7 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 - [x] **Phase 1: Foundation** - Monorepo scaffold, Playables adapter, hub menu shell
 - [x] **Phase 2: Safe Cracker** - Clicker/timing minigame
 - [x] **Phase 3: Brick Blitz** - Breakout minigame
-- [ ] **Phase 4: Sky Hopper** - Vertical platformer minigame
+- [x] **Phase 4: Sky Hopper** - Vertical platformer minigame
 - [ ] **Phase 5: Crate Catch** - Catcher/stacker minigame
 - [ ] **Phase 6: Type Strike** - Typing defense minigame
 - [ ] **Phase 7: Polish & Deploy** - Cross-game polish, saves, packaging, deploy
@@ -72,7 +72,10 @@ Plans:
   3. Obstacles (jester, bird, spire) kill on contact; can be crushed by landing on them or destroyed with projectile (W/Up)
   4. Power-ups (rocket, spring, jump pad) boost height
   5. Story mode ends at fixed height; infinite mode scores by altitude
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 04-01-PLAN.md — Core physics, player kinematics, screen wrap, camera, platform generator & obstacle combat
+- [x] 04-02-PLAN.md — Game state, story & infinite climb modes, particle effects, canvas scene, and adapter wiring
 
 ### Phase 5: Crate Catch
 **Goal**: Fully playable Crate Catch game — two-lane platform, falling crates, bombs, stacking multiplier
@@ -117,7 +120,7 @@ Plans:
 | 1. Foundation | 3/3 | Complete | 2026-08-17 |
 | 2. Safe Cracker | 2/2 | Complete | 2026-08-17 |
 | 3. Brick Blitz | 2/2 | Complete | 2026-08-17 |
-| 4. Sky Hopper | 0/TBD | Not started | - |
+| 4. Sky Hopper | 2/2 | Complete | 2026-08-17 |
 | 5. Crate Catch | 0/TBD | Not started | - |
 | 6. Type Strike | 0/TBD | Not started | - |
 | 7. Polish & Deploy | 0/TBD | Not started | - |
