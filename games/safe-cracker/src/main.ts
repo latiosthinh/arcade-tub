@@ -1,15 +1,23 @@
-const canvas = document.getElementById('game') as HTMLCanvasElement;
-canvas.width = 800;
-canvas.height = 600;
+import { GameLoop, InputManager } from '@arcade-carnival/game-engine';
+import { initPlayables, onPause, onResume } from '@arcade-carnival/playables-adapter';
+import { SafeCrackerScene } from './SafeCrackerScene.js';
 
-const ctx = canvas.getContext('2d');
-if (ctx) {
-  ctx.fillStyle = '#2d3436';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 48px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Safe Cracker', canvas.width / 2, canvas.height / 2 - 30);
-  ctx.font = '24px sans-serif';
-  ctx.fillText('Coming Soon', canvas.width / 2, canvas.height / 2 + 30);
+initPlayables();
+
+const canvas = document.getElementById('game') as HTMLCanvasElement;
+if (canvas) {
+  const loop = new GameLoop(canvas);
+  const input = new InputManager();
+  const scene = new SafeCrackerScene(canvas, input);
+
+  onPause(() => {
+    scene.pause();
+  });
+
+  onResume(() => {
+    scene.resume();
+  });
+
+  loop.setScene(scene);
+  loop.start();
 }
