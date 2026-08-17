@@ -1,6 +1,7 @@
 import { BaseComponent } from '../core/Component';
 import type { AppState } from '../core/types';
 import type { Store } from '../core/Store';
+import { uiAudio } from '../audio/ui-audio';
 
 const FILTERS = [
   { id: 'all', label: 'All Games' },
@@ -40,6 +41,7 @@ export class FilterChips extends BaseComponent<AppState> {
     for (const btn of buttons) {
       this.addListener(btn, 'click', () => {
         const filter = btn.getAttribute('data-filter') || 'all';
+        uiAudio.playClick();
         this.store.setState({ activeFilter: filter });
       });
     }

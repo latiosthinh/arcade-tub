@@ -3,6 +3,7 @@ import { GameView } from '../../src/views/GameView';
 import { Store } from '../../src/core/Store';
 import type { AppState } from '../../src/core/types';
 import { GAMES } from '../../src/data/games';
+import { uiAudio } from '../../src/audio/ui-audio';
 
 describe('GameView', () => {
   let store: Store<AppState>;
@@ -99,6 +100,7 @@ describe('GameView', () => {
   });
 
   it('auto-focuses iframe on mount and navigates to #/ on Escape key (PLAY-03)', () => {
+    const transitionSpy = vi.spyOn(uiAudio, 'playTransition');
     const view = new GameView(store, 'safe-cracker');
     view.mount(container);
 
@@ -106,12 +108,14 @@ describe('GameView', () => {
 
     // Press Escape
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(transitionSpy).toHaveBeenCalled();
     expect(window.location.hash).toBe('#/');
 
     view.destroy();
   });
 
   it('toggles theater mode via button and T key shortcut without recreating iframe (PLAY-04)', () => {
+    const clickSpy = vi.spyOn(uiAudio, 'playClick');
     const view = new GameView(store, 'safe-cracker');
     view.mount(container);
 
@@ -124,6 +128,7 @@ describe('GameView', () => {
 
     // Click button
     theaterBtn.click();
+    expect(clickSpy).toHaveBeenCalledTimes(1);
     expect(store.getState().isTheaterMode).toBe(true);
     expect(frameWrapper.classList.contains('is-theater')).toBe(true);
     expect(view.element.classList.contains('is-theater')).toBe(true);
@@ -131,6 +136,7 @@ describe('GameView', () => {
 
     // Press T key
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 't' }));
+    expect(clickSpy).toHaveBeenCalledTimes(2);
     expect(store.getState().isTheaterMode).toBe(false);
     expect(frameWrapper.classList.contains('is-theater')).toBe(false);
 

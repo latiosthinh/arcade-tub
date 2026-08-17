@@ -4,6 +4,7 @@ import { AppHeader } from '../../src/components/AppHeader';
 import { Store } from '../../src/core/Store';
 import type { AppState } from '../../src/core/types';
 import * as adapter from '@arcade-carnival/playables-adapter';
+import { uiAudio } from '../../src/audio/ui-audio';
 
 describe('Game Data Module (src/data/games.ts)', () => {
   it('exports 5 arcade games with required metadata', () => {
@@ -126,7 +127,7 @@ describe('AppHeader Component (src/components/AppHeader.ts)', () => {
     header.destroy();
   });
 
-  it('clicking audio toggle updates store isMuted state and toggles icon', () => {
+  it('clicking audio toggle updates store isMuted state, sets uiAudio, and toggles icon', () => {
     const header = new AppHeader(store);
     header.mount(document.getElementById('container')!);
 
@@ -135,16 +136,19 @@ describe('AppHeader Component (src/components/AppHeader.ts)', () => {
 
     audioToggle.click();
     expect(store.getState().isMuted).toBe(true);
+    expect(uiAudio.isMuted()).toBe(true);
     expect(audioToggle.textContent).toContain('🔇');
 
     audioToggle.click();
     expect(store.getState().isMuted).toBe(false);
+    expect(uiAudio.isMuted()).toBe(false);
     expect(audioToggle.textContent).toContain('🔊');
 
     header.destroy();
   });
 
-  it('clicking CRT toggle toggles CRT overlay and class', () => {
+  it('clicking CRT toggle toggles CRT overlay and triggers crt sound', () => {
+    const crtAudioSpy = vi.spyOn(uiAudio, 'playCrtToggle');
     const header = new AppHeader(store);
     header.mount(document.getElementById('container')!);
 
@@ -152,6 +156,7 @@ describe('AppHeader Component (src/components/AppHeader.ts)', () => {
     const crtToggle = header.element.querySelector('.ac-crt-toggle') as HTMLButtonElement;
     crtToggle.click();
 
+    expect(crtAudioSpy).toHaveBeenCalled();
     expect(localStorage.getItem('arcade_crt_mode')).toBe('off');
     expect(document.body.classList.contains('crt-active')).toBe(false);
 

@@ -9,6 +9,7 @@ import { CatalogView } from './views/CatalogView';
 import { GameView } from './views/GameView';
 import { EmbedView } from './views/EmbedView';
 import { initCrtOverlay } from './crt';
+import { uiAudio } from './audio/ui-audio';
 
 /**
  * Loads initial high scores from local storage for all registered games.
@@ -36,12 +37,12 @@ function bootstrap(): void {
   // Initialize CRT scanline/bloom overlay
   initCrtOverlay();
 
-  // 1. Initialize reactive Store
+  // 1. Initialize reactive Store with persisted mute preference
   const store = new Store<AppState>({
     route: { path: '/', params: {} },
     activeFilter: 'all',
     searchQuery: '',
-    isMuted: false,
+    isMuted: uiAudio.isMuted(),
     isTheaterMode: false,
     highScores: loadInitialHighScores(),
   });
@@ -66,8 +67,9 @@ function bootstrap(): void {
   const bottomNav = new BottomNav(store);
   bottomNav.mount(appContainer);
 
-  // 3. Subscribe App Shell Components to Store Changes
+  // 3. Subscribe App Shell Components and Audio Synthesizer to Store Changes
   store.subscribe((state) => {
+    uiAudio.setMuted(state.isMuted);
     header.update(state);
     sidebar.update(state);
     bottomNav.update(state);
@@ -75,8 +77,14 @@ function bootstrap(): void {
 
   // 4. Client-side Hash Router and View Lifecycle Manager
   let currentView: Component<AppState> | null = null;
+  let isFirstLoad = true;
 
   const mountView = (view: Component<AppState>, path: string, params: Record<string, string> = {}) => {
+    if (!isFirstLoad) {
+      uiAudio.playTransition();
+    }
+    isFirstLoad = false;
+
     if (currentView) {
       currentView.destroy();
       currentView = null;

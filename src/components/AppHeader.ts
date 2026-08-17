@@ -2,6 +2,7 @@ import { BaseComponent } from '../core/Component';
 import type { AppState } from '../core/types';
 import type { Store } from '../core/Store';
 import { toggleCrt } from '../crt';
+import { uiAudio } from '../audio/ui-audio';
 
 /**
  * AppHeader renders top navigation bar, search input with '/' shortcut, audio toggle, and CRT toggle.
@@ -81,11 +82,16 @@ export class AppHeader extends BaseComponent<AppState> {
     this.addListener(this.audioToggle, 'click', () => {
       const nextMuted = !this.store.getState().isMuted;
       this.store.setState({ isMuted: nextMuted });
+      uiAudio.setMuted(nextMuted);
+      if (!nextMuted) {
+        uiAudio.playClick();
+      }
       this.audioToggle.textContent = nextMuted ? '🔇' : '🔊';
     });
 
     // CRT overlay toggle
     this.addListener(this.crtToggle, 'click', () => {
+      uiAudio.playCrtToggle();
       toggleCrt();
     });
   }

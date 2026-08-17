@@ -1,5 +1,6 @@
 import { BaseComponent } from '../core/Component';
 import type { GameItem } from '../data/games';
+import { uiAudio } from '../audio/ui-audio';
 
 export interface GameCardState {
   highScore?: number;
@@ -51,7 +52,16 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
   }
 
   private setupListeners(): void {
+    this.addListener(this.element, 'mouseenter', () => {
+      uiAudio.playHover();
+    });
+
+    this.addListener(this.element, 'focus', () => {
+      uiAudio.playHover();
+    });
+
     const navigate = () => {
+      uiAudio.playLaunch();
       window.location.hash = `#/game/${this.game.id}`;
     };
 

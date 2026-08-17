@@ -2,6 +2,7 @@ import { BaseComponent } from '../core/Component';
 import type { AppState } from '../core/types';
 import type { Store } from '../core/Store';
 import { GAMES, getPersonalHighScore, type GameItem } from '../data/games';
+import { uiAudio } from '../audio/ui-audio';
 
 /**
  * GameView renders dedicated cyber-arcade player view for an active playable.
@@ -46,6 +47,7 @@ export class GameView extends BaseComponent<AppState> {
     const backBtn = this.element.querySelector('.ac-btn-back');
     if (backBtn) {
       this.addListener(backBtn, 'click', () => {
+        uiAudio.playTransition();
         window.location.hash = '#/';
       });
     }
@@ -127,6 +129,7 @@ export class GameView extends BaseComponent<AppState> {
     const backBtn = this.element.querySelector('.ac-btn-back');
     if (backBtn) {
       this.addListener(backBtn, 'click', () => {
+        uiAudio.playTransition();
         window.location.hash = '#/';
       });
     }
@@ -134,6 +137,7 @@ export class GameView extends BaseComponent<AppState> {
     // Theater mode toggle button
     if (this.theaterBtnElement) {
       this.addListener(this.theaterBtnElement, 'click', () => {
+        uiAudio.playClick();
         this.toggleTheater();
       });
     }
@@ -168,6 +172,7 @@ export class GameView extends BaseComponent<AppState> {
           });
         }
       } else if (data.type === 'close') {
+        uiAudio.playTransition();
         window.location.hash = '#/';
       }
     };
@@ -179,8 +184,10 @@ export class GameView extends BaseComponent<AppState> {
       if (activeTag === 'input' || activeTag === 'textarea') return;
 
       if (e.key === 'Escape') {
+        uiAudio.playTransition();
         window.location.hash = '#/';
       } else if (e.key === 't' || e.key === 'T' || e.code === 'KeyT') {
+        uiAudio.playClick();
         this.toggleTheater();
       }
     };

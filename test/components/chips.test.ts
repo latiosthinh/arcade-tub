@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { FilterChips } from '../../src/components/FilterChips';
 import { Store } from '../../src/core/Store';
 import type { AppState } from '../../src/core/types';
+import { uiAudio } from '../../src/audio/ui-audio';
 
 describe('FilterChips Component (src/components/FilterChips.ts)', () => {
   let store: Store<AppState>;
@@ -22,6 +23,7 @@ describe('FilterChips Component (src/components/FilterChips.ts)', () => {
 
   afterEach(() => {
     container.remove();
+    vi.restoreAllMocks();
   });
 
   it('renders filter chip buttons for all, action, arcade, casual', () => {
@@ -48,13 +50,15 @@ describe('FilterChips Component (src/components/FilterChips.ts)', () => {
     chips.destroy();
   });
 
-  it('clicking a filter chip updates store activeFilter and updates active class', () => {
+  it('clicking a filter chip updates store activeFilter and triggers audio click', () => {
+    const clickSpy = vi.spyOn(uiAudio, 'playClick');
     const chips = new FilterChips(store);
     chips.mount(container);
 
     const actionChip = chips.element.querySelector<HTMLButtonElement>('[data-filter="action"]')!;
     actionChip.click();
 
+    expect(clickSpy).toHaveBeenCalled();
     expect(store.getState().activeFilter).toBe('action');
 
     chips.update(store.getState());
