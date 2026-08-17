@@ -1,8 +1,8 @@
 # Milestone v3.0 Requirements: Game Catalog Expansion
 
 ## Memory Cards
-- [ ] **MC-01**: Cyber memory cards model & logic (grid shuffle, 2-card flip state machine, pair matching, streak combo multiplier, round timer, 100% unit tests)
-- [ ] **MC-02**: Memory Cards canvas presentation (holographic card flip animations, particle sparkles on match, audio feedback, high score saving)
+- [x] **MC-01**: Cyber memory cards model & logic (grid shuffle, 2-card flip state machine, pair matching, streak combo multiplier, round timer, 100% unit tests)
+- [x] **MC-02**: Memory Cards canvas presentation (holographic card flip animations, particle sparkles on match, audio feedback, high score saving)
 
 ## Memory Boxes
 - [ ] **MB-01**: Memory boxes sequence model (increasing pattern sequence generator, step-by-step playback state, player input matching, life tracking, 100% unit tests)
@@ -40,8 +40,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MC-01 | Phase 13 | Pending |
-| MC-02 | Phase 13 | Pending |
+| MC-01 | Phase 13 | Complete |
+| MC-02 | Phase 13 | Complete |
 | MB-01 | Phase 14 | Pending |
 | MB-02 | Phase 14 | Pending |
 | PB-01 | Phase 15 | Pending |

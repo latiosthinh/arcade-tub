@@ -2,7 +2,7 @@
 
 ## Phases
 
-- [ ] **Phase 13: Memory Cards Minigame** - Cyber card matching with streak combos, round timer, flip animations, and sound effects
+- [x] **Phase 13: Memory Cards Minigame** - Cyber card matching with streak combos, round timer, flip animations, and sound effects
 - [ ] **Phase 14: Memory Boxes Minigame** - Sequence memory reproduction game with increasing pattern steps, neon pulse feedback, and tone synthesis
 - [ ] **Phase 15: Pop Balloon Minigame** - Fast-action ascending balloon pop mechanics with color combo multipliers, hazard bombs, and particle effects
 - [ ] **Phase 16: Space Racer Minigame** - High-speed orbital obstacle dodging with speed kinematics, turbo boost gates, and pseudo-3D warp starfield
@@ -23,7 +23,10 @@
   3. Mismatched pairs flip back facedown after brief reveal delay
   4. Round ends when all pairs cleared or timer expires, saving high score locally
   5. 100% unit tests pass for card state machine, shuffle logic, and combo calculations
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 13-01-PLAN.md — CardGrid data model, cyber glyph pairs, flip/match state machine, GameState timers & combo math, unit test suite
+- [x] 13-02-PLAN.md — Holographic 3D card flip canvas rendering, vector cyber glyphs, particle sparkles, procedural audio, MemoryCardsScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 14: Memory Boxes Minigame
@@ -121,7 +124,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 13. Memory Cards Minigame | 0/0 | Not started | - |
+| 13. Memory Cards Minigame | 2/2 | Complete | 2026-08-18 |
 | 14. Memory Boxes Minigame | 0/0 | Not started | - |
 | 15. Pop Balloon Minigame | 0/0 | Not started | - |
 | 16. Space Racer Minigame | 0/0 | Not started | - |
