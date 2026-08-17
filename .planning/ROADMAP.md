@@ -196,7 +196,10 @@ Plans:
   2. Sound mute toggle silences all UI audio and synchronizes mute state with running game frames
   3. Total gzipped distribution bundle size remains strictly under 200KB
   4. 100% of all 191+ Vitest unit tests pass across engine, adapter, and games with zero regressions
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 12-01-PLAN.md — Procedural UI Web Audio synthesizer, component sound triggers, and unit tests
+- [ ] 12-02-PLAN.md — Production bundle audit, size budget verification, and full monorepo regression suite
 **UI hint**: yes
 
 ## Progress
