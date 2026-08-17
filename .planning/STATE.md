@@ -3,24 +3,24 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-08-17T15:40:00.000Z"
+last_updated: "2026-08-17T15:45:00.000Z"
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 7
-  completed_plans: 6
-  percent: 85
+  completed_plans: 7
+  percent: 100
 ---
 
 # State: Arcade Carnival
 
 ## Current Phase
 
-Phase 3: Brick Blitz — In Progress (Plan 01 complete)
+Phase 3: Brick Blitz — Plan 02 Complete (Phase 3 finished)
 
 ## Status
 
-STATUS: Phase 3 Plan 01 Complete. Ready for Phase 3 Plan 02.
+STATUS: Phase 3 Complete (Plans 01 & 02). Ready for Phase 4: Sky Hopper.
 
 ## History
 
@@ -31,6 +31,7 @@ STATUS: Phase 3 Plan 01 Complete. Ready for Phase 3 Plan 02.
 - 2026-08-17: Phase 2 Plan 01 completed (Safe Cracker core game models, dial collision math, game state).
 - 2026-08-17: Phase 2 Plan 02 completed (Safe Cracker visual presentation, particles, scene, controls, Playables adapter integration).
 - 2026-08-17: Phase 3 Plan 01 completed (Brick Blitz physics, paddle angular deflection, ball trajectory, brick AABB collisions).
+- 2026-08-17: Phase 3 Plan 02 completed (Brick Blitz scene, game state, particles, input controls, Playables adapter wiring).
 
 ## Decisions
 
@@ -44,3 +45,4 @@ STATUS: Phase 3 Plan 01 Complete. Ready for Phase 3 Plan 02.
 - Safe Cracker math: Dial wraps at 2*PI, target zone arcs narrow per difficulty level, speed multiplier scales with floor(score/3000)*0.35 + streak*0.05
 - Capped active particles at 200 in ParticleSystem to bound memory/render load
 - Brick Blitz math: Max paddle deflection angle is 60 degrees (PI/3), circle-to-AABB collision resolution inverts dominant penetration axis.
+- Brick Blitz particles: capped at 300 debris and sparks, screen shake on life loss.
