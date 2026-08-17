@@ -100,7 +100,10 @@ Plans:
   3. Colliding with top/bottom boundaries or coral structures triggers game over
   4. High score updates and persists locally upon run completion
   5. 100% unit tests pass for hydrodynamic physics calculations and bounding box gap checks
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 18-01-PLAN.md — Fish hydrodynamic physics model, PipeManager coral reef scrolling & circle-AABB collisions, pearl pickups, GameState medal tiers, unit test suite
+- [ ] 18-02-PLAN.md — Deep ocean caustic FishRenderer, animated cyber-fish, glowing coral pillars, FishAudio procedural synthesizer, FlappyFishScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 19: 2048 Neon Minigame
