@@ -6,7 +6,7 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Monorepo scaffold, Playables adapter, hub menu shell
+- [x] **Phase 1: Foundation** - Monorepo scaffold, Playables adapter, hub menu shell
 - [ ] **Phase 2: Safe Cracker** - Clicker/timing minigame
 - [ ] **Phase 3: Brick Blitz** - Breakout minigame
 - [ ] **Phase 4: Sky Hopper** - Vertical platformer minigame
@@ -30,7 +30,7 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 Plans:
 - [x] 01-01-PLAN.md — Monorepo scaffold, workspace config, Vite multi-page build
 - [x] 01-02-PLAN.md — Playables adapter + game engine implementations
-- [ ] 01-03-PLAN.md — Hub menu page with arcade-themed game cards
+- [x] 01-03-PLAN.md — Hub menu page with arcade-themed game cards
 
 ### Phase 2: Safe Cracker
 **Goal**: Fully playable Safe Cracker game — rotating dial indicator, timed target zones, scoring, speed ramp, game over
@@ -108,7 +108,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 3/3 | Complete | 2026-08-17 |
 | 2. Safe Cracker | 0/TBD | Not started | - |
 | 3. Brick Blitz | 0/TBD | Not started | - |
 | 4. Sky Hopper | 0/TBD | Not started | - |
