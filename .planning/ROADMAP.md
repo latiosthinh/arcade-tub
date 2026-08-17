@@ -89,8 +89,8 @@ Plans:
   5. Game ends when too many crates lost
 **Plans**: 2 plans
 Plans:
-- [ ] 05-01-PLAN.md — Core 2-lane cart kinematics, vertical stacking physics, wobble math, and falling items manager
-- [ ] 05-02-PLAN.md — Game state, steampunk particle effects, canvas factory scene, HUD, and Playables integration
+- [x] 05-01-PLAN.md — Core 2-lane cart kinematics, vertical stacking physics, wobble math, and falling items manager
+- [x] 05-02-PLAN.md — Game state, steampunk particle effects, canvas factory scene, HUD, and Playables integration
 
 ### Phase 6: Type Strike
 **Goal**: Fully playable Type Strike typing defense — enemies with words, typing destroys them, streak multiplier
@@ -117,7 +117,11 @@ Plans:
   3. Bundle size per game < 200KB gzipped
   4. Hub and game menus keyboard-navigable with ARIA labels
   5. Deploy script outputs production-ready static bundle
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [x] 07-01-PLAN.md — Procedural Web Audio synthesizer singleton and sound presets
+- [ ] 07-02-PLAN.md — Game sound integration, hub high scores, and navigation polish
+- [ ] 07-03-PLAN.md — Bundle size audit, production asset packaging, and end-to-end verification
 
 ## Progress
 
@@ -129,4 +133,4 @@ Plans:
 | 4. Sky Hopper | 2/2 | Complete | 2026-08-17 |
 | 5. Crate Catch | 2/2 | Complete | 2026-08-17 |
 | 6. Type Strike | 2/2 | Complete | 2026-08-17 |
-| 7. Polish & Deploy | 0/TBD | Not started | - |
+| 7. Polish & Deploy | 1/3 | In Progress | - |
