@@ -3,6 +3,18 @@
 ## Purpose
 Collection of 5 browser-based arcade minigames packaged for YouTube Playables. Each game lives in its own folder, shares a common Playables adapter layer, and launches from a hub menu. Original names and UI — no third-party IP.
 
+## Current Milestone: v2.0 Unique UI/UX Refactor
+
+**Goal:** Overhaul webapp from YouTube-dark clone to a distinct, memorable Arcade Carnival visual brand with modern vanilla TS UX architecture.
+
+**Target features:**
+- Unique visual identity & design system (retro-modern arcade theme, custom typography, tokens)
+- Lightweight component-based Hub architecture (clean DOM updates, no full innerHTML rebuilds)
+- Modern UX: smooth view transitions, URL hash routing (back/forward button support), loading states
+- Responsive redesign with mobile-first navigation (bottom bar on mobile, full touch support)
+- Unified embed kit & docs page using shared design tokens
+- Zero-dependency constraint preserved (vanilla TS + CSS)
+
 ## Games
 | Folder | Game | Genre | Mechanic Summary |
 |--------|------|-------|------------------|
@@ -16,14 +28,31 @@ Collection of 5 browser-based arcade minigames packaged for YouTube Playables. E
 - **Build:** Vite 7 + TypeScript + pnpm workspaces
 - **Rendering:** Canvas 2D API (no engine dependency)
 - **Platform:** YouTube Playables (iframe, static assets, lifecycle hooks via postMessage)
-- **Styling:** Minimal CSS for hub menu; games use canvas full-bleed
+- **Styling:** Custom CSS design system (tokens, scoped CSS, retro-modern arcade aesthetic)
 - **Testing:** Vitest for game logic unit tests
 - **Deploy:** Static hosting (Vercel / GitHub Pages / any CDN)
 
 ## Constraints
-- No server-side code — fully static
+- Zero runtime dependencies — fully static vanilla TS + CSS
 - Each game folder is self-contained (own entry point, assets, game loop)
-- Shared code lives in `packages/playables-adapter/` (score reporting, save/load, lifecycle)
-- Hub page at root `index.html` links to each game
-- Keyboard-only controls (no mouse required except Safe Cracker click)
+- Shared code lives in `packages/playables-adapter/` and `packages/game-engine/`
+- Bundle size budget: < 200KB gzipped total
 - Must run at 60fps on mid-range mobile
+- All existing 191 tests must continue passing
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
