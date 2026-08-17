@@ -7,8 +7,8 @@ import * as adapter from '@arcade-carnival/playables-adapter';
 import { uiAudio } from '../../src/audio/ui-audio';
 
 describe('Game Data Module (src/data/games.ts)', () => {
-  it('exports 5 arcade games with required metadata', () => {
-    expect(GAMES).toHaveLength(5);
+  it('exports 12 arcade games with required metadata', () => {
+    expect(GAMES).toHaveLength(12);
     for (const game of GAMES) {
       expect(game).toHaveProperty('id');
       expect(game).toHaveProperty('title');
