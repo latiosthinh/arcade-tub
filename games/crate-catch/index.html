@@ -6,11 +6,36 @@
   <title>Crate Catch — Arcade Carnival</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; position: relative; }
     canvas { display: block; }
+    .hub-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 1000;
+      color: #2ed573;
+      background: rgba(26, 26, 46, 0.85);
+      border: 2px solid #2ed573;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-family: 'Courier New', monospace, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(46, 213, 115, 0.3);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .hub-btn:hover, .hub-btn:focus-visible {
+      background: #2ed573;
+      color: #1a1a2e;
+      box-shadow: 0 0 16px rgba(46, 213, 115, 0.8);
+      outline: 2px solid #ffffff;
+    }
   </style>
 </head>
 <body>
+  <a href="../../index.html" class="hub-btn" aria-label="Return to Arcade Carnival Hub">← Arcade Hub</a>
   <canvas id="game"></canvas>
   <script type="module" src="./src/main.ts"></script>
 </body>
