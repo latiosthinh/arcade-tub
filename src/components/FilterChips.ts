@@ -5,9 +5,10 @@ import { uiAudio } from '../audio/ui-audio';
 
 const FILTERS = [
   { id: 'all', label: 'All Games' },
-  { id: 'action', label: 'Action & Breakout' },
+  { id: 'action', label: 'Action & Defense' },
   { id: 'arcade', label: 'Classic Arcade' },
-  { id: 'casual', label: 'Endless Jumpers' }
+  { id: 'puzzle', label: 'Puzzle & Memory' },
+  { id: 'casual', label: 'Casual & Jumpers' }
 ];
 
 /**

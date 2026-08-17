@@ -26,23 +26,25 @@ describe('FilterChips Component (src/components/FilterChips.ts)', () => {
     vi.restoreAllMocks();
   });
 
-  it('renders filter chip buttons for all, action, arcade, casual', () => {
+  it('renders filter chip buttons for all, action, arcade, puzzle, casual', () => {
     const chips = new FilterChips(store);
     chips.mount(container);
 
     expect(chips.element.classList.contains('ac-chips-bar')).toBe(true);
 
     const buttons = chips.element.querySelectorAll<HTMLButtonElement>('.ac-chip');
-    expect(buttons.length).toBe(4);
+    expect(buttons.length).toBe(5);
 
     const allChip = chips.element.querySelector('[data-filter="all"]');
     const actionChip = chips.element.querySelector('[data-filter="action"]');
     const arcadeChip = chips.element.querySelector('[data-filter="arcade"]');
+    const puzzleChip = chips.element.querySelector('[data-filter="puzzle"]');
     const casualChip = chips.element.querySelector('[data-filter="casual"]');
 
     expect(allChip).toBeTruthy();
     expect(actionChip).toBeTruthy();
     expect(arcadeChip).toBeTruthy();
+    expect(puzzleChip).toBeTruthy();
     expect(casualChip).toBeTruthy();
 
     expect(allChip?.classList.contains('active')).toBe(true);

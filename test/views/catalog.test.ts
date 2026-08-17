@@ -52,7 +52,7 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
 
     // Still in DOM, but hidden with is-hidden
     const hiddenCards = grid.element.querySelectorAll<HTMLElement>('.ac-card.is-hidden');
-    expect(hiddenCards.length).toBe(4);
+    expect(hiddenCards.length).toBe(11);
 
     const visibleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
     expect(visibleCards.length).toBe(1);
@@ -68,15 +68,24 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
     const grid = new GameGrid(store);
     grid.mount(container);
 
-    // action filter -> brick-blitz, type-strike
+    // action filter -> brick-blitz, type-strike, virus-defense, pop-balloon
     store.setState({ activeFilter: 'action' });
     grid.update(store.getState());
 
     const visibleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
-    expect(visibleCards.length).toBe(2);
+    expect(visibleCards.length).toBe(4);
 
     const ids = Array.from(visibleCards).map(c => c.getAttribute('data-game-id'));
-    expect(ids).toEqual(['brick-blitz', 'type-strike']);
+    expect(ids).toEqual(['brick-blitz', 'type-strike', 'pop-balloon', 'virus-defense']);
+
+    // puzzle filter -> memory-cards, memory-boxes, game-2048
+    store.setState({ activeFilter: 'puzzle' });
+    grid.update(store.getState());
+
+    const puzzleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
+    expect(puzzleCards.length).toBe(3);
+    const puzzleIds = Array.from(puzzleCards).map(c => c.getAttribute('data-game-id'));
+    expect(puzzleIds).toEqual(['memory-cards', 'memory-boxes', 'game-2048']);
 
     grid.destroy();
   });
