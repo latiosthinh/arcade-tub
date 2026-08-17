@@ -9,7 +9,7 @@
 - [x] **Phase 17: Virus Defense Minigame** - 360-degree turret radial defense against mutating pathogen swarms with trajectory physics and nucleus health
 - [x] **Phase 18: Flappy Fish Minigame** - Underwater hydrodynamic flapping physics, glowing coral reef obstacles, and pearl bubble score collection
 - [x] **Phase 19: 2048 Neon Minigame** - 4x4 sliding number tile puzzle with directional merge logic, spawn algorithms, neon value styling, and swipe support
-- [ ] **Phase 20: Catalog Integration & Release Audit** - Hub metadata registration, SVG screenshots, multi-page Vite build, bundle budget audit (<200KB), and 100% test verification
+- [x] **Phase 20: Catalog Integration & Release Audit** - Hub metadata registration, SVG screenshots, multi-page Vite build, bundle budget audit (<200KB), and 100% test verification
 
 ## Phase Details
 
@@ -134,8 +134,8 @@ Plans:
   5. 100% unit test pass rate across all games and shared packages in workspace
 **Plans**: 2 plans
 Plans:
-- [ ] 20-01-PLAN.md — Register 7 new games in GAMES metadata catalog, create authentic SVG screenshots, update FilterChips and GameGrid categories, update catalog unit tests
-- [ ] 20-02-PLAN.md — Multi-page bundle audit test assertions for 12 games, production Vite build, bundle size audit (<200KB limit), and 100% test pass verification
+- [x] 20-01-PLAN.md — Register 7 new games in GAMES metadata catalog, create authentic SVG screenshots, update FilterChips and GameGrid categories, update catalog unit tests
+- [x] 20-02-PLAN.md — Multi-page bundle audit test assertions for 12 games, production Vite build, bundle size audit (<200KB limit), and 100% test pass verification
 **UI hint**: yes
 
 ## Progress Table
@@ -149,4 +149,4 @@ Plans:
 | 17. Virus Defense Minigame | 2/2 | Complete | 2026-08-18 |
 | 18. Flappy Fish Minigame | 2/2 | Complete | 2026-08-18 |
 | 19. 2048 Neon Minigame | 2/2 | Complete | 2026-08-18 |
-| 20. Catalog Integration & Release Audit | 0/0 | Not started | - |
+| 20. Catalog Integration & Release Audit | 2/2 | Complete | 2026-08-18 |

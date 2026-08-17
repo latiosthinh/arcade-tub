@@ -29,8 +29,8 @@
 - [x] **G2048-02**: 2048 canvas presentation (smooth tile slide & merge pop animations, color-tiered neon value tiles, keyboard & swipe touch input, high score saving)
 
 ## Hub Integration & Packaging
-- [ ] **HUB-01**: Register all 7 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
-- [ ] **HUB-02**: Multi-page Vite build configuration, standalone game HTML templates, total bundle size audit (< 200KB gzipped), and 100% test pass rate across all 12 games
+- [x] **HUB-01**: Register all 7 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
+- [x] **HUB-02**: Multi-page Vite build configuration, standalone game HTML templates, total bundle size audit (< 200KB gzipped), and 100% test pass rate across all 12 games
 
 ## Out of Scope
 - Multiplayer/online matchmaking (static browser requirement)
@@ -54,6 +54,6 @@
 | FF-02 | Phase 18 | Complete |
 | G2048-01 | Phase 19 | Complete |
 | G2048-02 | Phase 19 | Complete |
-| HUB-01 | Phase 20 | Pending |
-| HUB-02 | Phase 20 | Pending |
+| HUB-01 | Phase 20 | Complete |
+| HUB-02 | Phase 20 | Complete |
 
