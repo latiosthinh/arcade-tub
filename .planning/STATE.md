@@ -1,61 +1,17 @@
----
-gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: complete
-last_updated: "2026-08-17T16:20:00.000Z"
-progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
----
-
 # State: Arcade Carnival
 
-## Current Phase
+## Current State
+Milestone v1.0 complete and shipped!
 
-Phase 7: Polish & Deploy — Complete (All 7 Phases Finished)
-
-## Status
-
-STATUS: Phase 7 Plan 03 Complete. All 5 arcade minigames + Arcade Hub built, verified, audio synthesized, keyboard accessible, fully unit tested (191 tests passing), and bundle audited under 200KB limit (dist total is ~37.84 KB gzipped). Workspace is 100% production ready for YouTube Playables deployment.
-
-## History
-
-- 2026-08-17: Project initialized. 7 phases defined. Roadmap created.
-- 2026-08-17: Phase 1 Plan 01 completed (Monorepo scaffold).
-- 2026-08-17: Phase 1 Plan 02 completed (Playables adapter & game engine).
-- 2026-08-17: Phase 1 Plan 03 completed (Hub menu shell & arcade theme).
-- 2026-08-17: Phase 2 Plan 01 completed (Safe Cracker core game models, dial collision math, game state).
-- 2026-08-17: Phase 2 Plan 02 completed (Safe Cracker visual presentation, particles, scene, controls, Playables adapter integration).
-- 2026-08-17: Phase 3 Plan 01 completed (Brick Blitz physics, paddle angular deflection, ball trajectory, brick AABB collisions).
-- 2026-08-17: Phase 3 Plan 02 completed (Brick Blitz scene, game state, particles, input controls, Playables adapter wiring).
-- 2026-08-17: Phase 4 Plan 01 completed (Sky Hopper character physics, camera scroll, platform & obstacle generators).
-- 2026-08-17: Phase 4 Plan 02 completed (Sky Hopper scene, GameState, Story/Infinite modes, particles, Playables integration).
-- 2026-08-17: Phase 5 Plan 01 & 02 completed (Crate Catch two-lane physics, crate stacking, steampunk factory, Playables adapter).
-- 2026-08-17: Phase 6 Plan 01 completed (Type Strike word tiers, enemy kinematics, typing engine target locking, prefix advancement).
-- 2026-08-17: Phase 6 Plan 02 completed (Type Strike scene, GameState, laser strike particles, CRT scanline rendering, and main bootstrap).
-- 2026-08-17: Phase 7 Plan 01 completed (AudioSynthesizer procedural Web Audio API singleton with zero assets and preset sound effects).
-- 2026-08-17: Phase 7 Plan 02 completed (Audio SFX wired across all 5 games, Back to Hub links added, hub keyboard shortcuts and high scores).
-- 2026-08-17: Phase 7 Plan 03 completed (Automated bundle size audit, multi-page dist verification, 100% test suite passing).
-
-## Decisions
-
-- Tech: Vite 7 + TypeScript + pnpm workspaces + Canvas 2D
-- Platform: YouTube Playables (static iframe games)
-- Structure: One folder per game, shared playables-adapter package
-- No external game engine — raw Canvas 2D API with lightweight in-house GameLoop/InputManager/SceneManager
-- Original IP — no third-party characters or names
-- TypeScript project references + composite tsconfig per workspace project
-- Hub UI uses CSS Grid with per-game CSS variables (`--accent`) for arcade neon styling and hover animations
-- Safe Cracker math: Dial wraps at 2*PI, target zone arcs narrow per difficulty level, speed multiplier scales with floor(score/3000)*0.35 + streak*0.05
-- Capped active particles at 200 in ParticleSystem to bound memory/render load
-- Brick Blitz math: Max paddle deflection angle is 60 degrees (PI/3), circle-to-AABB collision resolution inverts dominant penetration axis.
-- Brick Blitz particles: capped at 300 debris and sparks, screen shake on life loss.
-- Sky Hopper altitude conversion: altitude meters = (500 - playerWorldY) / 10.
-- Sky Hopper modes: Story (target 5,000m airship mothership + 2500 clear bonus) vs Infinite (endless climb scored by altitude + kills).
-- Sky Hopper particle pool capped at 250 particles.
-- Type Strike: 60s round countdown, 3 base shields, dynamic drone speed scaling over elapsed time, laser particle pool capped at 300.
-- Hub Navigation: 1-5 keys launch games, arrow keys cycle focus, Enter triggers focused game, M toggles mute, ? / H opens shortcut help modal.
+## Shipped in v1.0
+- 5 Complete HTML5 Canvas Arcade Minigames for YouTube Playables:
+  1. `games/safe-cracker/`: Safe Cracker clicker/timing game
+  2. `games/brick-blitz/`: Brick Blitz breakout game
+  3. `games/sky-hopper/`: Sky Hopper vertical platformer
+  4. `games/crate-catch/`: Crate Catch 2-lane catcher/stacker
+  5. `games/type-strike/`: Type Strike cyberpunk typing defense
+- Shared `packages/playables-adapter/` (YouTube Playables postMessage lifecycle + localStorage fallback)
+- Shared `packages/game-engine/` (GameLoop, InputManager, SceneManager, procedural Web Audio synthesizer)
+- Central Arcade Hub (`index.html`) with neon cards, high score badges, and keyboard shortcuts overlay
+- 27 test files, 191 unit tests passing (100% pass rate)
+- Dist bundle size: 37.84 KB gzipped total (< 200 KB per game budget)

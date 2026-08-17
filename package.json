@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "audit-bundle": "node scripts/audit-bundle.js",
+    "audit:bundle": "node scripts/audit-bundle.js",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },
