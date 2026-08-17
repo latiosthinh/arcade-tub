@@ -1,4 +1,4 @@
-import { GameScene, InputManager } from '@arcade-carnival/game-engine';
+import { GameScene, InputManager, audio } from '@arcade-carnival/game-engine';
 import { Cart } from './Cart.js';
 import { StackPhysics } from './StackPhysics.js';
 import { FallingItemManager, FallingItem } from './FallingItemManager.js';
@@ -97,6 +97,7 @@ export class CrateCatchScene implements GameScene {
   private performBank(): void {
     const bankRes = this.stackPhysics.bank();
     if (bankRes.crateCount > 0) {
+      audio.playPowerup();
       this.gameState.addBankedScore(bankRes.totalPoints, bankRes.crateCount);
       const cartCenter = this.cart.x + this.cart.width / 2;
       this.particles.emitSparks(cartCenter, this.cart.y, 20);
@@ -185,6 +186,7 @@ export class CrateCatchScene implements GameScene {
       for (let i = 0; i < newMissed; i++) {
         this.gameState.registerMissedCrate();
       }
+      audio.playError();
       this.particles.addFloatingText('CRATE LOST!', 200 + Math.random() * 400, 560, '#ff4d4d', 18);
     }
 
@@ -192,19 +194,23 @@ export class CrateCatchScene implements GameScene {
     const cartCenter = this.cart.x + this.cart.width / 2;
     for (const res of colResults) {
       if (res.isBomb) {
+        audio.playExplosion();
         this.gameState.damageCart(35);
         this.stackPhysics.explodeScatter();
         this.particles.emitExplosion(cartCenter, this.cart.y, 30);
         this.particles.addFloatingText('BOMB HIT! -35 HP', cartCenter, this.cart.y - 40, '#ff3838', 22);
       } else if (res.isRepair) {
+        audio.playPowerup();
         this.gameState.repairCart(35);
         this.particles.emitSparks(cartCenter, this.cart.y, 16);
         this.particles.addFloatingText('+35 HP REPAIRED', cartCenter, this.cart.y - 30, '#2ed573', 20);
       } else if (res.isShield) {
+        audio.playPowerup();
         this.stackPhysics.activateShield(10.0);
         this.particles.emitSparks(cartCenter, this.cart.y, 20);
         this.particles.addFloatingText('MAGNETIC SHIELD (10s)', cartCenter, this.cart.y - 30, '#00d2d3', 20);
       } else if (res.caught && res.item) {
+        audio.playScore();
         const topY = this.stackPhysics.getStackTopY(this.cart.y);
         if (res.item.type === 'crate_golden') {
           this.particles.emitGoldenSparkle(cartCenter, topY, 14);

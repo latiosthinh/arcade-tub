@@ -1,4 +1,4 @@
-import { GameScene, InputManager } from '@arcade-carnival/game-engine';
+import { GameScene, InputManager, audio } from '@arcade-carnival/game-engine';
 import { Player } from './Player.js';
 import { Camera } from './Camera.js';
 import { PlatformManager } from './PlatformManager.js';
@@ -158,6 +158,7 @@ export class SkyHopperScene implements GameScene {
 
     if (this.inputManager.justPressed('KeyW') || this.inputManager.justPressed('ArrowUp')) {
       this.player.shoot();
+      audio.playClick();
     }
 
     // Player update
@@ -186,12 +187,16 @@ export class SkyHopperScene implements GameScene {
     const landRes = this.platformManager.checkLanding(this.player, dt);
     if (landRes.hit && landRes.platform) {
       if (landRes.gotRocket) {
+        audio.playPowerup();
         this.particles.emitExplosion(this.player.x + 16, this.player.y + 16, '#fdcb6e', 20);
       } else if (landRes.isSuperBounce) {
+        audio.playBounce();
         this.particles.emitSpringSparks(landRes.platform.x + landRes.platform.width / 2, landRes.platform.y, 14);
       } else if (landRes.platform.type === 'fragile') {
+        audio.playBounce();
         this.particles.emitFragileCrumble(landRes.platform.x, landRes.platform.y, landRes.platform.width, 12);
       } else {
+        audio.playBounce();
         this.particles.emitJumpDust(landRes.platform.x + landRes.platform.width / 2, landRes.platform.y, 8);
       }
     }
@@ -199,6 +204,7 @@ export class SkyHopperScene implements GameScene {
     // Obstacle collisions
     const combatScore = this.obstacleManager.checkProjectileCollisions(this.player);
     if (combatScore > 0) {
+      audio.playExplosion();
       this.gameState.addScore(combatScore);
       this.particles.emitExplosion(this.player.x + 16, this.camera.y + 200, '#ff7675', 12);
     }
@@ -206,12 +212,15 @@ export class SkyHopperScene implements GameScene {
     const obsRes = this.obstacleManager.checkPlayerInteractions(this.player);
     if (obsRes.hitObstacle) {
       if (obsRes.stomped) {
+        audio.playBounce();
         this.particles.emitExplosion(obsRes.hitObstacle.x + 18, obsRes.hitObstacle.y + 12, '#fdcb6e', 14);
         this.gameState.addScore(obsRes.pointsAwarded);
       } else if (obsRes.balloonBounce) {
+        audio.playBounce();
         this.particles.emitBalloonPop(obsRes.hitObstacle.x + 16, obsRes.hitObstacle.y + 20, 12);
         this.gameState.addScore(obsRes.pointsAwarded);
       } else if (obsRes.playerDead) {
+        audio.playError();
         this.particles.emitExplosion(this.player.x + 16, this.player.y + 16, '#ff3838', 24);
         this.gameState.triggerGameOver();
       }
@@ -219,11 +228,18 @@ export class SkyHopperScene implements GameScene {
 
     // Abyss fall check
     if (this.camera.isOutOfBounds(this.player.y)) {
+      if (this.gameState.status === 'playing') {
+        audio.playError();
+      }
       this.gameState.triggerGameOver();
     }
 
     // Altitude & score
+    const prevStatus = this.gameState.status;
     this.gameState.updateAltitude(this.player.y);
+    if (prevStatus === 'playing' && this.gameState.status === 'victory') {
+      audio.playVictory();
+    }
 
     this.particles.update(dt);
     this.inputManager.update();

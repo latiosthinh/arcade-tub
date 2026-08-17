@@ -1,5 +1,5 @@
 import type { GameScene } from '@arcade-carnival/game-engine';
-import { InputManager } from '@arcade-carnival/game-engine';
+import { InputManager, audio } from '@arcade-carnival/game-engine';
 import { Dial } from './Dial.js';
 import { GameState } from './GameState.js';
 import { ParticleSystem } from './Particles.js';
@@ -68,6 +68,7 @@ export class SafeCrackerScene implements GameScene {
 
   private triggerPick(): void {
     if (this.gameState.status === 'ready' || this.gameState.status === 'gameover') {
+      audio.playClick();
       this.gameState.start();
       this.dial.resetZones(0);
       this.particles.clear();
@@ -85,12 +86,15 @@ export class SafeCrackerScene implements GameScene {
     const tipY = this.centerY + Math.sin(this.dial.pointerAngle) * (this.dialRadius - 10);
 
     if (pickResult.outcome === 'yellow') {
+      audio.playScore();
       this.particles.emit(tipX, tipY, 25, '#ffd32a', 180, 3.5, 0.6);
       this.dial.resetZones(this.gameState.difficultyLevel);
     } else if (pickResult.outcome === 'blue') {
+      audio.playPowerup();
       this.particles.emit(tipX, tipY, 20, '#00d2d3', 160, 3, 0.6);
       this.dial.resetZones(this.gameState.difficultyLevel);
     } else if (pickResult.outcome === 'miss') {
+      audio.playError();
       this.particles.emit(tipX, tipY, 12, '#ff3838', 120, 2.5, 0.4);
       this.shakeTimer = 0.2;
     }
@@ -177,7 +181,11 @@ export class SafeCrackerScene implements GameScene {
     const isShiftDown = this.input.isDown('ShiftLeft') || this.input.isDown('ShiftRight');
     const isBoosted = this.isRightMouseDown || isShiftDown;
 
+    const prevStatus = this.gameState.status;
     this.gameState.update(dt);
+    if (prevStatus === 'playing' && this.gameState.status === 'gameover') {
+      audio.playExplosion();
+    }
 
     if (this.gameState.status === 'playing') {
       this.dial.update(dt, this.gameState.speedMultiplier, isBoosted);

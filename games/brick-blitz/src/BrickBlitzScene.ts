@@ -1,4 +1,4 @@
-import { GameScene, InputManager } from '@arcade-carnival/game-engine';
+import { GameScene, InputManager, audio } from '@arcade-carnival/game-engine';
 import { Ball } from './Ball.js';
 import { Paddle } from './Paddle.js';
 import { BrickGrid } from './BrickGrid.js';
@@ -54,12 +54,14 @@ export class BrickBlitzScene implements GameScene {
 
   private handlePointerDown(e: PointerEvent): void {
     if (this.gameState.status === 'ready') {
+      audio.playClick();
       this.gameState.start();
       this.ball.launch((Math.random() - 0.5) * 0.4);
     } else if (this.gameState.status === 'playing') {
       const mouseX = this.getCanvasRelativeX(e.clientX);
       this.paddle.setPositionX(mouseX);
       if (!this.ball.launched) {
+        audio.playBounce();
         this.ball.launch((Math.random() - 0.5) * 0.4);
       }
     } else if (this.gameState.status === 'gameover') {
@@ -100,8 +102,10 @@ export class BrickBlitzScene implements GameScene {
     if (this.ball.launched) {
       const wallRes = this.ball.checkWallCollisions(800, 600);
       if (wallRes.bounced) {
+        audio.playBounce();
         this.particles.emitSparks(this.ball.x, this.ball.y, '#00d2d3', 6);
       } else if (wallRes.lost) {
+        audio.playError();
         this.gameState.loseLife();
         this.shakeTimer = 0.25;
         this.particles.emitSparks(this.ball.x, 590, '#ff3838', 20);
@@ -111,6 +115,7 @@ export class BrickBlitzScene implements GameScene {
       }
 
       if (this.paddle.checkBallBounce(this.ball)) {
+        audio.playBounce();
         this.particles.emitSparks(this.ball.x, this.paddle.y, '#00d2d3', 10);
       }
 
@@ -118,7 +123,12 @@ export class BrickBlitzScene implements GameScene {
       if (colRes.hit && colRes.brick) {
         this.gameState.addScore(colRes.pointsAwarded);
         if (colRes.isLife) {
+          audio.playPowerup();
           this.gameState.addLife();
+        } else if (colRes.isBonus) {
+          audio.playPowerup();
+        } else {
+          audio.playScore();
         }
 
         if (colRes.isDestroyed) {
@@ -133,6 +143,7 @@ export class BrickBlitzScene implements GameScene {
         }
 
         if (this.brickGrid.isLevelCleared()) {
+          audio.playVictory();
           this.gameState.completeLevel();
           this.brickGrid.loadLevel(this.gameState.level);
           this.ball.reset(this.paddle.x, this.paddle.width, this.paddle.y);

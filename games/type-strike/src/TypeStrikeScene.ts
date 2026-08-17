@@ -1,4 +1,4 @@
-import { GameScene } from '@arcade-carnival/game-engine';
+import { GameScene, audio } from '@arcade-carnival/game-engine';
 import { Dictionary, WordTier } from './Dictionary.js';
 import { Enemy } from './Enemy.js';
 import { TypingEngine } from './TypingEngine.js';
@@ -61,6 +61,7 @@ export class TypeStrikeScene implements GameScene {
   private handleKeyDown(e: KeyboardEvent): void {
     if (this.gameState.status === 'ready') {
       if (e.code === 'Space' || e.code === 'Enter' || (e.key.length === 1 && e.key >= 'a' && e.key <= 'z') || (e.key.length === 1 && e.key >= 'A' && e.key <= 'Z')) {
+        audio.playClick();
         this.gameState.start();
         return;
       }
@@ -86,9 +87,11 @@ export class TypeStrikeScene implements GameScene {
         return;
       }
 
+      const prevStreak = this.typingEngine.getStreak();
       const res = this.typingEngine.handleKey(e.key, this.enemies);
 
       if (res.status === 'locked' || res.status === 'progress') {
+        audio.playClick();
         const target = this.typingEngine.getActiveTarget();
         if (target) {
           this.particles.fireLaserBeam(60, this.defenderTurretY, target.x, target.y + target.height / 2, '#00ffcc', 3);
@@ -96,12 +99,17 @@ export class TypeStrikeScene implements GameScene {
         }
       } else if (res.status === 'completed') {
         if (res.targetEnemy) {
+          audio.playScore();
+          if (this.typingEngine.getStreak() > prevStreak && this.typingEngine.getStreak() % 5 === 0) {
+            audio.playPowerup();
+          }
           this.particles.fireLaserBeam(60, this.defenderTurretY, res.targetEnemy.x, res.targetEnemy.y + res.targetEnemy.height / 2, '#ff0055', 5);
           this.particles.emitExplosion(res.targetEnemy.x + res.targetEnemy.width / 2, res.targetEnemy.y + res.targetEnemy.height / 2, 32);
           this.particles.addFloatingText(`+${res.pointsEarned} (${res.multiplier}x)`, res.targetEnemy.x, res.targetEnemy.y - 15, '#ffeaa7', 22);
           this.gameState.addScore(res.pointsEarned ?? 0);
         }
       } else if (res.status === 'typo') {
+        audio.playError();
         if (res.targetEnemy) {
           this.particles.addFloatingText('TYPO! RESET 1x', res.targetEnemy.x, res.targetEnemy.y - 20, '#ff4757', 18);
         } else {
@@ -164,6 +172,12 @@ export class TypeStrikeScene implements GameScene {
           this.particles.emitShieldBreachWave(60, enemy.y + enemy.height / 2);
           this.particles.emitExplosion(60, enemy.y + enemy.height / 2, 25);
           this.particles.addFloatingText('SHIELD BREACH! -1', 90, enemy.y, '#ff3838', 22);
+
+          if (this.gameState.shields <= 0) {
+            audio.playExplosion();
+          } else {
+            audio.playError();
+          }
         }
       }
     }
