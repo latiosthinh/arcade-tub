@@ -55,7 +55,10 @@ Plans:
   3. Popping hazard spike bomb detonates explosion and reduces player health/timer
   4. Game tracks score with floating point indicators and saves high score on game over
   5. 100% unit tests pass for ascent kinematics, combo timer window, and collision points
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 15-01-PLAN.md — Balloon & BalloonSpawner kinematics, PopEngine combo multiplier chaining & bomb penalty, GameState 60s timer, unit test suite
+- [ ] 15-02-PLAN.md — Glossy neon balloon & spike bomb canvas rendering, PopAudio synthesizer, confetti/explosion particle physics, FloatingScore popups, PopBalloonScene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 16: Space Racer Minigame
