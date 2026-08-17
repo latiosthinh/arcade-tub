@@ -7,6 +7,7 @@
     { "path": "games/brick-blitz" },
     { "path": "games/sky-hopper" },
     { "path": "games/crate-catch" },
-    { "path": "games/type-strike" }
+    { "path": "games/type-strike" },
+    { "path": "games/memory-cards" }
   ]
 }
