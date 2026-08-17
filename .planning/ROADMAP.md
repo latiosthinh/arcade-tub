@@ -13,7 +13,7 @@ Arcade Carnival delivers 5 browser-based HTML5 Canvas arcade minigames packaged 
 - [x] **Phase 5: Crate Catch** - Catcher/stacker minigame
 - [x] **Phase 6: Type Strike** - Typing defense minigame
 - [x] **Phase 7: Polish & Deploy** - Cross-game polish, saves, packaging, deploy
-- [ ] **Phase 8: Design System & Visual Foundation** - Cyber-arcade CSS tokens, shared styles, CRT overlay
+- [x] **Phase 8: Design System & Visual Foundation** - Cyber-arcade CSS tokens, shared styles, CRT overlay
 - [ ] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
 - [ ] **Phase 10: Hub Views & Component Library** - Header, responsive nav, search/filters, game cards
 - [ ] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
@@ -136,7 +136,10 @@ Plans:
   1. Hub, embed kit, and standalone game shells share unified color palette, surface colors, neon glows, and arcade typography defined in `tokens.css`
   2. CRT scanline / bloom visual overlay renders across the hub and preserves user toggle preference across sessions in `localStorage`
   3. Design token stylesheet is imported cleanly without breaking iframe boundaries or introducing CSS specificity conflicts
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 08-01-PLAN.md — Create cyber-arcade tokens.css and theme.css
+- [x] 08-02-PLAN.md — CRT scanline/bloom overlay and shared tokens integration across templates
 **UI hint**: yes
 
 ### Phase 9: Core Architecture & Routing
@@ -198,7 +201,7 @@ Plans:
 | 5. Crate Catch | 2/2 | Complete | 2026-08-17 |
 | 6. Type Strike | 2/2 | Complete | 2026-08-17 |
 | 7. Polish & Deploy | 3/3 | Complete | 2026-08-17 |
-| 8. Design System & Visual Foundation | 0/0 | Not started | - |
+| 8. Design System & Visual Foundation | 2/2 | Complete | 2026-08-17 |
 | 9. Core Architecture & Routing | 0/0 | Not started | - |
 | 10. Hub Views & Component Library | 0/0 | Not started | - |
 | 11. Game Player View & Embed Kit | 0/0 | Not started | - |

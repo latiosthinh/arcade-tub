@@ -1,9 +1,9 @@
 # Milestone v2.0 Requirements: Unique UI/UX Refactor
 
 ## Design System & Tokens
-- [ ] **DS-01**: Retro-modern cyber-arcade CSS token palette (colors, surfaces, neon glow, typography, borders)
-- [ ] **DS-02**: Shared design tokens file imported across hub (`index.html`), embed kit (`embed.html`), and game shells
-- [ ] **DS-03**: CRT scanline / bloom visual overlay toggle with persistent preference in localStorage
+- [x] **DS-01**: Retro-modern cyber-arcade CSS token palette (colors, surfaces, neon glow, typography, borders)
+- [x] **DS-02**: Shared design tokens file imported across hub (`index.html`), embed kit (`embed.html`), and game shells
+- [x] **DS-03**: CRT scanline / bloom visual overlay toggle with persistent preference in localStorage
 
 ## Core Architecture & Routing
 - [ ] **ARCH-01**: BaseComponent lifecycle (`mount`, `update`, `destroy`, event listener unbinds) eliminating full-page innerHTML rebuilds
@@ -41,9 +41,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DS-01 | Phase 8 | Pending |
-| DS-02 | Phase 8 | Pending |
-| DS-03 | Phase 8 | Pending |
+| DS-01 | Phase 8 | Complete |
+| DS-02 | Phase 8 | Complete |
+| DS-03 | Phase 8 | Complete |
 | ARCH-01 | Phase 9 | Pending |
 | ARCH-02 | Phase 9 | Pending |
 | ARCH-03 | Phase 9 | Pending |

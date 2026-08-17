@@ -3,15 +3,15 @@
 ## Current Position
 
 Phase: Phase 8: Design System & Visual Foundation
-Plan: Not planned yet
-Status: Ready for planning
-Last activity: 2026-08-17 — Roadmap created for milestone v2.0 Unique UI/UX Refactor
+Plan: Complete (2/2 plans executed)
+Status: Complete
+Last activity: 2026-08-17 — Phase 8 Design System & Visual Foundation completed
 
 ## Performance Metrics
 
 | Metric | Target | Current | Status |
 |--------|--------|---------|--------|
-| Unit Tests | 191+ | 191 | Passing (100%) |
+| Unit Tests | 191+ | 199 | Passing (100%) |
 | Bundle Size | < 200 KB gzipped | 37.84 KB gzipped | Within Budget |
 | Zero Dependencies | 0 runtime deps | 0 runtime deps | Clean |
 
@@ -26,13 +26,11 @@ Last activity: 2026-08-17 — Roadmap created for milestone v2.0 Unique UI/UX Re
 - Dist bundle size: 37.84 KB gzipped total (< 200 KB per game budget)
 - Audit: `.planning/v1.0-MILESTONE-AUDIT.md` (passed)
 
-### Milestone v2.0 Scope
-- Retro-modern cyber-arcade design system (`tokens.css`, `theme.css`, CRT overlay)
-- Modular component lifecycle (`BaseComponent`) and typed pub/sub `Store`
-- URL hash routing (`HashRouter`) and native View Transitions wrapper
-- Responsive desktop sidebar + mobile bottom dock navigation
-- Robust iframe player lifecycle (`GameView`, skeleton loading, theater mode)
-- Web Audio UI sound synthesis and verification of < 200KB bundle budget
+### Shipped in Phase 8
+- Cyber-arcade CSS design token palette (`src/styles/tokens.css`) and base theme (`src/styles/theme.css`)
+- CRT scanline, vignette, and phosphor bloom overlay (`src/styles/crt.css`) with controller (`src/crt.ts`) and localStorage toggle
+- Integrated shared design tokens across hub (`index.html`, `src/hub.css`), embed kit (`embed.html`), and all 5 standalone games (`games/*/index.html`)
+- 29 test files, 199 unit tests passing (100% pass rate)
 
 ### Decisions
 - Retain vanilla TypeScript and native CSS architecture (no frameworks or third-party runtime libraries).
@@ -41,5 +39,5 @@ Last activity: 2026-08-17 — Roadmap created for milestone v2.0 Unique UI/UX Re
 
 ## Session Continuity
 
-- Current focus: Phase 8 (Design System & Visual Foundation)
-- Next action: `/gsd-plan-phase 8`
+- Current focus: Phase 9 (Core Architecture & Routing)
+- Next action: `/gsd-plan-phase 9`
