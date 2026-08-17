@@ -12,10 +12,10 @@
 - [x] **ARCH-04**: View Transitions wrapper using `document.startViewTransition()` with graceful fallback for seamless view morphs
 
 ## Hub Views & Components
-- [ ] **COMP-01**: AppHeader with brand logo, search input with focus shortcut (`/`), sound toggle, and embed docs link
-- [ ] **COMP-02**: Sidebar navigation for desktop and bottom navigation bar for mobile (<768px) with touch-friendly targets (48px min)
-- [ ] **COMP-03**: Search bar and FilterChips with active state indicators and live catalog filtering without DOM thrashing
-- [ ] **COMP-04**: Redesigned GameCard with genre badges, persistent high score display, play-on-hover glow, and keyboard focus outlines
+- [x] **COMP-01**: AppHeader with brand logo, search input with focus shortcut (`/`), sound toggle, and embed docs link
+- [x] **COMP-02**: Sidebar navigation for desktop and bottom navigation bar for mobile (<768px) with touch-friendly targets (48px min)
+- [x] **COMP-03**: Search bar and FilterChips with active state indicators and live catalog filtering without DOM thrashing
+- [x] **COMP-04**: Redesigned GameCard with genre badges, persistent high score display, play-on-hover glow, and keyboard focus outlines
 
 ## Player View & Lifecycle
 - [ ] **PLAY-01**: GameView component with skeleton loader while game iframe initializes
@@ -48,10 +48,10 @@
 | ARCH-02 | Phase 9 | Complete |
 | ARCH-03 | Phase 9 | Complete |
 | ARCH-04 | Phase 9 | Complete |
-| COMP-01 | Phase 10 | Pending |
-| COMP-02 | Phase 10 | Pending |
-| COMP-03 | Phase 10 | Pending |
-| COMP-04 | Phase 10 | Pending |
+| COMP-01 | Phase 10 | Complete |
+| COMP-02 | Phase 10 | Complete |
+| COMP-03 | Phase 10 | Complete |
+| COMP-04 | Phase 10 | Complete |
 | PLAY-01 | Phase 11 | Pending |
 | PLAY-02 | Phase 11 | Pending |
 | PLAY-03 | Phase 11 | Pending |
