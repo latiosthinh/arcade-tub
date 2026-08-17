@@ -24,8 +24,8 @@
 - [x] **PLAY-04**: Theater mode toggle with keyboard shortcut (`T`) expanding game viewport
 
 ## Audio & Polish
-- [ ] **POL-01**: Procedural Web Audio UI sound effects (button click, card hover, game launch, view transition) via existing AudioSynthesizer
-- [ ] **POL-02**: Bundle budget verification (< 200KB gzipped total) and 100% test pass rate across all 191+ tests
+- [x] **POL-01**: Procedural Web Audio UI sound effects (button click, card hover, game launch, view transition) via existing AudioSynthesizer
+- [x] **POL-02**: Bundle budget verification (< 200KB gzipped total) and 100% test pass rate across all 191+ tests
 
 ## Future Requirements (Deferred)
 - **FUT-01**: Full dark/light arcade theme switcher
@@ -56,5 +56,5 @@
 | PLAY-02 | Phase 11 | Complete |
 | PLAY-03 | Phase 11 | Complete |
 | PLAY-04 | Phase 11 | Complete |
-| POL-01 | Phase 12 | Pending |
-| POL-02 | Phase 12 | Pending |
+| POL-01 | Phase 12 | Complete |
+| POL-02 | Phase 12 | Complete |

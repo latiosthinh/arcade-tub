@@ -17,7 +17,7 @@ Arcade Carnival delivers 5 browser-based HTML5 Canvas arcade minigames packaged 
 - [x] **Phase 9: Core Architecture & Routing** - Component lifecycle, pub/sub store, hash router, view transitions
 - [x] **Phase 10: Hub Views & Component Library** - Header, responsive nav, search/filters, game cards
 - [x] **Phase 11: Game Player View & Embed Kit** - Player view, skeleton loading, iframe lifecycle, theater mode
-- [ ] **Phase 12: Audio Feedback & Production Verification** - Procedural UI audio, bundle audit, test suite verification
+- [x] **Phase 12: Audio Feedback & Production Verification** - Procedural UI audio, bundle audit, test suite verification
 
 ## Phase Details
 
@@ -198,8 +198,8 @@ Plans:
   4. 100% of all 191+ Vitest unit tests pass across engine, adapter, and games with zero regressions
 **Plans**: 2 plans
 Plans:
-- [ ] 12-01-PLAN.md — Procedural UI Web Audio synthesizer, component sound triggers, and unit tests
-- [ ] 12-02-PLAN.md — Production bundle audit, size budget verification, and full monorepo regression suite
+- [x] 12-01-PLAN.md — Procedural UI Web Audio synthesizer, component sound triggers, and unit tests
+- [x] 12-02-PLAN.md — Production bundle audit, size budget verification, and full monorepo regression suite
 **UI hint**: yes
 
 ## Progress
@@ -217,4 +217,4 @@ Plans:
 | 9. Core Architecture & Routing | 2/2 | Complete | 2026-08-17 |
 | 10. Hub Views & Component Library | 2/2 | Complete | 2026-08-17 |
 | 11. Game Player View & Embed Kit | 2/2 | Complete | 2026-08-17 |
-| 12. Audio Feedback & Production Verification | 0/0 | Not started | - |
+| 12. Audio Feedback & Production Verification | 2/2 | Complete | 2026-08-17 |
