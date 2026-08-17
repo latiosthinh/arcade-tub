@@ -387,5 +387,268 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
         <circle cx="20" cy="10" r="6" fill="#00f0ff" filter="url(#ts-glow-laser)" />
       </g>
     </svg>
+  `,
+
+  'memory-cards': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="mc-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#051923" />
+          <stop offset="100%" stop-color="#003554" />
+        </linearGradient>
+        <filter id="mc-glow-cyan">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#mc-bg)" />
+      <text x="15" y="18" fill="#00f0ff" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE: 4,800</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">STREAK: 3x</text>
+      <text x="305" y="18" text-anchor="end" fill="#00ff88" font-family="'Courier New', monospace" font-size="10" font-weight="bold">TIME: 45.2s</text>
+      <!-- 4x3 Card Grid -->
+      <!-- Row 1 -->
+      <rect x="25" y="30" width="55" height="40" rx="4" fill="#0c2333" stroke="#00f0ff" stroke-width="1.5" />
+      <text x="52" y="55" text-anchor="middle" fill="#00f0ff" font-size="16">⬡</text>
+      <rect x="95" y="30" width="55" height="40" rx="4" fill="#0c2333" stroke="#00f0ff" stroke-width="1.5" />
+      <text x="122" y="55" text-anchor="middle" fill="#00f0ff" font-size="16">⬡</text>
+      <rect x="165" y="30" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <text x="192" y="55" text-anchor="middle" fill="#1e4d6b" font-size="14">?</text>
+      <rect x="235" y="30" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <text x="262" y="55" text-anchor="middle" fill="#1e4d6b" font-size="14">?</text>
+      <!-- Row 2 -->
+      <rect x="25" y="78" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <text x="52" y="103" text-anchor="middle" fill="#1e4d6b" font-size="14">?</text>
+      <rect x="95" y="78" width="55" height="40" rx="4" fill="#1e1833" stroke="#ff007f" stroke-width="1.5" filter="url(#mc-glow-cyan)" />
+      <text x="122" y="103" text-anchor="middle" fill="#ff007f" font-size="16">⚡</text>
+      <rect x="165" y="78" width="55" height="40" rx="4" fill="#1e1833" stroke="#ff007f" stroke-width="1.5" />
+      <text x="192" y="103" text-anchor="middle" fill="#ff007f" font-size="16">⚡</text>
+      <rect x="235" y="78" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <text x="262" y="103" text-anchor="middle" fill="#1e4d6b" font-size="14">?</text>
+      <!-- Row 3 -->
+      <rect x="25" y="126" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <rect x="95" y="126" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <rect x="165" y="126" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+      <rect x="235" y="126" width="55" height="40" rx="4" fill="#08141e" stroke="#1e4d6b" stroke-width="1" />
+    </svg>
+  `,
+
+  'memory-boxes': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="mb-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#120c1d" />
+          <stop offset="100%" stop-color="#2a1435" />
+        </linearGradient>
+        <filter id="mb-glow-purple">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#mb-bg)" />
+      <text x="15" y="18" fill="#a29bfe" font-family="'Courier New', monospace" font-size="10" font-weight="bold">ROUND 6</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">STEP 4/6</text>
+      <text x="305" y="18" text-anchor="end" fill="#ff7675" font-family="'Courier New', monospace" font-size="10" font-weight="bold">LIVES: ♥♥♥</text>
+      <!-- 3x3 Grid of Neon Boxes -->
+      <g transform="translate(85, 30)">
+        <rect x="0" y="0" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        <rect x="52" y="0" width="42" height="42" rx="6" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="2" filter="url(#mb-glow-purple)" />
+        <rect x="104" y="0" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        
+        <rect x="0" y="48" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        <rect x="52" y="48" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        <rect x="104" y="48" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        
+        <rect x="0" y="96" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        <rect x="52" y="96" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+        <rect x="104" y="96" width="42" height="42" rx="6" fill="#1e1830" stroke="#4834d4" stroke-width="1.5" />
+      </g>
+    </svg>
+  `,
+
+  'pop-balloon': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="pb-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#230a14" />
+          <stop offset="100%" stop-color="#481022" />
+        </linearGradient>
+        <filter id="pb-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#pb-bg)" />
+      <text x="15" y="18" fill="#ff7675" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE: 18,300</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">COMBO x4</text>
+      <text x="305" y="18" text-anchor="end" fill="#00f0ff" font-family="'Courier New', monospace" font-size="10" font-weight="bold">TIME: 28s</text>
+      <!-- Floating Balloons -->
+      <g transform="translate(60, 60)">
+        <ellipse cx="15" cy="20" rx="14" ry="18" fill="#ff7675" filter="url(#pb-glow)" />
+        <polygon points="15,38 12,42 18,42" fill="#ff7675" />
+        <path d="M 15 42 Q 12 52 16 60" stroke="#ffb8b8" fill="none" stroke-width="1" />
+      </g>
+      <g transform="translate(140, 40)">
+        <ellipse cx="15" cy="20" rx="14" ry="18" fill="#00cec9" filter="url(#pb-glow)" />
+        <polygon points="15,38 12,42 18,42" fill="#00cec9" />
+        <path d="M 15 42 Q 18 52 14 60" stroke="#81ecec" fill="none" stroke-width="1" />
+      </g>
+      <g transform="translate(220, 80)">
+        <ellipse cx="15" cy="20" rx="14" ry="18" fill="#ffeaa7" filter="url(#pb-glow)" />
+        <polygon points="15,38 12,42 18,42" fill="#ffeaa7" />
+        <path d="M 15 42 Q 13 52 17 60" stroke="#fdcb6e" fill="none" stroke-width="1" />
+      </g>
+      <!-- Spike Bomb Hazard -->
+      <g transform="translate(170, 110)">
+        <circle cx="12" cy="12" r="10" fill="#2d3436" stroke="#d63031" stroke-width="2" />
+        <line x1="12" y1="-2" x2="12" y2="26" stroke="#d63031" stroke-width="2" />
+        <line x1="-2" y1="12" x2="26" y2="12" stroke="#d63031" stroke-width="2" />
+        <circle cx="12" cy="12" r="4" fill="#ff7675" />
+      </g>
+    </svg>
+  `,
+
+  'space-racer': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="sr-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#020813" />
+          <stop offset="100%" stop-color="#092042" />
+        </linearGradient>
+        <filter id="sr-glow">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#sr-bg)" />
+      <!-- Perspective Warp Grid -->
+      <line x1="160" y1="70" x2="20" y2="180" stroke="#0984e3" stroke-width="1" opacity="0.4" />
+      <line x1="160" y1="70" x2="100" y2="180" stroke="#0984e3" stroke-width="1" opacity="0.4" />
+      <line x1="160" y1="70" x2="220" y2="180" stroke="#0984e3" stroke-width="1" opacity="0.4" />
+      <line x1="160" y1="70" x2="300" y2="180" stroke="#0984e3" stroke-width="1" opacity="0.4" />
+      <text x="15" y="18" fill="#00d2d3" font-family="'Courier New', monospace" font-size="10" font-weight="bold">DIST: 3,420 LY</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">WARP 2.4x</text>
+      <text x="305" y="18" text-anchor="end" fill="#ff7675" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SHIELD 85%</text>
+      <!-- Turbo Gate Arch -->
+      <path d="M 120 120 Q 160 85 200 120" fill="none" stroke="#00cec9" stroke-width="3" filter="url(#sr-glow)" />
+      <!-- Asteroid Obstacle -->
+      <polygon points="70,110 85,100 95,115 80,125 65,120" fill="#636e72" stroke="#b2bec3" stroke-width="1" />
+      <!-- Player Jet -->
+      <g transform="translate(148, 130)">
+        <polygon points="12,0 0,25 12,20 24,25" fill="#0984e3" stroke="#74b9ff" stroke-width="1.5" />
+        <circle cx="12" cy="22" r="3" fill="#ffeaa7" filter="url(#sr-glow)" />
+      </g>
+    </svg>
+  `,
+
+  'virus-defense': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <radialGradient id="vd-bg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0b3c35" />
+          <stop offset="100%" stop-color="#021412" />
+        </radialGradient>
+        <filter id="vd-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#vd-bg)" />
+      <text x="15" y="18" fill="#00cec9" font-family="'Courier New', monospace" font-size="10" font-weight="bold">WAVE 7</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE 14,250</text>
+      <text x="305" y="18" text-anchor="end" fill="#55efc4" font-family="'Courier New', monospace" font-size="10" font-weight="bold">NUCLEUS 100%</text>
+      <!-- Center Nucleus Cell & Turret -->
+      <circle cx="160" cy="100" r="28" fill="#006266" stroke="#00cec9" stroke-width="2" filter="url(#vd-glow)" />
+      <circle cx="160" cy="100" r="14" fill="#00cec9" />
+      <line x1="160" y1="100" x2="195" y2="75" stroke="#ffeaa7" stroke-width="3" stroke-linecap="round" />
+      <!-- Laser Beam -->
+      <line x1="195" y1="75" x2="250" y2="45" stroke="#55efc4" stroke-width="2" stroke-dasharray="4 2" />
+      <!-- Swarming Pathogens -->
+      <circle cx="260" cy="40" r="8" fill="#d63031" stroke="#ff7675" stroke-width="1.5" />
+      <circle cx="65" cy="80" r="7" fill="#e17055" stroke="#fab1a0" stroke-width="1.5" />
+      <circle cx="120" cy="155" r="6" fill="#fdcb6e" stroke="#ffeaa7" stroke-width="1.5" />
+    </svg>
+  `,
+
+  'flappy-fish': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="ff-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#05272a" />
+          <stop offset="100%" stop-color="#021417" />
+        </linearGradient>
+        <filter id="ff-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#ff-bg)" />
+      <text x="15" y="18" fill="#00b894" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE: 24</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">BEST: 42</text>
+      <text x="305" y="18" text-anchor="end" fill="#81ecec" font-family="'Courier New', monospace" font-size="10" font-weight="bold">PEARLS: 18</text>
+      <!-- Glowing Coral Pillars -->
+      <rect x="220" y="0" width="30" height="60" rx="3" fill="#006266" stroke="#00b894" stroke-width="2" />
+      <rect x="220" y="120" width="30" height="60" rx="3" fill="#006266" stroke="#00b894" stroke-width="2" />
+      <!-- Cyber Fish -->
+      <g transform="translate(100, 85)">
+        <ellipse cx="14" cy="10" rx="14" ry="9" fill="#00cec9" filter="url(#ff-glow)" />
+        <polygon points="0,10 -8,4 -8,16" fill="#00b894" />
+        <circle cx="20" cy="8" r="2" fill="#ffffff" />
+        <!-- Air Bubbles -->
+        <circle cx="-12" cy="5" r="2" fill="#81ecec" opacity="0.6" />
+        <circle cx="-18" cy="1" r="1.5" fill="#81ecec" opacity="0.4" />
+      </g>
+    </svg>
+  `,
+
+  'game-2048': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="g2-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1f1b0a" />
+          <stop offset="100%" stop-color="#3d3514" />
+        </linearGradient>
+        <filter id="g2-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#g2-bg)" />
+      <text x="15" y="18" fill="#fdcb6e" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE 18,420</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffeaa7" font-family="'Courier New', monospace" font-size="10" font-weight="bold">2048 NEON</text>
+      <text x="305" y="18" text-anchor="end" fill="#00cec9" font-family="'Courier New', monospace" font-size="10" font-weight="bold">MOVES 182</text>
+      <!-- 4x4 Tile Board -->
+      <g transform="translate(95, 28)">
+        <rect x="0" y="0" width="130" height="130" rx="6" fill="#141107" stroke="#fdcb6e" stroke-width="1" />
+        <rect x="6" y="6" width="26" height="26" rx="3" fill="#2d2915" />
+        <text x="19" y="23" text-anchor="middle" fill="#f1c40f" font-size="10" font-weight="bold">2</text>
+        <rect x="36" y="6" width="26" height="26" rx="3" fill="#383015" />
+        <text x="49" y="23" text-anchor="middle" fill="#f39c12" font-size="10" font-weight="bold">4</text>
+        <rect x="66" y="6" width="26" height="26" rx="3" fill="#4d2f10" />
+        <text x="79" y="23" text-anchor="middle" fill="#e67e22" font-size="10" font-weight="bold">8</text>
+        <rect x="96" y="6" width="26" height="26" rx="3" fill="#542010" />
+        <text x="109" y="23" text-anchor="middle" fill="#e74c3c" font-size="10" font-weight="bold">16</text>
+
+        <rect x="6" y="36" width="26" height="26" rx="3" fill="#59182a" />
+        <text x="19" y="53" text-anchor="middle" fill="#fd79a8" font-size="10" font-weight="bold">32</text>
+        <rect x="36" y="36" width="26" height="26" rx="3" fill="#521745" />
+        <text x="49" y="53" text-anchor="middle" fill="#e84393" font-size="10" font-weight="bold">64</text>
+        <rect x="66" y="36" width="26" height="26" rx="3" fill="#1c1f4a" />
+        <text x="79" y="53" text-anchor="middle" fill="#0984e3" font-size="9" font-weight="bold">128</text>
+        <rect x="96" y="36" width="26" height="26" rx="3" fill="#113645" />
+        <text x="109" y="53" text-anchor="middle" fill="#00cec9" font-size="9" font-weight="bold">256</text>
+
+        <rect x="6" y="66" width="26" height="26" rx="3" fill="#0a3d36" />
+        <text x="19" y="83" text-anchor="middle" fill="#00b894" font-size="9" font-weight="bold">512</text>
+        <rect x="36" y="66" width="26" height="26" rx="3" fill="#4d3b0d" stroke="#ffeaa7" stroke-width="1.5" filter="url(#g2-glow)" />
+        <text x="49" y="83" text-anchor="middle" fill="#ffeaa7" font-size="8" font-weight="bold">2048</text>
+        <rect x="66" y="66" width="26" height="26" rx="3" fill="#1f1b0a" />
+        <rect x="96" y="66" width="26" height="26" rx="3" fill="#1f1b0a" />
+
+        <rect x="6" y="96" width="26" height="26" rx="3" fill="#1f1b0a" />
+        <rect x="36" y="96" width="26" height="26" rx="3" fill="#1f1b0a" />
+        <rect x="66" y="96" width="26" height="26" rx="3" fill="#1f1b0a" />
+        <rect x="96" y="96" width="26" height="26" rx="3" fill="#1f1b0a" />
+      </g>
+    </svg>
   `
 };
