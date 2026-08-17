@@ -12,6 +12,7 @@
     { "path": "games/memory-boxes" },
     { "path": "games/pop-balloon" },
     { "path": "games/space-racer" },
-    { "path": "games/virus-defense" }
+    { "path": "games/virus-defense" },
+    { "path": "games/flappy-fish" }
   ]
 }
