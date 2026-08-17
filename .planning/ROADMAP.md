@@ -7,7 +7,7 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
 ## Phases
 
 - [x] **Phase 1: Foundation** - Monorepo scaffold, Playables adapter, hub menu shell
-- [ ] **Phase 2: Safe Cracker** - Clicker/timing minigame
+- [x] **Phase 2: Safe Cracker** - Clicker/timing minigame
 - [ ] **Phase 3: Brick Blitz** - Breakout minigame
 - [ ] **Phase 4: Sky Hopper** - Vertical platformer minigame
 - [ ] **Phase 5: Crate Catch** - Catcher/stacker minigame
@@ -45,7 +45,7 @@ Plans:
 **Plans**: 2 plans
 Plans:
 - [x] 02-01-PLAN.md — Core game models, dial collision math, game state, and unit tests
-- [ ] 02-02-PLAN.md — Particle system, canvas scene rendering, input binding, and adapter wiring
+- [x] 02-02-PLAN.md — Particle system, canvas scene rendering, input binding, and adapter wiring
 
 ### Phase 3: Brick Blitz
 **Goal**: Fully playable Brick Blitz breakout game — paddle, ball, bricks, lives, levels
@@ -112,7 +112,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-08-17 |
-| 2. Safe Cracker | 1/2 | In progress | - |
+| 2. Safe Cracker | 2/2 | Complete | 2026-08-17 |
 | 3. Brick Blitz | 0/TBD | Not started | - |
 | 4. Sky Hopper | 0/TBD | Not started | - |
 | 5. Crate Catch | 0/TBD | Not started | - |
