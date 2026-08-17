@@ -111,7 +111,9 @@ export class BioArenaRenderer {
     // Concentric rings
     const rings = [100, 180, 260, 340, 420];
     for (let i = 0; i < rings.length; i++) {
-      const r = rings[i] + Math.sin(this.animTime * 1.5 + i) * 3;
+      const ringRadius = rings[i];
+      if (ringRadius === undefined) continue;
+      const r = ringRadius + Math.sin(this.animTime * 1.5 + i) * 3;
       ctx.strokeStyle = `rgba(34, 211, 238, ${0.08 - i * 0.012})`;
       ctx.lineWidth = 1.5;
       ctx.setLineDash([8, 12]);
@@ -163,8 +165,7 @@ export class BioArenaRenderer {
 
   private renderAntibodies(ctx: CanvasRenderingContext2D, antibodies: Antibody[]): void {
     ctx.save();
-    for (let i = 0; i < antibodies.length; i++) {
-      const a = antibodies[i];
+    for (const a of antibodies) {
       if (!a.active) continue;
 
       ctx.save();
@@ -198,8 +199,7 @@ export class BioArenaRenderer {
 
   private renderPathogens(ctx: CanvasRenderingContext2D, pathogens: Pathogen[]): void {
     ctx.save();
-    for (let i = 0; i < pathogens.length; i++) {
-      const p = pathogens[i];
+    for (const p of pathogens) {
       if (!p.active) continue;
 
       ctx.save();
@@ -285,7 +285,7 @@ export class BioArenaRenderer {
     ctx.moveTo(-r * 1.2, -3);
     ctx.quadraticCurveTo(-r * 2.2, wiggle, -r * 3.0, wiggle * 1.2);
     ctx.moveTo(-r * 1.2, 3);
-    ctx.quadraticCurveTo(-r * 2.2, -wigiggle, -r * 3.0, -wiggle * 1.2);
+    ctx.quadraticCurveTo(-r * 2.2, -wiggle, -r * 3.0, -wiggle * 1.2);
     ctx.stroke();
   }
 
@@ -392,8 +392,7 @@ export class BioArenaRenderer {
 
   private renderProjectiles(ctx: CanvasRenderingContext2D, turret: Turret): void {
     ctx.save();
-    for (let i = 0; i < turret.projectiles.length; i++) {
-      const p = turret.projectiles[i];
+    for (const p of turret.projectiles) {
       if (!p.active) continue;
 
       ctx.save();

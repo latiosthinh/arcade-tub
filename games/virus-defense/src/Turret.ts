@@ -72,8 +72,7 @@ export class Turret {
       this.cooldown = Math.max(0, this.cooldown - dt);
     }
 
-    for (let i = 0; i < this.projectiles.length; i++) {
-      const p = this.projectiles[i];
+    for (const p of this.projectiles) {
       if (!p.active) continue;
 
       const stepDist = this.projectileSpeed * dt;

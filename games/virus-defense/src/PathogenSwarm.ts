@@ -174,12 +174,10 @@ export class PathogenSwarm {
   public checkProjectileCollisions(projectiles: Projectile[]): CollisionHit[] {
     const hits: CollisionHit[] = [];
 
-    for (let pIdx = 0; pIdx < projectiles.length; pIdx++) {
-      const proj = projectiles[pIdx];
+    for (const proj of projectiles) {
       if (!proj.active) continue;
 
-      for (let eIdx = 0; eIdx < this.pathogens.length; eIdx++) {
-        const pathogen = this.pathogens[eIdx];
+      for (const pathogen of this.pathogens) {
         if (!pathogen.active) continue;
 
         const dx = proj.x - pathogen.x;
@@ -221,8 +219,7 @@ export class PathogenSwarm {
   public checkNucleusCollisions(nucleus: NucleusState): BreachHit[] {
     const breaches: BreachHit[] = [];
 
-    for (let i = 0; i < this.pathogens.length; i++) {
-      const pathogen = this.pathogens[i];
+    for (const pathogen of this.pathogens) {
       if (!pathogen.active) continue;
 
       const dx = this.centerX - pathogen.x;
@@ -244,8 +241,7 @@ export class PathogenSwarm {
   }
 
   public update(dt: number): void {
-    for (let i = 0; i < this.pathogens.length; i++) {
-      const p = this.pathogens[i];
+    for (const p of this.pathogens) {
       if (!p.active) continue;
 
       p.timeAlive += dt;

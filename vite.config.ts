@@ -25,6 +25,7 @@ export default defineConfig({
         'memory-boxes': resolve(__dirname, 'games/memory-boxes/index.html'),
         'pop-balloon': resolve(__dirname, 'games/pop-balloon/index.html'),
         'space-racer': resolve(__dirname, 'games/space-racer/index.html'),
+        'virus-defense': resolve(__dirname, 'games/virus-defense/index.html'),
       },
     },
   },

@@ -84,8 +84,7 @@ export class NucleusState {
   }
 
   public update(dt: number): void {
-    for (let i = 0; i < this.antibodies.length; i++) {
-      const a = this.antibodies[i];
+    for (const a of this.antibodies) {
       if (!a.active) continue;
       a.timeAlive += dt;
       // Gentle circular hover drift

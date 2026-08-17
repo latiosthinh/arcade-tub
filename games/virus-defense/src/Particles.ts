@@ -95,8 +95,7 @@ export class ParticleSystem {
   }
 
   public update(dt: number): void {
-    for (let i = 0; i < this.particles.length; i++) {
-      const p = this.particles[i];
+    for (const p of this.particles) {
       p.life -= dt / p.maxLife;
       p.alpha = Math.max(0, p.life);
       p.x += p.vx * dt;
@@ -110,8 +109,7 @@ export class ParticleSystem {
 
   public render(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    for (let i = 0; i < this.particles.length; i++) {
-      const p = this.particles[i];
+    for (const p of this.particles) {
       ctx.save();
       ctx.globalAlpha = p.alpha;
       ctx.fillStyle = p.color;
