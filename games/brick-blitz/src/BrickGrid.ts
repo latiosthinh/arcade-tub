@@ -58,7 +58,7 @@ export class BrickGrid {
     if (safeLevel === 2) rows = 5;
     else if (safeLevel >= 3) rows = Math.min(7, 4 + safeLevel - 1);
 
-    const standardColors = ['#00d2d3', '#ff7675', '#fed330', '#26de81'];
+    const standardColors = ['#00d2d3', '#ff7675', '#fed330', '#26de81'] as const;
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < this.gridCols; c++) {
@@ -68,7 +68,7 @@ export class BrickGrid {
 
         let type: BrickType = 'standard';
         let maxHp = 1;
-        let color = standardColors[r % standardColors.length];
+        let color: string = standardColors[r % standardColors.length] ?? '#00d2d3';
 
         // Specific bonus/life placement
         if (r === 0 && (c === 2 || c === 7)) {
