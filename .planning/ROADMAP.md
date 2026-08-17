@@ -28,7 +28,7 @@ Build 5 arcade minigames for YouTube Playables from shared scaffold to polished 
   5. `pnpm typecheck` passes with zero errors
 **Plans**: 3 plans
 Plans:
-- [ ] 01-01-PLAN.md — Monorepo scaffold, workspace config, Vite multi-page build
+- [x] 01-01-PLAN.md — Monorepo scaffold, workspace config, Vite multi-page build
 - [ ] 01-02-PLAN.md — Playables adapter + game engine implementations
 - [ ] 01-03-PLAN.md — Hub menu page with arcade-themed game cards
 
