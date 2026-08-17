@@ -116,7 +116,10 @@ Plans:
   3. Random 2 or 4 tile spawns in empty cell after valid move
   4. Game detects reaching 2048 win condition and no-more-moves gameover state
   5. 100% unit tests pass for directional slide/merge matrix algorithms and spawn logic
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 19-01-PLAN.md — 4x4 matrix slide & merge algorithms, 90/10 spawner, move validation, win & gameover detection, undo snapshot stack, GameState lifecycle, unit test suite
+- [ ] 19-02-PLAN.md — Color-tiered neon tile visuals, slide & pop merge animations, ParticleSystem sparkles, Audio2048 procedural synthesizer, swipe & keyboard controls, Game2048Scene wiring & Vite rollup input
 **UI hint**: yes
 
 ### Phase 20: Catalog Integration & Release Audit
