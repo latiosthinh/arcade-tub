@@ -37,12 +37,12 @@ export class CardGrid {
 
   public initialize(customGlyphs?: string[]): void {
     const glyphList: string[] = [];
-    const sourceGlyphs = customGlyphs && customGlyphs.length >= CardGrid.PAIR_COUNT
+    const sourceGlyphs: string[] = customGlyphs && customGlyphs.length >= CardGrid.PAIR_COUNT
       ? customGlyphs.slice(0, CardGrid.PAIR_COUNT)
       : [...CYBER_GLYPHS];
 
     for (let i = 0; i < CardGrid.PAIR_COUNT; i++) {
-      const glyph = sourceGlyphs[i];
+      const glyph = sourceGlyphs[i] ?? CYBER_GLYPHS[i % CYBER_GLYPHS.length]!;
       glyphList.push(glyph, glyph);
     }
 
@@ -54,11 +54,12 @@ export class CardGrid {
     for (let i = 0; i < CardGrid.TOTAL_CARDS; i++) {
       const row = Math.floor(i / CardGrid.COLS);
       const col = i % CardGrid.COLS;
+      const glyph = glyphList[i] ?? CYBER_GLYPHS[0];
       this.cards.push({
         id: i,
         row,
         col,
-        glyph: glyphList[i],
+        glyph,
         state: 'facedown',
         flipProgress: 0,
       });
@@ -69,9 +70,12 @@ export class CardGrid {
     const glyphs = this.cards.map((c) => c.glyph);
     this.shuffleArray(glyphs);
     for (let i = 0; i < this.cards.length; i++) {
-      this.cards[i].glyph = glyphs[i];
-      this.cards[i].state = 'facedown';
-      this.cards[i].flipProgress = 0;
+      const card = this.cards[i];
+      if (card) {
+        card.glyph = glyphs[i] ?? CYBER_GLYPHS[0];
+        card.state = 'facedown';
+        card.flipProgress = 0;
+      }
     }
     this.selectedIndices = [];
   }
@@ -90,7 +94,7 @@ export class CardGrid {
     }
 
     const card = this.cards[index];
-    if (card.state !== 'facedown') {
+    if (!card || card.state !== 'facedown') {
       return { flipped: false, reason: 'not_facedown' };
     }
 
@@ -119,6 +123,11 @@ export class CardGrid {
 
     const idxA = this.selectedIndices[0];
     const idxB = this.selectedIndices[1];
+    if (idxA === undefined || idxB === undefined) {
+      this.selectedIndices = [];
+      return { evaluated: false, match: false };
+    }
+
     const cardA = this.cards[idxA];
     const cardB = this.cards[idxB];
 
@@ -145,14 +154,16 @@ export class CardGrid {
     if (this.selectedIndices.length >= 2) {
       const idxA = this.selectedIndices[0];
       const idxB = this.selectedIndices[1];
-      const cardA = this.cards[idxA];
-      const cardB = this.cards[idxB];
+      if (idxA !== undefined && idxB !== undefined) {
+        const cardA = this.cards[idxA];
+        const cardB = this.cards[idxB];
 
-      if (cardA && cardA.state !== 'matched') {
-        cardA.state = 'flipping_down';
-      }
-      if (cardB && cardB.state !== 'matched') {
-        cardB.state = 'flipping_down';
+        if (cardA && cardA.state !== 'matched') {
+          cardA.state = 'flipping_down';
+        }
+        if (cardB && cardB.state !== 'matched') {
+          cardB.state = 'flipping_down';
+        }
       }
     }
     this.selectedIndices = [];
@@ -162,8 +173,8 @@ export class CardGrid {
     // Fisher-Yates shuffle with bounded O(N) execution
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
+      const temp = array[i]!;
+      array[i] = array[j]!;
       array[j] = temp;
     }
   }
