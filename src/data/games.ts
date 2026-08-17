@@ -79,6 +79,97 @@ export const GAMES: GameItem[] = [
     themeColor: '#ff4757',
     bannerBg: 'linear-gradient(135deg, #23080b 0%, #63121b 100%)',
     features: ['Streak Multipliers', 'Laser Target Locking', '60-Second Challenge']
+  },
+  {
+    id: 'memory-cards',
+    title: 'Memory Cards',
+    genre: 'Card Matching',
+    description: 'Holographic cyberpunk pair matching. Uncover glyph pairs, chain combo streaks, and clear the cyber grid.',
+    badge: 'New',
+    rating: '4.8 ★',
+    plays: '150K plays',
+    icon: '🃏',
+    themeColor: '#00f0ff',
+    bannerBg: 'linear-gradient(135deg, #051923 0%, #003554 100%)',
+    features: ['Cyber Glyph Pairs', 'Streak Multipliers', 'Round Timer & High Score']
+  },
+  {
+    id: 'memory-boxes',
+    title: 'Memory Boxes',
+    genre: 'Pattern Memory',
+    description: 'Synthesized memory matrix. Watch expanding light sequences, listen to tones, and repeat patterns accurately.',
+    badge: 'Audio',
+    rating: '4.7 ★',
+    plays: '120K plays',
+    icon: '🔲',
+    themeColor: '#a29bfe',
+    bannerBg: 'linear-gradient(135deg, #191024 0%, #301934 100%)',
+    features: ['Expanding Sequences', 'Synthesized Audio Tones', '3-Strike Life System']
+  },
+  {
+    id: 'pop-balloon',
+    title: 'Pop Balloon',
+    genre: 'Balloon Pop / Reflex',
+    description: 'Ascending neon balloon popping frenzy. Chain same-color combos, dodge spike bombs, and rack up points.',
+    badge: 'Reflex',
+    rating: '4.8 ★',
+    plays: '210K plays',
+    icon: '🎈',
+    themeColor: '#ff7675',
+    bannerBg: 'linear-gradient(135deg, #2d0c14 0%, #5c182a 100%)',
+    features: ['Ascending Balloon Chains', 'Color Combo Multipliers', 'Hazard Spike Bombs']
+  },
+  {
+    id: 'space-racer',
+    title: 'Space Racer',
+    genre: 'Orbital Racing',
+    description: 'High-speed orbital warp dodging. Weave through asteroid fields and hit turbo boost gates at light speed.',
+    badge: 'High Speed',
+    rating: '4.9 ★',
+    plays: '340K plays',
+    icon: '🚀',
+    themeColor: '#0984e3',
+    bannerBg: 'linear-gradient(135deg, #050e1e 0%, #0c2461 100%)',
+    features: ['Pseudo-3D Starfield Warp', 'Turbo Boost Gates', 'Dynamic Asteroid Kinematics']
+  },
+  {
+    id: 'virus-defense',
+    title: 'Virus Defense',
+    genre: 'Radial Turret Defense',
+    description: 'Radial cell turret defense. Rotate 360 degrees to blast mutating pathogen swarms before they breach nucleus.',
+    badge: 'Action',
+    rating: '4.9 ★',
+    plays: '280K plays',
+    icon: '🦠',
+    themeColor: '#00cec9',
+    bannerBg: 'linear-gradient(135deg, #041d1a 0%, #0b3c35 100%)',
+    features: ['360° Laser Turret Aiming', 'Mutating Pathogen Swarms', 'Nucleus Shield Defense']
+  },
+  {
+    id: 'flappy-fish',
+    title: 'Flappy Fish',
+    genre: 'Hydrodynamic Flapper',
+    description: 'Underwater buoyancy tapping arcade. Navigate a glowing cyber-fish through illuminated coral reef pillars.',
+    badge: 'Arcade',
+    rating: '4.8 ★',
+    plays: '490K plays',
+    icon: '🐠',
+    themeColor: '#00b894',
+    bannerBg: 'linear-gradient(135deg, #031e21 0%, #06444a 100%)',
+    features: ['Underwater Flap Kinematics', 'Glowing Coral Reef Obstacles', 'Pearl Pickups & Medals']
+  },
+  {
+    id: 'game-2048',
+    title: '2048 Neon',
+    genre: 'Sliding Tile Puzzle',
+    description: 'Neon sliding number tile challenge. Merge matching numbers to reach the legendary 2048 tile.',
+    badge: 'Puzzle',
+    rating: '4.9 ★',
+    plays: '620K plays',
+    icon: '🔢',
+    themeColor: '#fdcb6e',
+    bannerBg: 'linear-gradient(135deg, #1f1b0a 0%, #3d3514 100%)',
+    features: ['4x4 Directional Merging', 'Neon Tiered Value Tiles', 'Undo Move & Win State']
   }
 ];
 
