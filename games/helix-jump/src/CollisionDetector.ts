@@ -33,7 +33,7 @@ export class CollisionDetector {
 
     for (let i = 0; i < tiers.length; i++) {
       const tier = tiers[i];
-      if (tier.isSmashed) continue;
+      if (!tier || tier.isSmashed) continue;
 
       const tierSurfaceY = tier.y;
 

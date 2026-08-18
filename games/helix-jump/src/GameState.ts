@@ -126,7 +126,12 @@ export class GameState {
           if (this.onGameOver) this.onGameOver();
         } else {
           // Safe bounce
-          this.droplet.bounce(this.tiers[result.tierIndex].y);
+          const hitTier = this.tiers[result.tierIndex];
+          if (hitTier) {
+            this.droplet.bounce(hitTier.y);
+          } else {
+            this.droplet.bounce(0);
+          }
 
           // Check if reached goal (last tier)
           if (result.tierIndex === this.tiers.length - 1) {
