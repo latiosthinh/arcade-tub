@@ -1,26 +1,49 @@
-# Roadmap: Arcade Carnival
+# ROADMAP.md
 
-## Overview
+## Milestone v5.0: 2D Papercraft Visual Overhaul
+Goal: Replace entire visual identity (hub + all 15 games) with handmade 2D papercraft aesthetic.
 
-Arcade Carnival delivers 15 browser-based HTML5 Canvas arcade minigames with a shared game engine, playables adapter, and central cyber-arcade launcher. Milestone v4.0 expanded the game library to 15 complete, playable games with arrow mode defense, traffic racing, tree climbing, and snake mechanics.
+#### Phase 26: Hub Papercraft Design System & CSS
+- **Goal:** Replace all hub CSS tokens, theme primitives, and component styles with papercraft design language (craft-paper palette, torn-edge borders, tape/staple accents, cardboard shadows, craft fonts).
+- **Requirements:** [CRAFT-01, CRAFT-02, CRAFT-03]
+- **Files:** `src/styles/tokens.css`, `src/styles/theme.css`, `src/styles/components/*.css`, `src/hub.css`, `index.html`
+- **Plans:** TBD
+- **Status:** Not started
 
-## Milestone v4.0 Phases (Complete)
+#### Phase 27: Game Shell HTML Containers (15 games)
+- **Goal:** Update all 15 `games/*/index.html` with papercraft backgrounds, cardboard canvas frames, craft fonts.
+- **Requirements:** [CRAFT-04]
+- **Files:** `games/*/index.html`
+- **Plans:** TBD
+- **Status:** Not started
 
-- [x] **Phase 21: Type Strike Arrow Mode** — Directional arrow sequence defense (`↑ ↓ ← →` / WASD) with ready screen mode toggle
-- [x] **Phase 22: Cyber Snake Minigame** — Smooth grid movement, energy food pellets, speed growth, tail collision
-- [x] **Phase 23: Bug Climb Tree Minigame** — Left/Right trunk climber dodging branch hazards under urgent countdown
-- [x] **Phase 24: Neon Highway Car Race Minigame** — Multi-lane traffic racer with Up/Down throttle and slipstream drafting
-- [x] **Phase 25: Catalog Expansion & Release Audit** — 15-game catalog metadata, SVG screenshots, multi-page Vite build, size audit (<200KB)
+#### Phase 28: Simple Game Renderers (5 games)
+- **Goal:** Convert canvas renderers for safe-cracker, memory-cards, memory-boxes, game-2048, pop-balloon to papercraft sprites, backgrounds, and overlays.
+- **Requirements:** [CRAFT-05, CRAFT-08]
+- **Files:** `games/{safe-cracker,memory-cards,memory-boxes,game-2048,pop-balloon}/src/*Renderer.ts`, `*Scene.ts`, `src/data/games.ts`
+- **Plans:** TBD
+- **Status:** Not started
+
+#### Phase 29: Mid-Complexity Game Renderers (5 games)
+- **Goal:** Convert canvas renderers for brick-blitz, crate-catch, type-strike, flappy-fish, sky-hopper to papercraft.
+- **Requirements:** [CRAFT-06, CRAFT-08]
+- **Files:** `games/{brick-blitz,crate-catch,type-strike,flappy-fish,sky-hopper}/src/*Renderer.ts`, `*Scene.ts`
+- **Plans:** TBD
+- **Status:** Not started
+
+#### Phase 30: Complex Game Renderers (5 games) + Final Audit
+- **Goal:** Convert canvas renderers for snake-eat, bug-climb, car-race, space-racer, virus-defense. Final build audit, test verification, and Cloudflare deploy.
+- **Requirements:** [CRAFT-07, CRAFT-08, CRAFT-09]
+- **Files:** `games/{snake-eat,bug-climb,car-race,space-racer,virus-defense}/src/*Renderer.ts`, `*Scene.ts`
+- **Plans:** TBD
+- **Status:** Not started
 
 ## Progress
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1–7. v1.0 Foundation & 5 Core Games | 17/17 | Complete | 2026-08-17 |
-| 8–12. v2.0 Unique UI/UX Refactor | 10/10 | Complete | 2026-08-17 |
-| 13–20. v3.0 Game Catalog Expansion | 16/16 | Complete | 2026-08-18 |
-| 21. Type Strike Arrow Mode | 2/2 | Complete | 2026-08-18 |
-| 22. Cyber Snake Minigame | 2/2 | Complete | 2026-08-18 |
-| 23. Bug Climb Tree Minigame | 2/2 | Complete | 2026-08-18 |
-| 24. Neon Highway Car Race Minigame | 2/2 | Complete | 2026-08-18 |
-| 25. Catalog Expansion & Release Audit | 2/2 | Complete | 2026-08-18 |
+| Phase | Status |
+|-------|--------|
+| 26. Hub Papercraft CSS | Not started |
+| 27. Game Shell HTML | Not started |
+| 28. Simple Renderers (5) | Not started |
+| 29. Mid Renderers (5) | Not started |
+| 30. Complex Renderers (5) + Audit | Not started |

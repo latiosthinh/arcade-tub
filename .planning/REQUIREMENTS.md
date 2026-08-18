@@ -1,36 +1,20 @@
-# Milestone v4.0 Requirements: Action & Arcade Expansion
+# REQUIREMENTS.md — v5.0 2D Papercraft Visual Overhaul
 
-## Type Strike Arrow Mode
-- [x] **TS-ARR-01**: Type Strike Arrow Mode support (mode toggle between Word and Arrow sequence mode, arrow symbol formatting `↑ ↓ ← →` on drone badges, input handling for ArrowUp/Down/Left/Right and WASD, 100% unit tests)
-- [x] **TS-ARR-02**: Type Strike Arrow Mode UI & Canvas rendering (arrow badge visuals, mode toggle in ready screen, sound triggers)
+## Design System
+- **[CRAFT-01] Papercraft Design Token System:** CSS variables for craft-paper color palette (kraft brown, construction paper primaries, cardboard tan, manila, cream), torn-edge clip-path borders, layered cardboard drop shadows (`box-shadow: 3px 3px 0px` + slight offset layers), tape-strip decorative accents, staple/pin UI details, hand-cut wobble border effects.
+- **[CRAFT-02] Papercraft Typography:** Hand-drawn/craft-style Google Fonts (e.g. Patrick Hand, Indie Flower, or Cabin Sketch for headings; Nunito or Quicksand for body), consistent across hub and in-game canvas text rendering.
 
-## Cyber Snake (Snake Eat)
-- [x] **SNK-01**: Snake Eat grid model & logic (grid matrix movement, food pellet spawner, snake growth, self & wall collision math, score & speed scaling, 100% unit tests)
-- [x] **SNK-02**: Snake Eat canvas presentation & packaging (neon segmented snake glow, particle eating bursts, procedural audio, standalone HTML & Vite rollup input)
+## Hub & Shell
+- **[CRAFT-03] Hub Site Papercraft Transformation:** Header, search box, filter chips, game cards, player view, score cards, details panel, and bottom nav — all restyled as construction paper cutouts with cardboard frames, tape strip joins, and layered paper depth.
+- **[CRAFT-04] Game Shell HTML Containers:** All 15 `games/*/index.html` files updated with craft-paper backgrounds, cardboard-framed canvases, and papercraft Google Fonts loaded.
 
-## Bug Climb Tree
-- [x] **BUG-01**: Bug Climb Tree model & logic (trunk column state, branch hazard generation on left/right sides, Left/Right arrow tap side-switching, urgent timer bar, height scoring, 100% unit tests)
-- [x] **BUG-02**: Bug Climb Tree canvas presentation & packaging (animated climbing bug, falling branch obstacles, wood chop particle effects, procedural audio, standalone HTML & Vite rollup input)
+## In-Game Canvas Renderers
+- **[CRAFT-05] Simple Game Renderers (5 games):** `safe-cracker`, `memory-cards`, `memory-boxes`, `game-2048`, `pop-balloon` — canvas backgrounds as layered construction paper, sprites as paper cutouts with visible edges, HUD text in craft fonts, overlays on sticky-note cards.
+- **[CRAFT-06] Mid-Complexity Game Renderers (5 games):** `brick-blitz`, `crate-catch`, `type-strike`, `flappy-fish`, `sky-hopper` — paper cutout paddles/bricks/crates/fish/platforms, cardboard pillar obstacles, torn-paper particle effects, sticky-note score panels.
+- **[CRAFT-07] Complex Game Renderers (5 games):** `snake-eat`, `bug-climb`, `car-race`, `space-racer`, `virus-defense` — origami/folded paper car sprites, paper-cutout ladybug, construction paper road/trunk/arena, craft-paper starfield, cardboard HUD gauges.
 
-## Neon Highway (Car Race)
-- [ ] **CAR-01**: Car Race traffic & kinematics model (multi-lane vertical highway, Up/Down speed control and Left/Right lane switching, oncoming traffic spawning with variable speeds, near-miss draft bonus, distance scoring, 100% unit tests)
-- [ ] **CAR-02**: Car Race canvas presentation & packaging (scrolling neon asphalt road, sports car rendering with headlights, traffic collision explosions, engine audio, standalone HTML & Vite rollup input)
+## Metadata & Catalog
+- **[CRAFT-08] Game Catalog Data Update:** `src/data/games.ts` titles, descriptions, icons, theme colors, and banner gradients updated to match papercraft visual language.
 
-## Catalog Integration & Release Audit
-- [ ] **HUB-CAT-01**: Register 3 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
-- [ ] **HUB-CAT-02**: Multi-page Vite build configuration, bundle size audit (< 200KB gzipped), and 100% test pass rate across all 15 games
-
-## Traceability
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| TS-ARR-01 | Phase 21 | Complete |
-| TS-ARR-02 | Phase 21 | Complete |
-| SNK-01 | Phase 22 | Complete |
-| SNK-02 | Phase 22 | Complete |
-| BUG-01 | Phase 23 | Complete |
-| BUG-02 | Phase 23 | Complete |
-| CAR-01 | Phase 24 | Pending |
-| CAR-02 | Phase 24 | Pending |
-| HUB-CAT-01 | Phase 25 | Pending |
-| HUB-CAT-02 | Phase 25 | Pending |
+## Quality Gates
+- **[CRAFT-09] Build & Test Integrity:** All 574 unit tests pass, Vite production build succeeds, bundle < 200KB gzipped, deployed to Cloudflare Pages.
