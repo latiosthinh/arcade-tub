@@ -17,7 +17,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Rotational cylinder paper tower, bouncing paint droplet, gap drop combos, red cardboard hazard plates.
 - Unit tests for rotation math, gap traversal, and impact physics.
 
-### Phase 34: Square Bird (`games/square-bird/`)
+### Phase 34: Square Bird (`games/square-bird/`) [COMPLETED]
 - Auto-runner with instant block stacking underneath paper bird, cliff clearance, perfect landing fever mode.
 - Unit tests for stack height, obstacle collisions, and fever speed multipliers.
 
