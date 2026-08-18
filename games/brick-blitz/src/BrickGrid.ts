@@ -58,7 +58,7 @@ export class BrickGrid {
     if (safeLevel === 2) rows = 5;
     else if (safeLevel >= 3) rows = Math.min(7, 4 + safeLevel - 1);
 
-    const standardColors = ['#00d2d3', '#ff7675', '#fed330', '#26de81'] as const;
+    const standardColors = ['#3B82F6', '#E11D48', '#F59E0B', '#10B981'] as const;
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < this.gridCols; c++) {
@@ -68,25 +68,25 @@ export class BrickGrid {
 
         let type: BrickType = 'standard';
         let maxHp = 1;
-        let color: string = standardColors[r % standardColors.length] ?? '#00d2d3';
+        let color: string = standardColors[r % standardColors.length] ?? '#3B82F6';
 
         // Specific bonus/life placement
         if (r === 0 && (c === 2 || c === 7)) {
           type = 'bonus';
           maxHp = 1;
-          color = '#f1c40f'; // gold
+          color = '#F59E0B'; // bonus gold
         } else if (r === 1 && c === 4) {
           type = 'life';
           maxHp = 1;
-          color = '#e74c3c'; // heart red
+          color = '#E11D48'; // life red
         } else if (safeLevel >= 2 && r === 0) {
           type = 'durable';
           maxHp = safeLevel >= 3 ? 3 : 2;
-          color = maxHp === 3 ? '#8854d0' : '#575fcf';
+          color = maxHp === 3 ? '#8B5CF6' : '#6366F1';
         } else if (safeLevel >= 3 && r === 1 && (c % 2 === 0)) {
           type = 'durable';
           maxHp = 2;
-          color = '#575fcf';
+          color = '#6366F1';
         }
 
         this.bricks.push({

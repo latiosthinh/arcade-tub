@@ -170,227 +170,313 @@ export class BrickBlitzScene implements GameScene {
       ctx.translate(offsetX, offsetY);
     }
 
-    // Synthwave background gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, 0, 600);
-    bgGrad.addColorStop(0, '#0c0d1e');
-    bgGrad.addColorStop(1, '#161730');
-    ctx.fillStyle = bgGrad;
+    // 1. Kraft paper background (#F4EAD4)
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, 800, 600);
 
-    // Subtle neon grid lines
-    ctx.strokeStyle = 'rgba(72, 52, 212, 0.15)';
-    ctx.lineWidth = 1;
-    for (let y = 60; y < 600; y += 30) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(800, y);
-      ctx.stroke();
-    }
+    // Stitched/dashed ink border guidelines
+    ctx.save();
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.15)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(10, 56, 780, 534);
+    ctx.restore();
 
-    // Render Bricks
+    // Paper tape corner accents
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    // Top-left tape
+    ctx.fillRect(8, 54, 36, 12);
+    ctx.strokeRect(8, 54, 36, 12);
+    // Top-right tape
+    ctx.fillRect(756, 54, 36, 12);
+    ctx.strokeRect(756, 54, 36, 12);
+    ctx.restore();
+
+    // 2. Render Bricks with cardboard drop shadow & inked paper borders
     for (const b of this.brickGrid.bricks) {
       if (b.destroyed) continue;
 
       ctx.save();
-      ctx.shadowColor = b.color;
-      ctx.shadowBlur = 8;
-      ctx.fillStyle = b.color;
-
-      // Rounded rectangle
-      const radius = 3;
+      // Paper drop shadow
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
       ctx.beginPath();
-      ctx.moveTo(b.x + radius, b.y);
-      ctx.lineTo(b.x + b.width - radius, b.y);
-      ctx.arcTo(b.x + b.width, b.y, b.x + b.width, b.y + radius, radius);
-      ctx.lineTo(b.x + b.width, b.y + b.height - radius);
-      ctx.arcTo(b.x + b.width, b.y + b.height, b.x + b.width - radius, b.y + b.height, radius);
-      ctx.lineTo(b.x + radius, b.y + b.height);
-      ctx.arcTo(b.x, b.y + b.height, b.x, b.y + b.height - radius, radius);
-      ctx.lineTo(b.x, b.y + radius);
-      ctx.arcTo(b.x, b.y, b.x + radius, b.y, radius);
-      ctx.closePath();
+      ctx.roundRect(b.x + 3, b.y + 3, b.width, b.height, 4);
       ctx.fill();
 
-      // Inner bevel highlight
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
-      ctx.fillRect(b.x + 2, b.y + 2, b.width - 4, 3);
+      // Cardboard/Construction cutout body
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.roundRect(b.x, b.y, b.width, b.height, 4);
+      ctx.fill();
 
-      // Durable cracks or multi-hp indicator
+      // Inked contour
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Top paper fold highlight
+      ctx.fillStyle = 'rgba(255, 253, 248, 0.35)';
+      ctx.beginPath();
+      ctx.roundRect(b.x + 2, b.y + 2, b.width - 4, 3, 2);
+      ctx.fill();
+
+      // Durable cracks or special icons
       if (b.type === 'durable') {
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#3E2723';
         ctx.lineWidth = 1.5;
         if (b.hp > 1) {
           ctx.strokeRect(b.x + 4, b.y + 4, b.width - 8, b.height - 8);
         } else {
-          // crack indicator
+          // Crinkle/crack fold line
           ctx.beginPath();
           ctx.moveTo(b.x + b.width / 2, b.y + 3);
-          ctx.lineTo(b.x + b.width / 2 + 5, b.y + b.height / 2);
+          ctx.lineTo(b.x + b.width / 2 + 6, b.y + b.height / 2);
           ctx.lineTo(b.x + b.width / 2 - 4, b.y + b.height - 3);
           ctx.stroke();
         }
       } else if (b.type === 'bonus') {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px sans-serif';
+        ctx.fillStyle = '#FFFDF8';
+        ctx.font = 'bold 13px "Patrick Hand", cursive, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('★', b.x + b.width / 2, b.y + b.height / 2);
+        ctx.fillText('★', b.x + b.width / 2, b.y + b.height / 2 + 1);
       } else if (b.type === 'life') {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 14px sans-serif';
+        ctx.fillStyle = '#FFFDF8';
+        ctx.font = 'bold 15px "Patrick Hand", cursive, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('+', b.x + b.width / 2, b.y + b.height / 2);
+        ctx.fillText('♥', b.x + b.width / 2, b.y + b.height / 2 + 1);
       }
 
       ctx.restore();
     }
 
-    // Render Paddle
+    // 3. Render Wooden Craft Paddle with Tape Strip Bumpers
     ctx.save();
-    ctx.shadowColor = '#00d2d3';
-    ctx.shadowBlur = 12;
-    ctx.fillStyle = '#1e272e';
-
-    const pRadius = 6;
+    // Paddle shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
     ctx.beginPath();
-    ctx.moveTo(this.paddle.x + pRadius, this.paddle.y);
-    ctx.lineTo(this.paddle.x + this.paddle.width - pRadius, this.paddle.y);
-    ctx.arcTo(this.paddle.x + this.paddle.width, this.paddle.y, this.paddle.x + this.paddle.width, this.paddle.y + pRadius, pRadius);
-    ctx.lineTo(this.paddle.x + this.paddle.width, this.paddle.y + this.paddle.height - pRadius);
-    ctx.arcTo(this.paddle.x + this.paddle.width, this.paddle.y + this.paddle.height, this.paddle.x + this.paddle.width - pRadius, this.paddle.y + this.paddle.height, pRadius);
-    ctx.lineTo(this.paddle.x + pRadius, this.paddle.y + this.paddle.height);
-    ctx.arcTo(this.paddle.x, this.paddle.y + this.paddle.height, this.paddle.x, this.paddle.y + this.paddle.height - pRadius, pRadius);
-    ctx.lineTo(this.paddle.x, this.paddle.y + pRadius);
-    ctx.arcTo(this.paddle.x, this.paddle.y, this.paddle.x + pRadius, this.paddle.y, pRadius);
-    ctx.closePath();
+    ctx.roundRect(this.paddle.x + 3, this.paddle.y + 3, this.paddle.width, this.paddle.height, 6);
     ctx.fill();
 
-    // Center neon cyan core
-    ctx.fillStyle = '#00d2d3';
-    ctx.fillRect(this.paddle.x + 8, this.paddle.y + 4, this.paddle.width - 16, 4);
+    // Wooden craft stick body
+    ctx.fillStyle = '#C85A32';
+    ctx.beginPath();
+    ctx.roundRect(this.paddle.x, this.paddle.y, this.paddle.width, this.paddle.height, 6);
+    ctx.fill();
 
-    // Bumpers
-    ctx.fillStyle = '#ff7675';
-    ctx.fillRect(this.paddle.x + 2, this.paddle.y + 2, 4, this.paddle.height - 4);
-    ctx.fillRect(this.paddle.x + this.paddle.width - 6, this.paddle.y + 2, 4, this.paddle.height - 4);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Wooden grain center strip
+    ctx.fillStyle = '#E8DEC8';
+    ctx.beginPath();
+    ctx.roundRect(this.paddle.x + 14, this.paddle.y + 4, this.paddle.width - 28, 4, 2);
+    ctx.fill();
+
+    // Left tape bumper strip
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(this.paddle.x + 2, this.paddle.y + 1, 10, this.paddle.height - 2, 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Right tape bumper strip
+    ctx.beginPath();
+    ctx.roundRect(this.paddle.x + this.paddle.width - 12, this.paddle.y + 1, 10, this.paddle.height - 2, 2);
+    ctx.fill();
+    ctx.stroke();
     ctx.restore();
 
-    // Render Ball Trail
-    for (let i = 0; i < this.ball.trail.length; i++) {
-      const pt = this.ball.trail[i];
-      if (!pt) continue;
-      const alpha = (1 - i / this.ball.trail.length) * 0.4;
-      const size = this.ball.radius * (1 - (i / this.ball.trail.length) * 0.4);
-      ctx.save();
-      ctx.fillStyle = `rgba(0, 210, 211, ${alpha})`;
-      ctx.beginPath();
-      ctx.arc(pt.x, pt.y, size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // Render Ball
+    // 4. Render Paper Ball with Inked Contour
     ctx.save();
-    ctx.shadowColor = '#ffffff';
-    ctx.shadowBlur = 10;
-    ctx.fillStyle = '#ffffff';
+    // Ball shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.arc(this.ball.x + 2, this.ball.y + 2, this.ball.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ball paper cutout
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
     ctx.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Inner highlight
-    ctx.fillStyle = '#00d2d3';
+    // Concentric paper ring
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(this.ball.x - 2, this.ball.y - 2, this.ball.radius * 0.4, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.arc(this.ball.x, this.ball.y, this.ball.radius * 0.6, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Inked contour
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
+    ctx.stroke();
     ctx.restore();
 
-    // Render Particles
+    // 5. Render Particles
     this.particles.render(ctx);
 
-    // Render Top HUD
+    // 6. Render Top HUD on Taped Kraft Placard
     ctx.save();
-    ctx.fillStyle = 'rgba(12, 13, 30, 0.85)';
+    // Cardboard placard background
+    ctx.fillStyle = '#FFFDF8';
     ctx.fillRect(0, 0, 800, 48);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 48);
+    ctx.lineTo(800, 48);
+    ctx.stroke();
 
-    ctx.font = 'bold 18px "Courier New", monospace, sans-serif';
+    // Tape decorations on top bar
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(180, 2, 28, 12);
+    ctx.strokeRect(180, 2, 28, 12);
+    ctx.fillRect(380, 2, 28, 12);
+    ctx.strokeRect(380, 2, 28, 12);
+    ctx.fillRect(550, 2, 28, 12);
+    ctx.strokeRect(550, 2, 28, 12);
+
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#fed330';
-    ctx.fillText(`SCORE: ${this.gameState.score}`, 20, 30);
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#C85A32';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, 20, 25);
 
-    ctx.fillStyle = '#a4b0be';
-    ctx.fillText(`HIGH: ${this.gameState.highScore}`, 220, 30);
+    ctx.fillStyle = '#6A5D4D';
+    ctx.fillText(`HIGH: ${this.gameState.highScore}`, 220, 25);
 
-    ctx.fillStyle = '#00d2d3';
-    ctx.fillText(`LEVEL: ${this.gameState.level}`, 420, 30);
+    ctx.fillStyle = '#3B82F6';
+    ctx.fillText(`LEVEL: ${this.gameState.level}`, 420, 25);
 
-    ctx.fillStyle = '#ff3838';
+    ctx.fillStyle = '#E11D48';
     let hearts = '';
     for (let i = 0; i < this.gameState.lives; i++) {
       hearts += '♥ ';
     }
-    ctx.fillText(`LIVES: ${hearts}`, 590, 30);
+    ctx.fillText(`LIVES: ${hearts}`, 590, 25);
     ctx.restore();
 
     // Launch hint
     if (!this.ball.launched && (this.gameState.status === 'playing' || this.gameState.status === 'ready')) {
       ctx.save();
-      ctx.font = 'bold 16px sans-serif';
+      // Taped hint note
+      const hintY = this.paddle.y - 35;
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(260, hintY - 14, 280, 28, 4);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(385, hintY - 18, 30, 8);
+      ctx.strokeRect(385, hintY - 18, 30, 8);
+
+      ctx.font = 'bold 15px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#00d2d3';
-      ctx.shadowColor = '#00d2d3';
-      ctx.shadowBlur = 8;
-      ctx.fillText('PRESS SPACE OR CLICK TO LAUNCH', 400, this.paddle.y - 30);
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#3E2723';
+      ctx.fillText('PRESS SPACE OR CLICK TO LAUNCH', 400, hintY);
       ctx.restore();
     }
 
     // Overlays
     if (this.gameState.status === 'paused') {
       ctx.save();
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.85)';
       ctx.fillRect(0, 0, 800, 600);
 
-      ctx.fillStyle = '#fed330';
-      ctx.font = 'bold 36px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.shadowColor = '#fed330';
-      ctx.shadowBlur = 10;
-      ctx.fillText('GAME PAUSED', 400, 270);
+      // Cardboard modal placard
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(220, 180, 360, 220, 8);
+      ctx.fill();
+      ctx.stroke();
 
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '18px sans-serif';
-      ctx.shadowBlur = 0;
-      ctx.fillText('Press ESC to Resume', 400, 330);
+      // Top tape strip
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.3)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(360, 172, 80, 16);
+      ctx.strokeRect(360, 172, 80, 16);
+
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('GAME PAUSED', 400, 250);
+
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '18px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('Press ESC to Resume', 400, 320);
       ctx.restore();
     } else if (this.gameState.status === 'gameover') {
       ctx.save();
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.9)';
       ctx.fillRect(0, 0, 800, 600);
 
-      ctx.fillStyle = '#ff3838';
-      ctx.font = 'bold 44px sans-serif';
+      // Cardboard game over placard
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(200, 140, 400, 300, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Top tape strips
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.3)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(250, 132, 60, 16);
+      ctx.strokeRect(250, 132, 60, 16);
+      ctx.fillRect(490, 132, 60, 16);
+      ctx.strokeRect(490, 132, 60, 16);
+
+      ctx.fillStyle = '#E11D48';
+      ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.shadowColor = '#ff3838';
-      ctx.shadowBlur = 15;
-      ctx.fillText('GAME OVER', 400, 230);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('GAME OVER', 400, 210);
 
-      ctx.fillStyle = '#fed330';
-      ctx.font = 'bold 22px sans-serif';
-      ctx.shadowColor = '#fed330';
-      ctx.shadowBlur = 6;
-      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, 400, 290);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, 400, 270);
 
-      ctx.fillStyle = '#a4b0be';
-      ctx.font = '18px sans-serif';
-      ctx.shadowBlur = 0;
-      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 330);
+      ctx.fillStyle = '#6A5D4D';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 310);
 
-      ctx.fillStyle = '#00d2d3';
-      ctx.font = 'bold 20px sans-serif';
-      ctx.shadowColor = '#00d2d3';
-      ctx.shadowBlur = 8;
-      ctx.fillText('PRESS SPACE OR CLICK TO RESTART', 400, 390);
+      // Button placard
+      ctx.fillStyle = '#10B981';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(230, 350, 340, 48, 6);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFFDF8';
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('PRESS SPACE OR CLICK TO PLAY AGAIN', 400, 375);
       ctx.restore();
     }
 

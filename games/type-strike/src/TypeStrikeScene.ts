@@ -277,17 +277,13 @@ export class TypeStrikeScene implements GameScene {
   render(ctx: CanvasRenderingContext2D): void {
     ctx.save();
 
-    // 1. Cyber background
-    const bgGrad = ctx.createLinearGradient(0, 0, 800, 600);
-    bgGrad.addColorStop(0, '#0b0409');
-    bgGrad.addColorStop(0.5, '#12081a');
-    bgGrad.addColorStop(1, '#1a0b28');
-    ctx.fillStyle = bgGrad;
+    // 1. Parchment paper command desk background (#F4EAD4)
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, 800, 600);
 
-    // Tactical Radar Wireframe Circles & Crosshairs
+    // Stitched Tactical Radar Wireframe Rings & Crosshairs
     ctx.save();
-    ctx.strokeStyle = 'rgba(255, 0, 127, 0.12)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.12)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.arc(60, this.defenderTurretY, 180, -Math.PI / 2, Math.PI / 2);
@@ -295,7 +291,7 @@ export class TypeStrikeScene implements GameScene {
     ctx.arc(60, this.defenderTurretY, 520, -Math.PI / 2, Math.PI / 2);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.08)';
     ctx.beginPath();
     ctx.moveTo(60, this.defenderTurretY);
     ctx.lineTo(800, this.defenderTurretY - 240);
@@ -304,18 +300,18 @@ export class TypeStrikeScene implements GameScene {
     ctx.stroke();
     ctx.restore();
 
-    // Matrix background drops
-    ctx.font = '13px monospace';
+    // Faint Typewriter text rain drops
+    ctx.font = '13px "Patrick Hand", cursive, monospace';
     for (const drop of this.matrixRainDrops) {
-      ctx.fillStyle = 'rgba(0, 255, 136, 0.15)';
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.1)';
       ctx.fillText(drop.char, drop.x, drop.y);
     }
 
-    // Lane laser divider guides
+    // Stitched lane divider ink guidelines
     ctx.lineWidth = 1;
-    ctx.setLineDash([4, 8]);
+    ctx.setLineDash([4, 6]);
     for (const laneY of this.lanes) {
-      ctx.strokeStyle = 'rgba(255, 0, 127, 0.15)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.18)';
       ctx.beginPath();
       ctx.moveTo(60, laneY + 18);
       ctx.lineTo(800, laneY + 18);
@@ -323,47 +319,53 @@ export class TypeStrikeScene implements GameScene {
     }
     ctx.setLineDash([]);
 
-    // 2. Base / Defender zone (x: 0..60)
-    const shieldAlpha = Math.max(0.2, this.gameState.shields / this.gameState.maxShields);
-    ctx.fillStyle = `rgba(0, 240, 255, ${shieldAlpha * 0.22})`;
+    // 2. Base / Cardboard Fortress Defender zone (x: 0..60)
+    ctx.fillStyle = '#C5A880';
     ctx.fillRect(0, 0, 60, 600);
 
-    // Shield barrier neon strip
-    ctx.strokeStyle = this.gameState.shields > 1 ? '#00f0ff' : '#ff007f';
-    ctx.lineWidth = 4;
-    ctx.shadowBlur = 16;
-    ctx.shadowColor = ctx.strokeStyle;
+    // Stitched fortress edge
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(60, 0);
     ctx.lineTo(60, 600);
     ctx.stroke();
-    ctx.shadowBlur = 0;
 
-    // Defender command turret base
-    ctx.fillStyle = '#1f1d36';
-    ctx.strokeStyle = '#00f0ff';
+    // Cardboard fortress rivets
+    ctx.fillStyle = '#3E2723';
+    for (let y = 30; y < 600; y += 60) {
+      ctx.beginPath();
+      ctx.arc(52, y, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Cardboard command launcher hub
+    ctx.fillStyle = '#E8DEC8';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(20, this.defenderTurretY, 22, -Math.PI / 2, Math.PI / 2);
+    ctx.arc(20, this.defenderTurretY, 24, -Math.PI / 2, Math.PI / 2);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
-    // Glowing core reactor
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00f0ff';
+    // Brass fastener axle
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
     ctx.arc(18, this.defenderTurretY, 7, 0, Math.PI * 2);
     ctx.fill();
-    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // Dual Turret cannon emitter barrels
-    ctx.fillStyle = '#ff007f';
-    ctx.fillRect(20, this.defenderTurretY - 8, 24, 4);
-    ctx.fillRect(20, this.defenderTurretY + 4, 24, 4);
+    // Dual cardboard launcher barrels
+    ctx.fillStyle = '#C85A32';
+    ctx.fillRect(20, this.defenderTurretY - 8, 24, 5);
+    ctx.strokeRect(20, this.defenderTurretY - 8, 24, 5);
+    ctx.fillRect(20, this.defenderTurretY + 3, 24, 5);
+    ctx.strokeRect(20, this.defenderTurretY + 3, 24, 5);
 
-    // 3. Enemies
+    // 3. Enemies - Papercraft Origami Flyers & Inked Cards
     const activeTarget = this.typingEngine.getActiveTarget();
 
     for (const enemy of this.enemies) {
@@ -371,17 +373,25 @@ export class TypeStrikeScene implements GameScene {
       const isTarget = activeTarget && activeTarget.id === enemy.id;
       const ey = enemy.y + enemy.hoverOffset;
 
-      // Drone body
       ctx.save();
-      ctx.fillStyle = isTarget ? '#2a1a38' : '#1a1829';
-      ctx.strokeStyle = isTarget ? '#00f0ff' : (enemy.tier === 'long' ? '#ff007f' : (enemy.tier === 'medium' ? '#ffe600' : '#00f0ff'));
-      ctx.lineWidth = isTarget ? 2.5 : 1.5;
-      if (isTarget) {
-        ctx.shadowBlur = 14;
-        ctx.shadowColor = '#00f0ff';
-      }
+      // Drop shadow for origami flyer
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.22)';
+      ctx.beginPath();
+      ctx.moveTo(enemy.x + 3, ey + enemy.height / 2 + 3);
+      ctx.lineTo(enemy.x + 18 + 3, ey + 3);
+      ctx.lineTo(enemy.x + enemy.width + 3, ey + 3 + 3);
+      ctx.lineTo(enemy.x + enemy.width - 6 + 3, ey + enemy.height / 2 + 3);
+      ctx.lineTo(enemy.x + enemy.width + 3, ey + enemy.height - 3 + 3);
+      ctx.lineTo(enemy.x + 18 + 3, ey + enemy.height + 3);
+      ctx.closePath();
+      ctx.fill();
 
-      // Drone chassis shape (angular cyberpunk stealth polygon)
+      // Origami Paper Flyer Cutout
+      const flyerBg = enemy.tier === 'long' ? '#E11D48' : enemy.tier === 'medium' ? '#F59E0B' : '#3B82F6';
+      ctx.fillStyle = isTarget ? '#FFFDF8' : flyerBg;
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = isTarget ? 2.5 : 1.5;
+
       ctx.beginPath();
       ctx.moveTo(enemy.x, ey + enemy.height / 2);
       ctx.lineTo(enemy.x + 18, ey);
@@ -393,32 +403,17 @@ export class TypeStrikeScene implements GameScene {
       ctx.fill();
       ctx.stroke();
 
-      // Drone glowing eye core
-      ctx.fillStyle = isTarget ? '#00f0ff' : '#ff007f';
-      ctx.shadowBlur = isTarget ? 8 : 4;
-      ctx.shadowColor = ctx.fillStyle;
+      // Origami center fold crease
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.35)';
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(enemy.x + 14, ey + enemy.height / 2, 4.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.moveTo(enemy.x, ey + enemy.height / 2);
+      ctx.lineTo(enemy.x + enemy.width - 6, ey + enemy.height / 2);
+      ctx.stroke();
 
-      // Thruster flames (dual exhaust)
-      ctx.fillStyle = '#ff007f';
-      ctx.beginPath();
-      ctx.moveTo(enemy.x + enemy.width - 6, ey + 4);
-      ctx.lineTo(enemy.x + enemy.width + 12, ey + 6);
-      ctx.lineTo(enemy.x + enemy.width - 6, ey + 8);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(enemy.x + enemy.width - 6, ey + enemy.height - 8);
-      ctx.lineTo(enemy.x + enemy.width + 12, ey + enemy.height - 6);
-      ctx.lineTo(enemy.x + enemy.width - 6, ey + enemy.height - 4);
-      ctx.fill();
-
-      // Target selection brackets [ ... ]
+      // Target selection paper brackets
       if (isTarget) {
-        ctx.strokeStyle = '#00f0ff';
+        ctx.strokeStyle = '#E11D48';
         ctx.lineWidth = 2;
         const pad = 10;
         // Left bracket
@@ -439,27 +434,36 @@ export class TypeStrikeScene implements GameScene {
         ctx.stroke();
       }
 
-      // Word / Arrow Badge Container
-      ctx.font = 'bold 18px "Courier New", monospace';
+      // Word / Arrow Papercut Badge
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
       const isArrowMode = enemy.mode === 'arrows';
       const badgeText = enemy.getFormattedWord();
-      const badgeWidth = Math.max(74, ctx.measureText(badgeText).width + 24);
+      const badgeWidth = Math.max(76, ctx.measureText(badgeText).width + 24);
       const badgeX = enemy.x + enemy.width / 2 - badgeWidth / 2;
       const badgeY = ey - 28;
 
-      ctx.fillStyle = 'rgba(10, 10, 24, 0.92)';
-      ctx.strokeStyle = isTarget ? '#00f0ff' : 'rgba(255, 0, 127, 0.4)';
-      ctx.lineWidth = isTarget ? 2 : 1;
-      ctx.fillRect(badgeX, badgeY, badgeWidth, 24);
-      ctx.strokeRect(badgeX, badgeY, badgeWidth, 24);
+      // Badge shadow
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.beginPath();
+      ctx.roundRect(badgeX + 2, badgeY + 2, badgeWidth, 24, 4);
+      ctx.fill();
 
-      // Render prefix matched (cyan glow), next char (cursor highlight), remaining (white)
+      // Construction Paper Placard Body
+      ctx.fillStyle = '#FFFDF8';
+      ctx.beginPath();
+      ctx.roundRect(badgeX, badgeY, badgeWidth, 24, 4);
+      ctx.fill();
+
+      ctx.strokeStyle = isTarget ? '#E11D48' : '#3E2723';
+      ctx.lineWidth = isTarget ? 2 : 1.2;
+      ctx.stroke();
+
+      // Render prefix matched (green), next char (underline), remaining (ink brown)
       let textCursorX = badgeX + 12;
       ctx.textBaseline = 'middle';
       const textCenterY = badgeY + 12;
 
       if (isArrowMode) {
-        // Draw individual arrow glyphs with spacing
         for (let i = 0; i < enemy.word.length; i++) {
           const char = enemy.word[i]!;
           const sym = arrowCharToSymbol(char);
@@ -467,27 +471,23 @@ export class TypeStrikeScene implements GameScene {
           const isCharNext = isTarget && i === enemy.matchedIndex;
 
           if (isCharMatched) {
-            ctx.fillStyle = '#00f0ff';
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = '#00f0ff';
+            ctx.fillStyle = '#10B981';
             ctx.fillText(sym, textCursorX, textCenterY);
-            ctx.shadowBlur = 0;
           } else {
-            ctx.fillStyle = '#f8fafc';
+            ctx.fillStyle = '#3E2723';
             ctx.fillText(sym, textCursorX, textCenterY);
           }
 
           const symWidth = ctx.measureText(sym).width;
           if (isCharNext) {
-            ctx.strokeStyle = '#00f0ff';
-            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#E11D48';
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(textCursorX, textCenterY + 9);
             ctx.lineTo(textCursorX + symWidth, textCenterY + 9);
             ctx.stroke();
           }
 
-          // Advance cursor with space gap
           textCursorX += symWidth + (i < enemy.word.length - 1 ? ctx.measureText(' ').width : 0);
         }
       } else {
@@ -495,24 +495,20 @@ export class TypeStrikeScene implements GameScene {
         const unmatched = enemy.getUnmatchedPrefix();
 
         if (matched.length > 0) {
-          ctx.fillStyle = '#00f0ff';
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = '#00f0ff';
+          ctx.fillStyle = '#10B981';
           ctx.fillText(matched, textCursorX, textCenterY);
-          ctx.shadowBlur = 0;
           textCursorX += ctx.measureText(matched).width;
         }
 
         if (unmatched.length > 0) {
-          ctx.fillStyle = '#f8fafc';
+          ctx.fillStyle = '#3E2723';
           ctx.fillText(unmatched, textCursorX, textCenterY);
 
           if (isTarget) {
-            // Cursor underline under next char
             const nextChar = unmatched[0]!;
             const nextCharWidth = ctx.measureText(nextChar).width;
-            ctx.strokeStyle = '#00f0ff';
-            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#E11D48';
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(textCursorX, textCenterY + 9);
             ctx.lineTo(textCursorX + nextCharWidth, textCenterY + 9);
@@ -527,64 +523,80 @@ export class TypeStrikeScene implements GameScene {
     // 4. Lasers & Particles
     this.particles.render(ctx);
 
-    // 5. Top Cyber HUD
-    ctx.fillStyle = 'rgba(10, 10, 24, 0.95)';
+    // 5. Top Taped Placard HUD
+    ctx.fillStyle = '#FFFDF8';
     ctx.fillRect(0, 0, 800, 52);
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 52);
     ctx.lineTo(800, 52);
     ctx.stroke();
 
-    ctx.font = 'bold 16px "Courier New", monospace';
+    // Tape accents
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(200, 2, 24, 10);
+    ctx.strokeRect(200, 2, 24, 10);
+    ctx.fillRect(570, 2, 24, 10);
+    ctx.strokeRect(570, 2, 24, 10);
+
+    ctx.font = 'bold 17px "Patrick Hand", cursive, sans-serif';
     ctx.textBaseline = 'middle';
 
     // Shields (left)
-    ctx.fillStyle = '#ff007f';
+    ctx.fillStyle = '#E11D48';
+    ctx.textAlign = 'left';
     ctx.fillText('SHIELDS:', 20, 26);
     for (let s = 0; s < this.gameState.maxShields; s++) {
-      const sx = 105 + s * 24;
+      const sx = 95 + s * 24;
       if (s < this.gameState.shields) {
-        ctx.fillStyle = '#00f0ff';
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#00f0ff';
-        ctx.fillRect(sx, 18, 16, 16);
-        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#3B82F6';
+        ctx.beginPath();
+        ctx.roundRect(sx, 18, 16, 16, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
       } else {
-        ctx.strokeStyle = '#ff007f';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(sx, 18, 16, 16);
+        ctx.fillStyle = '#E8DEC8';
+        ctx.beginPath();
+        ctx.roundRect(sx, 18, 16, 16, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
       }
     }
 
     // Timer & Score (center)
-    ctx.fillStyle = this.gameState.timeRemaining < 10 ? '#ff007f' : '#f8fafc';
+    ctx.fillStyle = this.gameState.timeRemaining < 10 ? '#E11D48' : '#3E2723';
     ctx.textAlign = 'center';
     ctx.fillText(`TIME: ${this.gameState.timeRemaining.toFixed(1)}s`, 320, 26);
 
-    ctx.fillStyle = '#ffe600';
+    ctx.fillStyle = '#C85A32';
     ctx.fillText(`SCORE: ${this.gameState.score}`, 480, 26);
 
     // Multiplier & Streak (right)
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#00f0ff';
+    ctx.fillStyle = '#10B981';
     ctx.fillText(`STREAK: ${this.typingEngine.getStreak()} [${this.typingEngine.getMultiplier()}x]`, 780, 26);
 
     // Bottom Lock Terminal Status Bar
-    ctx.fillStyle = 'rgba(10, 10, 24, 0.9)';
+    ctx.fillStyle = '#FFFDF8';
     ctx.fillRect(0, 565, 800, 35);
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, 565);
     ctx.lineTo(800, 565);
     ctx.stroke();
 
     ctx.textAlign = 'left';
-    ctx.font = '14px "Courier New", monospace';
+    ctx.font = 'bold 15px "Patrick Hand", cursive, sans-serif';
     if (activeTarget) {
-      ctx.fillStyle = '#00f0ff';
+      ctx.fillStyle = '#E11D48';
       if (activeTarget.mode === 'arrows') {
         const matchedSymbols = activeTarget.getMatchedPrefix().split('').map(arrowCharToSymbol).join(' ');
         const unmatchedSymbols = activeTarget.getUnmatchedPrefix().split('').map(arrowCharToSymbol).join(' ');
@@ -594,7 +606,7 @@ export class TypeStrikeScene implements GameScene {
         ctx.fillText(`TARGET LOCKED: [${activeTarget.getMatchedPrefix()}]${activeTarget.getUnmatchedPrefix()}  |  NEXT CHAR: '${activeTarget.getNextChar()}'`, 20, 582);
       }
     } else {
-      ctx.fillStyle = '#94a3b8';
+      ctx.fillStyle = '#6A5D4D';
       const promptTip = this.mode === 'arrows'
         ? 'STATUS: RADAR ACTIVE. PRESS ARROW KEYS OR WASD TO ENGAGE LASER STRIKE.'
         : 'STATUS: RADAR ACTIVE. TYPE TARGET PROMPT TO ENGAGE LASER STRIKE.';
@@ -614,116 +626,165 @@ export class TypeStrikeScene implements GameScene {
   }
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(5, 8, 17, 0.88)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
     ctx.fillRect(0, 0, 800, 600);
 
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#00ffcc';
-    ctx.font = 'bold 44px "Courier New", monospace';
-    ctx.shadowBlur = 16;
-    ctx.shadowColor = '#00ffcc';
-    ctx.fillText('TYPE STRIKE', 400, 160);
-    ctx.shadowBlur = 0;
+    // Cardboard Modal Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(140, 70, 520, 480, 10);
+    ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.font = '18px "Courier New", monospace';
-    ctx.fillText('CYBER DEFENSE TERMINAL', 400, 200);
+    // Tape strips
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(200, 62, 60, 16);
+    ctx.strokeRect(200, 62, 60, 16);
+    ctx.fillRect(540, 62, 60, 16);
+    ctx.strokeRect(540, 62, 60, 16);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 40px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('TYPE STRIKE', 400, 125);
+
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('PAPERCRAFT DEFENSE TERMINAL', 400, 160);
 
     // Mode-specific instructions
-    ctx.fillStyle = '#dcdde1';
-    ctx.font = '16px "Courier New", monospace';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
     if (this.mode === 'arrows') {
-      ctx.fillText('Press Arrow keys (↑↓←→) or WASD to clear direction sequences and fire lasers.', 400, 250);
-      ctx.fillText('Complete sequences sequentially to scale streak multiplier up to 8x.', 400, 280);
-      ctx.fillText('Defend base shields across 60 seconds of cyber onslaught!', 400, 310);
+      ctx.fillText('Press Arrow keys (↑↓←→) or WASD to clear direction sequences.', 400, 210);
+      ctx.fillText('Complete sequences sequentially to scale streak multiplier up to 8x.', 400, 240);
+      ctx.fillText('Defend base shields across 60 seconds of papercraft onslaught!', 400, 270);
     } else {
-      ctx.fillText('Type prompt words above approaching drones to fire lasers.', 400, 250);
-      ctx.fillText('Complete words sequentially to scale streak multiplier up to 8x.', 400, 280);
-      ctx.fillText('Defend base shields across 60 seconds of cyber onslaught!', 400, 310);
+      ctx.fillText('Type prompt words above approaching origami planes to fire lasers.', 400, 210);
+      ctx.fillText('Complete words sequentially to scale streak multiplier up to 8x.', 400, 240);
+      ctx.fillText('Defend base shields across 60 seconds of papercraft onslaught!', 400, 270);
     }
 
     if (this.gameState.highScore > 0) {
-      ctx.fillStyle = '#ffeaa7';
-      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 350);
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 16px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 310);
     }
 
     // Mode Toggle Button
     const btn = this.modeToggleRect;
-    ctx.fillStyle = 'rgba(18, 14, 36, 0.95)';
-    ctx.strokeStyle = this.mode === 'arrows' ? '#ffe600' : '#00f0ff';
+    ctx.fillStyle = this.mode === 'arrows' ? '#F59E0B' : '#3B82F6';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = ctx.strokeStyle;
-    ctx.fillRect(btn.x, btn.y, btn.width, btn.height);
-    ctx.strokeRect(btn.x, btn.y, btn.width, btn.height);
-    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.roundRect(btn.x, btn.y, btn.width, btn.height, 6);
+    ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = ctx.strokeStyle;
-    ctx.font = 'bold 18px "Courier New", monospace';
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
     const modeLabel = this.mode === 'arrows' ? 'MODE: ARROWS (↑↓←→)' : 'MODE: WORDS';
-    ctx.fillText(modeLabel, btn.x + btn.width / 2, btn.y + btn.height / 2 + 6);
+    ctx.fillText(modeLabel, btn.x + btn.width / 2, btn.y + btn.height / 2 + 5);
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '13px "Courier New", monospace';
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Press [M] / [TAB] or Click Button to Toggle Mode', 400, 455);
 
-    ctx.fillStyle = '#00ff88';
-    ctx.font = 'bold 20px "Courier New", monospace';
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00ff88';
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     const startTip = this.mode === 'arrows'
       ? 'PRESS ARROW / WASD / SPACE TO COMMENCE'
       : 'PRESS ANY LETTER OR SPACE TO COMMENCE';
-    ctx.fillText(startTip, 400, 515);
-    ctx.shadowBlur = 0;
+    ctx.fillText(startTip, 400, 500);
   }
 
   private renderPausedOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(5, 8, 17, 0.85)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.85)';
     ctx.fillRect(0, 0, 800, 600);
 
+    // Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(240, 200, 320, 200, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    // Tape
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(360, 192, 80, 16);
+    ctx.strokeRect(360, 192, 80, 16);
+
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#00ffcc';
-    ctx.font = 'bold 36px "Courier New", monospace';
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('SYSTEM PAUSED', 400, 270);
 
-    ctx.fillStyle = '#f5f6fa';
-    ctx.font = '18px "Courier New", monospace';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Press ESC or Click to Resume', 400, 330);
   }
 
   private renderGameOverOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(5, 8, 17, 0.92)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
     ctx.fillRect(0, 0, 800, 600);
+
+    // Cardboard Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(160, 110, 480, 400, 10);
+    ctx.fill();
+    ctx.stroke();
+
+    // Tape
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(220, 102, 60, 16);
+    ctx.strokeRect(220, 102, 60, 16);
+    ctx.fillRect(520, 102, 60, 16);
+    ctx.strokeRect(520, 102, 60, 16);
 
     ctx.textAlign = 'center';
     const isWin = this.gameState.gameOverReason === 'time_up';
-    ctx.fillStyle = isWin ? '#00ff88' : '#ff4757';
-    ctx.font = 'bold 38px "Courier New", monospace';
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = ctx.fillStyle;
-    ctx.fillText(isWin ? 'MISSION ACCOMPLISHED' : 'BASE OVERRUN', 400, 180);
-    ctx.shadowBlur = 0;
+    ctx.fillStyle = isWin ? '#10B981' : '#E11D48';
+    ctx.font = 'bold 40px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(isWin ? 'MISSION ACCOMPLISHED' : 'BASE OVERRUN', 400, 175);
 
-    ctx.fillStyle = '#f5f6fa';
-    ctx.font = '20px "Courier New", monospace';
-    ctx.fillText(isWin ? '60s Survival Window Complete!' : 'All Base Shields Depleted!', 400, 225);
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(isWin ? '60s Survival Window Complete!' : 'All Base Shields Depleted!', 400, 220);
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.font = 'bold 28px "Courier New", monospace';
-    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, 400, 290);
+    ctx.fillStyle = '#3E2723';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, 400, 280);
 
-    ctx.fillStyle = '#dcdde1';
-    ctx.font = '18px "Courier New", monospace';
-    ctx.fillText(`DRONES ELIMINATED: ${this.gameState.wordsDestroyed}`, 400, 335);
-    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 370);
+    ctx.fillStyle = '#3B82F6';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`FLYERS ELIMINATED: ${this.gameState.wordsDestroyed}`, 400, 325);
+    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 355);
 
-    ctx.fillStyle = '#00ffcc';
-    ctx.font = 'bold 22px "Courier New", monospace';
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00ffcc';
-    ctx.fillText('PRESS SPACE OR ENTER TO REBOOT', 400, 470);
-    ctx.shadowBlur = 0;
+    // Button
+    ctx.fillStyle = '#10B981';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(220, 410, 360, 48, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('PRESS SPACE OR ENTER TO REBOOT', 400, 438);
   }
 
   restart(): void {
