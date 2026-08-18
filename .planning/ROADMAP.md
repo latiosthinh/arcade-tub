@@ -51,8 +51,11 @@ Plans:
   2. Consuming energy food pellets extends tail length, adds score, accelerates game speed, and triggers neon eating particle bursts.
   3. Colliding with grid boundary walls or own tail triggers game over state and records high score.
   4. Standalone HTML entry and Vite rollup build bundle cleanly with procedural Web Audio eating/crash sounds.
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 2 plans
+
+Plans:
+- [ ] 22-01-PLAN.md — Grid matrix math, Snake kinematics & 180° direction buffer, FoodSpawner, GameState & 100% unit tests (SNK-01)
+- [ ] 22-02-PLAN.md — SnakeAudio, ParticleSystem, SnakeRenderer neon UI, controls & Vite packaging (SNK-02)
 
 ### Phase 23: Bug Climb Tree Minigame
 **Goal**: Deliver complete playable Bug Climb Tree minigame with trunk side-switching, falling branch hazards, countdown timer, and climbing animations.
