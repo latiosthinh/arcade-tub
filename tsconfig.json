@@ -17,6 +17,7 @@
     { "path": "games/game-2048" },
     { "path": "games/snake-eat" },
     { "path": "games/bug-climb" },
-    { "path": "games/car-race" }
+    { "path": "games/car-race" },
+    { "path": "games/paper-basket" }
   ]
 }
