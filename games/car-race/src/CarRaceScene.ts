@@ -85,7 +85,7 @@ export class CarRaceScene implements GameScene {
         this.audio.playTireScreech();
       }
 
-      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.code === 'Space') {
         this.player.setThrottle(true);
       } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
         this.player.setBrake(true);
@@ -99,7 +99,7 @@ export class CarRaceScene implements GameScene {
       this.player.setSteer(0);
     }
 
-    if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+    if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.code === 'Space') {
       this.player.setThrottle(false);
     } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
       this.player.setBrake(false);
@@ -190,32 +190,32 @@ export class CarRaceScene implements GameScene {
     // 4. Particles
     this.renderParticles(ctx);
 
-    // 5. Top Cyber HUD
-    ctx.fillStyle = 'rgba(10, 7, 20, 0.9)';
+    // 5. Top Storybook HUD
+    ctx.fillStyle = '#FFFDF9';
     ctx.fillRect(0, 0, CANVAS_WIDTH, 52);
-    ctx.strokeStyle = '#ff007f';
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 52);
     ctx.lineTo(CANVAS_WIDTH, 52);
     ctx.stroke();
 
-    ctx.font = 'bold 16px "Courier New", monospace';
+    ctx.font = 'bold 16px "Comfortaa", cursive, sans-serif';
     ctx.textBaseline = 'middle';
 
     // Left: Speedometer
-    ctx.fillStyle = this.player.speed > 250 ? '#ff007f' : '#00f0ff';
+    ctx.fillStyle = '#C85A32';
     ctx.textAlign = 'left';
     ctx.fillText(`SPEED: ${Math.floor(this.player.speed)} KM/H`, 20, 26);
 
     // Center: Score & Distance
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ffe600';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText(`SCORE: ${Math.floor(this.gameState.score)}  |  DIST: ${(this.gameState.distance / 1000).toFixed(1)} KM`, CANVAS_WIDTH / 2, 26);
 
     // Right: High Score
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#00ff88';
+    ctx.fillStyle = '#4A6D56';
     ctx.fillText(`BEST: ${Math.floor(this.gameState.highScore)}`, CANVAS_WIDTH - 20, 26);
 
     // 6. Overlays
@@ -255,82 +255,70 @@ export class CarRaceScene implements GameScene {
   }
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(10, 7, 20, 0.88)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.92)';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ff007f';
-    ctx.font = 'bold 44px "Courier New", monospace';
-    ctx.shadowBlur = 16;
-    ctx.shadowColor = '#ff007f';
-    ctx.fillText('NEON HIGHWAY', CANVAS_WIDTH / 2, 220);
-    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('VINTAGE HIGHWAY', CANVAS_WIDTH / 2, 220);
 
-    ctx.fillStyle = '#ffe600';
-    ctx.font = '18px "Courier New", monospace';
-    ctx.fillText('TRAFFIC SPEED RACER', CANVAS_WIDTH / 2, 265);
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('SPEEDWAY ADVENTURE', CANVAS_WIDTH / 2, 265);
 
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = '16px "Courier New", monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Steer: Left / Right Arrow or A / D keys', CANVAS_WIDTH / 2, 320);
-    ctx.fillText('Throttle / Brake: Up / Down Arrow or W / S keys', CANVAS_WIDTH / 2, 350);
+    ctx.fillText('Throttle / Brake: Up / Down Arrow, W / S, or Space', CANVAS_WIDTH / 2, 350);
     ctx.fillText('Draft close behind traffic to gain slipstream speed bonuses!', CANVAS_WIDTH / 2, 380);
 
-    ctx.fillStyle = '#00ff88';
-    ctx.font = 'bold 22px "Courier New", monospace';
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00ff88';
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PRESS ANY KEY OR TAP TO RACE', CANVAS_WIDTH / 2, 480);
-    ctx.shadowBlur = 0;
   }
 
   private renderPausedOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(10, 7, 20, 0.85)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.9)';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 36px "Courier New", monospace';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 40px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('RACE PAUSED', CANVAS_WIDTH / 2, 270);
 
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = '18px "Courier New", monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '18px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Press ESC to Resume', CANVAS_WIDTH / 2, 330);
   }
 
   private renderGameOverOverlay(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = 'rgba(10, 7, 20, 0.92)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.95)';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ff007f';
-    ctx.font = 'bold 42px "Courier New", monospace';
-    ctx.shadowBlur = 16;
-    ctx.shadowColor = '#ff007f';
-    ctx.fillText('CRASH & BURN', CANVAS_WIDTH / 2, 200);
-    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('RACE OVER', CANVAS_WIDTH / 2, 200);
 
-    ctx.fillStyle = '#ffe600';
-    ctx.font = 'bold 28px "Courier New", monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = 'bold 28px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(`FINAL SCORE: ${Math.floor(this.gameState.score)}`, CANVAS_WIDTH / 2, 270);
 
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = '18px "Courier New", monospace';
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '18px "Comfortaa", cursive, sans-serif';
     ctx.fillText(`DISTANCE: ${(this.gameState.distance / 1000).toFixed(2)} KM`, CANVAS_WIDTH / 2, 320);
-    ctx.fillText(`TRAFFIC OVERTAKEN: ${this.gameState.carsDodged}`, CANVAS_WIDTH / 2, 355);
+    ctx.fillText(`CARS PASSED: ${this.gameState.carsDodged}`, CANVAS_WIDTH / 2, 355);
 
     if (this.gameState.score >= this.gameState.highScore && this.gameState.score > 0) {
-      ctx.fillStyle = '#00ff88';
-      ctx.font = 'bold 20px "Courier New", monospace';
+      ctx.fillStyle = '#E09F3E';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
       ctx.fillText('★ NEW HIGH SCORE! ★', CANVAS_WIDTH / 2, 400);
     }
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 22px "Courier New", monospace';
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00f0ff';
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PRESS SPACE OR TAP TO RESTART', CANVAS_WIDTH / 2, 480);
-    ctx.shadowBlur = 0;
   }
 
   public restart(): void {

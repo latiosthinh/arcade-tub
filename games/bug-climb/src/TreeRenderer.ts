@@ -46,47 +46,38 @@ export class TreeRenderer {
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D): void {
-    const grad = ctx.createLinearGradient(0, 0, 0, TreeRenderer.HEIGHT);
-    grad.addColorStop(0, '#0a1917');
-    grad.addColorStop(0.5, '#0d2821');
-    grad.addColorStop(1, '#05120e');
-
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#FAF6EE';
     ctx.fillRect(0, 0, TreeRenderer.WIDTH, TreeRenderer.HEIGHT);
 
-    // Background silhouettes
-    ctx.fillStyle = 'rgba(0, 40, 25, 0.4)';
+    // Warm storybook tree silhouettes in soft sage
+    ctx.fillStyle = 'rgba(74, 109, 86, 0.12)';
     ctx.fillRect(40, 0, 30, TreeRenderer.HEIGHT);
     ctx.fillRect(410, 0, 40, TreeRenderer.HEIGHT);
     ctx.fillRect(80, 0, 15, TreeRenderer.HEIGHT);
     ctx.fillRect(380, 0, 20, TreeRenderer.HEIGHT);
 
-    // Canopy top vignette
-    const canopyGrad = ctx.createLinearGradient(0, 0, 0, 140);
-    canopyGrad.addColorStop(0, 'rgba(5, 25, 15, 0.9)');
-    canopyGrad.addColorStop(1, 'rgba(5, 25, 15, 0)');
-    ctx.fillStyle = canopyGrad;
-    ctx.fillRect(0, 0, TreeRenderer.WIDTH, 140);
+    // Subtle paper grain dots
+    ctx.fillStyle = 'rgba(43, 33, 24, 0.05)';
+    for (let x = 12; x < TreeRenderer.WIDTH; x += 24) {
+      for (let y = 12; y < TreeRenderer.HEIGHT; y += 24) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
   }
 
   private renderTrunk(ctx: CanvasRenderingContext2D, trunk: TreeTrunk): void {
     const leftX = TreeRenderer.TRUNK_X - TreeRenderer.TRUNK_WIDTH / 2;
     const width = TreeRenderer.TRUNK_WIDTH;
 
-    // Outer bark trunk body
-    const trunkGrad = ctx.createLinearGradient(leftX, 0, leftX + width, 0);
-    trunkGrad.addColorStop(0, '#3e2723');
-    trunkGrad.addColorStop(0.2, '#5d4037');
-    trunkGrad.addColorStop(0.5, '#6d4c41');
-    trunkGrad.addColorStop(0.8, '#5d4037');
-    trunkGrad.addColorStop(1, '#3e2723');
-
-    ctx.fillStyle = trunkGrad;
+    // Vintage warm wood trunk
+    ctx.fillStyle = '#A67C52';
     ctx.fillRect(leftX, 0, width, TreeRenderer.HEIGHT);
 
     // Bark grooves and rings
-    ctx.strokeStyle = 'rgba(38, 20, 15, 0.6)';
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
 
     for (let i = 0; i < trunk.segments.length; i++) {
       const seg = trunk.segments[i];
@@ -109,9 +100,9 @@ export class TreeRenderer {
       ctx.stroke();
     }
 
-    // Trunk side borders
-    ctx.strokeStyle = '#27120a';
-    ctx.lineWidth = 4;
+    // Inked tree borders
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(leftX, 0);
     ctx.lineTo(leftX, TreeRenderer.HEIGHT);
@@ -145,11 +136,7 @@ export class TreeRenderer {
     ctx.save();
 
     // Branch limb
-    const branchGrad = ctx.createLinearGradient(0, y - branchHeight / 2, 0, y + branchHeight / 2);
-    branchGrad.addColorStop(0, '#5d4037');
-    branchGrad.addColorStop(1, '#3e2723');
-
-    ctx.fillStyle = branchGrad;
+    ctx.fillStyle = '#8D5B34';
     ctx.beginPath();
     ctx.roundRect(
       side === 'LEFT' ? endX : rootX,
@@ -160,14 +147,14 @@ export class TreeRenderer {
     );
     ctx.fill();
 
-    // Branch outline
-    ctx.strokeStyle = '#27120a';
+    // Inked branch outline
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // Foliage leaf tufts on branch
-    const foliageColors = ['#2ecc71', '#27ae60', '#1abc9c'];
-    ctx.fillStyle = foliageColors[0] ?? '#2ecc71';
+    // Storybook foliage leaf tufts
+    const foliageColor = '#4A6D56';
+    ctx.fillStyle = foliageColor;
 
     const leafX = side === 'LEFT' ? endX - 10 : endX - 15;
     ctx.beginPath();
@@ -175,12 +162,9 @@ export class TreeRenderer {
     ctx.arc(leafX + (side === 'LEFT' ? 30 : 5), y + 6, 18, 0, Math.PI * 2);
     ctx.arc(leafX + (side === 'LEFT' ? -5 : 35), y + 4, 16, 0, Math.PI * 2);
     ctx.fill();
-
-    // Foliage highlight
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-    ctx.beginPath();
-    ctx.arc(leafX + (side === 'LEFT' ? 10 : 20), y - 16, 8, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
     ctx.restore();
   }
@@ -201,17 +185,15 @@ export class TreeRenderer {
     }
 
     if (!climber.alive) {
-      // Dead bug tilt
       ctx.rotate(0.6);
       ctx.globalAlpha = 0.8;
     }
 
     // Legs
-    ctx.strokeStyle = '#1e272e';
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 3;
     ctx.lineCap = 'round';
 
-    // 3 pairs of animated legs
     for (let i = -1; i <= 1; i++) {
       const legY = i * 12;
       const legAnim = (i % 2 === 0 ? 1 : -1) * legOffset;
@@ -232,7 +214,7 @@ export class TreeRenderer {
     }
 
     // Antennae
-    ctx.strokeStyle = '#00ffcc';
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, -22);
@@ -241,31 +223,28 @@ export class TreeRenderer {
     ctx.quadraticCurveTo(-8, -34, -14, -38);
     ctx.stroke();
 
-    // Antenna glowing tips
-    ctx.fillStyle = '#00ffcc';
-    ctx.beginPath();
-    ctx.arc(14, -38, 3, 0, Math.PI * 2);
-    ctx.arc(-14, -38, 3, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Bug Shell / Carapace
-    const shellGrad = ctx.createLinearGradient(0, -20, 0, 20);
-    shellGrad.addColorStop(0, '#2ecc71');
-    shellGrad.addColorStop(0.6, '#27ae60');
-    shellGrad.addColorStop(1, '#16a085');
-
-    ctx.fillStyle = shellGrad;
+    // Ladybug Red Shell
+    ctx.fillStyle = '#C85A32';
     ctx.beginPath();
     ctx.ellipse(0, 0, 16, 22, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // Shell border
-    ctx.strokeStyle = '#0d2821';
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Glowing cyber shell lines
-    ctx.strokeStyle = '#00ffff';
+    // Spots on Ladybug
+    ctx.fillStyle = '#2B2118';
+    ctx.beginPath();
+    ctx.arc(-6, -6, 3, 0, Math.PI * 2);
+    ctx.arc(6, -6, 3, 0, Math.PI * 2);
+    ctx.arc(-7, 8, 3.5, 0, Math.PI * 2);
+    ctx.arc(7, 8, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Center divider
+    ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, -20);
@@ -273,16 +252,21 @@ export class TreeRenderer {
     ctx.stroke();
 
     // Head
-    ctx.fillStyle = '#1e272e';
+    ctx.fillStyle = '#2B2118';
     ctx.beginPath();
     ctx.ellipse(0, -20, 10, 8, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // Eyes
-    ctx.fillStyle = '#ff0055';
+    ctx.fillStyle = '#FFFDF9';
     ctx.beginPath();
-    ctx.arc(-4, -22, 2.5, 0, Math.PI * 2);
-    ctx.arc(4, -22, 2.5, 0, Math.PI * 2);
+    ctx.arc(-4, -22, 3, 0, Math.PI * 2);
+    ctx.arc(4, -22, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#2B2118';
+    ctx.beginPath();
+    ctx.arc(-4, -22, 1.5, 0, Math.PI * 2);
+    ctx.arc(4, -22, 1.5, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -314,42 +298,38 @@ export class TreeRenderer {
   }
 
   private renderHUD(ctx: CanvasRenderingContext2D, timer: UrgentTimer, gameState: GameState): void {
-    // 1. Altitude Counter (Large Center)
+    // 1. Altitude Counter
     ctx.save();
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '900 36px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
     ctx.textAlign = 'center';
-    ctx.shadowColor = 'rgba(0, 255, 200, 0.6)';
-    ctx.shadowBlur = 12;
     ctx.fillText(`${gameState.altitude}m`, TreeRenderer.WIDTH / 2, 70);
     ctx.restore();
 
-    // 2. Score & High Score top corners
+    // 2. Score & High Score
     ctx.save();
-    ctx.font = 'bold 15px "Segoe UI", system-ui, sans-serif';
+    ctx.font = '700 15px "Comfortaa", cursive, sans-serif';
 
     // Left score
-    ctx.fillStyle = '#ecf0f1';
+    ctx.fillStyle = '#6A5D4D';
     ctx.textAlign = 'left';
     ctx.fillText(`SCORE: ${gameState.score}`, 20, 32);
 
     // Right high score
-    ctx.fillStyle = '#f1c40f';
+    ctx.fillStyle = '#C85A32';
     ctx.textAlign = 'right';
-    ctx.fillText(`HIGH: ${gameState.highScore}`, TreeRenderer.WIDTH - 20, 32);
+    ctx.fillText(`BEST: ${gameState.highScore}`, TreeRenderer.WIDTH - 20, 32);
 
     // Combo streak badge
     if (gameState.multiplier > 1) {
-      ctx.fillStyle = '#e67e22';
-      ctx.font = '900 20px "Segoe UI", system-ui, sans-serif';
+      ctx.fillStyle = '#E09F3E';
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.shadowColor = '#f39c12';
-      ctx.shadowBlur = 10;
-      ctx.fillText(`COMBO x${gameState.multiplier}!`, TreeRenderer.WIDTH / 2, 100);
+      ctx.fillText(`★ COMBO x${gameState.multiplier}!`, TreeRenderer.WIDTH / 2, 100);
     }
     ctx.restore();
 
-    // 3. Urgent Countdown Timer Bar (Top prominent)
+    // 3. Urgent Countdown Timer Bar
     const barWidth = 320;
     const barHeight = 14;
     const barX = (TreeRenderer.WIDTH - barWidth) / 2;
@@ -357,31 +337,26 @@ export class TreeRenderer {
     const frac = timer.getTimeFraction();
 
     ctx.save();
-    // Background bar track
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillStyle = '#FFFDF9';
     ctx.beginPath();
     ctx.roundRect(barX, barY, barWidth, barHeight, 7);
     ctx.fill();
 
-    // Fill bar
-    let fillColor = '#2ecc71';
+    let fillColor = '#4A6D56';
     if (timer.isUrgent) {
       const pulse = Math.sin(Date.now() * 0.02) > 0;
-      fillColor = pulse ? '#e74c3c' : '#c0392b';
+      fillColor = pulse ? '#C85A32' : '#8D3A20';
     } else if (frac < 0.5) {
-      fillColor = '#f39c12';
+      fillColor = '#E09F3E';
     }
 
     ctx.fillStyle = fillColor;
-    ctx.shadowColor = fillColor;
-    ctx.shadowBlur = timer.isUrgent ? 16 : 8;
     ctx.beginPath();
     ctx.roundRect(barX + 2, barY + 2, Math.max(0, (barWidth - 4) * frac), barHeight - 4, 5);
     ctx.fill();
 
-    // Bar border
-    ctx.strokeStyle = timer.isUrgent ? '#e74c3c' : 'rgba(255, 255, 255, 0.4)';
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
     ctx.stroke();
     ctx.restore();
   }
@@ -398,45 +373,43 @@ export class TreeRenderer {
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 18, 14, 0.85)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.92)';
     ctx.fillRect(0, 0, TreeRenderer.WIDTH, TreeRenderer.HEIGHT);
 
     ctx.textAlign = 'center';
 
     // Title
-    ctx.fillStyle = '#2ecc71';
-    ctx.font = '900 38px "Segoe UI", system-ui, sans-serif';
-    ctx.shadowColor = 'rgba(46, 204, 113, 0.8)';
-    ctx.shadowBlur = 20;
-    ctx.fillText('BUG CLIMB TREE', TreeRenderer.WIDTH / 2, 280);
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 42px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('LADYBUG CLIMB', TreeRenderer.WIDTH / 2, 280);
 
     // Subtitle
-    ctx.fillStyle = '#ecf0f1';
-    ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
-    ctx.shadowBlur = 0;
-    ctx.fillText('Switch sides & climb high!', TreeRenderer.WIDTH / 2, 320);
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '600 16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('Switch sides & climb the big tree!', TreeRenderer.WIDTH / 2, 320);
 
     // Controls card
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.fillStyle = '#FFFDF9';
     ctx.beginPath();
     ctx.roundRect(60, 360, 360, 140, 12);
     ctx.fill();
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
-    ctx.fillStyle = '#00ffff';
-    ctx.font = 'bold 15px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 16px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('CONTROLS', TreeRenderer.WIDTH / 2, 390);
 
-    ctx.fillStyle = '#bdc3c7';
-    ctx.font = '14px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
     ctx.fillText('A / Left Arrow / Tap Left: Climb Left', TreeRenderer.WIDTH / 2, 425);
     ctx.fillText('D / Right Arrow / Tap Right: Climb Right', TreeRenderer.WIDTH / 2, 455);
-    ctx.fillText('Dodge branches & beat the urgent clock!', TreeRenderer.WIDTH / 2, 485);
+    ctx.fillText('Hold SPACE to speed boost up the trunk', TreeRenderer.WIDTH / 2, 485);
 
     // Start prompt
-    ctx.fillStyle = '#f1c40f';
-    ctx.font = 'bold 18px "Segoe UI", system-ui, sans-serif';
-    ctx.shadowColor = '#f39c12';
-    ctx.shadowBlur = 10;
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('TAP OR PRESS ANY KEY TO START', TreeRenderer.WIDTH / 2, 560);
 
     ctx.restore();
@@ -444,32 +417,30 @@ export class TreeRenderer {
 
   private renderPauseOverlay(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.9)';
     ctx.fillRect(0, 0, TreeRenderer.WIDTH, TreeRenderer.HEIGHT);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '900 36px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 40px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PAUSED', TreeRenderer.WIDTH / 2, TreeRenderer.HEIGHT / 2);
 
-    ctx.fillStyle = '#bdc3c7';
-    ctx.font = '16px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Press P or Tap to Resume', TreeRenderer.WIDTH / 2, TreeRenderer.HEIGHT / 2 + 40);
     ctx.restore();
   }
 
   private renderGameOverOverlay(ctx: CanvasRenderingContext2D, gameState: GameState): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(10, 0, 0, 0.85)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.95)';
     ctx.fillRect(0, 0, TreeRenderer.WIDTH, TreeRenderer.HEIGHT);
 
     ctx.textAlign = 'center';
 
     // Reason title
-    ctx.fillStyle = '#e74c3c';
-    ctx.font = '900 38px "Segoe UI", system-ui, sans-serif';
-    ctx.shadowColor = 'rgba(231, 76, 60, 0.8)';
-    ctx.shadowBlur = 20;
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 42px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(
       gameState.gameOverReason === 'timeout' ? 'TIME UP!' : 'CRASHED!',
       TreeRenderer.WIDTH / 2,
@@ -477,28 +448,28 @@ export class TreeRenderer {
     );
 
     // Score details card
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.fillStyle = '#FFFDF9';
     ctx.beginPath();
     ctx.roundRect(80, 320, 320, 160, 12);
     ctx.fill();
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#ecf0f1';
-    ctx.font = 'bold 22px "Segoe UI", system-ui, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(`SCORE: ${gameState.score}`, TreeRenderer.WIDTH / 2, 365);
 
-    ctx.font = '16px "Segoe UI", system-ui, sans-serif';
-    ctx.fillStyle = '#00ffcc';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#4A6D56';
     ctx.fillText(`Altitude: ${gameState.altitude}m (${gameState.stepsClimbed} steps)`, TreeRenderer.WIDTH / 2, 405);
 
-    ctx.fillStyle = '#f1c40f';
+    ctx.fillStyle = '#E09F3E';
     ctx.fillText(`Best High Score: ${gameState.highScore}`, TreeRenderer.WIDTH / 2, 445);
 
     // Retry CTA
-    ctx.fillStyle = '#2ecc71';
-    ctx.font = 'bold 18px "Segoe UI", system-ui, sans-serif';
-    ctx.shadowColor = '#2ecc71';
-    ctx.shadowBlur = 10;
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('TAP OR PRESS SPACE TO RETRY', TreeRenderer.WIDTH / 2, 540);
 
     ctx.restore();

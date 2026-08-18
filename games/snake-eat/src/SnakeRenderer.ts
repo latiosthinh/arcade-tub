@@ -47,16 +47,23 @@ export class SnakeRenderer {
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-    const grad = ctx.createRadialGradient(width / 2, height / 2, 50, width / 2, height / 2, width / 1.1);
-    grad.addColorStop(0, '#0c1220');
-    grad.addColorStop(1, '#05070e');
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#FAF6EE';
     ctx.fillRect(0, 0, width, height);
+
+    // Subtle paper grain dots
+    ctx.fillStyle = 'rgba(43, 33, 24, 0.06)';
+    for (let x = 12; x < width; x += 24) {
+      for (let y = 12; y < height; y += 24) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
   }
 
   private renderGrid(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(43, 33, 24, 0.08)';
     ctx.lineWidth = 1;
 
     for (let x = 0; x <= width; x += CELL_SIZE) {
@@ -73,77 +80,78 @@ export class SnakeRenderer {
       ctx.stroke();
     }
 
-    // Glowing border
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 8;
+    // Storybook inked border
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 3;
     ctx.strokeRect(1, 1, width - 2, height - 2);
 
     ctx.restore();
   }
 
   private renderFood(ctx: CanvasRenderingContext2D, spawner: FoodSpawner): void {
-    // Regular Pellet
+    // Storybook Red Apple / Berry Pellet
     if (spawner.regularFood) {
       const { x, y, pulsePhase } = spawner.regularFood;
       const px = x * CELL_SIZE + CELL_SIZE / 2;
       const py = y * CELL_SIZE + CELL_SIZE / 2;
       const scale = 1.0 + Math.sin(pulsePhase) * 0.15;
-      const radius = 8 * scale;
+      const radius = 9 * scale;
 
       ctx.save();
-      ctx.shadowColor = '#ff007f';
-      ctx.shadowBlur = 12;
-      ctx.fillStyle = '#ff007f';
-
-      // Diamond shape
+      // Drop shadow
+      ctx.fillStyle = 'rgba(43, 33, 24, 0.25)';
       ctx.beginPath();
-      ctx.moveTo(px, py - radius * 1.2);
-      ctx.lineTo(px + radius * 1.2, py);
-      ctx.lineTo(px, py + radius * 1.2);
-      ctx.lineTo(px - radius * 1.2, py);
-      ctx.closePath();
+      ctx.arc(px + 2, py + 2, radius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Glowing core
-      ctx.fillStyle = '#ffffff';
+      // Apple Body
+      ctx.fillStyle = '#C85A32';
       ctx.beginPath();
-      ctx.arc(px, py, radius * 0.45, 0, Math.PI * 2);
+      ctx.arc(px, py, radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Leaf stem
+      ctx.fillStyle = '#4A6D56';
+      ctx.beginPath();
+      ctx.ellipse(px + 3, py - radius, 4, 2, Math.PI / 4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.restore();
     }
 
-    // Golden Bonus Orb
+    // Golden Honeycomb / Star Fruit Orb
     if (spawner.bonusFood) {
       const { x, y, lifetime, maxLifetime, pulsePhase } = spawner.bonusFood;
       const px = x * CELL_SIZE + CELL_SIZE / 2;
       const py = y * CELL_SIZE + CELL_SIZE / 2;
-      const scale = 1.0 + Math.sin(pulsePhase) * 0.2;
-      const radius = 10 * scale;
+      const scale = 1.0 + Math.sin(pulsePhase) * 0.15;
+      const radius = 11 * scale;
 
       ctx.save();
 
-      // Decaying countdown progress ring
+      // Countdown Ring
       const progress = Math.max(0, lifetime / maxLifetime);
-      ctx.strokeStyle = 'rgba(255, 204, 0, 0.6)';
+      ctx.strokeStyle = '#C85A32';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.arc(px, py, radius * 1.6, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
+      ctx.arc(px, py, radius * 1.5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
       ctx.stroke();
 
-      // Glowing Star Orb
-      ctx.shadowColor = '#ffd700';
-      ctx.shadowBlur = 16;
-      ctx.fillStyle = '#ffaa00';
+      // Golden Core
+      ctx.fillStyle = '#E09F3E';
       ctx.beginPath();
       ctx.arc(px, py, radius, 0, Math.PI * 2);
       ctx.fill();
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#FFFDF9';
       ctx.beginPath();
-      ctx.arc(px, py, radius * 0.5, 0, Math.PI * 2);
+      ctx.arc(px - 3, py - 3, 3, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.restore();
@@ -156,7 +164,7 @@ export class SnakeRenderer {
     ctx.save();
     const len = snake.body.length;
 
-    // Body Segments (tail to neck)
+    // Body Segments (tail to neck) in Sage Green storybook aesthetic
     for (let i = len - 1; i >= 1; i--) {
       const seg = snake.body[i];
       if (!seg) continue;
@@ -164,14 +172,23 @@ export class SnakeRenderer {
       const py = seg.y * CELL_SIZE + CELL_SIZE / 2;
       const t = 1 - i / len;
 
-      const size = (CELL_SIZE / 2 - 2) * (0.7 + t * 0.3);
-      ctx.fillStyle = t > 0.5 ? '#00e5ff' : '#0099ff';
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 6;
+      const size = (CELL_SIZE / 2 - 2) * (0.75 + t * 0.25);
 
+      // Inked shadow
+      ctx.fillStyle = 'rgba(43, 33, 24, 0.2)';
+      ctx.beginPath();
+      ctx.arc(px + 2, py + 2, size, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sage body
+      ctx.fillStyle = i % 2 === 0 ? '#4A6D56' : '#588066';
       ctx.beginPath();
       ctx.arc(px, py, size, 0, Math.PI * 2);
       ctx.fill();
+
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
     }
 
     // Head
@@ -184,14 +201,16 @@ export class SnakeRenderer {
     const hy = head.y * CELL_SIZE + CELL_SIZE / 2;
     const headRadius = CELL_SIZE / 2 - 1;
 
-    ctx.shadowColor = '#00ffcc';
-    ctx.shadowBlur = 14;
-    ctx.fillStyle = '#00ffcc';
+    ctx.fillStyle = '#3D5A46';
     ctx.beginPath();
     ctx.arc(hx, hy, headRadius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Directional glowing eyes
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Friendly storybook eyes
     let eye1Offset = { x: -4, y: -4 };
     let eye2Offset = { x: 4, y: -4 };
 
@@ -214,12 +233,16 @@ export class SnakeRenderer {
         break;
     }
 
-    ctx.fillStyle = '#ffffff';
-    ctx.shadowColor = '#ffffff';
-    ctx.shadowBlur = 4;
+    ctx.fillStyle = '#FFFDF9';
     ctx.beginPath();
-    ctx.arc(hx + eye1Offset.x, hy + eye1Offset.y, 2.5, 0, Math.PI * 2);
-    ctx.arc(hx + eye2Offset.x, hy + eye2Offset.y, 2.5, 0, Math.PI * 2);
+    ctx.arc(hx + eye1Offset.x, hy + eye1Offset.y, 3.5, 0, Math.PI * 2);
+    ctx.arc(hx + eye2Offset.x, hy + eye2Offset.y, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#2B2118';
+    ctx.beginPath();
+    ctx.arc(hx + eye1Offset.x, hy + eye1Offset.y, 1.8, 0, Math.PI * 2);
+    ctx.arc(hx + eye2Offset.x, hy + eye2Offset.y, 1.8, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -227,37 +250,30 @@ export class SnakeRenderer {
 
   private renderHUD(ctx: CanvasRenderingContext2D, gameState: GameState, width: number): void {
     ctx.save();
-    ctx.font = '600 16px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#a0aec0';
+    ctx.font = '700 15px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
 
     // Score
     ctx.textAlign = 'left';
     ctx.fillText('SCORE', 20, 28);
-    ctx.font = 'bold 22px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#00ffff';
-    ctx.shadowColor = '#00ffff';
-    ctx.shadowBlur = 8;
-    ctx.fillText(`${gameState.score}`, 80, 29);
+    ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#C85A32';
+    ctx.fillText(`${gameState.score}`, 85, 29);
 
     // Multiplier Combo Badge
     if (gameState.multiplier > 1) {
-      ctx.font = 'bold 18px "Segoe UI", Roboto, sans-serif';
-      ctx.fillStyle = '#ff007f';
-      ctx.shadowColor = '#ff007f';
-      ctx.shadowBlur = 10;
-      ctx.fillText(`x${gameState.multiplier} COMBO!`, 180, 29);
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+      ctx.fillStyle = '#E09F3E';
+      ctx.fillText(`★ x${gameState.multiplier} COMBO!`, 180, 29);
     }
 
     // High Score
     ctx.textAlign = 'right';
-    ctx.font = '600 16px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#a0aec0';
-    ctx.shadowBlur = 0;
-    ctx.fillText('HIGH', width - 90, 28);
-    ctx.font = 'bold 22px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#ffd700';
-    ctx.shadowColor = '#ffd700';
-    ctx.shadowBlur = 8;
+    ctx.font = '700 15px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
+    ctx.fillText('BEST', width - 90, 28);
+    ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#4A6D56';
     ctx.fillText(`${gameState.highScore}`, width - 20, 29);
 
     ctx.restore();
@@ -265,26 +281,21 @@ export class SnakeRenderer {
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 7, 14, 0.85)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.92)';
     ctx.fillRect(0, 0, width, height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 20;
-    ctx.font = 'bold 44px "Segoe UI", Roboto, sans-serif';
-    ctx.fillText('CYBER SNAKE', width / 2, height / 2 - 50);
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('STORYBOOK SNAKE', width / 2, height / 2 - 50);
 
-    ctx.shadowBlur = 6;
-    ctx.font = '18px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#cbd5e0';
-    ctx.fillText('Use ARROW KEYS / WASD or SWIPE to steer', width / 2, height / 2 + 10);
-    ctx.fillText('Collect Energy Pellets & Golden Orbs to grow', width / 2, height / 2 + 40);
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.fillText('Use ARROW KEYS / WASD to steer, SPACE to speed up', width / 2, height / 2 + 10);
+    ctx.fillText('Collect Apples & Honey Orbs to grow your caterpillar', width / 2, height / 2 + 40);
 
-    ctx.fillStyle = '#ff007f';
-    ctx.shadowColor = '#ff007f';
-    ctx.shadowBlur = 10;
-    ctx.font = 'bold 20px "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PRESS ANY KEY OR TAP TO START', width / 2, height / 2 + 95);
 
     ctx.restore();
@@ -292,19 +303,16 @@ export class SnakeRenderer {
 
   private renderPausedOverlay(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 7, 14, 0.75)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.9)';
     ctx.fillRect(0, 0, width, height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ffd700';
-    ctx.shadowColor = '#ffd700';
-    ctx.shadowBlur = 15;
-    ctx.font = 'bold 40px "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PAUSED', width / 2, height / 2 - 10);
 
-    ctx.font = '18px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#cbd5e0';
-    ctx.shadowBlur = 0;
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText('Press P or Tap to Resume', width / 2, height / 2 + 35);
 
     ctx.restore();
@@ -317,42 +325,35 @@ export class SnakeRenderer {
     height: number
   ): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 7, 14, 0.88)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.95)';
     ctx.fillRect(0, 0, width, height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ff0055';
-    ctx.shadowColor = '#ff0055';
-    ctx.shadowBlur = 22;
-    ctx.font = 'bold 46px "Segoe UI", Roboto, sans-serif';
-    ctx.fillText('SIGNAL LOST', width / 2, height / 2 - 70);
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('GAME OVER', width / 2, height / 2 - 70);
 
-    ctx.shadowBlur = 8;
-    ctx.font = '22px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText(`Final Score: ${gameState.score}`, width / 2, height / 2 - 15);
 
-    ctx.font = '16px "Segoe UI", Roboto, sans-serif';
-    ctx.fillStyle = '#a0aec0';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText(
-      `Pellets Eaten: ${gameState.foodEaten} | Golden Orbs: ${gameState.goldenEaten}`,
+      `Apples Eaten: ${gameState.foodEaten} | Honey Orbs: ${gameState.goldenEaten}`,
       width / 2,
       height / 2 + 20
     );
 
     if (gameState.score >= gameState.highScore && gameState.score > 0) {
-      ctx.fillStyle = '#ffd700';
-      ctx.shadowColor = '#ffd700';
-      ctx.shadowBlur = 12;
-      ctx.font = 'bold 18px "Segoe UI", Roboto, sans-serif';
+      ctx.fillStyle = '#E09F3E';
+      ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
       ctx.fillText('★ NEW HIGH SCORE! ★', width / 2, height / 2 + 55);
     }
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 10;
-    ctx.font = 'bold 20px "Segoe UI", Roboto, sans-serif';
-    ctx.fillText('PRESS SPACE OR TAP TO RESTART', width / 2, height / 2 + 95);
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('PRESS SPACE OR TAP TO PLAY AGAIN', width / 2, height / 2 + 95);
 
     ctx.restore();
   }

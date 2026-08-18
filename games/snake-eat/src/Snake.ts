@@ -34,11 +34,12 @@ export class Snake {
   body: SnakeSegment[] = [];
   currentDirection: Direction = Direction.RIGHT;
   directionQueue: Direction[] = [];
-  baseStepInterval: number = 0.16;
-  minStepInterval: number = 0.065;
+  baseStepInterval: number = 0.28;
+  minStepInterval: number = 0.12;
   stepTimer: number = 0;
   growPending: number = 0;
   alive: boolean = true;
+  isSpeedBoostActive: boolean = false;
 
   constructor(
     startX: number = 10,
@@ -60,6 +61,7 @@ export class Snake {
     this.stepTimer = 0;
     this.growPending = 0;
     this.alive = true;
+    this.isSpeedBoostActive = false;
     this.body = [];
 
     const vec = DIRECTION_VECTORS[initialDir];
@@ -72,9 +74,14 @@ export class Snake {
     }
   }
 
+  setSpeedBoost(active: boolean): void {
+    this.isSpeedBoostActive = active;
+  }
+
   getStepInterval(): number {
     const lengthPenalty = Math.max(0, this.body.length - 3) * 0.0025;
-    return Math.max(this.minStepInterval, this.baseStepInterval - lengthPenalty);
+    const base = Math.max(this.minStepInterval, this.baseStepInterval - lengthPenalty);
+    return this.isSpeedBoostActive ? base * 0.45 : base;
   }
 
   queueDirection(dir: Direction): void {

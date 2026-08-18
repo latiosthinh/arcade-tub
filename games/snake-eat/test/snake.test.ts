@@ -92,7 +92,7 @@ describe('Snake', () => {
     expect(snake.checkSelfCollision()).toBe(true);
   });
 
-  it('scales speed (step interval decreases) as length grows', () => {
+  it('scales speed (step interval decreases) as length grows and with speed boost', () => {
     const snake = new Snake(10, 10, 3, Direction.RIGHT);
     const initialInterval = snake.getStepInterval();
 
@@ -100,7 +100,10 @@ describe('Snake', () => {
     const fasterInterval = snake.getStepInterval();
 
     expect(fasterInterval).toBeLessThan(initialInterval);
-    expect(fasterInterval).toBeGreaterThanOrEqual(0.065);
+    expect(fasterInterval).toBeGreaterThanOrEqual(0.12);
+
+    snake.setSpeedBoost(true);
+    expect(snake.getStepInterval()).toBeLessThan(fasterInterval);
   });
 
   it('checks occupies coordinate correctly', () => {

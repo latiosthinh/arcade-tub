@@ -18,6 +18,8 @@ export class BugClimbScene implements GameScene {
 
   private canvas: HTMLCanvasElement;
   private urgentPulseTimer = 0;
+  private autoClimbTimer = 0;
+  private isSpeedBoostActive = false;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -37,12 +39,26 @@ export class BugClimbScene implements GameScene {
       this.handleKeyDown(e);
     });
 
+    window.addEventListener('keyup', (e) => {
+      this.handleKeyUp(e);
+    });
+
     this.canvas.addEventListener('pointerdown', (e) => {
       this.handlePointerDown(e);
     });
   }
 
+  public handleKeyUp(e: KeyboardEvent): void {
+    if (e.code === 'Space') {
+      this.isSpeedBoostActive = false;
+    }
+  }
+
   public handleKeyDown(e: KeyboardEvent): void {
+    if (e.code === 'Space' && this.gameState.status === 'playing') {
+      this.isSpeedBoostActive = true;
+    }
+
     if (e.repeat) return;
 
     if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
@@ -110,6 +126,8 @@ export class BugClimbScene implements GameScene {
     this.climber.reset();
     this.timer.reset();
     this.particles.reset();
+    this.autoClimbTimer = 0;
+    this.isSpeedBoostActive = false;
     this.gameState.startGame();
     this.audio.playStep('LEFT');
   }
@@ -119,6 +137,8 @@ export class BugClimbScene implements GameScene {
     this.climber.reset();
     this.timer.reset();
     this.particles.reset();
+    this.autoClimbTimer = 0;
+    this.isSpeedBoostActive = false;
     this.gameState.reset();
     this.gameState.startGame();
     this.audio.playStep('LEFT');
@@ -162,15 +182,24 @@ export class BugClimbScene implements GameScene {
     if (this.gameState.status === 'playing') {
       this.gameState.update(validDt);
 
-      const timerRes = this.timer.update(validDt, this.gameState.altitude);
-      if (timerRes.expired) {
-        this.audio.playCrash();
-        this.gameState.endGame('timeout');
-      } else if (timerRes.isUrgent) {
-        this.urgentPulseTimer += validDt;
-        if (this.urgentPulseTimer > 0.3) {
-          this.urgentPulseTimer = 0;
-          this.audio.playUrgentTick();
+      const autoStepInterval = this.isSpeedBoostActive ? 0.22 : 0.55;
+      this.autoClimbTimer += validDt;
+      if (this.autoClimbTimer >= autoStepInterval) {
+        this.autoClimbTimer = 0;
+        this.climbStep(this.climber.side);
+      }
+
+      if (this.gameState.status === 'playing') {
+        const timerRes = this.timer.update(validDt, this.gameState.altitude);
+        if (timerRes.expired) {
+          this.audio.playCrash();
+          this.gameState.endGame('timeout');
+        } else if (timerRes.isUrgent) {
+          this.urgentPulseTimer += validDt;
+          if (this.urgentPulseTimer > 0.3) {
+            this.urgentPulseTimer = 0;
+            this.audio.playUrgentTick();
+          }
         }
       }
     }

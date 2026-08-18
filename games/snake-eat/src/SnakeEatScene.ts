@@ -20,6 +20,7 @@ export class SnakeEatScene implements GameScene {
   private isTouching: boolean = false;
 
   private boundKeyDown: (e: KeyboardEvent) => void;
+  private boundKeyUp: (e: KeyboardEvent) => void;
   private boundTouchStart: (e: TouchEvent) => void;
   private boundTouchEnd: (e: TouchEvent) => void;
   private boundPointerDown: (e: PointerEvent) => void;
@@ -33,6 +34,7 @@ export class SnakeEatScene implements GameScene {
     this.renderer = new SnakeRenderer();
 
     this.boundKeyDown = this.handleKeyDown.bind(this);
+    this.boundKeyUp = this.handleKeyUp.bind(this);
     this.boundTouchStart = this.handleTouchStart.bind(this);
     this.boundTouchEnd = this.handleTouchEnd.bind(this);
     this.boundPointerDown = this.handlePointerDown.bind(this);
@@ -43,6 +45,7 @@ export class SnakeEatScene implements GameScene {
 
   private attachEventListeners(): void {
     window.addEventListener('keydown', this.boundKeyDown);
+    window.addEventListener('keyup', this.boundKeyUp);
     this.canvas.addEventListener('touchstart', this.boundTouchStart, { passive: false });
     this.canvas.addEventListener('touchend', this.boundTouchEnd, { passive: false });
     this.canvas.addEventListener('pointerdown', this.boundPointerDown);
@@ -50,6 +53,7 @@ export class SnakeEatScene implements GameScene {
 
   destroy(): void {
     window.removeEventListener('keydown', this.boundKeyDown);
+    window.removeEventListener('keyup', this.boundKeyUp);
     this.canvas.removeEventListener('touchstart', this.boundTouchStart);
     this.canvas.removeEventListener('touchend', this.boundTouchEnd);
     this.canvas.removeEventListener('pointerdown', this.boundPointerDown);
@@ -62,7 +66,17 @@ export class SnakeEatScene implements GameScene {
     this.foodSpawner.spawnRegular(this.snake);
   }
 
+  private handleKeyUp(e: KeyboardEvent): void {
+    if (e.code === 'Space') {
+      this.snake.setSpeedBoost(false);
+    }
+  }
+
   private handleKeyDown(e: KeyboardEvent): void {
+    if (e.code === 'Space' && this.gameState.status === 'playing') {
+      this.snake.setSpeedBoost(true);
+    }
+
     if (e.key === ' ' || e.key === 'Enter') {
       if (this.gameState.status === 'ready') {
         this.gameState.startGame();
