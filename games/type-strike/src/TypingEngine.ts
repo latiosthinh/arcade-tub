@@ -1,4 +1,5 @@
 import { Enemy } from './Enemy.js';
+import { GameMode } from './Dictionary.js';
 
 export interface TypingResult {
   status: 'locked' | 'progress' | 'completed' | 'typo' | 'ignored';
@@ -12,12 +13,18 @@ export interface TypingResult {
 }
 
 export class TypingEngine {
+  mode: GameMode = 'words';
   activeTarget: Enemy | null = null;
   streak: number = 0;
   multiplier: number = 1;
   maxMultiplier: number = 8;
   totalWordsCompleted: number = 0;
   totalTypos: number = 0;
+
+  setMode(mode: GameMode): void {
+    this.mode = mode;
+    this.reset();
+  }
 
   reset(): void {
     this.activeTarget = null;
@@ -39,9 +46,34 @@ export class TypingEngine {
     return this.multiplier;
   }
 
-  handleKey(key: string, enemies: Enemy[]): TypingResult {
-    // Ignore non-alpha keys or multi-char strings
-    if (!key || key.length !== 1) {
+  normalizeKey(key: string, mode: GameMode = this.mode): string | null {
+    if (!key) return null;
+
+    if (mode === 'words') {
+      if (key.length === 1) {
+        const char = key.toUpperCase();
+        if (char >= 'A' && char <= 'Z') {
+          return char;
+        }
+      }
+      return null;
+    }
+
+    // mode === 'arrows'
+    const lower = key.toLowerCase();
+    if (key === 'ArrowUp' || lower === 'w' || key === 'KeyW') return 'U';
+    if (key === 'ArrowDown' || lower === 's' || key === 'KeyS') return 'D';
+    if (key === 'ArrowLeft' || lower === 'a' || key === 'KeyA') return 'L';
+    if (key === 'ArrowRight' || lower === 'd' || key === 'KeyD') return 'R';
+
+    return null;
+  }
+
+  handleKey(key: string, enemies: Enemy[], overrideMode?: GameMode): TypingResult {
+    const activeMode = overrideMode ?? this.mode;
+    const normalized = this.normalizeKey(key, activeMode);
+
+    if (!normalized) {
       return {
         status: 'ignored',
         targetId: null,
@@ -50,15 +82,7 @@ export class TypingEngine {
       };
     }
 
-    const char = key.toUpperCase();
-    if (char < 'A' || char > 'Z') {
-      return {
-        status: 'ignored',
-        targetId: null,
-        multiplier: this.multiplier,
-        streak: this.streak
-      };
-    }
+    const char = normalized;
 
     // Active locked target flow
     if (this.activeTarget !== null) {
@@ -130,7 +154,7 @@ export class TypingEngine {
       const isDone = closest.advanceLetter();
 
       if (isDone) {
-        // 1-letter word completed immediately
+        // 1-token sequence completed immediately
         this.activeTarget = null;
         this.streak++;
         this.multiplier = Math.min(this.maxMultiplier, 1 + this.streak);

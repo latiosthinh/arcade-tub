@@ -195,4 +195,145 @@ describe('TypingEngine', () => {
     expect(engine.getStreak()).toBe(0);
     expect(engine.getMultiplier()).toBe(1);
   });
+
+  describe('Arrows Mode', () => {
+    it('normalizes Arrow keys and WASD inputs correctly', () => {
+      engine.setMode('arrows');
+
+      expect(engine.normalizeKey('ArrowUp')).toBe('U');
+      expect(engine.normalizeKey('ArrowDown')).toBe('D');
+      expect(engine.normalizeKey('ArrowLeft')).toBe('L');
+      expect(engine.normalizeKey('ArrowRight')).toBe('R');
+
+      expect(engine.normalizeKey('w')).toBe('U');
+      expect(engine.normalizeKey('W')).toBe('U');
+      expect(engine.normalizeKey('s')).toBe('D');
+      expect(engine.normalizeKey('S')).toBe('D');
+      expect(engine.normalizeKey('a')).toBe('L');
+      expect(engine.normalizeKey('A')).toBe('L');
+      expect(engine.normalizeKey('d')).toBe('R');
+      expect(engine.normalizeKey('D')).toBe('R');
+
+      expect(engine.normalizeKey('q')).toBeNull();
+      expect(engine.normalizeKey('Enter')).toBeNull();
+    });
+
+    it('ignores regular letters in arrows mode and ignores arrow keys in words mode', () => {
+      const enemyWords = new Enemy({
+        id: 'e1',
+        word: 'UP',
+        tier: 'short',
+        basePoints: 100,
+        lane: 0
+      });
+      // Words mode -> ArrowUp ignored
+      const resWords = engine.handleKey('ArrowUp', [enemyWords]);
+      expect(resWords.status).toBe('ignored');
+
+      engine.setMode('arrows');
+      const enemyArrows = new Enemy({
+        id: 'e2',
+        word: 'UDLR',
+        tier: 'short',
+        basePoints: 100,
+        lane: 0,
+        mode: 'arrows'
+      });
+      // Arrows mode -> 'x' ignored
+      const resArrows = engine.handleKey('x', [enemyArrows]);
+      expect(resArrows.status).toBe('ignored');
+    });
+
+    it('locks onto closest matching arrow sequence and advances', () => {
+      engine.setMode('arrows');
+
+      const enemyFar = new Enemy({
+        id: 'e-far',
+        word: 'UDLR',
+        tier: 'short',
+        basePoints: 100,
+        lane: 0,
+        mode: 'arrows',
+        x: 700
+      });
+      const enemyNear = new Enemy({
+        id: 'e-near',
+        word: 'UUDD',
+        tier: 'short',
+        basePoints: 100,
+        lane: 1,
+        mode: 'arrows',
+        x: 350
+      });
+
+      // Press ArrowUp
+      const res1 = engine.handleKey('ArrowUp', [enemyFar, enemyNear]);
+      expect(res1.status).toBe('locked');
+      expect(res1.targetId).toBe('e-near');
+      expect(res1.matchedLetter).toBe('U');
+      expect(enemyNear.matchedIndex).toBe(1);
+
+      // Press 'w' (WASD equivalent of Up)
+      const res2 = engine.handleKey('w', [enemyFar, enemyNear]);
+      expect(res2.status).toBe('progress');
+      expect(res2.targetId).toBe('e-near');
+      expect(enemyNear.matchedIndex).toBe(2);
+
+      // Press ArrowDown
+      const res3 = engine.handleKey('ArrowDown', [enemyFar, enemyNear]);
+      expect(res3.status).toBe('progress');
+      expect(enemyNear.matchedIndex).toBe(3);
+
+      // Press 's' (WASD equivalent of Down)
+      const res4 = engine.handleKey('s', [enemyFar, enemyNear]);
+      expect(res4.status).toBe('completed');
+      expect(res4.targetId).toBe('e-near');
+      expect(enemyNear.alive).toBe(false);
+      expect(engine.getStreak()).toBe(1);
+      expect(engine.getMultiplier()).toBe(2);
+      expect(engine.getActiveTarget()).toBeNull();
+    });
+
+    it('triggers typo penalty in arrows mode on wrong directional input', () => {
+      engine.setMode('arrows');
+
+      const enemy = new Enemy({
+        id: 'e1',
+        word: 'UDLR',
+        tier: 'short',
+        basePoints: 100,
+        lane: 0,
+        mode: 'arrows'
+      });
+
+      engine.handleKey('ArrowUp', [enemy]); // 'U' match
+      expect(enemy.matchedIndex).toBe(1);
+
+      const typoRes = engine.handleKey('ArrowLeft', [enemy]); // Expected 'D', received 'L'
+      expect(typoRes.status).toBe('typo');
+      expect(typoRes.targetId).toBe('e1');
+      expect(enemy.matchedIndex).toBe(0);
+      expect(engine.getActiveTarget()).toBeNull();
+      expect(engine.getStreak()).toBe(0);
+      expect(engine.getMultiplier()).toBe(1);
+    });
+
+    it('resets cleanly when switching mode', () => {
+      const enemy = new Enemy({
+        id: 'e1',
+        word: 'NODE',
+        tier: 'short',
+        basePoints: 100,
+        lane: 0
+      });
+
+      engine.handleKey('N', [enemy]);
+      expect(engine.getActiveTarget()).toBe(enemy);
+
+      engine.setMode('arrows');
+      expect(engine.mode).toBe('arrows');
+      expect(engine.getActiveTarget()).toBeNull();
+      expect(engine.getStreak()).toBe(0);
+    });
+  });
 });
