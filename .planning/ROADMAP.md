@@ -66,8 +66,12 @@ Plans:
   2. Branch obstacles spawn procedurally on left or right sides; colliding with a branch immediately ends the run.
   3. Urgent countdown timer bar drains continuously and replenishes with successful climbing steps.
   4. Procedural audio, chop particles, animated bug sprite, and high score tracking work in standalone build.
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+Plans:
+- [x] 23-01-PLAN.md — Trunk column state, Branch hazard generation, Climber kinematics, UrgentTimer & 100% unit tests (BUG-01)
+- [x] 23-02-PLAN.md — BugAudio, Chop particles, BugClimbRenderer tree canvas, BugClimbScene controls & Vite packaging (BUG-02)
 
 ### Phase 24: Neon Highway Car Race Minigame
 **Goal**: Deliver complete playable Neon Highway Car Race minigame with multi-lane traffic navigation, acceleration/braking, draft boosts, and engine audio.
@@ -94,5 +98,9 @@ Plans:
   2. Multi-page Vite build generates standalone bundles for all 15 games, hub, and embed views.
   3. Total gzipped distribution bundle remains strictly under the 200 KB budget.
   4. Vitest test suite executes across all 15 games with 100% pass rate.
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+Plans:
+- [ ] 25-01-PLAN.md — 15-game catalog metadata, high-fidelity SVG screenshots & genre filter mappings (HUB-CAT-01)
+- [ ] 25-02-PLAN.md — Multi-page Vite rollup entries, bundle size audit (< 200KB) & 100% workspace test pass (HUB-CAT-02)
