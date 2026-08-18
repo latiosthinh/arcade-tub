@@ -13,7 +13,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - One-button hold/release drift steering on isometric zigzag cardboard road, coin collection, edge falling.
 - Unit tests for drift timing, turn physics, and track procedural generation.
 
-### Phase 33: Helix Jump (`games/helix-jump/`)
+### Phase 33: Helix Jump (`games/helix-jump/`) [COMPLETED]
 - Rotational cylinder paper tower, bouncing paint droplet, gap drop combos, red cardboard hazard plates.
 - Unit tests for rotation math, gap traversal, and impact physics.
 
