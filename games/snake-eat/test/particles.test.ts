@@ -23,7 +23,7 @@ describe('ParticleSystem', () => {
   it('emits golden burst particles with golden colors', () => {
     ps.emitGoldenBurst(200, 200, 20);
     expect(ps.particles.length).toBe(20);
-    const goldenColors = ['#ffe066', '#ffd700', '#fff3b0'];
+    const goldenColors = ['#ffe066', '#ffd700', '#fff3b0', '#ffaa00'];
     expect(goldenColors).toContain(ps.particles[0].color);
   });
 

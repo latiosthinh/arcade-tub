@@ -170,6 +170,45 @@ export const GAMES: GameItem[] = [
     themeColor: '#fdcb6e',
     bannerBg: 'linear-gradient(135deg, #1f1b0a 0%, #3d3514 100%)',
     features: ['4x4 Directional Merging', 'Neon Tiered Value Tiles', 'Undo Move & Win State']
+  },
+  {
+    id: 'snake-eat',
+    title: 'Cyber Snake',
+    genre: 'Grid Action',
+    description: 'Classic cybernetic snake. Consume energy pellets to grow longer, accelerate speeds, and avoid walls or self-collision.',
+    badge: 'Classic',
+    rating: '4.9 ★',
+    plays: '710K plays',
+    icon: '🐍',
+    themeColor: '#00ff88',
+    bannerBg: 'linear-gradient(135deg, #021a10 0%, #063d27 100%)',
+    features: ['Smooth Grid Kinematics', 'Speed Scaling & Growth', 'Energy Pellet Combos']
+  },
+  {
+    id: 'bug-climb',
+    title: 'Bug Climb',
+    genre: 'Reflex Climber',
+    description: 'High-speed tree climbing reflex action. Tap Left or Right to switch sides on the trunk and dodge oncoming branch hazards.',
+    badge: 'Fast Paced',
+    rating: '4.8 ★',
+    plays: '380K plays',
+    icon: '🐛',
+    themeColor: '#2ed573',
+    bannerBg: 'linear-gradient(135deg, #0f1c08 0%, #1e3810 100%)',
+    features: ['Rapid Left/Right Trunk Shifts', 'Branch Obstacle Hazards', 'Urgent Countdown Timer']
+  },
+  {
+    id: 'car-race',
+    title: 'Neon Highway',
+    genre: 'Traffic Racing',
+    description: 'Multi-lane cyber highway racer. Steer sports car across lanes, throttle speeds, and draft commuter traffic for slipstream bonuses.',
+    badge: 'High Speed',
+    rating: '4.9 ★',
+    plays: '520K plays',
+    icon: '🏎️',
+    themeColor: '#ff4757',
+    bannerBg: 'linear-gradient(135deg, #1f060b 0%, #3f0d16 100%)',
+    features: ['4-Lane Highway Shifting', 'Up/Down Speed Throttle', 'Slipstream Drafting Bonus']
   }
 ];
 

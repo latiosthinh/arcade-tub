@@ -86,7 +86,7 @@ export class TrafficManager {
     } else {
       type = VehicleType.SEDAN;
       const sedanColors = ['#9b59b6', '#3498db', '#1abc9c', '#bdc3c7'];
-      color = sedanColors[Math.floor(Math.random() * sedanColors.length)];
+      color = sedanColors[Math.floor(Math.random() * sedanColors.length)] ?? '#9b59b6';
     }
 
     const vehicle: TrafficVehicle = {
@@ -127,6 +127,7 @@ export class TrafficManager {
     // Relative speed movement
     for (let i = this.vehicles.length - 1; i >= 0; i--) {
       const v = this.vehicles[i];
+      if (!v) continue;
       // Convert km/h delta to px/sec: (playerSpeed - vehicleSpeed) * (1000m/3600s) * scaling_factor
       const speedDeltaKmh = playerSpeed - v.speed;
       const relativeSpeedPx = speedDeltaKmh * (1000 / 3600) * 4.2;

@@ -650,5 +650,141 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
         <rect x="96" y="96" width="26" height="26" rx="3" fill="#1f1b0a" />
       </g>
     </svg>
+  `,
+
+  'snake-eat': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="snk-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#02140d" />
+          <stop offset="100%" stop-color="#05281a" />
+        </linearGradient>
+        <filter id="snk-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#snk-bg)" />
+      <!-- Grid Lines -->
+      <line x1="0" y1="50" x2="320" y2="50" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+      <line x1="0" y1="90" x2="320" y2="90" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+      <line x1="0" y1="130" x2="320" y2="130" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+      <line x1="80" y1="0" x2="80" y2="180" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+      <line x1="160" y1="0" x2="160" y2="180" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+      <line x1="240" y1="0" x2="240" y2="180" stroke="rgba(0, 255, 136, 0.1)" stroke-width="1" />
+
+      <text x="15" y="18" fill="#00ff88" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SCORE: 1,840</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">LENGTH: 24</text>
+      <text x="305" y="18" text-anchor="end" fill="#00f0ff" font-family="'Courier New', monospace" font-size="10" font-weight="bold">SPEED 1.6x</text>
+
+      <!-- Glowing Food Pellets -->
+      <circle cx="250" cy="70" r="7" fill="#ffe600" filter="url(#snk-glow)" />
+      <circle cx="90" cy="130" r="6" fill="#ff007f" filter="url(#snk-glow)" />
+
+      <!-- Glowing Segmented Snake Body -->
+      <rect x="70" y="90" width="16" height="16" rx="4" fill="#00b894" opacity="0.6" />
+      <rect x="90" y="90" width="16" height="16" rx="4" fill="#00b894" opacity="0.75" />
+      <rect x="110" y="90" width="16" height="16" rx="4" fill="#00cec9" opacity="0.85" />
+      <rect x="130" y="90" width="16" height="16" rx="4" fill="#00ff88" />
+      <rect x="150" y="90" width="16" height="16" rx="4" fill="#00ff88" />
+      <rect x="170" y="90" width="16" height="16" rx="4" fill="#00ff88" />
+      <rect x="190" y="90" width="16" height="16" rx="4" fill="#00ff88" />
+      <rect x="190" y="70" width="16" height="16" rx="4" fill="#00ff88" />
+      <!-- Snake Head -->
+      <rect x="210" y="70" width="18" height="18" rx="6" fill="#00ff88" filter="url(#snk-glow)" />
+      <circle cx="222" cy="75" r="2" fill="#02140d" />
+      <circle cx="222" cy="81" r="2" fill="#02140d" />
+    </svg>
+  `,
+
+  'bug-climb': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="bug-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0a1805" />
+          <stop offset="100%" stop-color="#142c0c" />
+        </linearGradient>
+        <filter id="bug-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#bug-bg)" />
+      <text x="15" y="18" fill="#2ed573" font-family="'Courier New', monospace" font-size="10" font-weight="bold">HEIGHT: 84m</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">CADENCE 3.2x</text>
+      <text x="305" y="18" text-anchor="end" fill="#ff4757" font-family="'Courier New', monospace" font-size="10" font-weight="bold">TIME [||||]</text>
+
+      <!-- Center Tree Trunk -->
+      <rect x="135" y="0" width="50" height="180" fill="#4a2e12" stroke="#6e4219" stroke-width="2" />
+      <line x1="150" y1="0" x2="150" y2="180" stroke="#6e4219" stroke-width="1.5" stroke-dasharray="8 6" />
+      <line x1="170" y1="0" x2="170" y2="180" stroke="#6e4219" stroke-width="1.5" stroke-dasharray="12 8" />
+
+      <!-- Tree Branches -->
+      <!-- Left Branch -->
+      <rect x="55" y="50" width="80" height="14" rx="3" fill="#6e4219" stroke="#925925" stroke-width="1.5" />
+      <polygon points="55,57 45,52 45,62" fill="#2ed573" />
+      <!-- Right Branch -->
+      <rect x="185" y="110" width="80" height="14" rx="3" fill="#6e4219" stroke="#925925" stroke-width="1.5" />
+      <polygon points="265,117 275,112 275,122" fill="#2ed573" />
+
+      <!-- Animated Climbing Bug on Left Trunk Side -->
+      <g transform="translate(108, 110)">
+        <ellipse cx="14" cy="16" rx="12" ry="16" fill="#2ed573" filter="url(#bug-glow)" />
+        <circle cx="14" cy="6" r="6" fill="#7bed9f" />
+        <!-- Eyes -->
+        <circle cx="11" cy="4" r="1.5" fill="#000000" />
+        <circle cx="17" cy="4" r="1.5" fill="#000000" />
+        <!-- Legs -->
+        <line x1="2" y1="12" x2="-4" y2="8" stroke="#2ed573" stroke-width="2" stroke-linecap="round" />
+        <line x1="2" y1="20" x2="-4" y2="22" stroke="#2ed573" stroke-width="2" stroke-linecap="round" />
+        <line x1="26" y1="12" x2="32" y2="8" stroke="#2ed573" stroke-width="2" stroke-linecap="round" />
+        <line x1="26" y1="20" x2="32" y2="22" stroke="#2ed573" stroke-width="2" stroke-linecap="round" />
+      </g>
+    </svg>
+  `,
+
+  'car-race': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <defs>
+        <linearGradient id="car-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0a0514" />
+          <stop offset="100%" stop-color="#160826" />
+        </linearGradient>
+        <filter id="car-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect width="320" height="180" fill="url(#car-bg)" />
+      <!-- Highway Road Surface -->
+      <rect x="50" y="0" width="220" height="180" fill="#1e132c" stroke="#ff007f" stroke-width="2" />
+      <!-- Dashed Lane Dividers -->
+      <line x1="105" y1="0" x2="105" y2="180" stroke="rgba(255, 230, 0, 0.4)" stroke-width="2" stroke-dasharray="14 10" />
+      <line x1="160" y1="0" x2="160" y2="180" stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" stroke-dasharray="14 10" />
+      <line x1="215" y1="0" x2="215" y2="180" stroke="rgba(255, 230, 0, 0.4)" stroke-width="2" stroke-dasharray="14 10" />
+
+      <text x="15" y="18" fill="#ff4757" font-family="'Courier New', monospace" font-size="10" font-weight="bold">245 KM/H</text>
+      <text x="160" y="18" text-anchor="middle" fill="#ffe600" font-family="'Courier New', monospace" font-size="10" font-weight="bold">DIST: 2.8 KM</text>
+      <text x="305" y="18" text-anchor="end" fill="#00f0ff" font-family="'Courier New', monospace" font-size="10" font-weight="bold">DRAFT 2x</text>
+
+      <!-- Traffic Vehicles Ahead -->
+      <!-- Truck in Lane 1 -->
+      <rect x="68" y="25" width="24" height="42" rx="3" fill="#e67e22" stroke="#d35400" stroke-width="1.5" />
+      <!-- Police Cruiser in Lane 3 -->
+      <rect x="178" y="45" width="20" height="32" rx="3" fill="#2c3e50" stroke="#3498db" stroke-width="1.5" />
+      <rect x="186" y="56" width="4" height="4" fill="#e74c3c" />
+
+      <!-- Player Neon Sports Car in Lane 2 -->
+      <g transform="translate(122, 115)">
+        <!-- Headlight Beams -->
+        <polygon points="3,-25 19,-25 15,0 7,0" fill="rgba(0, 240, 255, 0.25)" />
+        <rect x="2" y="0" width="18" height="36" rx="4" fill="#ff007f" stroke="#00f0ff" stroke-width="1.5" filter="url(#car-glow)" />
+        <!-- Windshield -->
+        <rect x="5" y="8" width="12" height="8" rx="2" fill="#00f0ff" />
+        <!-- Tail lights -->
+        <circle cx="4" cy="34" r="2" fill="#ffe600" />
+        <circle cx="18" cy="34" r="2" fill="#ffe600" />
+      </g>
+    </svg>
   `
 };
