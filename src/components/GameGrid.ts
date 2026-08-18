@@ -64,7 +64,7 @@ export class GameGrid extends BaseComponent<AppState> {
 
       const matchesFilter = filter === 'all' ||
         (filter === 'action' && ['brick-blitz', 'type-strike', 'virus-defense', 'pop-balloon', 'car-race'].includes(game.id)) ||
-        (filter === 'arcade' && ['safe-cracker', 'crate-catch', 'space-racer', 'snake-eat'].includes(game.id)) ||
+        (filter === 'arcade' && ['safe-cracker', 'crate-catch', 'space-racer', 'snake-eat', 'paper-basket'].includes(game.id)) ||
         (filter === 'puzzle' && ['memory-cards', 'memory-boxes', 'game-2048'].includes(game.id)) ||
         (filter === 'casual' && ['sky-hopper', 'flappy-fish', 'bug-climb'].includes(game.id));
 

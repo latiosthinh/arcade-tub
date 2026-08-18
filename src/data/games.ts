@@ -209,6 +209,19 @@ export const GAMES: GameItem[] = [
     themeColor: '#C85A32',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
     features: ['4-Lane Highway Shifting', 'Spacebar Speed Throttle', 'Slipstream Drafting Bonus']
+  },
+  {
+    id: 'paper-basket',
+    title: 'Paper Basket',
+    genre: 'Tap-Tap Arcade Shooter',
+    description: 'Parabolic paper basketball shots. Tap to flap into alternating cardboard hoops, beat the shot clock, and chain clean swishes.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '110K plays',
+    icon: '🏀',
+    themeColor: '#D97706',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['Upward Flap Kinematics', 'Swish Streak Multipliers', 'Dynamic Shot Clock & Moving Rims']
   }
 ];
 

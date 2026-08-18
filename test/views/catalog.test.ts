@@ -52,7 +52,7 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
 
     // Still in DOM, but hidden with is-hidden
     const hiddenCards = grid.element.querySelectorAll<HTMLElement>('.ac-card.is-hidden');
-    expect(hiddenCards.length).toBe(14);
+    expect(hiddenCards.length).toBe(GAMES.length - 1);
 
     const visibleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
     expect(visibleCards.length).toBe(1);
