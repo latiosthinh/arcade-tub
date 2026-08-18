@@ -28,6 +28,7 @@ export default defineConfig({
         'virus-defense': resolve(__dirname, 'games/virus-defense/index.html'),
         'flappy-fish': resolve(__dirname, 'games/flappy-fish/index.html'),
         'game-2048': resolve(__dirname, 'games/game-2048/index.html'),
+        'snake-eat': resolve(__dirname, 'games/snake-eat/index.html'),
       },
     },
   },

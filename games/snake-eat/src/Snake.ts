@@ -82,10 +82,8 @@ export class Snake {
       return;
     }
 
-    const lastEffectiveDir =
-      this.directionQueue.length > 0
-        ? this.directionQueue[this.directionQueue.length - 1]
-        : this.currentDirection;
+    const lastQueued = this.directionQueue[this.directionQueue.length - 1];
+    const lastEffectiveDir: Direction = lastQueued !== undefined ? lastQueued : this.currentDirection;
 
     // Prevent 180-degree instant reverse
     if (dir === lastEffectiveDir || dir === OPPOSITE_DIRECTIONS[lastEffectiveDir]) {
@@ -96,29 +94,28 @@ export class Snake {
   }
 
   update(dt: number): SnakeStepResult {
-    if (!this.alive) {
-      return { stepped: false, head: this.body[0] };
+    if (!this.alive || this.body.length === 0) {
+      return { stepped: false, head: this.body[0] || { x: 0, y: 0 } };
     }
 
     this.stepTimer += dt;
     const interval = this.getStepInterval();
 
     if (this.stepTimer < interval) {
-      return { stepped: false, head: this.body[0] };
+      return { stepped: false, head: this.body[0] || { x: 0, y: 0 } };
     }
 
     this.stepTimer -= interval;
 
     if (this.directionQueue.length > 0) {
-      const nextDir = this.directionQueue.shift()!;
-      // Extra safety check against 180 reverse
-      if (nextDir !== OPPOSITE_DIRECTIONS[this.currentDirection]) {
+      const nextDir = this.directionQueue.shift();
+      if (nextDir && nextDir !== OPPOSITE_DIRECTIONS[this.currentDirection]) {
         this.currentDirection = nextDir;
       }
     }
 
     const vec = DIRECTION_VECTORS[this.currentDirection];
-    const oldHead = this.body[0];
+    const oldHead = this.body[0]!;
     const newHead: SnakeSegment = {
       x: oldHead.x + vec.dx,
       y: oldHead.y + vec.dy,
@@ -149,8 +146,10 @@ export class Snake {
       return false;
     }
     const head = this.body[0];
+    if (!head) return false;
     for (let i = 1; i < this.body.length; i++) {
-      if (this.body[i].x === head.x && this.body[i].y === head.y) {
+      const seg = this.body[i];
+      if (seg && seg.x === head.x && seg.y === head.y) {
         return true;
       }
     }

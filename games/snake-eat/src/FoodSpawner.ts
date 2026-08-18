@@ -61,7 +61,7 @@ export class FoodSpawner {
       return null;
     }
     const idx = Math.floor(Math.random() * vacant.length);
-    const cell = vacant[idx];
+    const cell = vacant[idx]!;
     this.regularFood = {
       x: cell.x,
       y: cell.y,
@@ -80,7 +80,7 @@ export class FoodSpawner {
       return null;
     }
     const idx = Math.floor(Math.random() * vacant.length);
-    const cell = vacant[idx];
+    const cell = vacant[idx]!;
     this.bonusFood = {
       x: cell.x,
       y: cell.y,

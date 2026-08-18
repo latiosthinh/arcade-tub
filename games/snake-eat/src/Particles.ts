@@ -50,7 +50,7 @@ export class ParticleSystem {
       const angle = Math.random() * Math.PI * 2;
       const speed = 80 + Math.random() * 180;
       const life = 0.5 + Math.random() * 0.35;
-      const color = goldenPalette[Math.floor(Math.random() * goldenPalette.length)];
+      const color = goldenPalette[Math.floor(Math.random() * goldenPalette.length)] || '#ffd700';
 
       this.particles.push({
         x,
@@ -77,7 +77,7 @@ export class ParticleSystem {
         const angle = Math.random() * Math.PI * 2;
         const speed = 50 + Math.random() * 220;
         const life = 0.6 + Math.random() * 0.4;
-        const color = colors[Math.floor(Math.random() * colors.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)] || '#00ffff';
 
         this.particles.push({
           x: px,
@@ -119,6 +119,7 @@ export class ParticleSystem {
     const drag = 0.92;
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
+      if (!p) continue;
       p.life -= dt;
       if (p.life <= 0) {
         this.particles.splice(i, 1);

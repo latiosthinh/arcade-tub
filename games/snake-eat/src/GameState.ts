@@ -34,7 +34,7 @@ export class GameState {
 
   private persistHighScore(): void {
     try {
-      saveData(HIGHSCORE_KEY, this.highScore);
+      saveData(HIGHSCORE_KEY, String(this.highScore));
     } catch {
       // Ignore storage write errors
     }

@@ -1,18 +1,4 @@
 import { GameScene, audio } from '@arcade-carnival/game-engine';
-import { Dictionary, WordTier } from './Dictionary.js';
-import { Enemy } from './Enemy.js';
-import { TypingEngine } from './TypingEngine.js';
-import { GameState } from './GameState.js';
-import { ParticleSystem } from './Particles.js';
-
-interface MatrixDrop {
-  x: number;
-  y: number;
-  speed: number;
-  char: string;
-}
-
-import { GameScene, audio } from '@arcade-carnival/game-engine';
 import { Dictionary, WordTier, GameMode, arrowCharToSymbol } from './Dictionary.js';
 import { Enemy } from './Enemy.js';
 import { TypingEngine } from './TypingEngine.js';
