@@ -1,4 +1,4 @@
-import { WordTier } from './Dictionary.js';
+import { WordTier, GameMode, arrowCharToSymbol, formatArrowSequence } from './Dictionary.js';
 
 export interface EnemyConfig {
   id: string;
@@ -6,6 +6,7 @@ export interface EnemyConfig {
   tier: WordTier;
   basePoints: number;
   lane: number;
+  mode?: GameMode;
   x?: number;
   y?: number;
   speed?: number;
@@ -19,6 +20,7 @@ export class Enemy {
   tier: WordTier;
   basePoints: number;
   lane: number;
+  mode: GameMode;
   x: number;
   y: number;
   speed: number;
@@ -36,6 +38,7 @@ export class Enemy {
     this.tier = config.tier;
     this.basePoints = config.basePoints;
     this.lane = config.lane;
+    this.mode = config.mode ?? 'words';
     this.x = config.x ?? 820;
     this.y = config.y ?? (100 + config.lane * 80);
     this.speed = config.speed ?? 45;
@@ -64,6 +67,15 @@ export class Enemy {
 
   getNextChar(): string {
     return this.matchedIndex < this.word.length ? (this.word[this.matchedIndex] || '') : '';
+  }
+
+  getFormattedWord(): string {
+    return this.mode === 'arrows' ? formatArrowSequence(this.word) : this.word;
+  }
+
+  getFormattedNextChar(): string {
+    const next = this.getNextChar();
+    return this.mode === 'arrows' ? arrowCharToSymbol(next) : next;
   }
 
   advanceLetter(): boolean {

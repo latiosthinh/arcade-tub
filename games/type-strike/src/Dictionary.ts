@@ -1,4 +1,22 @@
 export type WordTier = 'short' | 'medium' | 'long';
+export type GameMode = 'words' | 'arrows';
+export type ArrowDir = 'U' | 'D' | 'L' | 'R';
+
+export const ARROW_DIRS: ArrowDir[] = ['U', 'D', 'L', 'R'];
+
+export function arrowCharToSymbol(char: string): string {
+  switch (char.toUpperCase()) {
+    case 'U': return '↑';
+    case 'D': return '↓';
+    case 'L': return '←';
+    case 'R': return '→';
+    default: return char;
+  }
+}
+
+export function formatArrowSequence(seq: string): string {
+  return seq.split('').map(arrowCharToSymbol).join(' ');
+}
 
 export interface WordEntry {
   word: string;
@@ -56,9 +74,30 @@ export class Dictionary {
     }
   }
 
+  static generateArrowSequence(tier: WordTier): string {
+    let len: number;
+    switch (tier) {
+      case 'short':
+        len = 3 + Math.floor(Math.random() * 2); // 3-4
+        break;
+      case 'medium':
+        len = 5 + Math.floor(Math.random() * 3); // 5-7
+        break;
+      case 'long':
+        len = 8 + Math.floor(Math.random() * 3); // 8-10
+        break;
+    }
+    let seq = '';
+    for (let i = 0; i < len; i++) {
+      seq += ARROW_DIRS[Math.floor(Math.random() * ARROW_DIRS.length)];
+    }
+    return seq;
+  }
+
   getRandomWord(
     activeWords: Set<string> | string[] = [],
-    preferredTier?: WordTier
+    preferredTier?: WordTier,
+    mode: GameMode = 'words'
   ): WordEntry {
     const activeSet = activeWords instanceof Set ? activeWords : new Set(activeWords);
 
@@ -72,6 +111,16 @@ export class Dictionary {
       } else {
         tier = 'long';
       }
+    }
+
+    if (mode === 'arrows') {
+      let seq = Dictionary.generateArrowSequence(tier);
+      let attempts = 0;
+      while (activeSet.has(seq) && attempts < 10) {
+        seq = Dictionary.generateArrowSequence(tier);
+        attempts++;
+      }
+      return { word: seq, tier, basePoints: Dictionary.getPointsForTier(tier) };
     }
 
     const wordsForTier = this.getWordsByTier(tier);

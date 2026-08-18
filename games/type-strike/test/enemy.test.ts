@@ -111,4 +111,34 @@ describe('Enemy', () => {
     expect(pts).toBe(500);
     expect(enemy.alive).toBe(false);
   });
+
+  it('supports arrow mode formatting for words and next characters', () => {
+    const arrowEnemy = new Enemy({
+      id: 'drone-arrow',
+      word: 'UDLR',
+      tier: 'short',
+      basePoints: 100,
+      lane: 0,
+      mode: 'arrows'
+    });
+
+    expect(arrowEnemy.mode).toBe('arrows');
+    expect(arrowEnemy.getFormattedWord()).toBe('↑ ↓ ← →');
+    expect(arrowEnemy.getFormattedNextChar()).toBe('↑');
+
+    arrowEnemy.advanceLetter(); // U done
+    expect(arrowEnemy.getFormattedNextChar()).toBe('↓');
+
+    const wordEnemy = new Enemy({
+      id: 'drone-word',
+      word: 'PING',
+      tier: 'short',
+      basePoints: 100,
+      lane: 0,
+      mode: 'words'
+    });
+
+    expect(wordEnemy.getFormattedWord()).toBe('PING');
+    expect(wordEnemy.getFormattedNextChar()).toBe('P');
+  });
 });
