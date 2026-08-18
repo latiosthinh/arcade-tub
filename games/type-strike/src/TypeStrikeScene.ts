@@ -12,12 +12,28 @@ interface MatrixDrop {
   char: string;
 }
 
+import { GameScene, audio } from '@arcade-carnival/game-engine';
+import { Dictionary, WordTier, GameMode, arrowCharToSymbol } from './Dictionary.js';
+import { Enemy } from './Enemy.js';
+import { TypingEngine } from './TypingEngine.js';
+import { GameState } from './GameState.js';
+import { ParticleSystem } from './Particles.js';
+
+interface MatrixDrop {
+  x: number;
+  y: number;
+  speed: number;
+  char: string;
+}
+
 export class TypeStrikeScene implements GameScene {
   dictionary: Dictionary;
   typingEngine: TypingEngine;
   gameState: GameState;
   particles: ParticleSystem;
   canvas: HTMLCanvasElement;
+  mode: GameMode = 'words';
+  modeToggleRect = { x: 260, y: 390, width: 280, height: 44 };
 
   enemies: Enemy[] = [];
   spawnTimer: number = 0;
@@ -58,12 +74,45 @@ export class TypeStrikeScene implements GameScene {
     }
   }
 
+  toggleMode(): void {
+    this.mode = this.mode === 'words' ? 'arrows' : 'words';
+    this.typingEngine.setMode(this.mode);
+    audio.playClick();
+  }
+
   private handleKeyDown(e: KeyboardEvent): void {
     if (this.gameState.status === 'ready') {
-      if (e.code === 'Space' || e.code === 'Enter' || (e.key.length === 1 && e.key >= 'a' && e.key <= 'z') || (e.key.length === 1 && e.key >= 'A' && e.key <= 'Z')) {
+      if (e.key === 'm' || e.key === 'M' || e.key === 'Tab') {
+        e.preventDefault();
+        this.toggleMode();
+        return;
+      }
+
+      if (e.code === 'Space' || e.code === 'Enter') {
         audio.playClick();
         this.gameState.start();
         return;
+      }
+
+      if (this.mode === 'words') {
+        if (e.key.length === 1 && ((e.key >= 'a' && e.key <= 'z') || (e.key >= 'A' && e.key <= 'Z'))) {
+          audio.playClick();
+          this.gameState.start();
+          this.processTypingKey(e.key);
+          return;
+        }
+      } else {
+        if (
+          e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' ||
+          e.key === 'w' || e.key === 'W' || e.key === 's' || e.key === 'S' ||
+          e.key === 'a' || e.key === 'A' || e.key === 'd' || e.key === 'D'
+        ) {
+          e.preventDefault();
+          audio.playClick();
+          this.gameState.start();
+          this.processTypingKey(e.key);
+          return;
+        }
       }
     }
 
@@ -87,40 +136,64 @@ export class TypeStrikeScene implements GameScene {
         return;
       }
 
-      const prevStreak = this.typingEngine.getStreak();
-      const res = this.typingEngine.handleKey(e.key, this.enemies);
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Tab') {
+        e.preventDefault();
+      }
 
-      if (res.status === 'locked' || res.status === 'progress') {
-        audio.playClick();
-        const target = this.typingEngine.getActiveTarget();
-        if (target) {
-          this.particles.fireLaserBeam(60, this.defenderTurretY, target.x, target.y + target.height / 2, '#00f0ff', 3.5);
-          this.particles.emitLaserHitSparks(target.x, target.y + target.height / 2, 10);
+      this.processTypingKey(e.key);
+    }
+  }
+
+  private processTypingKey(key: string): void {
+    const prevStreak = this.typingEngine.getStreak();
+    const res = this.typingEngine.handleKey(key, this.enemies, this.mode);
+
+    if (res.status === 'locked' || res.status === 'progress') {
+      audio.playClick();
+      const target = this.typingEngine.getActiveTarget();
+      if (target) {
+        this.particles.fireLaserBeam(60, this.defenderTurretY, target.x, target.y + target.height / 2, '#00f0ff', 3.5);
+        this.particles.emitLaserHitSparks(target.x, target.y + target.height / 2, 10);
+      }
+    } else if (res.status === 'completed') {
+      if (res.targetEnemy) {
+        audio.playScore();
+        if (this.typingEngine.getStreak() > prevStreak && this.typingEngine.getStreak() % 5 === 0) {
+          audio.playPowerup();
         }
-      } else if (res.status === 'completed') {
-        if (res.targetEnemy) {
-          audio.playScore();
-          if (this.typingEngine.getStreak() > prevStreak && this.typingEngine.getStreak() % 5 === 0) {
-            audio.playPowerup();
-          }
-          this.particles.fireLaserBeam(60, this.defenderTurretY, res.targetEnemy.x, res.targetEnemy.y + res.targetEnemy.height / 2, '#00f0ff', 6);
-          this.particles.emitExplosion(res.targetEnemy.x + res.targetEnemy.width / 2, res.targetEnemy.y + res.targetEnemy.height / 2, 36);
-          this.particles.addFloatingText(`+${res.pointsEarned} (${res.multiplier}x)`, res.targetEnemy.x, res.targetEnemy.y - 15, '#ffe600', 22);
-          this.gameState.addScore(res.pointsEarned ?? 0);
-        }
-      } else if (res.status === 'typo') {
-        audio.playError();
-        if (res.targetEnemy) {
-          this.particles.addFloatingText('TYPO! RESET 1x', res.targetEnemy.x, res.targetEnemy.y - 20, '#ff007f', 18);
-        } else {
-          this.particles.addFloatingText('MISMATCH', 140, 260, '#ff007f', 18);
-        }
+        this.particles.fireLaserBeam(60, this.defenderTurretY, res.targetEnemy.x, res.targetEnemy.y + res.targetEnemy.height / 2, '#00f0ff', 6);
+        this.particles.emitExplosion(res.targetEnemy.x + res.targetEnemy.width / 2, res.targetEnemy.y + res.targetEnemy.height / 2, 36);
+        this.particles.addFloatingText(`+${res.pointsEarned} (${res.multiplier}x)`, res.targetEnemy.x, res.targetEnemy.y - 15, '#ffe600', 22);
+        this.gameState.addScore(res.pointsEarned ?? 0);
+      }
+    } else if (res.status === 'typo') {
+      audio.playError();
+      if (res.targetEnemy) {
+        this.particles.addFloatingText('TYPO! RESET 1x', res.targetEnemy.x, res.targetEnemy.y - 20, '#ff007f', 18);
+      } else {
+        this.particles.addFloatingText('MISMATCH', 140, 260, '#ff007f', 18);
       }
     }
   }
 
   private handlePointerDown(e: PointerEvent): void {
     if (this.gameState.status === 'ready') {
+      const rect = this.canvas.getBoundingClientRect();
+      const scaleX = this.canvas.width / (rect.width || 1);
+      const scaleY = this.canvas.height / (rect.height || 1);
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      if (
+        x >= this.modeToggleRect.x &&
+        x <= this.modeToggleRect.x + this.modeToggleRect.width &&
+        y >= this.modeToggleRect.y &&
+        y <= this.modeToggleRect.y + this.modeToggleRect.height
+      ) {
+        this.toggleMode();
+        return;
+      }
+
       this.gameState.start();
     } else if (this.gameState.status === 'gameover') {
       this.restart();
@@ -200,7 +273,7 @@ export class TypeStrikeScene implements GameScene {
       tier = Math.random() < 0.5 ? 'medium' : 'long';
     }
 
-    const wordEntry = this.dictionary.getRandomWord(activeWords, tier);
+    const wordEntry = this.dictionary.getRandomWord(activeWords, tier, this.mode);
     this.enemies.push(
       new Enemy({
         id: 'enemy-' + (++this.enemyIdCounter),
@@ -208,6 +281,7 @@ export class TypeStrikeScene implements GameScene {
         tier: wordEntry.tier,
         basePoints: wordEntry.basePoints,
         lane,
+        mode: this.mode,
         y: this.lanes[lane],
         speed
       })
@@ -379,10 +453,11 @@ export class TypeStrikeScene implements GameScene {
         ctx.stroke();
       }
 
-      // Word Badge Container
+      // Word / Arrow Badge Container
       ctx.font = 'bold 18px "Courier New", monospace';
-      const wordText = enemy.word;
-      const badgeWidth = Math.max(74, ctx.measureText(wordText).width + 24);
+      const isArrowMode = enemy.mode === 'arrows';
+      const badgeText = enemy.getFormattedWord();
+      const badgeWidth = Math.max(74, ctx.measureText(badgeText).width + 24);
       const badgeX = enemy.x + enemy.width / 2 - badgeWidth / 2;
       const badgeY = ey - 28;
 
@@ -393,36 +468,70 @@ export class TypeStrikeScene implements GameScene {
       ctx.strokeRect(badgeX, badgeY, badgeWidth, 24);
 
       // Render prefix matched (cyan glow), next char (cursor highlight), remaining (white)
-      const matched = enemy.getMatchedPrefix();
-      const unmatched = enemy.getUnmatchedPrefix();
-
       let textCursorX = badgeX + 12;
       ctx.textBaseline = 'middle';
       const textCenterY = badgeY + 12;
 
-      if (matched.length > 0) {
-        ctx.fillStyle = '#00f0ff';
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#00f0ff';
-        ctx.fillText(matched, textCursorX, textCenterY);
-        ctx.shadowBlur = 0;
-        textCursorX += ctx.measureText(matched).width;
-      }
+      if (isArrowMode) {
+        // Draw individual arrow glyphs with spacing
+        for (let i = 0; i < enemy.word.length; i++) {
+          const char = enemy.word[i]!;
+          const sym = arrowCharToSymbol(char);
+          const isCharMatched = i < enemy.matchedIndex;
+          const isCharNext = isTarget && i === enemy.matchedIndex;
 
-      if (unmatched.length > 0) {
-        ctx.fillStyle = '#f8fafc';
-        ctx.fillText(unmatched, textCursorX, textCenterY);
+          if (isCharMatched) {
+            ctx.fillStyle = '#00f0ff';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#00f0ff';
+            ctx.fillText(sym, textCursorX, textCenterY);
+            ctx.shadowBlur = 0;
+          } else {
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillText(sym, textCursorX, textCenterY);
+          }
 
-        if (isTarget) {
-          // Cursor underline under next char
-          const nextChar = unmatched[0]!;
-          const nextCharWidth = ctx.measureText(nextChar).width;
-          ctx.strokeStyle = '#00f0ff';
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.moveTo(textCursorX, textCenterY + 9);
-          ctx.lineTo(textCursorX + nextCharWidth, textCenterY + 9);
-          ctx.stroke();
+          const symWidth = ctx.measureText(sym).width;
+          if (isCharNext) {
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(textCursorX, textCenterY + 9);
+            ctx.lineTo(textCursorX + symWidth, textCenterY + 9);
+            ctx.stroke();
+          }
+
+          // Advance cursor with space gap
+          textCursorX += symWidth + (i < enemy.word.length - 1 ? ctx.measureText(' ').width : 0);
+        }
+      } else {
+        const matched = enemy.getMatchedPrefix();
+        const unmatched = enemy.getUnmatchedPrefix();
+
+        if (matched.length > 0) {
+          ctx.fillStyle = '#00f0ff';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#00f0ff';
+          ctx.fillText(matched, textCursorX, textCenterY);
+          ctx.shadowBlur = 0;
+          textCursorX += ctx.measureText(matched).width;
+        }
+
+        if (unmatched.length > 0) {
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText(unmatched, textCursorX, textCenterY);
+
+          if (isTarget) {
+            // Cursor underline under next char
+            const nextChar = unmatched[0]!;
+            const nextCharWidth = ctx.measureText(nextChar).width;
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(textCursorX, textCenterY + 9);
+            ctx.lineTo(textCursorX + nextCharWidth, textCenterY + 9);
+            ctx.stroke();
+          }
         }
       }
 
@@ -490,10 +599,20 @@ export class TypeStrikeScene implements GameScene {
     ctx.font = '14px "Courier New", monospace';
     if (activeTarget) {
       ctx.fillStyle = '#00f0ff';
-      ctx.fillText(`TARGET LOCKED: [${activeTarget.getMatchedPrefix()}]${activeTarget.getUnmatchedPrefix()}  |  NEXT CHAR: '${activeTarget.getNextChar()}'`, 20, 582);
+      if (activeTarget.mode === 'arrows') {
+        const matchedSymbols = activeTarget.getMatchedPrefix().split('').map(arrowCharToSymbol).join(' ');
+        const unmatchedSymbols = activeTarget.getUnmatchedPrefix().split('').map(arrowCharToSymbol).join(' ');
+        const nextSymbol = activeTarget.getFormattedNextChar();
+        ctx.fillText(`TARGET LOCKED: [${matchedSymbols}] ${unmatchedSymbols}  |  NEXT ARROW: '${nextSymbol}'`, 20, 582);
+      } else {
+        ctx.fillText(`TARGET LOCKED: [${activeTarget.getMatchedPrefix()}]${activeTarget.getUnmatchedPrefix()}  |  NEXT CHAR: '${activeTarget.getNextChar()}'`, 20, 582);
+      }
     } else {
       ctx.fillStyle = '#94a3b8';
-      ctx.fillText('STATUS: RADAR ACTIVE. TYPE TARGET PROMPT TO ENGAGE LASER STRIKE.', 20, 582);
+      const promptTip = this.mode === 'arrows'
+        ? 'STATUS: RADAR ACTIVE. PRESS ARROW KEYS OR WASD TO ENGAGE LASER STRIKE.'
+        : 'STATUS: RADAR ACTIVE. TYPE TARGET PROMPT TO ENGAGE LASER STRIKE.';
+      ctx.fillText(promptTip, 20, 582);
     }
 
     // 6. Overlays
@@ -517,29 +636,59 @@ export class TypeStrikeScene implements GameScene {
     ctx.font = 'bold 44px "Courier New", monospace';
     ctx.shadowBlur = 16;
     ctx.shadowColor = '#00ffcc';
-    ctx.fillText('TYPE STRIKE', 400, 200);
+    ctx.fillText('TYPE STRIKE', 400, 160);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = '#ffeaa7';
     ctx.font = '18px "Courier New", monospace';
-    ctx.fillText('CYBER DEFENSE TERMINAL', 400, 240);
+    ctx.fillText('CYBER DEFENSE TERMINAL', 400, 200);
 
+    // Mode-specific instructions
     ctx.fillStyle = '#dcdde1';
     ctx.font = '16px "Courier New", monospace';
-    ctx.fillText('Type prompt words above approaching drones to fire lasers.', 400, 300);
-    ctx.fillText('Complete words sequentially to scale streak multiplier up to 8x.', 400, 330);
-    ctx.fillText('Defend base shields across 60 seconds of cyber onslaught!', 400, 360);
+    if (this.mode === 'arrows') {
+      ctx.fillText('Press Arrow keys (↑↓←→) or WASD to clear direction sequences and fire lasers.', 400, 250);
+      ctx.fillText('Complete sequences sequentially to scale streak multiplier up to 8x.', 400, 280);
+      ctx.fillText('Defend base shields across 60 seconds of cyber onslaught!', 400, 310);
+    } else {
+      ctx.fillText('Type prompt words above approaching drones to fire lasers.', 400, 250);
+      ctx.fillText('Complete words sequentially to scale streak multiplier up to 8x.', 400, 280);
+      ctx.fillText('Defend base shields across 60 seconds of cyber onslaught!', 400, 310);
+    }
 
     if (this.gameState.highScore > 0) {
       ctx.fillStyle = '#ffeaa7';
-      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 410);
+      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, 400, 350);
     }
 
+    // Mode Toggle Button
+    const btn = this.modeToggleRect;
+    ctx.fillStyle = 'rgba(18, 14, 36, 0.95)';
+    ctx.strokeStyle = this.mode === 'arrows' ? '#ffe600' : '#00f0ff';
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = ctx.strokeStyle;
+    ctx.fillRect(btn.x, btn.y, btn.width, btn.height);
+    ctx.strokeRect(btn.x, btn.y, btn.width, btn.height);
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.font = 'bold 18px "Courier New", monospace';
+    const modeLabel = this.mode === 'arrows' ? 'MODE: ARROWS (↑↓←→)' : 'MODE: WORDS';
+    ctx.fillText(modeLabel, btn.x + btn.width / 2, btn.y + btn.height / 2 + 6);
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '13px "Courier New", monospace';
+    ctx.fillText('Press [M] / [TAB] or Click Button to Toggle Mode', 400, 455);
+
     ctx.fillStyle = '#00ff88';
-    ctx.font = 'bold 22px "Courier New", monospace';
+    ctx.font = 'bold 20px "Courier New", monospace';
     ctx.shadowBlur = 10;
     ctx.shadowColor = '#00ff88';
-    ctx.fillText('PRESS ANY KEY OR CLICK TO COMMENCE DEFENSE', 400, 480);
+    const startTip = this.mode === 'arrows'
+      ? 'PRESS ARROW / WASD / SPACE TO COMMENCE'
+      : 'PRESS ANY LETTER OR SPACE TO COMMENCE';
+    ctx.fillText(startTip, 400, 515);
     ctx.shadowBlur = 0;
   }
 
