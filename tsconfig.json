@@ -20,6 +20,7 @@
     { "path": "games/car-race" },
     { "path": "games/paper-basket" },
     { "path": "games/helix-jump" },
-    { "path": "games/square-bird" }
+    { "path": "games/square-bird" },
+    { "path": "games/mini-battles" }
   ]
 }
