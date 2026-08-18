@@ -7,8 +7,8 @@ Goal: Replace entire visual identity (hub + all 15 games) with handmade 2D paper
 - **Goal:** Replace all hub CSS tokens, theme primitives, and component styles with papercraft design language (craft-paper palette, torn-edge borders, tape/staple accents, cardboard shadows, craft fonts).
 - **Requirements:** [CRAFT-01, CRAFT-02, CRAFT-03]
 - **Files:** `src/styles/tokens.css`, `src/styles/theme.css`, `src/styles/components/*.css`, `src/hub.css`, `index.html`
-- **Plans:** TBD
-- **Status:** Not started
+- **Plans:** 2/2 complete
+- **Status:** Complete
 
 #### Phase 27: Game Shell HTML Containers (15 games)
 - **Goal:** Update all 15 `games/*/index.html` with papercraft backgrounds, cardboard canvas frames, craft fonts.
@@ -42,7 +42,7 @@ Goal: Replace entire visual identity (hub + all 15 games) with handmade 2D paper
 
 | Phase | Status |
 |-------|--------|
-| 26. Hub Papercraft CSS | Not started |
+| 26. Hub Papercraft CSS | Complete |
 | 27. Game Shell HTML | Not started |
 | 28. Simple Renderers (5) | Not started |
 | 29. Mid Renderers (5) | Not started |
