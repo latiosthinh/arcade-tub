@@ -19,6 +19,7 @@
     { "path": "games/bug-climb" },
     { "path": "games/car-race" },
     { "path": "games/paper-basket" },
-    { "path": "games/helix-jump" }
+    { "path": "games/helix-jump" },
+    { "path": "games/square-bird" }
   ]
 }
