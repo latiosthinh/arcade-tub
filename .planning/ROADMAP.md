@@ -7,7 +7,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 ## Milestone v4.0 Phases
 
 - [x] **Phase 21: Type Strike Arrow Mode** — Mode toggle, arrow sequence badges (↑ ↓ ← → / WASD), directional input & lasers (TS-ARR-01, TS-ARR-02)
-- [ ] **Phase 22: Cyber Snake Minigame** — Grid matrix movement, food pellets, tail growth, wall/self collision, particle effects (SNK-01, SNK-02)
+- [x] **Phase 22: Cyber Snake Minigame** — Grid matrix movement, food pellets, tail growth, wall/self collision, particle effects (SNK-01, SNK-02)
 - [ ] **Phase 23: Bug Climb Tree Minigame** — Trunk side-switching, procedural branch obstacles, urgent timer bar, chop particles (BUG-01, BUG-02)
 - [ ] **Phase 24: Neon Highway Car Race Minigame** — Multi-lane traffic dodger, speed control, slipstream draft bonus, crash FX (CAR-01, CAR-02)
 - [ ] **Phase 25: Catalog Expansion & Release Audit** — 15-game catalog registry, SVG screenshots, multi-page Vite build, bundle audit (<200KB), 100% test pass (HUB-CAT-01, HUB-CAT-02)
@@ -20,7 +20,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 | 8–12. v2.0 Unique UI/UX Refactor | 10/10 | Complete | 2026-08-17 |
 | 13–20. v3.0 Game Catalog Expansion (7 Games) | 16/16 | Complete | 2026-08-18 |
 | 21. Type Strike Arrow Mode | 2/2 | Complete | 2026-08-18 |
-| 22. Cyber Snake Minigame | 0/2 | Not started | - |
+| 22. Cyber Snake Minigame | 2/2 | Complete | 2026-08-18 |
 | 23. Bug Climb Tree Minigame | 0/2 | Not started | - |
 | 24. Neon Highway Car Race Minigame | 0/2 | Not started | - |
 | 25. Catalog Expansion & Release Audit | 0/2 | Not started | - |
@@ -54,8 +54,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 22-01-PLAN.md — Grid matrix math, Snake kinematics & 180° direction buffer, FoodSpawner, GameState & 100% unit tests (SNK-01)
-- [ ] 22-02-PLAN.md — SnakeAudio, ParticleSystem, SnakeRenderer neon UI, controls & Vite packaging (SNK-02)
+- [x] 22-01-PLAN.md — Grid matrix math, Snake kinematics & 180° direction buffer, FoodSpawner, GameState & 100% unit tests (SNK-01)
+- [x] 22-02-PLAN.md — SnakeAudio, ParticleSystem, SnakeRenderer neon UI, controls & Vite packaging (SNK-02)
 
 ### Phase 23: Bug Climb Tree Minigame
 **Goal**: Deliver complete playable Bug Climb Tree minigame with trunk side-switching, falling branch hazards, countdown timer, and climbing animations.

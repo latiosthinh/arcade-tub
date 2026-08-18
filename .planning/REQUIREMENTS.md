@@ -5,8 +5,8 @@
 - [x] **TS-ARR-02**: Type Strike Arrow Mode UI & Canvas rendering (arrow badge visuals, mode toggle in ready screen, sound triggers)
 
 ## Cyber Snake (Snake Eat)
-- [ ] **SNK-01**: Snake Eat grid model & logic (grid matrix movement, food pellet spawner, snake growth, self & wall collision math, score & speed scaling, 100% unit tests)
-- [ ] **SNK-02**: Snake Eat canvas presentation & packaging (neon segmented snake glow, particle eating bursts, procedural audio, standalone HTML & Vite rollup input)
+- [x] **SNK-01**: Snake Eat grid model & logic (grid matrix movement, food pellet spawner, snake growth, self & wall collision math, score & speed scaling, 100% unit tests)
+- [x] **SNK-02**: Snake Eat canvas presentation & packaging (neon segmented snake glow, particle eating bursts, procedural audio, standalone HTML & Vite rollup input)
 
 ## Bug Climb Tree
 - [ ] **BUG-01**: Bug Climb Tree model & logic (trunk column state, branch hazard generation on left/right sides, Left/Right arrow tap side-switching, urgent timer bar, height scoring, 100% unit tests)
@@ -26,8 +26,8 @@
 |-------------|-------|--------|
 | TS-ARR-01 | Phase 21 | Complete |
 | TS-ARR-02 | Phase 21 | Complete |
-| SNK-01 | Phase 22 | Pending |
-| SNK-02 | Phase 22 | Pending |
+| SNK-01 | Phase 22 | Complete |
+| SNK-02 | Phase 22 | Complete |
 | BUG-01 | Phase 23 | Pending |
 | BUG-02 | Phase 23 | Pending |
 | CAR-01 | Phase 24 | Pending |
