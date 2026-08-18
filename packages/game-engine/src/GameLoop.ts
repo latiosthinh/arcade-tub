@@ -4,8 +4,8 @@ export interface GameScene {
 }
 
 export class GameLoop {
-  readonly width: number = 800;
-  readonly height: number = 600;
+  readonly width: number;
+  readonly height: number;
   private _scale: number = 1;
 
   private _canvas: HTMLCanvasElement;
@@ -23,9 +23,15 @@ export class GameLoop {
     return this._scale;
   }
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, width: number = 800, height: number = 600) {
     this._canvas = canvas;
     this._ctx = canvas.getContext('2d');
+
+    const explicitWidth = canvas.getAttribute('width');
+    const explicitHeight = canvas.getAttribute('height');
+
+    this.width = explicitWidth ? parseInt(explicitWidth, 10) : width;
+    this.height = explicitHeight ? parseInt(explicitHeight, 10) : height;
 
     this._canvas.width = this.width;
     this._canvas.height = this.height;

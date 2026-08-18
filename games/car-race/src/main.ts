@@ -6,7 +6,7 @@ initPlayables();
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
 if (canvas) {
-  const loop = new GameLoop(canvas);
+  const loop = new GameLoop(canvas, 800, 600);
   const scene = new CarRaceScene(canvas);
 
   onPause(() => {

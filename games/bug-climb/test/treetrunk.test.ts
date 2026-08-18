@@ -1,79 +1,89 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TreeTrunk, BranchSide, TrunkSegment } from '../src/TreeTrunk';
+import { TreeTrunk, BranchSide, MAX_ACTIVE_OBSTACLES } from '../src/TreeTrunk';
+import { BugClimber } from '../src/BugClimber';
+import { BUG_LEFT_X, BUG_RIGHT_X, TRUNK_LEFT, TRUNK_WIDTH } from '../src/TrunkLanes';
 
 describe('TreeTrunk', () => {
   let trunk: TreeTrunk;
+  let climber: BugClimber;
 
   beforeEach(() => {
     trunk = new TreeTrunk();
+    climber = new BugClimber(0);
   });
 
-  it('generates initial segments with safe starting base', () => {
-    trunk.generateInitial();
-    expect(trunk.segments.length).toBe(TreeTrunk.VISIBLE_SEGMENTS);
-    // Safe starting segments must have no branches
-    for (let i = 0; i < TreeTrunk.SAFE_START_SEGMENTS; i++) {
-      expect(trunk.segments[i].branch).toBe(BranchSide.NONE);
+  it('spawns a branch obstacle with valid side and dimensions', () => {
+    const obs = trunk.spawnObstacle(180);
+    expect(obs).not.toBeNull();
+    if (obs) {
+      expect(obs.lane).toBeGreaterThanOrEqual(0);
+      expect(obs.lane).toBeLessThanOrEqual(1);
+      expect(obs.y).toBe(-60);
+      expect(trunk.obstacles.length).toBe(1);
     }
   });
 
-  it('guarantees sequential altitude and ids', () => {
-    trunk.generateInitial();
-    for (let i = 0; i < trunk.segments.length; i++) {
-      expect(trunk.segments[i].altitude).toBe(i);
-      expect(trunk.segments[i].id).toBe(i);
-    }
-  });
-
-  it('advances segments queue on step()', () => {
-    trunk.generateInitial();
-    const firstSegment = trunk.segments[0];
-    const removed = trunk.step();
-
-    expect(removed.id).toBe(firstSegment.id);
-    expect(trunk.segments.length).toBe(TreeTrunk.VISIBLE_SEGMENTS);
-    expect(trunk.segments[0].altitude).toBe(1);
-    expect(trunk.segments[trunk.segments.length - 1].altitude).toBe(TreeTrunk.VISIBLE_SEGMENTS);
-  });
-
-  it('retrieves branch hazard at specific index', () => {
-    trunk.generateInitial();
-    expect(trunk.getBranchAt(0)).toBe(BranchSide.NONE);
-    expect(trunk.getBranchAt(99)).toBe(BranchSide.NONE);
-  });
-
-  it('resets segment buffer to initial safe state', () => {
-    trunk.generateInitial();
-    trunk.step();
-    trunk.step();
-    trunk.step();
-    trunk.reset();
-
-    expect(trunk.segments.length).toBe(TreeTrunk.VISIBLE_SEGMENTS);
-    expect(trunk.segments[0].altitude).toBe(0);
-    for (let i = 0; i < TreeTrunk.SAFE_START_SEGMENTS; i++) {
-      expect(trunk.segments[i].branch).toBe(BranchSide.NONE);
-    }
-  });
-
-  it('ensures no consecutive branches on same side exceed 4 times', () => {
-    trunk.generateInitial(100);
-    let consecutiveLeft = 0;
-    let consecutiveRight = 0;
-
-    for (const segment of trunk.segments) {
-      if (segment.branch === BranchSide.LEFT) {
-        consecutiveLeft++;
-        consecutiveRight = 0;
-      } else if (segment.branch === BranchSide.RIGHT) {
-        consecutiveRight++;
-        consecutiveLeft = 0;
-      } else {
-        consecutiveLeft = 0;
-        consecutiveRight = 0;
+  it('respects MAX_ACTIVE_OBSTACLES limit', () => {
+    for (let i = 0; i < MAX_ACTIVE_OBSTACLES + 5; i++) {
+      trunk.spawnObstacle(180);
+      if (trunk.obstacles[i]) {
+        trunk.obstacles[i].y = 200 + i * 80;
       }
-      expect(consecutiveLeft).toBeLessThanOrEqual(4);
-      expect(consecutiveRight).toBeLessThanOrEqual(4);
     }
+    expect(trunk.obstacles.length).toBeLessThanOrEqual(MAX_ACTIVE_OBSTACLES);
+  });
+
+  it('updates downward obstacle scrolling relative to climb speed', () => {
+    const obs = trunk.spawnObstacle(200);
+    expect(obs).not.toBeNull();
+    if (obs) {
+      obs.y = 100;
+      const initialY = obs.y;
+      const res = trunk.update(0.1, 200);
+      expect(obs.y).toBeGreaterThan(initialY);
+      expect(res.passedCount).toBe(0);
+
+      obs.y = 900;
+      const res2 = trunk.update(0.1, 200);
+      expect(res2.passedCount).toBe(1);
+      expect(trunk.obstacles.length).toBe(0);
+    }
+  });
+
+  it('detects collision when bug overlaps branch on same side', () => {
+    const obs = trunk.spawnObstacle(180);
+    expect(obs).not.toBeNull();
+    if (obs) {
+      obs.side = BranchSide.LEFT;
+      obs.lane = 0;
+      obs.x = TRUNK_LEFT;
+      obs.y = climber.y;
+
+      const hit = trunk.checkCollision(climber.getHitbox());
+      expect(hit).toBe(obs);
+    }
+  });
+
+  it('returns null when bug is on opposite side of branch', () => {
+    const obs = trunk.spawnObstacle(180);
+    expect(obs).not.toBeNull();
+    if (obs) {
+      obs.side = BranchSide.RIGHT;
+      obs.lane = 1;
+      obs.x = TRUNK_LEFT + TRUNK_WIDTH;
+      obs.y = climber.y;
+
+      // Climber is in left lane
+      const hit = trunk.checkCollision(climber.getHitbox());
+      expect(hit).toBeNull();
+    }
+  });
+
+  it('resets trunk state', () => {
+    trunk.spawnObstacle(180);
+    expect(trunk.obstacles.length).toBeGreaterThan(0);
+    trunk.reset();
+    expect(trunk.obstacles.length).toBe(0);
+    expect(trunk.nextId).toBe(1);
   });
 });

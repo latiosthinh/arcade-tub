@@ -10,8 +10,8 @@ function init(): void {
     throw new Error('Canvas element #game-canvas not found');
   }
 
+  const loop = new GameLoop(canvas, 800, 600);
   const scene = new BugClimbScene(canvas);
-  const loop = new GameLoop(canvas);
   loop.setScene(scene);
 
   onPause(() => {

@@ -179,7 +179,7 @@ export class MemoryCardsScene implements GameScene {
       }
 
       // 2. Handle Match Checking when 2 cards finish flipping up
-      if (this.grid.selectedIndices.length === 2 && allFlippedUp) {
+      if (this.grid.selectedIndices.length === 2 && allFlippedUp && this.mismatchCooldown <= 0) {
         const idxA = this.grid.selectedIndices[0];
         const idxB = this.grid.selectedIndices[1];
         const cardA = idxA !== undefined ? this.grid.cards[idxA] : undefined;

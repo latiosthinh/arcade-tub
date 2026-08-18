@@ -1,76 +1,71 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { BugClimber, ClimberSide } from '../src/BugClimber';
-import { TreeTrunk, BranchSide } from '../src/TreeTrunk';
+import { BugClimber, MIN_SPEED, MAX_SPEED, BASE_SPEED, BUG_WIDTH, BUG_HEIGHT } from '../src/BugClimber';
+import { BUG_LEFT_X, BUG_RIGHT_X, BUG_Y } from '../src/TrunkLanes';
 
 describe('BugClimber', () => {
   let climber: BugClimber;
-  let trunk: TreeTrunk;
 
   beforeEach(() => {
-    climber = new BugClimber();
-    trunk = new TreeTrunk();
-    trunk.generateInitial();
+    climber = new BugClimber(0);
   });
 
-  it('initializes with default left side and 0 altitude', () => {
-    expect(climber.side).toBe(ClimberSide.LEFT);
-    expect(climber.altitude).toBe(0);
-    expect(climber.alive).toBe(true);
-    expect(climber.scurryTimer).toBe(0);
-  });
-
-  it('can climb and switch sides safely when no branch hazard exists', () => {
-    // Safe start segments are clear
-    const res = climber.climb(ClimberSide.RIGHT, trunk);
-    expect(res.success).toBe(true);
-    expect(res.collided).toBe(false);
-    expect(climber.side).toBe(ClimberSide.RIGHT);
-    expect(climber.altitude).toBe(1);
-    expect(climber.alive).toBe(true);
-    expect(climber.scurryTimer).toBeGreaterThan(0);
-  });
-
-  it('detects collision and kills bug when climbing into branch', () => {
-    // Manually force segment at index 0 after step to have a branch
-    trunk.generateInitial();
-    // Segment 1 becomes index 0 after step
-    trunk.segments[1].branch = BranchSide.LEFT;
-
-    const res = climber.climb(ClimberSide.LEFT, trunk);
-    expect(res.collided).toBe(true);
-    expect(res.success).toBe(false);
-    expect(res.branchHit).toBe(BranchSide.LEFT);
-    expect(climber.alive).toBe(false);
-  });
-
-  it('survives if switching to opposite side of branch hazard', () => {
-    trunk.generateInitial();
-    // Segment 1 becomes index 0 after step
-    trunk.segments[1].branch = BranchSide.LEFT;
-
-    // Climber switches to RIGHT
-    const res = climber.climb(ClimberSide.RIGHT, trunk);
-    expect(res.collided).toBe(false);
-    expect(res.success).toBe(true);
-    expect(climber.side).toBe(ClimberSide.RIGHT);
+  it('initializes in lane 0 (left) at base speed', () => {
+    expect(climber.currentLane).toBe(0);
+    expect(climber.x).toBe(BUG_LEFT_X);
+    expect(climber.y).toBe(BUG_Y);
+    expect(climber.speed).toBe(BASE_SPEED);
     expect(climber.alive).toBe(true);
   });
 
-  it('updates and decays scurry timer', () => {
-    climber.climb(ClimberSide.LEFT, trunk);
-    expect(climber.scurryTimer).toBeGreaterThan(0);
-    climber.update(0.2);
-    expect(climber.scurryTimer).toBe(0);
+  it('accelerates speed when throttle is active up to MAX_SPEED', () => {
+    climber.setThrottle(true);
+    climber.update(1.0);
+    expect(climber.speed).toBe(BASE_SPEED + 140);
+
+    climber.update(2.0);
+    expect(climber.speed).toBe(MAX_SPEED);
   });
 
-  it('resets climber state cleanly', () => {
-    climber.climb(ClimberSide.RIGHT, trunk);
+  it('brakes speed when brake is active down to MIN_SPEED', () => {
+    climber.setBrake(true);
+    climber.update(1.0);
+    expect(climber.speed).toBe(MIN_SPEED);
+  });
+
+  it('steers smoothly laterally towards target lane position', () => {
+    climber.setSteer(1); // steer right -> lane 1
+    expect(climber.currentLane).toBe(1);
+
+    climber.update(0.5);
+    expect(climber.x).toBeGreaterThan(BUG_LEFT_X);
+
+    climber.update(2.0);
+    expect(climber.x).toBeCloseTo(BUG_RIGHT_X, 0);
+
+    climber.setSteer(-1); // steer left -> lane 0
+    expect(climber.currentLane).toBe(0);
+    climber.update(2.0);
+    expect(climber.x).toBeCloseTo(BUG_LEFT_X, 0);
+  });
+
+  it('returns inset AABB hitbox for arcade dodging', () => {
+    const hitbox = climber.getHitbox();
+    expect(hitbox.width).toBe(BUG_WIDTH - 8);
+    expect(hitbox.height).toBe(BUG_HEIGHT - 8);
+    expect(hitbox.x).toBe(climber.x - BUG_WIDTH / 2 + 4);
+    expect(hitbox.y).toBe(climber.y - BUG_HEIGHT / 2 + 4);
+  });
+
+  it('resets state correctly', () => {
+    climber.speed = 300;
+    climber.x = BUG_RIGHT_X;
+    climber.currentLane = 1;
     climber.alive = false;
-    climber.reset(ClimberSide.LEFT);
 
-    expect(climber.side).toBe(ClimberSide.LEFT);
-    expect(climber.altitude).toBe(0);
+    climber.reset(0);
     expect(climber.alive).toBe(true);
-    expect(climber.scurryTimer).toBe(0);
+    expect(climber.currentLane).toBe(0);
+    expect(climber.x).toBe(BUG_LEFT_X);
+    expect(climber.speed).toBe(BASE_SPEED);
   });
 });

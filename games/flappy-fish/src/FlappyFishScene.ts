@@ -7,7 +7,7 @@ import { FishAudio } from './FishAudio.js';
 import { FishRenderer } from './FishRenderer.js';
 
 export class FlappyFishScene implements GameScene {
-  private width: number = 400;
+  private width: number = 800;
   private height: number = 600;
   public fish: Fish;
   public pipeManager: PipeManager;
@@ -17,7 +17,11 @@ export class FlappyFishScene implements GameScene {
   public renderer: FishRenderer;
 
   constructor(canvas?: HTMLCanvasElement) {
-    this.fish = new Fish({ x: 140, y: 280 });
+    if (canvas) {
+      canvas.width = this.width;
+      canvas.height = this.height;
+    }
+    this.fish = new Fish({ x: 180, y: 280 });
     this.pipeManager = new PipeManager();
     this.gameState = new GameState();
     this.particles = new ParticleSystem(200);

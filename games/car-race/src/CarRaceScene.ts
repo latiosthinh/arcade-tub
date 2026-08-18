@@ -35,6 +35,9 @@ export class CarRaceScene implements GameScene {
     this.audio = new CarAudio();
     this.particles = new ParticleSystem();
 
+    this.canvas.width = CANVAS_WIDTH;
+    this.canvas.height = CANVAS_HEIGHT;
+
     this.onKeyDownBound = this.handleKeyDown.bind(this);
     this.onKeyUpBound = this.handleKeyUp.bind(this);
     this.onPointerDownBound = this.handlePointerDown.bind(this);

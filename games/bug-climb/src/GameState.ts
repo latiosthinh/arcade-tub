@@ -1,23 +1,16 @@
 import { loadData, saveData, reportScore } from '@arcade-carnival/playables-adapter';
 
 export type GameStatus = 'ready' | 'playing' | 'paused' | 'gameover';
-export type GameOverReason = 'collision' | 'timeout' | null;
 
 export class GameState {
   public static readonly HIGH_SCORE_KEY = 'arcade-carnival-bug-climb-highscore';
-  public static readonly STREAK_WINDOW = 0.8;
 
   public status: GameStatus = 'ready';
   public score = 0;
   public altitude = 0;
-  public stepsClimbed = 0;
+  public branchesDodged = 0;
   public highScore = 0;
-
-  public streak = 0;
-  public streakTimer = 0;
   public multiplier = 1;
-
-  public gameOverReason: GameOverReason = null;
 
   constructor() {
     this.loadHighScore();
@@ -28,11 +21,8 @@ export class GameState {
     this.status = 'playing';
     this.score = 0;
     this.altitude = 0;
-    this.stepsClimbed = 0;
-    this.streak = 0;
-    this.streakTimer = 0;
+    this.branchesDodged = 0;
     this.multiplier = 1;
-    this.gameOverReason = null;
     return true;
   }
 
@@ -48,47 +38,40 @@ export class GameState {
     return true;
   }
 
-  public endGame(reason: 'collision' | 'timeout'): boolean {
+  public endGame(): boolean {
     if (this.status !== 'playing') return false;
     this.status = 'gameover';
-    this.gameOverReason = reason;
 
     if (this.score > this.highScore) {
-      this.highScore = this.score;
+      this.highScore = Math.floor(this.score);
       this.saveHighScore();
     }
-    reportScore(this.score);
+    reportScore(Math.floor(this.score));
     return true;
   }
 
-  public addClimbScore(): number {
-    if (this.status !== 'playing') return 0;
-
-    this.stepsClimbed++;
-    this.altitude++;
-    this.streak++;
-    this.streakTimer = GameState.STREAK_WINDOW;
-
-    this.multiplier = 1 + Math.min(4, Math.floor(this.streak / 5));
-    const points = 10 * this.multiplier;
-    this.score += points;
-
+  public addDodgedBranches(count: number = 1): void {
+    if (this.status !== 'playing') return;
+    this.branchesDodged += count;
+    this.score += 50 * count * this.multiplier;
     if (this.score > this.highScore) {
-      this.highScore = this.score;
+      this.highScore = Math.floor(this.score);
     }
-
-    return points;
   }
 
-  public update(dt: number): void {
+  public update(dt: number, climberSpeed: number): void {
     if (this.status !== 'playing') return;
 
-    if (this.streakTimer > 0) {
-      this.streakTimer = Math.max(0, this.streakTimer - dt);
-      if (this.streakTimer === 0) {
-        this.streak = 0;
-        this.multiplier = 1;
-      }
+    // Altitude in meters climbed
+    const climbDelta = (climberSpeed * dt) / 25;
+    this.altitude += climbDelta;
+
+    // Continuous score increment from speed
+    this.multiplier = 1 + Math.min(3, Math.floor(climberSpeed / 120));
+    this.score += (climberSpeed / 10) * dt * this.multiplier;
+
+    if (this.score > this.highScore) {
+      this.highScore = Math.floor(this.score);
     }
   }
 
@@ -96,11 +79,8 @@ export class GameState {
     this.status = 'ready';
     this.score = 0;
     this.altitude = 0;
-    this.stepsClimbed = 0;
-    this.streak = 0;
-    this.streakTimer = 0;
+    this.branchesDodged = 0;
     this.multiplier = 1;
-    this.gameOverReason = null;
   }
 
   private loadHighScore(): void {
@@ -117,7 +97,7 @@ export class GameState {
 
   private saveHighScore(): void {
     try {
-      saveData(GameState.HIGH_SCORE_KEY, String(this.highScore));
+      saveData(GameState.HIGH_SCORE_KEY, String(Math.floor(this.highScore)));
     } catch {
       // Ignored
     }
