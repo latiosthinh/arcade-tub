@@ -39,6 +39,37 @@ export class BoxRenderer {
     dims: GridDimensions,
     hoveredBoxId: number | null = null
   ): void {
+    // Render cardboard mounting frame/tray around grid
+    const totalW = grid.size * dims.boxSize + (grid.size - 1) * dims.gap;
+    const totalH = grid.size * dims.boxSize + (grid.size - 1) * dims.gap;
+    const framePad = 18;
+
+    ctx.save();
+    // Cardboard tray shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.roundRect(dims.startX - framePad + 4, dims.startY - framePad + 4, totalW + framePad * 2, totalH + framePad * 2, 16);
+    ctx.fill();
+
+    // Cardboard tray body
+    ctx.fillStyle = '#C5A880';
+    ctx.beginPath();
+    ctx.roundRect(dims.startX - framePad, dims.startY - framePad, totalW + framePad * 2, totalH + framePad * 2, 16);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Inner stitched contour
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.roundRect(dims.startX - framePad + 6, dims.startY - framePad + 6, totalW + (framePad - 6) * 2, totalH + (framePad - 6) * 2, 12);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
     for (const box of grid.boxes) {
       const bounds = this.getBoxBounds(box, dims);
       const isHovered = hoveredBoxId === box.id;
@@ -53,66 +84,67 @@ export class BoxRenderer {
     isHovered = false
   ): void {
     const { x, y, w, h } = bounds;
-    const radius = 12;
+    const radius = 10;
     const intensity = box.activeIntensity; // 0 to 1
 
     ctx.save();
 
-    // Box base path
+    // Active paper pop offset (-2px, -2px)
+    const offsetX = intensity > 0.05 ? -2 * intensity : 0;
+    const offsetY = intensity > 0.05 ? -2 * intensity : 0;
+    const shadowDist = intensity > 0.05 ? 6 + intensity * 3 : (isHovered ? 4 : 3);
+
+    // Box drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
     ctx.beginPath();
-    ctx.roundRect(x, y, w, h, radius);
+    ctx.roundRect(x + shadowDist, y + shadowDist, w, h, radius);
+    ctx.fill();
 
-    // Dynamic glow effects based on active state
+    // Box main construction paper body
+    ctx.beginPath();
+    ctx.roundRect(x + offsetX, y + offsetY, w, h, radius);
+    ctx.fillStyle = box.color;
+    ctx.fill();
+
+    // Inner paper highlight / active illumination
     if (intensity > 0.05) {
-      ctx.shadowColor = box.color;
-      ctx.shadowBlur = 15 + intensity * 25;
-      ctx.fillStyle = box.color;
-      ctx.globalAlpha = 0.3 + intensity * 0.7;
+      // White inner cutout glow
+      ctx.fillStyle = `rgba(255, 253, 248, ${0.45 * intensity})`;
+      ctx.beginPath();
+      ctx.roundRect(x + offsetX + 6, y + offsetY + 6, w - 12, h - 12, radius - 2);
       ctx.fill();
 
-      // Bright inner core highlight
-      const grad = ctx.createRadialGradient(
-        x + w / 2,
-        y + h / 2,
-        w * 0.1,
-        x + w / 2,
-        y + h / 2,
-        w * 0.7
-      );
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.3, box.color);
-      grad.addColorStop(1, 'rgba(15, 23, 42, 0.8)');
-
-      ctx.fillStyle = grad;
-      ctx.globalAlpha = 0.5 + intensity * 0.5;
-      ctx.fill();
-
-      // Border outline
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 3 + intensity * 2;
-      ctx.globalAlpha = 0.9;
+      // Top-left shiny paper crease
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.8 * intensity})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + offsetX + 12, y + offsetY + 6);
+      ctx.lineTo(x + offsetX + w - 12, y + offsetY + 6);
       ctx.stroke();
-    } else {
-      // Idle cyber box state
-      ctx.shadowColor = isHovered ? box.color : 'rgba(0, 0, 0, 0.5)';
-      ctx.shadowBlur = isHovered ? 12 : 6;
-      ctx.fillStyle = isHovered ? '#1e293b' : '#0f172a';
-      ctx.globalAlpha = 0.95;
+    } else if (isHovered) {
+      ctx.fillStyle = 'rgba(255, 253, 248, 0.2)';
+      ctx.beginPath();
+      ctx.roundRect(x + offsetX, y + offsetY, w, h, radius);
       ctx.fill();
-
-      // Neon outline
-      ctx.strokeStyle = box.color;
-      ctx.lineWidth = isHovered ? 2.5 : 1.5;
-      ctx.globalAlpha = isHovered ? 0.9 : 0.45;
-      ctx.stroke();
     }
 
-    // Inner subtle icon/indicator glyph
-    ctx.globalAlpha = intensity > 0.1 ? 0.9 : 0.35;
-    ctx.fillStyle = intensity > 0.1 ? '#ffffff' : box.color;
+    // Inked border
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = intensity > 0.05 ? 3 : 2.5;
     ctx.beginPath();
-    ctx.arc(x + w / 2, y + h / 2, 6 + intensity * 4, 0, Math.PI * 2);
+    ctx.roundRect(x + offsetX, y + offsetY, w, h, radius);
+    ctx.stroke();
+
+    // Inner subtle paper stamp icon
+    ctx.fillStyle = intensity > 0.1 ? '#FFFDF8' : 'rgba(62, 39, 35, 0.35)';
+    ctx.beginPath();
+    ctx.arc(x + offsetX + w / 2, y + offsetY + h / 2, 7 + intensity * 4, 0, Math.PI * 2);
     ctx.fill();
+    if (intensity > 0.1) {
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
 
     ctx.restore();
   }

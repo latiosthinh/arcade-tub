@@ -230,68 +230,95 @@ export class SafeCrackerScene implements GameScene {
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D): void {
-    const bgGrad = ctx.createRadialGradient(
-      this.centerX,
-      this.centerY,
-      50,
-      this.centerX,
-      this.centerY,
-      500,
-    );
-    bgGrad.addColorStop(0, '#1e272e');
-    bgGrad.addColorStop(1, '#0a0e12');
-    ctx.fillStyle = bgGrad;
+    // 1. Warm kraft paper background
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Metallic rivet border
-    ctx.strokeStyle = '#2f3542';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(10, 10, this.canvas.width - 20, this.canvas.height - 20);
+    // Subtle paper grid pattern
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.05)';
+    ctx.lineWidth = 1;
+    const gridStep = 24;
+    for (let x = gridStep; x < this.canvas.width; x += gridStep) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, this.canvas.height);
+      ctx.stroke();
+    }
+    for (let y = gridStep; y < this.canvas.height; y += gridStep) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(this.canvas.width, y);
+      ctx.stroke();
+    }
 
-    ctx.fillStyle = '#747d8c';
-    const rivetSpacing = 60;
-    for (let x = 25; x < this.canvas.width - 15; x += rivetSpacing) {
-      this.drawRivet(ctx, x, 18);
-      this.drawRivet(ctx, x, this.canvas.height - 18);
-    }
-    for (let y = 35; y < this.canvas.height - 25; y += rivetSpacing) {
-      this.drawRivet(ctx, 18, y);
-      this.drawRivet(ctx, this.canvas.width - 18, y);
-    }
+    // Stitched / dashed border
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 6]);
+    ctx.strokeRect(14, 14, this.canvas.width - 28, this.canvas.height - 28);
+    ctx.setLineDash([]);
+
+    // Paper tape corner reinforcements
+    this.drawTape(ctx, 16, 16, -Math.PI / 4);
+    this.drawTape(ctx, this.canvas.width - 16, 16, Math.PI / 4);
+    this.drawTape(ctx, 16, this.canvas.height - 16, Math.PI / 4);
+    this.drawTape(ctx, this.canvas.width - 16, this.canvas.height - 16, -Math.PI / 4);
   }
 
-  private drawRivet(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-    ctx.beginPath();
-    ctx.arc(x, y, 3.5, 0, Math.PI * 2);
-    ctx.fill();
+  private drawTape(ctx: CanvasRenderingContext2D, x: number, y: number, angle: number): void {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(-22, -8, 44, 16);
+    ctx.strokeRect(-22, -8, 44, 16);
+    ctx.restore();
   }
 
   private renderDial(ctx: CanvasRenderingContext2D): void {
     ctx.save();
     ctx.translate(this.centerX, this.centerY);
 
-    // Outer Bezel Shadow & Ring
+    // Outer Cardboard Bezel Shadow
     ctx.beginPath();
-    ctx.arc(0, 0, this.dialRadius + 20, 0, Math.PI * 2);
-    ctx.fillStyle = '#111418';
+    ctx.arc(4, 4, this.dialRadius + 18, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
     ctx.fill();
 
+    // Outer Cardboard Bezel Ring
     ctx.beginPath();
-    ctx.arc(0, 0, this.dialRadius + 14, 0, Math.PI * 2);
-    ctx.fillStyle = '#2f3542';
+    ctx.arc(0, 0, this.dialRadius + 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#C5A880';
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
 
-    // Dial face
-    const faceGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, this.dialRadius);
-    faceGrad.addColorStop(0, '#353b48');
-    faceGrad.addColorStop(0.85, '#1e272e');
-    faceGrad.addColorStop(1, '#14181c');
+    // Inner Stitched Line on Bezel
+    ctx.beginPath();
+    ctx.arc(0, 0, this.dialRadius + 10, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dial face (kraft paper stock)
     ctx.beginPath();
     ctx.arc(0, 0, this.dialRadius, 0, Math.PI * 2);
-    ctx.fillStyle = faceGrad;
+    ctx.fillStyle = '#D8C3A5';
     ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#57606f';
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = '#3E2723';
+    ctx.stroke();
+
+    // Inner subtle concentric ring
+    ctx.beginPath();
+    ctx.arc(0, 0, this.dialRadius - 38, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Tick marks every 30 degrees (12 hours) + minor ticks
@@ -304,87 +331,118 @@ export class SafeCrackerScene implements GameScene {
       ctx.beginPath();
       ctx.moveTo(Math.cos(angle) * innerR, Math.sin(angle) * innerR);
       ctx.lineTo(Math.cos(angle) * outerR, Math.sin(angle) * outerR);
-      ctx.strokeStyle = isMajor ? '#a4b0be' : '#47535e';
-      ctx.lineWidth = isMajor ? 2.5 : 1;
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = isMajor ? 2.5 : 1.2;
       ctx.stroke();
     }
 
-    // Target Zones (Glowing Arcs)
+    // Target Zones (Construction Paper Arcs)
     for (const zone of this.dial.zones) {
       const isScore = zone.type === 'score';
-      const color = isScore ? '#ffd32a' : '#00d2d3';
-      const shadowColor = isScore ? 'rgba(255, 211, 42, 0.8)' : 'rgba(0, 210, 211, 0.8)';
+      const color = isScore ? '#F59E0B' : '#3B82F6';
       const trackRadius = this.dialRadius - 28;
 
       ctx.save();
-      ctx.shadowColor = shadowColor;
-      ctx.shadowBlur = 12;
-      ctx.strokeStyle = color;
+      // Drop shadow for arc
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
       ctx.lineWidth = 14;
       ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(2, 2, trackRadius, zone.startAngle, zone.endAngle);
+      ctx.stroke();
+
+      // Main paper arc
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 13;
       ctx.beginPath();
       ctx.arc(0, 0, trackRadius, zone.startAngle, zone.endAngle);
       ctx.stroke();
 
-      // Core bright line inside arc
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 3;
+      // Inked boundary along arc
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.arc(0, 0, trackRadius, zone.startAngle, zone.endAngle);
       ctx.stroke();
       ctx.restore();
     }
 
-    // Rotating Pointer Needle
+    // Rotating Pointer Needle (Papercut Arrow)
     ctx.save();
     ctx.rotate(this.dial.pointerAngle);
-    ctx.shadowColor = 'rgba(255, 159, 26, 0.75)';
-    ctx.shadowBlur = 10;
-    ctx.strokeStyle = '#ff9f1a';
-    ctx.lineWidth = 4;
-    ctx.lineCap = 'round';
+
+    // Needle drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.moveTo(3, 3);
+    ctx.lineTo(this.dialRadius - 24, -5 + 3);
+    ctx.lineTo(this.dialRadius - 10, 3);
+    ctx.lineTo(this.dialRadius - 24, 5 + 3);
+    ctx.closePath();
+    ctx.fill();
+
+    // Needle main craft body (Rose / Red construction paper needle)
+    ctx.fillStyle = '#E11D48';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(this.dialRadius - 12, 0);
-    ctx.stroke();
-
-    // Needle indicator tip arrowhead
-    ctx.fillStyle = '#fffa65';
-    ctx.beginPath();
-    ctx.moveTo(this.dialRadius - 10, 0);
     ctx.lineTo(this.dialRadius - 24, -6);
+    ctx.lineTo(this.dialRadius - 8, 0);
     ctx.lineTo(this.dialRadius - 24, 6);
     ctx.closePath();
     ctx.fill();
-    ctx.restore();
-
-    // Center Hub Cap
-    const hubGrad = ctx.createRadialGradient(-3, -3, 2, 0, 0, 24);
-    hubGrad.addColorStop(0, '#f1f2f6');
-    hubGrad.addColorStop(0.7, '#747d8c');
-    hubGrad.addColorStop(1, '#2f3542');
-    ctx.beginPath();
-    ctx.arc(0, 0, 22, 0, Math.PI * 2);
-    ctx.fillStyle = hubGrad;
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#1e272e';
     ctx.stroke();
 
-    // Lockout indicator over center
-    if (this.gameState.isLockedOut) {
-      ctx.fillStyle = 'rgba(255, 56, 56, 0.85)';
-      ctx.beginPath();
-      ctx.arc(0, 0, 48, 0, Math.PI * 2);
-      ctx.fill();
+    // Needle spine highlight
+    ctx.strokeStyle = '#FFFDF8';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(8, 0);
+    ctx.lineTo(this.dialRadius - 16, 0);
+    ctx.stroke();
 
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px monospace';
+    ctx.restore();
+
+    // Center Brass Paper Fastener / Brad Hub Cap
+    ctx.beginPath();
+    ctx.arc(3, 3, 22, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(0, 0, 22, 0, Math.PI * 2);
+    ctx.fillStyle = '#F59E0B';
+    ctx.fill();
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = '#3E2723';
+    ctx.stroke();
+
+    // Fastener center slit
+    ctx.beginPath();
+    ctx.moveTo(-10, 0);
+    ctx.lineTo(10, 0);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Lockout indicator over center (Paper stamp)
+    if (this.gameState.isLockedOut) {
+      ctx.fillStyle = '#E11D48';
+      ctx.beginPath();
+      ctx.arc(0, 0, 44, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFFDF8';
+      ctx.font = 'bold 13px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('LOCKED', 0, -6);
-      ctx.fillText(`${this.gameState.pickCooldown.toFixed(1)}s`, 0, 8);
+      ctx.fillText('LOCKED', 0, -8);
+      ctx.font = 'bold 12px "Comfortaa", cursive, sans-serif';
+      ctx.fillText(`${this.gameState.pickCooldown.toFixed(1)}s`, 0, 10);
     }
 
     ctx.restore();
@@ -392,130 +450,176 @@ export class SafeCrackerScene implements GameScene {
 
   private renderHUD(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.font = 'bold 20px "Courier New", Courier, monospace';
 
-    // Top-Left: Score & High Score
+    // Top-Left Sticky Note: Score & High Score
+    this.drawStickyNote(ctx, 25, 20, 150, 64, '#FFFDF8');
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#ffd32a';
-    ctx.fillText(`SCORE: ${this.gameState.score}`, 30, 45);
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, 35, 45);
 
-    ctx.fillStyle = '#a4b0be';
-    ctx.font = '16px "Courier New", Courier, monospace';
-    ctx.fillText(`HIGH:  ${this.gameState.highScore}`, 30, 72);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`HIGH:  ${this.gameState.highScore}`, 35, 68);
 
-    // Top-Center: Timer
-    ctx.textAlign = 'center';
-    ctx.font = 'bold 24px "Courier New", Courier, monospace';
+    // Top-Center Sticky Note: Timer
     const timerVal = this.gameState.timeRemaining.toFixed(1);
-    if (this.gameState.timeRemaining < 5.0) {
-      ctx.fillStyle = '#ff3838';
-      ctx.shadowColor = 'rgba(255, 56, 56, 0.8)';
-      ctx.shadowBlur = 8;
-    } else {
-      ctx.fillStyle = '#00d2d3';
-      ctx.shadowBlur = 0;
-    }
-    ctx.fillText(`TIME: ${timerVal}s`, this.centerX, 45);
-    ctx.shadowBlur = 0;
-
-    // Top-Right: Streak & Speed Multiplier
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#ff9f1a';
-    ctx.font = 'bold 18px "Courier New", Courier, monospace';
-    ctx.fillText(`STREAK: ${this.gameState.streak}`, this.canvas.width - 30, 45);
-
-    ctx.fillStyle = '#a4b0be';
-    ctx.font = '16px "Courier New", Courier, monospace';
-    ctx.fillText(`SPEED:  ${this.gameState.speedMultiplier.toFixed(2)}x`, this.canvas.width - 30, 72);
-
-    // Bottom Help Text
+    const timerColor = this.gameState.timeRemaining < 5.0 ? '#E11D48' : '#3B82F6';
+    this.drawStickyNote(ctx, this.centerX - 75, 20, 150, 64, '#FFFDF8');
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#747d8c';
-    ctx.font = '14px sans-serif';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = timerColor;
+    ctx.fillText(`TIME: ${timerVal}s`, this.centerX, 58);
+
+    // Top-Right Sticky Note: Streak & Speed
+    this.drawStickyNote(ctx, this.canvas.width - 175, 20, 150, 64, '#FFFDF8');
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#F59E0B';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`STREAK: ${this.gameState.streak}`, this.canvas.width - 35, 45);
+
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`SPEED:  ${this.gameState.speedMultiplier.toFixed(2)}x`, this.canvas.width - 35, 68);
+
+    // Bottom Help Text Paper Ribbon
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
     ctx.fillText(
       'CLICK / SPACE: Pick Lock  •  RIGHT-CLICK / SHIFT: Boost Speed  •  ESC: Pause',
       this.centerX,
-      570,
+      572,
     );
 
+    ctx.restore();
+  }
+
+  private drawStickyNote(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    bg: string,
+  ): void {
+    ctx.save();
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.fillRect(x + 3, y + 3, w, h);
+
+    // Note card
+    ctx.fillStyle = bg;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, w, h);
+
+    // Tape top strip
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(x + w / 2 - 20, y - 6, 40, 12);
+    ctx.strokeRect(x + w / 2 - 20, y - 6, 40, 12);
     ctx.restore();
   }
 
   private renderOverlays(ctx: CanvasRenderingContext2D): void {
     if (this.gameState.status === 'ready') {
       ctx.save();
-      ctx.fillStyle = 'rgba(10, 14, 18, 0.75)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
       ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+      const panelW = 460;
+      const panelH = 340;
+      const panelX = this.centerX - panelW / 2;
+      const panelY = this.centerY - panelH / 2 + 10;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#ffd32a';
-      ctx.font = 'bold 38px "Courier New", Courier, monospace';
-      ctx.fillText('SAFE CRACKER', this.centerX, 230);
+      ctx.fillStyle = '#E11D48';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('SAFE CRACKER', this.centerX, panelY + 50);
 
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '20px sans-serif';
-      ctx.fillText('Align needle with glowing target zones', this.centerX, 280);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('Align needle with paper target zones', this.centerX, panelY + 90);
 
-      ctx.fillStyle = '#ffd32a';
-      ctx.font = '16px monospace';
-      ctx.fillText('■ Yellow Zone = +1000 Pts', this.centerX, 320);
-      ctx.fillStyle = '#00d2d3';
-      ctx.fillText('■ Cyan Zone   = +1.5s Time', this.centerX, 345);
-      ctx.fillStyle = '#ff3838';
-      ctx.fillText('■ Miss        = 0.4s Lockout + Reset Streak', this.centerX, 370);
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = '15px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('■ Yellow Zone = +1000 Pts', this.centerX, panelY + 130);
+      ctx.fillStyle = '#3B82F6';
+      ctx.fillText('■ Blue Zone   = +1.5s Time Bonus', this.centerX, panelY + 158);
+      ctx.fillStyle = '#E11D48';
+      ctx.fillText('■ Miss        = 0.4s Lockout & Reset Streak', this.centerX, panelY + 186);
 
-      ctx.fillStyle = '#fffa65';
-      ctx.font = 'bold 22px sans-serif';
-      ctx.fillText('Click or Press SPACE to Begin', this.centerX, 430);
+      ctx.fillStyle = '#10B981';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('Click or Press SPACE to Begin', this.centerX, panelY + 250);
       ctx.restore();
       return;
     }
 
     if (this.gameState.status === 'paused') {
       ctx.save();
-      ctx.fillStyle = 'rgba(10, 14, 18, 0.8)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
       ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 36px "Courier New", Courier, monospace';
-      ctx.fillText('GAME PAUSED', this.centerX, 270);
+      const panelW = 320;
+      const panelH = 180;
+      const panelX = this.centerX - panelW / 2;
+      const panelY = this.centerY - panelH / 2;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
 
-      ctx.fillStyle = '#a4b0be';
-      ctx.font = '18px sans-serif';
-      ctx.fillText('Press ESC to Resume', this.centerX, 330);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#3E2723';
+      ctx.font = 'bold 34px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('GAME PAUSED', this.centerX, panelY + 65);
+
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('Press ESC to Resume', this.centerX, panelY + 115);
       ctx.restore();
       return;
     }
 
     if (this.gameState.status === 'gameover') {
       ctx.save();
-      ctx.fillStyle = 'rgba(10, 14, 18, 0.85)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
       ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+      const panelW = 440;
+      const panelH = 340;
+      const panelX = this.centerX - panelW / 2;
+      const panelY = this.centerY - panelH / 2 + 10;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#ff3838';
-      ctx.font = 'bold 36px "Courier New", Courier, monospace';
-      ctx.fillText('VAULT LOCKED', this.centerX, 210);
+      ctx.fillStyle = '#E11D48';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('VAULT LOCKED', this.centerX, panelY + 50);
 
-      ctx.fillStyle = '#ffd32a';
-      ctx.font = 'bold 26px "Courier New", Courier, monospace';
-      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, this.centerX, 270);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, this.centerX, panelY + 100);
 
-      ctx.fillStyle = '#a4b0be';
-      ctx.font = '20px "Courier New", Courier, monospace';
-      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, this.centerX, 310);
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, this.centerX, panelY + 135);
 
-      // Restart Button
-      ctx.fillStyle = '#2f3542';
-      ctx.strokeStyle = '#ffd32a';
-      ctx.lineWidth = 2;
+      // Paper restart button
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.fillRect(this.restartBtn.x + 3, this.restartBtn.y + 3, this.restartBtn.w, this.restartBtn.h);
+
+      ctx.fillStyle = '#10B981';
       ctx.fillRect(
         this.restartBtn.x,
         this.restartBtn.y,
         this.restartBtn.w,
         this.restartBtn.h,
       );
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2;
       ctx.strokeRect(
         this.restartBtn.x,
         this.restartBtn.y,
@@ -523,15 +627,15 @@ export class SafeCrackerScene implements GameScene {
         this.restartBtn.h,
       );
 
-      ctx.fillStyle = '#ffd32a';
-      ctx.font = 'bold 20px sans-serif';
+      ctx.fillStyle = '#FFFDF8';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
       ctx.textBaseline = 'middle';
       ctx.fillText('PLAY AGAIN', this.centerX, this.restartBtn.y + this.restartBtn.h / 2);
 
-      ctx.fillStyle = '#747d8c';
-      ctx.font = '14px sans-serif';
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '14px "Comfortaa", cursive, sans-serif';
       ctx.textBaseline = 'alphabetic';
-      ctx.fillText('or Press SPACE', this.centerX, 470);
+      ctx.fillText('or Press SPACE', this.centerX, panelY + 280);
 
       ctx.restore();
     }

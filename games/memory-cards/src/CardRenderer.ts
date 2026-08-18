@@ -71,76 +71,50 @@ export class CardRenderer {
     const halfW = w / 2;
     const halfH = h / 2;
 
-    // Card background body
-    ctx.fillStyle = '#0f172a';
+    // Card drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    this.drawRoundedRect(ctx, -halfW + 3, -halfH + 3, w, h, CardRenderer.CORNER_RADIUS);
+    ctx.fill();
+
+    // Card background body (craft card stock)
+    ctx.fillStyle = '#FFFDF8';
     this.drawRoundedRect(ctx, -halfW, -halfH, w, h, CardRenderer.CORNER_RADIUS);
     ctx.fill();
 
-    // Subtle dark gradient
-    const grad = ctx.createLinearGradient(-halfW, -halfH, halfW, halfH);
-    grad.addColorStop(0, 'rgba(30, 41, 59, 0.9)');
-    grad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
-    ctx.fillStyle = grad;
+    // Inked outer border
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     this.drawRoundedRect(ctx, -halfW, -halfH, w, h, CardRenderer.CORNER_RADIUS);
-    ctx.fill();
-
-    // Cyber circuit grid lines on back
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.2)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(-halfW + 15, -halfH + 15);
-    ctx.lineTo(halfW - 15, halfH - 15);
-    ctx.moveTo(halfW - 15, -halfH + 15);
-    ctx.lineTo(-halfW + 15, halfH - 15);
     ctx.stroke();
 
-    // Glowing center diamond
-    ctx.strokeStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 8;
-    ctx.lineWidth = 2;
+    // Cardboard tan inner frame pattern
+    ctx.strokeStyle = '#C5A880';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    this.drawRoundedRect(ctx, -halfW + 6, -halfH + 6, w - 12, h - 12, CardRenderer.CORNER_RADIUS - 3);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Decorative diamond back pattern
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(0, -18);
-    ctx.lineTo(18, 0);
-    ctx.lineTo(0, 18);
-    ctx.lineTo(-18, 0);
+    ctx.moveTo(0, -22);
+    ctx.lineTo(22, 0);
+    ctx.lineTo(0, 22);
+    ctx.lineTo(-22, 0);
     ctx.closePath();
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-
-    // Holographic corner brackets
-    ctx.strokeStyle = '#38bdf8';
-    ctx.lineWidth = 2;
-    const bracketSize = 10;
-    // Top-left
-    ctx.beginPath();
-    ctx.moveTo(-halfW + 8, -halfH + 8 + bracketSize);
-    ctx.lineTo(-halfW + 8, -halfH + 8);
-    ctx.lineTo(-halfW + 8 + bracketSize, -halfH + 8);
-    ctx.stroke();
-    // Top-right
-    ctx.beginPath();
-    ctx.moveTo(halfW - 8 - bracketSize, -halfH + 8);
-    ctx.lineTo(halfW - 8, -halfH + 8);
-    ctx.lineTo(halfW - 8, -halfH + 8 + bracketSize);
-    ctx.stroke();
-    // Bottom-left
-    ctx.beginPath();
-    ctx.moveTo(-halfW + 8, halfH - 8 - bracketSize);
-    ctx.lineTo(-halfW + 8, halfH - 8);
-    ctx.lineTo(-halfW + 8 + bracketSize, halfH - 8);
-    ctx.stroke();
-    // Bottom-right
-    ctx.beginPath();
-    ctx.moveTo(halfW - 8 - bracketSize, halfH - 8);
-    ctx.lineTo(halfW - 8, halfH - 8);
-    ctx.lineTo(halfW - 8, halfH - 8 - bracketSize);
+    ctx.fillStyle = '#F4EAD4';
+    ctx.fill();
     ctx.stroke();
 
-    // Outer border
-    ctx.strokeStyle = '#0284c7';
-    ctx.lineWidth = 2;
-    this.drawRoundedRect(ctx, -halfW, -halfH, w, h, CardRenderer.CORNER_RADIUS);
+    // Inner paper star / acorn seal
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath();
+    ctx.arc(0, 0, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.2;
     ctx.stroke();
   }
 
@@ -154,130 +128,114 @@ export class CardRenderer {
     const halfH = h / 2;
     const isMatched = card.state === 'matched';
 
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    this.drawRoundedRect(ctx, -halfW + 3, -halfH + 3, w, h, CardRenderer.CORNER_RADIUS);
+    ctx.fill();
+
     // Face background
-    const bgGrad = ctx.createLinearGradient(-halfW, -halfH, halfW, halfH);
-    if (isMatched) {
-      bgGrad.addColorStop(0, '#1e1b4b');
-      bgGrad.addColorStop(1, '#090a16');
-    } else {
-      bgGrad.addColorStop(0, '#1e293b');
-      bgGrad.addColorStop(1, '#0f172a');
-    }
-    ctx.fillStyle = bgGrad;
+    ctx.fillStyle = isMatched ? '#E8DEC8' : '#FFFDF8';
     this.drawRoundedRect(ctx, -halfW, -halfH, w, h, CardRenderer.CORNER_RADIUS);
     ctx.fill();
 
-    // Render cyber glyph
+    // Inner craft dashed border
+    ctx.strokeStyle = isMatched ? '#10B981' : 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    this.drawRoundedRect(ctx, -halfW + 5, -halfH + 5, w - 10, h - 10, CardRenderer.CORNER_RADIUS - 3);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Render paper cutout glyph
     this.renderGlyph(ctx, card.glyph as CyberGlyph, isMatched);
 
-    // Border glow
-    if (isMatched) {
-      ctx.shadowColor = '#fbbf24';
-      ctx.shadowBlur = 12;
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 3;
-    } else {
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 8;
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2;
-    }
-
+    // Outer border
+    ctx.strokeStyle = isMatched ? '#10B981' : '#3E2723';
+    ctx.lineWidth = isMatched ? 2.5 : 2;
     this.drawRoundedRect(ctx, -halfW, -halfH, w, h, CardRenderer.CORNER_RADIUS);
     ctx.stroke();
-    ctx.shadowBlur = 0;
   }
 
   private renderGlyph(ctx: CanvasRenderingContext2D, glyph: CyberGlyph, matched: boolean): void {
     ctx.save();
-    const primaryColor = matched ? '#fbbf24' : '#00f0ff';
-    const secondaryColor = matched ? '#fef08a' : '#ec4899';
-
-    ctx.shadowColor = primaryColor;
-    ctx.shadowBlur = 10;
-    ctx.strokeStyle = primaryColor;
-    ctx.fillStyle = primaryColor;
-    ctx.lineWidth = 2.5;
+    const border = '#3E2723';
 
     switch (glyph) {
       case 'CYBER_CHIP': {
-        // Central chip square
-        ctx.strokeRect(-16, -16, 32, 32);
-        ctx.fillStyle = secondaryColor;
-        ctx.fillRect(-8, -8, 16, 16);
-        // Microchip trace pins
+        // Red papercut puzzle tile
+        const fill = matched ? '#10B981' : '#E11D48';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        // Top pins
-        ctx.moveTo(-10, -16); ctx.lineTo(-10, -26);
-        ctx.moveTo(0, -16); ctx.lineTo(0, -26);
-        ctx.moveTo(10, -16); ctx.lineTo(10, -26);
-        // Bottom pins
-        ctx.moveTo(-10, 16); ctx.lineTo(-10, 26);
-        ctx.moveTo(0, 16); ctx.lineTo(0, 26);
-        ctx.moveTo(10, 16); ctx.lineTo(10, 26);
-        // Left pins
-        ctx.moveTo(-16, -10); ctx.lineTo(-26, -10);
-        ctx.moveTo(-16, 0); ctx.lineTo(-26, 0);
-        ctx.moveTo(-16, 10); ctx.lineTo(-26, 10);
-        // Right pins
-        ctx.moveTo(16, -10); ctx.lineTo(26, -10);
-        ctx.moveTo(16, 0); ctx.lineTo(26, 0);
-        ctx.moveTo(16, 10); ctx.lineTo(26, 10);
+        this.drawRoundedRect(ctx, -16, -16, 32, 32, 4);
+        ctx.fill();
         ctx.stroke();
+
+        ctx.fillStyle = '#FFFDF8';
+        ctx.fillRect(-6, -6, 12, 12);
+        ctx.strokeRect(-6, -6, 12, 12);
         break;
       }
 
       case 'NEON_SKULL': {
-        // Cranium
+        // Blue paper acorn / leaf
+        const fill = matched ? '#10B981' : '#3B82F6';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(0, -6, 20, Math.PI, 0, false);
-        ctx.lineTo(12, 14);
-        ctx.lineTo(-12, 14);
-        ctx.closePath();
-        ctx.stroke();
-        // Eye sockets
-        ctx.fillStyle = secondaryColor;
-        ctx.beginPath();
-        ctx.arc(-7, -4, 4.5, 0, Math.PI * 2);
-        ctx.arc(7, -4, 4.5, 0, Math.PI * 2);
+        ctx.ellipse(0, 4, 14, 16, 0, 0, Math.PI * 2);
         ctx.fill();
-        // Teeth slits
+        ctx.stroke();
+
+        ctx.fillStyle = '#D8C3A5';
         ctx.beginPath();
-        ctx.moveTo(-6, 8); ctx.lineTo(-6, 14);
-        ctx.moveTo(0, 8); ctx.lineTo(0, 14);
-        ctx.moveTo(6, 8); ctx.lineTo(6, 14);
+        ctx.arc(0, -8, 14, Math.PI, 0);
+        ctx.fill();
         ctx.stroke();
         break;
       }
 
       case 'QUANTUM_NODE': {
-        // Central nucleus
-        ctx.fillStyle = secondaryColor;
+        // Yellow paper sunburst
+        const fill = matched ? '#10B981' : '#F59E0B';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(0, 0, 6, 0, Math.PI * 2);
+        ctx.arc(0, 0, 11, 0, Math.PI * 2);
         ctx.fill();
-        // Orbital ellipse 1
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 24, 9, Math.PI / 4, 0, Math.PI * 2);
         ctx.stroke();
-        // Orbital ellipse 2
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 24, 9, -Math.PI / 4, 0, Math.PI * 2);
-        ctx.stroke();
+
+        for (let i = 0; i < 8; i++) {
+          const angle = (i * Math.PI) / 4;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(angle) * 14, Math.sin(angle) * 14);
+          ctx.lineTo(Math.cos(angle) * 22, Math.sin(angle) * 22);
+          ctx.stroke();
+        }
         break;
       }
 
       case 'MATRIX_KEY': {
-        // Key bow
+        // Purple paper key
+        const fill = matched ? '#10B981' : '#8B5CF6';
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
+        ctx.fillStyle = fill;
+
         ctx.beginPath();
         ctx.arc(0, -14, 12, 0, Math.PI * 2);
+        ctx.fill();
         ctx.stroke();
-        // Inner key cutout
-        ctx.fillStyle = secondaryColor;
+
+        ctx.fillStyle = '#FFFDF8';
         ctx.beginPath();
         ctx.arc(0, -14, 4, 0, Math.PI * 2);
         ctx.fill();
-        // Key shaft & bit
+        ctx.stroke();
+
         ctx.beginPath();
         ctx.moveTo(0, -2);
         ctx.lineTo(0, 24);
@@ -290,86 +248,92 @@ export class CardRenderer {
       }
 
       case 'CIRCUIT_CORE': {
-        // Hexagonal power core
-        ctx.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (i * Math.PI) / 3;
-          const hx = Math.cos(angle) * 22;
-          const hy = Math.sin(angle) * 22;
-          if (i === 0) ctx.moveTo(hx, hy);
-          else ctx.lineTo(hx, hy);
-        }
-        ctx.closePath();
-        ctx.stroke();
+        // Pink paper flower blossom
+        const fill = matched ? '#10B981' : '#EC4899';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 1.5;
 
-        ctx.fillStyle = secondaryColor;
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 2 * Math.PI) / 5;
+          ctx.beginPath();
+          ctx.arc(Math.cos(angle) * 12, Math.sin(angle) * 12, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        ctx.fillStyle = '#F59E0B';
         ctx.beginPath();
-        ctx.arc(0, 0, 7, 0, Math.PI * 2);
+        ctx.arc(0, 0, 6, 0, Math.PI * 2);
         ctx.fill();
-
-        // Radiating spokes
-        ctx.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (i * Math.PI) / 3;
-          ctx.moveTo(Math.cos(angle) * 7, Math.sin(angle) * 7);
-          ctx.lineTo(Math.cos(angle) * 20, Math.sin(angle) * 20);
-        }
         ctx.stroke();
         break;
       }
 
       case 'DATA_ORB': {
-        // Concentric energetic ring orb
+        // Orange paper apple
+        const fill = matched ? '#10B981' : '#F97316';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(0, 0, 22, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.strokeStyle = secondaryColor;
-        ctx.beginPath();
-        ctx.arc(0, 0, 14, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.fillStyle = primaryColor;
-        ctx.beginPath();
-        ctx.arc(0, 0, 6, 0, Math.PI * 2);
+        ctx.arc(0, 4, 16, 0, Math.PI * 2);
         ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#10B981';
+        ctx.beginPath();
+        ctx.ellipse(3, -12, 6, 3, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
         break;
       }
 
       case 'WARP_GATE': {
-        // Dual spiral hyper-jump ring
+        // Yellow-Orange 5-point paper star
+        const fill = matched ? '#10B981' : '#F59E0B';
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.strokeStyle = secondaryColor;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 14, 24, 0, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        for (let i = 0; i < 5; i++) {
+          const a1 = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+          const a2 = a1 + Math.PI / 5;
+          const r1 = 20;
+          const r2 = 9;
+          if (i === 0) ctx.moveTo(Math.cos(a1) * r1, Math.sin(a1) * r1);
+          else ctx.lineTo(Math.cos(a1) * r1, Math.sin(a1) * r1);
+          ctx.lineTo(Math.cos(a2) * r2, Math.sin(a2) * r2);
+        }
+        ctx.closePath();
         ctx.fill();
+        ctx.stroke();
         break;
       }
 
       case 'BIO_HAZARD': {
-        // Bio hazard 3-ring emblem
-        const r = 12;
-        const dist = 10;
+        // Green 3-leaf clover
+        const fill = matched ? '#3B82F6' : '#10B981';
+        const r = 9;
+        const dist = 8;
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 1.5;
+
         for (let i = 0; i < 3; i++) {
           const angle = (i * 2 * Math.PI) / 3 - Math.PI / 2;
           const cx = Math.cos(angle) * dist;
           const cy = Math.sin(angle) * dist;
           ctx.beginPath();
           ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fill();
           ctx.stroke();
         }
-        ctx.fillStyle = secondaryColor;
+
         ctx.beginPath();
-        ctx.arc(0, 0, 4, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(0, 4);
+        ctx.lineTo(0, 20);
+        ctx.stroke();
         break;
       }
     }

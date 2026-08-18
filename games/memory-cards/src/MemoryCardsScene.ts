@@ -262,96 +262,91 @@ export class MemoryCardsScene implements GameScene {
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D): void {
-    const bgGrad = ctx.createRadialGradient(
-      this.canvasWidth / 2,
-      this.canvasHeight / 2,
-      50,
-      this.canvasWidth / 2,
-      this.canvasHeight / 2,
-      500,
-    );
-    bgGrad.addColorStop(0, '#0f172a');
-    bgGrad.addColorStop(1, '#020617');
-    ctx.fillStyle = bgGrad;
+    // 1. Warm kraft / parchment paper background
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-    // Cyber digital grid lines
-    ctx.strokeStyle = 'rgba(14, 165, 233, 0.08)';
+    // Subtle paper grain crosshatch / grid
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.05)';
     ctx.lineWidth = 1;
-    for (let x = 0; x < this.canvasWidth; x += 40) {
+    for (let x = 20; x < this.canvasWidth; x += 20) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, this.canvasHeight);
       ctx.stroke();
     }
-    for (let y = 0; y < this.canvasHeight; y += 40) {
+    for (let y = 20; y < this.canvasHeight; y += 20) {
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(this.canvasWidth, y);
       ctx.stroke();
     }
+
+    // Stitched inner canvas frame
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(10, 10, this.canvasWidth - 20, this.canvasHeight - 20);
+    ctx.setLineDash([]);
   }
 
   private renderHUD(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.font = 'bold 20px "Courier New", Courier, monospace';
 
-    // Top-Left: Score & High Score
+    // Top-Left Sticky Note: Score & High Score
+    this.drawStickyNote(ctx, 25, 18, 160, 64, '#FFFDF8');
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowColor = 'rgba(0, 240, 255, 0.6)';
-    ctx.shadowBlur = 6;
-    ctx.fillText(`SCORE: ${this.gameState.score}`, 30, 38);
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, 35, 42);
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.shadowBlur = 0;
-    ctx.font = '15px "Courier New", Courier, monospace';
-    ctx.fillText(`HIGH:  ${this.gameState.highScore}`, 30, 60);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`BEST:  ${this.gameState.highScore}`, 35, 66);
 
-    // Top-Center: Round Timer Bar & Text
+    // Top-Center Sticky Note: Round Timer Bar & Text
+    this.drawStickyNote(ctx, this.canvasWidth / 2 - 90, 18, 180, 64, '#FFFDF8');
     ctx.textAlign = 'center';
-    ctx.font = 'bold 22px "Courier New", Courier, monospace';
+    ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
     const timerVal = this.gameState.timeRemaining.toFixed(1);
-    if (this.gameState.timeRemaining < 10.0) {
-      ctx.fillStyle = '#ef4444';
-      ctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
-      ctx.shadowBlur = 8;
-    } else {
-      ctx.fillStyle = '#38bdf8';
-      ctx.shadowColor = 'rgba(56, 189, 248, 0.5)';
-      ctx.shadowBlur = 6;
-    }
-    ctx.fillText(`TIME: ${timerVal}s`, this.canvasWidth / 2, 38);
-    ctx.shadowBlur = 0;
+    ctx.fillStyle = this.gameState.timeRemaining < 10.0 ? '#E11D48' : '#3B82F6';
+    ctx.fillText(`TIME: ${timerVal}s`, this.canvasWidth / 2, 44);
 
     // Timer Progress Bar
-    const barW = 200;
+    const barW = 140;
     const barH = 6;
-    const barX = (this.canvasWidth - barW) / 2;
-    const barY = 48;
+    const barX = this.canvasWidth / 2 - barW / 2;
+    const barY = 56;
     const ratio = Math.max(0, Math.min(1, this.gameState.timeRemaining / GameState.ROUND_DURATION));
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+    ctx.fillStyle = '#D8C3A5';
     ctx.fillRect(barX, barY, barW, barH);
-    ctx.fillStyle = this.gameState.timeRemaining < 10.0 ? '#ef4444' : '#00f0ff';
+    ctx.fillStyle = this.gameState.timeRemaining < 10.0 ? '#E11D48' : '#10B981';
     ctx.fillRect(barX, barY, barW * ratio, barH);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(barX, barY, barW, barH);
 
-    // Top-Right: Streak & Combo Multiplier
+    // Top-Right Sticky Note: Streak & Flip attempts
+    this.drawStickyNote(ctx, this.canvasWidth - 185, 18, 160, 64, '#FFFDF8');
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#fbbf24';
-    ctx.shadowColor = 'rgba(251, 191, 36, 0.6)';
-    ctx.shadowBlur = 6;
-    ctx.font = 'bold 18px "Courier New", Courier, monospace';
-    ctx.fillText(`STREAK: ${this.gameState.streak}`, this.canvasWidth - 30, 38);
+    if (this.gameState.streak > 1) {
+      ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+      ctx.fillStyle = '#F59E0B';
+      ctx.fillText(`★ x${this.gameState.comboMultiplier.toFixed(1)} STREAK!`, this.canvasWidth - 35, 42);
+    } else {
+      ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+      ctx.fillStyle = '#3B82F6';
+      ctx.fillText(`PAIRS: ${this.gameState.matchedPairs}/8`, this.canvasWidth - 35, 42);
+    }
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.shadowBlur = 0;
-    ctx.font = '15px "Courier New", Courier, monospace';
-    ctx.fillText(`COMBO:  ${this.gameState.comboMultiplier.toFixed(1)}x`, this.canvasWidth - 30, 60);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`FLIPS: ${this.gameState.flipAttempts}`, this.canvasWidth - 35, 66);
 
     // Bottom Help Text
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#64748b';
-    ctx.font = '13px sans-serif';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
     ctx.fillText(
       'CLICK / TAP: Flip Cards  •  MATCH PAIRS FOR STREAK COMBOS  •  ESC: Pause',
       this.canvasWidth / 2,
@@ -361,50 +356,88 @@ export class MemoryCardsScene implements GameScene {
     ctx.restore();
   }
 
+  private drawStickyNote(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    bg: string,
+  ): void {
+    ctx.save();
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.fillRect(x + 3, y + 3, w, h);
+
+    // Note card
+    ctx.fillStyle = bg;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, w, h);
+
+    // Tape top strip
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(x + w / 2 - 20, y - 6, 40, 12);
+    ctx.strokeRect(x + w / 2 - 20, y - 6, 40, 12);
+    ctx.restore();
+  }
+
   private renderOverlays(ctx: CanvasRenderingContext2D): void {
     if (this.gameState.status === 'ready') {
       ctx.save();
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.82)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
       ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
+      const panelW = 460;
+      const panelH = 340;
+      const panelX = this.canvasWidth / 2 - panelW / 2;
+      const panelY = this.canvasHeight / 2 - panelH / 2 + 10;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#00f0ff';
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 12;
-      ctx.font = 'bold 38px "Courier New", Courier, monospace';
-      ctx.fillText('MEMORY CARDS', this.canvasWidth / 2, 210);
-      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#E11D48';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('MEMORY CARDS', this.canvasWidth / 2, panelY + 50);
 
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '18px sans-serif';
-      ctx.fillText('Find and match all 8 cyber glyph pairs before time expires', this.canvasWidth / 2, 260);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '15px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('Find and match all 8 papercraft symbol pairs before time expires', this.canvasWidth / 2, panelY + 90);
 
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = '15px monospace';
-      ctx.fillText('■ Match Pair   = +500 Pts × Combo Multiplier', this.canvasWidth / 2, 305);
-      ctx.fillText('■ Consecutive  = +0.5x Multiplier per Streak', this.canvasWidth / 2, 330);
-      ctx.fillText('■ Board Clear  = Remaining Time × 100 Pts Bonus', this.canvasWidth / 2, 355);
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.8)';
+      ctx.font = '14px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('■ Match Pair   = +500 Pts × Combo Multiplier', this.canvasWidth / 2, panelY + 130);
+      ctx.fillText('■ Consecutive  = +0.5x Multiplier per Streak', this.canvasWidth / 2, panelY + 158);
+      ctx.fillText('■ Board Clear  = Remaining Time × 100 Pts Bonus', this.canvasWidth / 2, panelY + 186);
 
-      ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 22px sans-serif';
-      ctx.fillText('Click or Press SPACE to Begin', this.canvasWidth / 2, 420);
+      ctx.fillStyle = '#10B981';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('Click or Press SPACE to Begin', this.canvasWidth / 2, panelY + 250);
       ctx.restore();
       return;
     }
 
     if (this.gameState.status === 'paused') {
       ctx.save();
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
       ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 36px "Courier New", Courier, monospace';
-      ctx.fillText('SYSTEM PAUSED', this.canvasWidth / 2, 270);
+      const panelW = 320;
+      const panelH = 180;
+      const panelX = this.canvasWidth / 2 - panelW / 2;
+      const panelY = this.canvasHeight / 2 - panelH / 2;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
 
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '18px sans-serif';
-      ctx.fillText('Press ESC to Resume', this.canvasWidth / 2, 330);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = 'bold 34px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('GAME PAUSED', this.canvasWidth / 2, panelY + 65);
+
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('Press ESC to Resume', this.canvasWidth / 2, panelY + 115);
       ctx.restore();
       return;
     }
@@ -412,36 +445,42 @@ export class MemoryCardsScene implements GameScene {
     if (this.gameState.status === 'gameover' || this.gameState.status === 'victory') {
       const isVictory = this.gameState.status === 'victory';
       ctx.save();
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.88)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
       ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
+      const panelW = 440;
+      const panelH = 340;
+      const panelX = this.canvasWidth / 2 - panelW / 2;
+      const panelY = this.canvasHeight / 2 - panelH / 2 + 10;
+      this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
       ctx.textAlign = 'center';
-      ctx.fillStyle = isVictory ? '#fbbf24' : '#ef4444';
-      ctx.shadowColor = isVictory ? '#fbbf24' : '#ef4444';
-      ctx.shadowBlur = 12;
-      ctx.font = 'bold 38px "Courier New", Courier, monospace';
-      ctx.fillText(isVictory ? 'SYSTEM OVERRIDE CLEARED!' : 'TIME EXPIRED', this.canvasWidth / 2, 200);
-      ctx.shadowBlur = 0;
+      ctx.fillStyle = isVictory ? '#10B981' : '#E11D48';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(isVictory ? 'PUZZLE COMPLETE!' : 'TIME EXPIRED', this.canvasWidth / 2, panelY + 50);
 
-      ctx.fillStyle = '#00f0ff';
-      ctx.font = 'bold 26px "Courier New", Courier, monospace';
-      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, this.canvasWidth / 2, 260);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, this.canvasWidth / 2, panelY + 100);
 
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '18px "Courier New", Courier, monospace';
-      ctx.fillText(`HIGH SCORE:  ${this.gameState.highScore}`, this.canvasWidth / 2, 295);
-      ctx.fillText(`TOTAL FLIPS: ${this.gameState.flipAttempts}`, this.canvasWidth / 2, 325);
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+      ctx.font = '15px "Comfortaa", cursive, sans-serif';
+      ctx.fillText(`BEST SCORE:  ${this.gameState.highScore}`, this.canvasWidth / 2, panelY + 135);
+      ctx.fillText(`TOTAL FLIPS: ${this.gameState.flipAttempts}`, this.canvasWidth / 2, panelY + 160);
 
-      // Play Again Button
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = isVictory ? '#fbbf24' : '#00f0ff';
-      ctx.lineWidth = 2;
+      // Play Again Paper Button
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.fillRect(this.restartBtn.x + 3, this.restartBtn.y + 3, this.restartBtn.w, this.restartBtn.h);
+
+      ctx.fillStyle = '#10B981';
       ctx.fillRect(
         this.restartBtn.x,
         this.restartBtn.y,
         this.restartBtn.w,
         this.restartBtn.h,
       );
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2;
       ctx.strokeRect(
         this.restartBtn.x,
         this.restartBtn.y,
@@ -449,15 +488,15 @@ export class MemoryCardsScene implements GameScene {
         this.restartBtn.h,
       );
 
-      ctx.fillStyle = isVictory ? '#fbbf24' : '#00f0ff';
-      ctx.font = 'bold 19px sans-serif';
+      ctx.fillStyle = '#FFFDF8';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
       ctx.textBaseline = 'middle';
       ctx.fillText('PLAY AGAIN', this.canvasWidth / 2, this.restartBtn.y + this.restartBtn.h / 2);
 
-      ctx.fillStyle = '#64748b';
-      ctx.font = '13px sans-serif';
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '13px "Comfortaa", cursive, sans-serif';
       ctx.textBaseline = 'alphabetic';
-      ctx.fillText('or Press SPACE', this.canvasWidth / 2, 470);
+      ctx.fillText('or Press SPACE', this.canvasWidth / 2, panelY + 280);
 
       ctx.restore();
     }

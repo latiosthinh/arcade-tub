@@ -296,20 +296,17 @@ export class MemoryBoxesScene implements GameScene {
       ctx.translate(shakeX, shakeY);
     }
 
-    // Background gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
-    bgGrad.addColorStop(0, '#040714');
-    bgGrad.addColorStop(1, '#090d1f');
-    ctx.fillStyle = bgGrad;
+    // Kraft paper desktop background
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle background grid wires
+    // Subtle paper grid pattern
     this.renderBackgroundGrid(ctx, width, height);
 
     // Render HUD
     this.renderHUD(ctx, width);
 
-    // Render Boxes
+    // Render Boxes & Cardboard Tray
     this.renderer.render(ctx, this.grid, dims, this.hoveredBoxId);
 
     // Render Particles & Rings
@@ -323,9 +320,9 @@ export class MemoryBoxesScene implements GameScene {
 
   private renderBackgroundGrid(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.04)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.05)';
     ctx.lineWidth = 1;
-    const step = 40;
+    const step = 24;
     for (let x = 0; x < width; x += step) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -338,58 +335,113 @@ export class MemoryBoxesScene implements GameScene {
       ctx.lineTo(width, y);
       ctx.stroke();
     }
+
+    // Dashed outer frame
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(10, 10, width - 20, height - 20);
+    ctx.setLineDash([]);
+
     ctx.restore();
   }
 
   private renderHUD(ctx: CanvasRenderingContext2D, width: number): void {
     ctx.save();
-    ctx.font = 'bold 16px monospace';
-    ctx.fillStyle = '#94a3b8';
 
-    // Round & Pattern Length
+    // Top-Left Sticky Note: Round & Steps
+    this.drawStickyNote(ctx, 25, 18, 150, 64, '#FFFDF8');
     ctx.textAlign = 'left';
-    ctx.fillText(`ROUND: ${this.gameState.round}`, 30, 40);
-    ctx.fillStyle = '#00f0ff';
-    ctx.fillText(`STEPS: ${this.gameState.sequence.length}`, 30, 64);
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`ROUND: ${this.gameState.round}`, 35, 42);
 
-    // Score & High Score
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 20px monospace';
-    ctx.fillText(`SCORE: ${this.gameState.score}`, width - 30, 40);
-    ctx.font = '14px monospace';
-    ctx.fillStyle = '#64748b';
-    ctx.fillText(`BEST: ${this.gameState.highScore}`, width - 30, 64);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`STEPS: ${this.gameState.sequence.length}`, 35, 66);
 
-    // Lives (Hearts / Indicators)
+    // Top-Center Sticky Note: Lives (Hearts / Indicators) or Status
+    this.drawStickyNote(ctx, width / 2 - 90, 18, 180, 64, '#FFFDF8');
     ctx.textAlign = 'center';
-    ctx.font = 'bold 16px monospace';
-    ctx.fillStyle = '#f43f5e';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#E11D48';
     let hearts = '';
     for (let i = 0; i < GameState.INITIAL_LIVES; i++) {
       hearts += i < this.gameState.lives ? '♥ ' : '♡ ';
     }
-    ctx.fillText(`LIVES: ${hearts.trim()}`, width / 2, 40);
+    ctx.fillText(`LIVES: ${hearts.trim()}`, width / 2, 42);
 
     // Turn indicator or Timer Bar
     if (this.gameState.status === 'player_turn') {
       const timerProgress = Math.max(0, this.gameState.roundTimer / GameState.MAX_ROUND_TIME);
-      const barWidth = 240;
+      const barWidth = 140;
       const barHeight = 6;
       const barX = width / 2 - barWidth / 2;
-      const barY = 56;
+      const barY = 54;
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.fillStyle = '#D8C3A5';
       ctx.fillRect(barX, barY, barWidth, barHeight);
-
-      ctx.fillStyle = timerProgress > 0.3 ? '#00f0ff' : '#ef4444';
+      ctx.fillStyle = timerProgress > 0.3 ? '#10B981' : '#E11D48';
       ctx.fillRect(barX, barY, barWidth * timerProgress, barHeight);
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(barX, barY, barWidth, barHeight);
     } else if (this.gameState.status === 'playback') {
-      ctx.fillStyle = '#eab308';
-      ctx.font = 'bold 13px monospace';
-      ctx.fillText('• WATCH PATTERN •', width / 2, 62);
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = 'bold 12px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('• WATCH PATTERN •', width / 2, 64);
     }
 
+    // Top-Right Sticky Note: Score & High Score
+    this.drawStickyNote(ctx, width - 175, 18, 150, 64, '#FFFDF8');
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#F59E0B';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, width - 35, 42);
+
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`BEST:  ${this.gameState.highScore}`, width - 35, 66);
+
+    // Bottom Help Text
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(
+      'CLICK / TAP: Follow Sequence  •  REPEAT EXACT ORDER  •  ESC: Pause',
+      width / 2,
+      585,
+    );
+
+    ctx.restore();
+  }
+
+  private drawStickyNote(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    bg: string,
+  ): void {
+    ctx.save();
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.fillRect(x + 3, y + 3, w, h);
+
+    // Note card
+    ctx.fillStyle = bg;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, w, h);
+
+    // Tape top strip
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(x + w / 2 - 20, y - 6, 40, 12);
+    ctx.strokeRect(x + w / 2 - 20, y - 6, 40, 12);
     ctx.restore();
   }
 
@@ -419,41 +471,49 @@ export class MemoryBoxesScene implements GameScene {
     prompt: string
   ): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.85)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
     ctx.fillRect(0, 0, width, height);
 
+    const isGameOver = title === 'GAME OVER';
+    const panelW = 440;
+    const panelH = isGameOver ? 340 : 220;
+    const panelX = width / 2 - panelW / 2;
+    const panelY = height / 2 - panelH / 2;
+    this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
     ctx.textAlign = 'center';
-    ctx.fillStyle = title === 'GAME OVER' ? '#ef4444' : '#00f0ff';
-    ctx.font = 'bold 36px monospace';
-    ctx.shadowColor = title === 'GAME OVER' ? '#ef4444' : '#00f0ff';
-    ctx.shadowBlur = 15;
-    ctx.fillText(title, width / 2, height / 2 - 50);
+    ctx.fillStyle = isGameOver ? '#E11D48' : '#3B82F6';
+    ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(title, width / 2, panelY + 55);
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#cbd5e1';
-    ctx.font = '16px monospace';
-    ctx.fillText(subtitle, width / 2, height / 2);
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(subtitle, width / 2, panelY + 95);
 
-    if (title === 'GAME OVER') {
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#00f0ff';
-      ctx.lineWidth = 2;
+    if (isGameOver) {
+      // Paper restart button
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.fillRect(this.restartBtn.x + 3, this.restartBtn.y + 3, this.restartBtn.w, this.restartBtn.h);
+
+      ctx.fillStyle = '#10B981';
       ctx.fillRect(this.restartBtn.x, this.restartBtn.y, this.restartBtn.w, this.restartBtn.h);
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2;
       ctx.strokeRect(this.restartBtn.x, this.restartBtn.y, this.restartBtn.w, this.restartBtn.h);
 
-      ctx.fillStyle = '#00f0ff';
-      ctx.font = 'bold 18px sans-serif';
+      ctx.fillStyle = '#FFFDF8';
+      ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
       ctx.textBaseline = 'middle';
       ctx.fillText(prompt, width / 2, this.restartBtn.y + this.restartBtn.h / 2);
 
-      ctx.fillStyle = '#64748b';
-      ctx.font = '13px sans-serif';
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '13px "Comfortaa", cursive, sans-serif';
       ctx.textBaseline = 'alphabetic';
-      ctx.fillText('or Press SPACE', width / 2, 470);
+      ctx.fillText('or Press SPACE', width / 2, panelY + 280);
     } else {
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 15px monospace';
-      ctx.fillText(prompt, width / 2, height / 2 + 55);
+      ctx.fillStyle = '#10B981';
+      ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(prompt, width / 2, panelY + 155);
     }
 
     ctx.restore();

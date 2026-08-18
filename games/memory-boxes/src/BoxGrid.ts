@@ -1,13 +1,13 @@
 export const NEON_BOX_PALETTE: readonly string[] = [
-  '#00f0ff', // 0: Cyan
-  '#ec4899', // 1: Pink
-  '#10b981', // 2: Emerald
-  '#f59e0b', // 3: Amber
-  '#8b5cf6', // 4: Purple
-  '#3b82f6', // 5: Blue
-  '#ef4444', // 6: Red
-  '#14b8a6', // 7: Teal
-  '#eab308', // 8: Yellow
+  '#3B82F6', // 0: Craft Blue
+  '#EC4899', // 1: Craft Pink
+  '#10B981', // 2: Craft Emerald
+  '#F59E0B', // 3: Craft Amber
+  '#8B5CF6', // 4: Craft Purple
+  '#E11D48', // 5: Craft Red
+  '#14B8A6', // 6: Craft Teal
+  '#F97316', // 7: Craft Orange
+  '#6366F1', // 8: Craft Indigo
 ];
 
 // Harmonic pentatonic/diatonic scale frequencies (A3, C4, D4, E4, F4, G4, A4, B4, C5)
