@@ -1,59 +1,36 @@
-# Milestone v3.0 Requirements: Game Catalog Expansion
+# Milestone v4.0 Requirements: Action & Arcade Expansion
 
-## Memory Cards
-- [x] **MC-01**: Cyber memory cards model & logic (grid shuffle, 2-card flip state machine, pair matching, streak combo multiplier, round timer, 100% unit tests)
-- [x] **MC-02**: Memory Cards canvas presentation (holographic card flip animations, particle sparkles on match, audio feedback, high score saving)
+## Type Strike Arrow Mode
+- [ ] **TS-ARR-01**: Type Strike Arrow Mode support (mode toggle between Word and Arrow sequence mode, arrow symbol formatting `↑ ↓ ← →` on drone badges, input handling for ArrowUp/Down/Left/Right and WASD, 100% unit tests)
+- [ ] **TS-ARR-02**: Type Strike Arrow Mode UI & Canvas rendering (arrow badge visuals, mode toggle in ready screen, sound triggers)
 
-## Memory Boxes
-- [x] **MB-01**: Memory boxes sequence model (increasing pattern sequence generator, step-by-step playback state, player input matching, life tracking, 100% unit tests)
-- [x] **MB-02**: Memory Boxes canvas presentation (neon grid buttons with light-up pulses, audio tone synthesis, round fanfare, high score saving)
+## Cyber Snake (Snake Eat)
+- [ ] **SNK-01**: Snake Eat grid model & logic (grid matrix movement, food pellet spawner, snake growth, self & wall collision math, score & speed scaling, 100% unit tests)
+- [ ] **SNK-02**: Snake Eat canvas presentation & packaging (neon segmented snake glow, particle eating bursts, procedural audio, standalone HTML & Vite rollup input)
 
-## Pop Balloon
-- [ ] **PB-01**: Pop balloon physics & logic (balloon ascent mechanics, point values by color, combo chain timer, hazard spike bomb explosions, 100% unit tests)
-- [ ] **PB-02**: Pop balloon canvas presentation (colorful neon balloons with shine & wobble, pop particles, floating points HUD, high score saving)
+## Bug Climb Tree
+- [ ] **BUG-01**: Bug Climb Tree model & logic (trunk column state, branch hazard generation on left/right sides, Left/Right arrow tap side-switching, urgent timer bar, height scoring, 100% unit tests)
+- [ ] **BUG-02**: Bug Climb Tree canvas presentation & packaging (animated climbing bug, falling branch obstacles, wood chop particle effects, procedural audio, standalone HTML & Vite rollup input)
 
-## Space Racer
-- [x] **SR-01**: Space racer kinematics & logic (ship steering, speed acceleration, obstacle asteroid collisions, turbo boost gates, distance/time scoring, 100% unit tests)
-- [x] **SR-02**: Space racer canvas presentation (warp starfield pseudo-3D perspective, turbo trail flames, collision shake, high score saving)
+## Neon Highway (Car Race)
+- [ ] **CAR-01**: Car Race traffic & kinematics model (multi-lane vertical highway, Up/Down speed control and Left/Right lane switching, oncoming traffic spawning with variable speeds, near-miss draft bonus, distance scoring, 100% unit tests)
+- [ ] **CAR-02**: Car Race canvas presentation & packaging (scrolling neon asphalt road, sports car rendering with headlights, traffic collision explosions, engine audio, standalone HTML & Vite rollup input)
 
-## Virus Defense
-- [x] **VD-01**: Virus defense combat model (360° turret targeting, projectile trajectory, multi-vector pathogen swarm kinematics, nucleus HP, 100% unit tests)
-- [x] **VD-02**: Virus defense canvas presentation (cellular arena, rotating laser cannon, pathogen explosion debris, wave HUD, high score saving)
-
-## Flappy Fish
-- [x] **FF-01**: Flappy fish physics model (hydrodynamic flap velocity, gravity & water drag, coral reef gap collision detection, score trigger on pipe pass, 100% unit tests)
-- [x] **FF-02**: Flappy fish canvas presentation (underwater bubble ambient, animated fin flap, glowing coral pillars, high score saving)
-
-## 2048 Neon
-- [x] **G2048-01**: 2048 puzzle matrix model (4x4 directional slide & merge algorithms, random 2/4 tile spawn, score calculation, gameover & 2048 win detection, 100% unit tests)
-- [x] **G2048-02**: 2048 canvas presentation (smooth tile slide & merge pop animations, color-tiered neon value tiles, keyboard & swipe touch input, high score saving)
-
-## Hub Integration & Packaging
-- [x] **HUB-01**: Register all 7 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
-- [x] **HUB-02**: Multi-page Vite build configuration, standalone game HTML templates, total bundle size audit (< 200KB gzipped), and 100% test pass rate across all 12 games
-
-## Out of Scope
-- Multiplayer/online matchmaking (static browser requirement)
-- External raster asset packs (bundle size constraint)
+## Catalog Integration & Release Audit
+- [ ] **HUB-CAT-01**: Register 3 new games in `GAMES` catalog (`src/data/games.ts`) with metadata, genres, and high-fidelity SVG screenshots in `src/data/screenshots.ts`
+- [ ] **HUB-CAT-02**: Multi-page Vite build configuration, bundle size audit (< 200KB gzipped), and 100% test pass rate across all 15 games
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MC-01 | Phase 13 | Complete |
-| MC-02 | Phase 13 | Complete |
-| MB-01 | Phase 14 | Complete |
-| MB-02 | Phase 14 | Complete |
-| PB-01 | Phase 15 | Pending |
-| PB-02 | Phase 15 | Pending |
-| SR-01 | Phase 16 | Complete |
-| SR-02 | Phase 16 | Complete |
-| VD-01 | Phase 17 | Complete |
-| VD-02 | Phase 17 | Complete |
-| FF-01 | Phase 18 | Complete |
-| FF-02 | Phase 18 | Complete |
-| G2048-01 | Phase 19 | Complete |
-| G2048-02 | Phase 19 | Complete |
-| HUB-01 | Phase 20 | Complete |
-| HUB-02 | Phase 20 | Complete |
-
+| TS-ARR-01 | Phase 21 | Pending |
+| TS-ARR-02 | Phase 21 | Pending |
+| SNK-01 | Phase 22 | Pending |
+| SNK-02 | Phase 22 | Pending |
+| BUG-01 | Phase 23 | Pending |
+| BUG-02 | Phase 23 | Pending |
+| CAR-01 | Phase 24 | Pending |
+| CAR-02 | Phase 24 | Pending |
+| HUB-CAT-01 | Phase 25 | Pending |
+| HUB-CAT-02 | Phase 25 | Pending |
