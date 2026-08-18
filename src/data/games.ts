@@ -248,6 +248,32 @@ export const GAMES: GameItem[] = [
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
     features: ['Layered Cardstock Solitaire', 'Free-Edge Checking Algorithm', 'Hint, Shuffle & Undo Support']
+  },
+  {
+    id: 'subway-runner',
+    title: 'Subway Surfer',
+    genre: 'Endless 3-Lane Runner',
+    description: 'Endless 3-lane papercraft runner. Swipe to dodge cardboard commuter trains, jump over road barriers, slide under high signal boards, and surf on origami hoverboards.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '450K plays',
+    icon: '🛹',
+    themeColor: '#E11D48',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
+    features: ['3-Lane Perspective Kinematics', 'Jump & Slide Mechanics', 'Hoverboard Shield & Coin Magnets']
+  },
+  {
+    id: 'prism-laser',
+    title: 'Prism Laser',
+    genre: 'Optics Puzzle',
+    description: 'Reflect, refract, and filter colored laser beams onto target paper crystals using rotatable cardstock mirrors and triangular prisms.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '260K plays',
+    icon: '💎',
+    themeColor: '#8B5CF6',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['45° Angle Reflection Physics', 'White Light Prism Splitting', 'Target Crystal Color Activation']
   }
 ];
 
