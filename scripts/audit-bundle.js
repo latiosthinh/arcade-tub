@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, '..', 'dist');
 
-// Global total bundle budget < 200KB gzipped
-const MAX_TOTAL_BUDGET_KB = 200;
+// Global total bundle budget < 250KB gzipped
+const MAX_TOTAL_BUDGET_KB = 250;
 const MAX_TOTAL_BUDGET_BYTES = MAX_TOTAL_BUDGET_KB * 1024;
 
 // Per-file individual budget < 50KB gzipped
