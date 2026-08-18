@@ -5,7 +5,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 
 ---
 
-### Phase 31: Paper Basket (`games/paper-basket/`)
+### Phase 31: Paper Basket (`games/paper-basket/`) [COMPLETED]
 - Tap-to-flap trajectory ball physics, moving cardboard hoop rims, swish score multiplier, countdown shot clock.
 - Unit tests for bounce math, hoop scoring, and game state.
 
