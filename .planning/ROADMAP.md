@@ -33,15 +33,21 @@ Plans:
 #### Phase 29: Mid-Complexity Game Renderers (5 games)
 - **Goal:** Convert canvas renderers for brick-blitz, crate-catch, type-strike, flappy-fish, sky-hopper to papercraft.
 - **Requirements:** [CRAFT-06, CRAFT-08]
-- **Files:** `games/{brick-blitz,crate-catch,type-strike,flappy-fish,sky-hopper}/src/*Renderer.ts`, `*Scene.ts`
-- **Plans:** TBD
+- **Files:** `games/{brick-blitz,crate-catch,type-strike,flappy-fish,sky-hopper}/src/*Renderer.ts`, `*Scene.ts`, `src/data/games.ts`
+- **Plans:** 2 plans
+Plans:
+- [ ] 29-01-PLAN.md — Papercraft conversion for brick-blitz, crate-catch, and type-strike
+- [ ] 29-02-PLAN.md — Papercraft conversion for flappy-fish, sky-hopper, catalog metadata update, and verification
 - **Status:** Not started
 
 #### Phase 30: Complex Game Renderers (5 games) + Final Audit
 - **Goal:** Convert canvas renderers for snake-eat, bug-climb, car-race, space-racer, virus-defense. Final build audit, test verification, and Cloudflare deploy.
 - **Requirements:** [CRAFT-07, CRAFT-08, CRAFT-09]
-- **Files:** `games/{snake-eat,bug-climb,car-race,space-racer,virus-defense}/src/*Renderer.ts`, `*Scene.ts`
-- **Plans:** TBD
+- **Files:** `games/{snake-eat,bug-climb,car-race,space-racer,virus-defense}/src/*Renderer.ts`, `*Scene.ts`, `src/data/games.ts`
+- **Plans:** 2 plans
+Plans:
+- [ ] 30-01-PLAN.md — Papercraft conversion for snake-eat, bug-climb, and car-race
+- [ ] 30-02-PLAN.md — Papercraft conversion for space-racer, virus-defense, complete catalog metadata update, and final release audit
 - **Status:** Not started
 
 ## Progress
