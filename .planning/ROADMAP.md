@@ -29,7 +29,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - 1-Button 2-player/CPU party engine with 12 quick arcade duel modes (Duel, Tug, Soccer, Lava, Balloon, etc.).
 - Unit tests for mini-battle mode rotations, input triggers, and round scoring.
 
-### Phase 37: Dino Runner & Snow Rider (`games/dino-runner/`, `games/snow-rider/`)
+### Phase 37: Dino Runner & Snow Rider (`games/dino-runner/`, `games/snow-rider/`) [COMPLETED]
 - `dino-runner`: Endless desert runner, duck/jump controls, cactus & pterodactyl spawners.
 - `snow-rider`: Pseudo-3D downhill sledding, slalom obstacle weaving, gift pickups.
 - Unit tests for speed scaling, obstacles, and pseudo-3D projection.
