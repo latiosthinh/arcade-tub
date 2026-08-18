@@ -1,32 +1,30 @@
 /* ==========================================================================
-   Arcade Carnival v2.0 - GameCard Styles (cards.css)
+   Arcade Carnival - GameCard Styles (cards.css) - 2D Papercraft
    ========================================================================== */
 
 .ac-card {
   display: flex;
   flex-direction: column;
   background: var(--bg-card);
-  border: var(--border-subtle);
+  border: var(--border-accent);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-paper-layer);
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.2s ease,
-              box-shadow 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
   user-select: none;
 }
 
 .ac-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--neon-cyan);
-  box-shadow: var(--glow-cyan);
+  transform: translateY(-4px) rotate(0.5deg);
+  box-shadow: 6px 6px 0px var(--paper-ink), 10px 10px 0px rgba(62, 39, 35, 0.15);
 }
 
 .ac-card:focus-visible {
-  outline: 2px solid var(--neon-cyan);
+  outline: 2px solid var(--neon-pink);
   outline-offset: 3px;
 }
 
@@ -39,6 +37,7 @@
   justify-content: center;
   overflow: hidden;
   background-color: var(--bg-primary);
+  border-bottom: var(--border-subtle);
 }
 
 .ac-card-screenshot-container {
@@ -47,11 +46,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s ease;
 }
 
 .ac-card:hover .ac-card-screenshot-container {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .ac-game-screenshot {
@@ -63,24 +62,24 @@
 
 .ac-card-icon {
   font-size: 3.5rem;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-  transition: transform 0.3s ease;
+  filter: drop-shadow(2px 2px 0px var(--paper-ink));
+  transition: transform 0.2s ease;
 }
 
 .ac-card:hover .ac-card-icon {
-  transform: scale(1.1);
+  transform: scale(1.08) rotate(-3deg);
 }
 
 .ac-card-play-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 18, 0.6);
-  backdrop-filter: blur(2px);
+  background: rgba(62, 39, 35, 0.4);
+  backdrop-filter: blur(1px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .ac-card:hover .ac-card-play-overlay {
@@ -88,19 +87,21 @@
 }
 
 .ac-card-play-circle {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: var(--neon-cyan);
-  color: var(--bg-primary);
+  background: var(--neon-pink);
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: bold;
-  box-shadow: var(--glow-cyan);
+  font-family: var(--font-display);
+  border: var(--border-subtle);
+  box-shadow: var(--shadow-cardboard);
   transform: scale(0.85);
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 .ac-card:hover .ac-card-play-circle {
@@ -123,13 +124,16 @@
 
 .ac-card-title {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--paper-ink);
 }
 
 .ac-card-genre {
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
-  color: #94a3b8;
+  color: #795548;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -141,16 +145,18 @@
   justify-content: space-between;
   margin-top: 0.25rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1.5px dashed rgba(62, 39, 35, 0.25);
   font-size: var(--text-xs);
+  color: var(--paper-ink);
 }
 
 .ac-card-score-badge {
-  color: var(--neon-yellow);
+  color: var(--neon-pink);
   font-weight: 700;
+  font-family: var(--font-display);
 }
 
 .ac-card-rating {
-  color: #fbbf24;
-  font-weight: 600;
+  color: #D97706;
+  font-weight: 700;
 }

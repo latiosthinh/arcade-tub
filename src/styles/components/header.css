@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Arcade Carnival v2.0 - AppHeader Styles (header.css)
+   Arcade Carnival - AppHeader Styles (header.css) - 2D Papercraft
    ========================================================================== */
 
 .ac-header {
@@ -11,11 +11,9 @@
   justify-content: space-between;
   height: 64px;
   padding: 0 1.5rem;
-  background: rgba(18, 19, 36, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg-surface);
   border-bottom: var(--border-accent);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 0px rgba(62, 39, 35, 0.15);
 }
 
 .ac-header-left {
@@ -34,27 +32,31 @@
 }
 
 .ac-logo-icon {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   line-height: 1;
-  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.6));
+  filter: drop-shadow(2px 2px 0px var(--paper-ink));
 }
 
 .ac-logo-text {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
-  color: #ffffff;
-  letter-spacing: 1px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--paper-ink);
+  letter-spacing: 0.5px;
 }
 
 .ac-logo-badge {
-  background: rgba(255, 0, 127, 0.2);
-  color: var(--neon-pink);
-  border: var(--border-pink);
+  background: var(--neon-pink);
+  color: #FFFFFF;
+  border: 1.5px solid var(--paper-ink);
   border-radius: var(--radius-sm);
   padding: 2px 6px;
+  font-family: var(--font-display);
   font-size: var(--text-xs);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0px var(--paper-ink);
+  transform: rotate(-2deg);
 }
 
 .ac-header-center {
@@ -77,16 +79,17 @@
   background: var(--bg-primary);
   border: var(--border-subtle);
   border-radius: var(--radius-full);
-  color: #f8fafc;
+  color: var(--paper-ink);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   outline: none;
-  transition: all 0.2s ease;
+  box-shadow: inset 1px 1px 3px rgba(62, 39, 35, 0.1);
+  transition: all 0.15s ease;
 }
 
 .ac-search-input:focus {
-  border-color: var(--neon-cyan);
-  box-shadow: var(--glow-cyan);
+  border-color: var(--neon-pink);
+  box-shadow: 2px 2px 0px var(--paper-ink);
 }
 
 .ac-search-shortcut {
@@ -97,12 +100,13 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: var(--bg-card);
-  border: var(--border-subtle);
+  background: var(--bg-surface);
+  border: 1.5px solid var(--paper-ink);
   border-radius: var(--radius-sm);
-  color: #94a3b8;
+  color: var(--paper-ink);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
+  box-shadow: 1px 1px 0px var(--paper-ink);
   pointer-events: none;
 }
 
@@ -121,17 +125,22 @@
   background: var(--bg-surface);
   border: var(--border-subtle);
   border-radius: var(--radius-md);
-  color: #f8fafc;
+  color: var(--paper-ink);
+  box-shadow: var(--shadow-cardboard);
   font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
 }
 
 .ac-icon-btn:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--neon-cyan);
-  box-shadow: var(--glow-cyan);
-  color: var(--neon-cyan);
+  background: var(--neon-yellow);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px var(--paper-ink);
+}
+
+.ac-icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px;
 }
 
 .ac-embed-link {
@@ -140,21 +149,27 @@
   gap: 0.35rem;
   height: 38px;
   padding: 0 0.85rem;
-  background: var(--bg-surface);
-  border: var(--border-accent);
+  background: var(--neon-cyan);
+  border: var(--border-subtle);
   border-radius: var(--radius-md);
-  color: var(--neon-cyan);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-cardboard);
+  transition: all 0.1s ease;
 }
 
 .ac-embed-link:hover {
-  background: var(--neon-cyan);
-  color: var(--bg-primary);
-  box-shadow: var(--glow-cyan);
+  background: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px var(--paper-ink);
+}
+
+.ac-embed-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px;
 }
 
 @media (max-width: 640px) {

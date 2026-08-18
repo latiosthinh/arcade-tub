@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Arcade Carnival v2.0 - CatalogView & GameGrid Styles (catalog.css)
+   Arcade Carnival - CatalogView & GameGrid Styles (catalog.css) - 2D Papercraft
    ========================================================================== */
 
 .ac-catalog-view {
@@ -21,13 +21,17 @@
 }
 
 .ac-section-title {
-  font-size: var(--text-xl);
-  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--paper-ink);
+  letter-spacing: 0.5px;
 }
 
 .ac-section-sub {
-  font-size: var(--text-xs);
-  color: #64748b;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: #795548;
 }
 
 /* Game Grid */
@@ -53,10 +57,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 3.5rem 2rem;
   background: var(--bg-surface);
-  border: var(--border-subtle);
+  border: var(--border-dashed);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-cardboard);
   text-align: center;
   gap: 0.75rem;
 }
@@ -66,19 +71,22 @@
 }
 
 .ac-empty-icon {
-  font-size: 3rem;
+  font-size: 3.5rem;
+  filter: drop-shadow(2px 2px 0px var(--paper-ink));
   color: var(--neon-pink);
 }
 
 .ac-empty-title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
-  color: #ffffff;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--paper-ink);
 }
 
 .ac-empty-sub {
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
-  color: #94a3b8;
+  color: #795548;
 }
 
 @media (max-width: 768px) {

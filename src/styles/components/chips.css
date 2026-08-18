@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Arcade Carnival v2.0 - FilterChips Styles (chips.css)
+   Arcade Carnival - FilterChips Styles (chips.css) - 2D Papercraft
    ========================================================================== */
 
 .ac-chips-bar {
@@ -17,7 +17,7 @@
 }
 
 .ac-chips-bar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(62, 39, 35, 0.2);
   border-radius: var(--radius-full);
 }
 
@@ -25,29 +25,46 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1.15rem;
+  padding: 0.45rem 1.15rem;
   background: var(--bg-surface);
   border: var(--border-subtle);
   border-radius: var(--radius-full);
-  color: #94a3b8;
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  box-shadow: 2px 2px 0px var(--paper-ink);
+  color: var(--paper-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
   user-select: none;
 }
 
 .ac-chip:hover {
-  background: var(--bg-card);
-  color: #f8fafc;
-  border-color: rgba(0, 240, 255, 0.25);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px) rotate(1deg);
+  box-shadow: 3px 3px 0px var(--paper-ink);
 }
 
 .ac-chip.active {
-  background: rgba(0, 240, 255, 0.15);
-  color: var(--neon-cyan);
+  background: var(--neon-yellow);
+  color: var(--paper-ink);
   border: var(--border-accent);
-  box-shadow: var(--glow-cyan);
+  box-shadow: 3px 3px 0px var(--paper-ink);
+  transform: rotate(-1deg);
+  position: relative;
+}
+
+.ac-chip.active::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: 8px;
+  width: 16px;
+  height: 6px;
+  background: var(--tape-bg);
+  border: var(--tape-border);
+  box-shadow: var(--tape-shadow);
+  transform: rotate(15deg);
+  pointer-events: none;
 }
