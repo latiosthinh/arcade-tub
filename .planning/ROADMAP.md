@@ -9,7 +9,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Tap-to-flap trajectory ball physics, moving cardboard hoop rims, swish score multiplier, countdown shot clock.
 - Unit tests for bounce math, hoop scoring, and game state.
 
-### Phase 32: Cardboard Drift (`games/drift-boss/`)
+### Phase 32: Cardboard Drift (`games/drift-boss/`) [COMPLETED]
 - One-button hold/release drift steering on isometric zigzag cardboard road, coin collection, edge falling.
 - Unit tests for drift timing, turn physics, and track procedural generation.
 
