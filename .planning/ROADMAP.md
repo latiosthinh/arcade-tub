@@ -6,7 +6,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 
 ## Milestone v4.0 Phases
 
-- [ ] **Phase 21: Type Strike Arrow Mode** — Mode toggle, arrow sequence badges (↑ ↓ ← → / WASD), directional input & lasers (TS-ARR-01, TS-ARR-02)
+- [x] **Phase 21: Type Strike Arrow Mode** — Mode toggle, arrow sequence badges (↑ ↓ ← → / WASD), directional input & lasers (TS-ARR-01, TS-ARR-02)
 - [ ] **Phase 22: Cyber Snake Minigame** — Grid matrix movement, food pellets, tail growth, wall/self collision, particle effects (SNK-01, SNK-02)
 - [ ] **Phase 23: Bug Climb Tree Minigame** — Trunk side-switching, procedural branch obstacles, urgent timer bar, chop particles (BUG-01, BUG-02)
 - [ ] **Phase 24: Neon Highway Car Race Minigame** — Multi-lane traffic dodger, speed control, slipstream draft bonus, crash FX (CAR-01, CAR-02)
@@ -19,7 +19,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 | 1–7. v1.0 Foundation & 5 Core Games | 17/17 | Complete | 2026-08-17 |
 | 8–12. v2.0 Unique UI/UX Refactor | 10/10 | Complete | 2026-08-17 |
 | 13–20. v3.0 Game Catalog Expansion (7 Games) | 16/16 | Complete | 2026-08-18 |
-| 21. Type Strike Arrow Mode | 0/2 | Not started | - |
+| 21. Type Strike Arrow Mode | 2/2 | Complete | 2026-08-18 |
 | 22. Cyber Snake Minigame | 0/2 | Not started | - |
 | 23. Bug Climb Tree Minigame | 0/2 | Not started | - |
 | 24. Neon Highway Car Race Minigame | 0/2 | Not started | - |
@@ -36,8 +36,11 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
   2. In Arrow mode, drone badges render arrow glyph sequences (`↑ ↓ ← →`) matching directional targets.
   3. Pressing directional inputs (Arrow keys or WASD) matches and clears sequence steps, firing defense lasers on sequence completion.
   4. Scoring, multipliers, laser effects, and sound synthesis operate consistently across both modes with 100% test coverage.
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 2 plans
+
+Plans:
+- [x] 21-01-PLAN.md — Domain logic & unit tests for Arrow Mode (Dictionary, TypingEngine, Enemy)
+- [x] 21-02-PLAN.md — Canvas UI, Mode toggle button, Arrow glyph badges, input & audio wiring
 
 ### Phase 22: Cyber Snake Minigame
 **Goal**: Deliver complete playable Cyber Snake game on neon grid with food pellets, tail growth, speed scaling, and particle effects.

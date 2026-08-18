@@ -1,8 +1,8 @@
 # Milestone v4.0 Requirements: Action & Arcade Expansion
 
 ## Type Strike Arrow Mode
-- [ ] **TS-ARR-01**: Type Strike Arrow Mode support (mode toggle between Word and Arrow sequence mode, arrow symbol formatting `↑ ↓ ← →` on drone badges, input handling for ArrowUp/Down/Left/Right and WASD, 100% unit tests)
-- [ ] **TS-ARR-02**: Type Strike Arrow Mode UI & Canvas rendering (arrow badge visuals, mode toggle in ready screen, sound triggers)
+- [x] **TS-ARR-01**: Type Strike Arrow Mode support (mode toggle between Word and Arrow sequence mode, arrow symbol formatting `↑ ↓ ← →` on drone badges, input handling for ArrowUp/Down/Left/Right and WASD, 100% unit tests)
+- [x] **TS-ARR-02**: Type Strike Arrow Mode UI & Canvas rendering (arrow badge visuals, mode toggle in ready screen, sound triggers)
 
 ## Cyber Snake (Snake Eat)
 - [ ] **SNK-01**: Snake Eat grid model & logic (grid matrix movement, food pellet spawner, snake growth, self & wall collision math, score & speed scaling, 100% unit tests)
@@ -24,8 +24,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TS-ARR-01 | Phase 21 | Pending |
-| TS-ARR-02 | Phase 21 | Pending |
+| TS-ARR-01 | Phase 21 | Complete |
+| TS-ARR-02 | Phase 21 | Complete |
 | SNK-01 | Phase 22 | Pending |
 | SNK-02 | Phase 22 | Pending |
 | BUG-01 | Phase 23 | Pending |
