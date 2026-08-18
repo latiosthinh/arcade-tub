@@ -25,7 +25,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Rolling paper roll accumulating colored construction paper layers, obstacle trimmer teeth, finish ribbon line.
 - Unit tests for radius scaling, trimming mechanics, and final score multiplier.
 
-### Phase 36: 12 MiniBattles (`games/mini-battles/`)
+### Phase 36: 12 MiniBattles (`games/mini-battles/`) [COMPLETED]
 - 1-Button 2-player/CPU party engine with 12 quick arcade duel modes (Duel, Tug, Soccer, Lava, Balloon, etc.).
 - Unit tests for mini-battle mode rotations, input triggers, and round scoring.
 
