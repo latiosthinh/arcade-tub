@@ -34,7 +34,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - `snow-rider`: Pseudo-3D downhill sledding, slalom obstacle weaving, gift pickups.
 - Unit tests for speed scaling, obstacles, and pseudo-3D projection.
 
-### Phase 38: Potion Merge & Mahjong Paper (`games/potion-merge/`, `games/mahjong-paper/`)
+### Phase 38: Potion Merge & Mahjong Paper (`games/potion-merge/`, `games/mahjong-paper/`) [COMPLETED]
 - `potion-merge`: 2D physics flask drop & merge tiers into grand elixir.
 - `mahjong-paper`: Layered tile matching puzzle, free-edge logic, hint & shuffle.
 - Unit tests for merge collision, board generation, and match verification.
