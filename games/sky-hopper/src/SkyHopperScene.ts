@@ -251,27 +251,27 @@ export class SkyHopperScene implements GameScene {
     const grad = ctx.createLinearGradient(0, 0, 0, h);
 
     if (altRatio < 0.2) {
-      // 0 - 1000m: Sunset Violet
-      grad.addColorStop(0, '#2c1654');
-      grad.addColorStop(1, '#e84393');
+      // 0 - 1000m: Warm craft sunrise parchment
+      grad.addColorStop(0, '#F4EAD4');
+      grad.addColorStop(1, '#FDE68A');
     } else if (altRatio < 0.6) {
-      // 1000 - 3000m: Twilight Deep Purple
-      grad.addColorStop(0, '#0f0c29');
-      grad.addColorStop(1, '#302b63');
+      // 1000 - 3000m: Twilight cardboard
+      grad.addColorStop(0, '#D8C3A5');
+      grad.addColorStop(1, '#C5A880');
     } else {
-      // 3000m+: Deep Cosmic Void
-      grad.addColorStop(0, '#050510');
-      grad.addColorStop(1, '#0d0e23');
+      // 3000m+: Deep inked craft wash
+      grad.addColorStop(0, '#473C35');
+      grad.addColorStop(1, '#2B2118');
     }
 
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
-    // Twinkling Starfield with Parallax
+    // Papercut star stickers and stamped dots
     for (const s of this.stars) {
       const starScreenY = (s.y - this.camera.y * s.speed) % h;
       const actualY = starScreenY < 0 ? starScreenY + h : starScreenY;
-      ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+      ctx.fillStyle = altRatio > 0.6 ? `rgba(255, 253, 248, ${s.alpha})` : `rgba(62, 39, 35, ${s.alpha * 0.4})`;
       ctx.beginPath();
       ctx.arc(s.x, actualY, s.size, 0, Math.PI * 2);
       ctx.fill();
@@ -282,18 +282,35 @@ export class SkyHopperScene implements GameScene {
       const shipScreenY = this.camera.toScreenY(-49600);
       if (shipScreenY >= -400 && shipScreenY <= h + 200) {
         ctx.save();
-        ctx.fillStyle = '#6c5ce7';
+        // Drop shadow
+        ctx.fillStyle = 'rgba(62, 39, 35, 0.3)';
+        ctx.beginPath();
+        ctx.ellipse(w / 2 + 4, shipScreenY + 4, 300, 70, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cardboard mothership hull
+        ctx.fillStyle = '#C5A880';
         ctx.beginPath();
         ctx.ellipse(w / 2, shipScreenY, 300, 70, 0, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#00cec9';
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 3;
         ctx.stroke();
 
-        ctx.fillStyle = '#fdcb6e';
-        ctx.font = 'bold 18px monospace';
+        // Taped banner
+        ctx.fillStyle = '#FFFDF8';
+        ctx.beginPath();
+        ctx.roundRect(w / 2 - 200, shipScreenY - 18, 400, 36, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#C85A32';
+        ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('⚡ AIRSHIP MOTHERSHIP DOCKING BAY ⚡', w / 2, shipScreenY + 6);
+        ctx.textBaseline = 'middle';
+        ctx.fillText('★ AIRSHIP MOTHERSHIP DOCKING BAY ★', w / 2, shipScreenY + 1);
         ctx.restore();
       }
     }
@@ -305,46 +322,88 @@ export class SkyHopperScene implements GameScene {
       if (sy < -30 || sy > h + 30) continue;
 
       ctx.save();
+      // Drop shadow
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.beginPath();
+      ctx.roundRect(p.x + 2, sy + 2, p.width, p.height, 4);
+      ctx.fill();
+
       if (p.type === 'standard') {
-        ctx.fillStyle = '#00b894';
-        ctx.fillRect(p.x, sy, p.width, p.height);
-        ctx.fillStyle = '#55efc4';
-        ctx.fillRect(p.x, sy, p.width, 4);
+        // Construction green paper with cardboard edge
+        ctx.fillStyle = '#10B981';
+        ctx.beginPath();
+        ctx.roundRect(p.x, sy, p.width, p.height, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Paper highlight strip
+        ctx.fillStyle = 'rgba(255, 253, 248, 0.4)';
+        ctx.beginPath();
+        ctx.roundRect(p.x + 2, sy + 2, p.width - 4, 3, 2);
+        ctx.fill();
       } else if (p.type === 'fragile') {
-        ctx.fillStyle = 'rgba(129, 236, 236, 0.7)';
-        ctx.fillRect(p.x, sy, p.width, p.height);
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1;
+        // Kraft paper with dashed perforated tear lines
+        ctx.fillStyle = '#E8DEC8';
+        ctx.beginPath();
+        ctx.roundRect(p.x, sy, p.width, p.height, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
         ctx.setLineDash([4, 4]);
         ctx.strokeRect(p.x, sy, p.width, p.height);
       } else if (p.type === 'moving') {
-        ctx.fillStyle = '#0984e3';
-        ctx.fillRect(p.x, sy, p.width, p.height);
-        ctx.fillStyle = '#74b9ff';
-        ctx.fillRect(p.x, sy, p.width, 3);
-        // Chevrons
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '10px sans-serif';
+        // Blue construction paper with paper tape chevrons
+        ctx.fillStyle = '#3B82F6';
+        ctx.beginPath();
+        ctx.roundRect(p.x, sy, p.width, p.height, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Tape arrows
+        ctx.fillStyle = '#FFFDF8';
+        ctx.font = 'bold 12px "Patrick Hand", cursive, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('◄ ►', p.x + p.width / 2, sy + 12);
+        ctx.textBaseline = 'middle';
+        ctx.fillText('◄ ►', p.x + p.width / 2, sy + p.height / 2 + 1);
       } else if (p.type === 'spring') {
-        ctx.fillStyle = '#6c5ce7';
-        ctx.fillRect(p.x, sy, p.width, p.height);
-        ctx.fillStyle = '#a29bfe';
-        ctx.fillRect(p.x, sy, p.width, 3);
-        // Spring coil
-        ctx.fillStyle = '#ffeaa7';
-        ctx.fillRect(p.x + p.width / 2 - 8, sy - 8, 16, 8);
+        // Purple construction paper with paper spring coil
+        ctx.fillStyle = '#8B5CF6';
+        ctx.beginPath();
+        ctx.roundRect(p.x, sy, p.width, p.height, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Spring coil cutout
+        ctx.fillStyle = '#F59E0B';
+        ctx.beginPath();
+        ctx.roundRect(p.x + p.width / 2 - 8, sy - 8, 16, 8, 2);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
       }
 
-      // Rocket powerup
+      // Rocket powerup badge
       if (p.hasRocket) {
-        ctx.fillStyle = '#e17055';
+        ctx.fillStyle = '#E11D48';
         ctx.beginPath();
-        ctx.arc(p.x + p.width / 2, sy - 10, 8, 0, Math.PI * 2);
+        ctx.arc(p.x + p.width / 2, sy - 10, 9, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = '#fdcb6e';
-        ctx.fillText('🚀', p.x + p.width / 2 - 6, sy - 4);
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#FFFDF8';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🚀', p.x + p.width / 2, sy - 10);
       }
       ctx.restore();
     }
@@ -356,33 +415,59 @@ export class SkyHopperScene implements GameScene {
       if (sy < -50 || sy > h + 50) continue;
 
       ctx.save();
+      // Drop shadow
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+      ctx.fillRect(obs.x + 2, sy + 2, obs.width, obs.height);
+
       if (obs.type === 'drone') {
-        ctx.fillStyle = '#d63031';
-        ctx.fillRect(obs.x, sy, obs.width, obs.height);
-        ctx.fillStyle = '#ffeaa7';
+        // Origami paper flyer drone
+        ctx.fillStyle = '#E11D48';
+        ctx.beginPath();
+        ctx.roundRect(obs.x, sy, obs.width, obs.height, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Inked eye
+        ctx.fillStyle = '#FFFDF8';
         ctx.fillRect(obs.x + (obs.vx > 0 ? obs.width - 10 : 2), sy + 4, 8, 6);
-        // Rotor
-        ctx.fillStyle = '#dfe6e9';
+
+        // Cardboard rotor strip
+        ctx.fillStyle = '#C5A880';
         ctx.fillRect(obs.x - 4, sy - 4, obs.width + 8, 3);
+        ctx.strokeStyle = '#3E2723';
+        ctx.strokeRect(obs.x - 4, sy - 4, obs.width + 8, 3);
       } else if (obs.type === 'spire') {
-        ctx.fillStyle = '#2d3436';
+        // Cardboard spiked disc
+        ctx.fillStyle = '#3E2723';
         ctx.beginPath();
         ctx.arc(obs.x + obs.width / 2, sy + obs.height / 2, obs.width / 2, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = '#ff7675';
+
+        ctx.fillStyle = '#E11D48';
         ctx.beginPath();
         ctx.arc(obs.x + obs.width / 2, sy + obs.height / 2, 4, 0, Math.PI * 2);
         ctx.fill();
       } else if (obs.type === 'balloon') {
-        ctx.fillStyle = '#fd79a8';
+        // Papercut construction balloon
+        ctx.fillStyle = '#EC4899';
         ctx.beginPath();
         ctx.ellipse(obs.x + obs.width / 2, sy + 16, obs.width / 2, 16, 0, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Paper highlight
+        ctx.fillStyle = '#FFFDF8';
         ctx.beginPath();
         ctx.arc(obs.x + obs.width / 2 - 4, sy + 10, 3, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#dfe6e9';
+
+        // Paper string
+        ctx.strokeStyle = '#3E2723';
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.moveTo(obs.x + obs.width / 2, sy + 32);
         ctx.lineTo(obs.x + obs.width / 2, sy + obs.height);
@@ -396,13 +481,13 @@ export class SkyHopperScene implements GameScene {
       if (!proj.alive) continue;
       const sy = this.camera.toScreenY(proj.y);
       ctx.save();
-      ctx.fillStyle = '#00cec9';
+      ctx.fillStyle = '#F59E0B';
       ctx.beginPath();
       ctx.arc(proj.x, sy, proj.radius, 0, Math.PI * 2);
       ctx.fill();
-      ctx.shadowColor = '#81ecec';
-      ctx.shadowBlur = 8;
-      ctx.fill();
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
       ctx.restore();
     }
 
@@ -410,30 +495,38 @@ export class SkyHopperScene implements GameScene {
     const playerScreenY = this.camera.toScreenY(this.player.y);
     ctx.save();
     if (this.player.isRocketing) {
-      ctx.fillStyle = 'rgba(253, 203, 110, 0.4)';
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.4)';
       ctx.beginPath();
       ctx.arc(this.player.x + 16, playerScreenY + 16, 26, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // Hopper body
-    ctx.fillStyle = '#55efc4';
+    // Player drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.roundRect(this.player.x + 2, playerScreenY + 2, this.player.width, this.player.height, 8);
+    ctx.fill();
+
+    // Papercut Hopper body
+    ctx.fillStyle = '#10B981';
     ctx.beginPath();
     ctx.roundRect(this.player.x, playerScreenY, this.player.width, this.player.height, 8);
     ctx.fill();
-    ctx.strokeStyle = '#00b894';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Hopper ears / visor
-    ctx.fillStyle = '#2d3436';
+    // Cardboard visor
+    ctx.fillStyle = '#3E2723';
     const eyeX = this.player.facing === 'right' ? this.player.x + 18 : this.player.x + 6;
     ctx.fillRect(eyeX, playerScreenY + 8, 8, 8);
 
-    // Hopper ears (antenna)
-    ctx.fillStyle = '#00b894';
+    // Hopper cardboard ears
+    ctx.fillStyle = '#C5A880';
     ctx.fillRect(this.player.x + 6, playerScreenY - 8, 4, 8);
+    ctx.strokeRect(this.player.x + 6, playerScreenY - 8, 4, 8);
     ctx.fillRect(this.player.x + 22, playerScreenY - 8, 4, 8);
+    ctx.strokeRect(this.player.x + 22, playerScreenY - 8, 4, 8);
     ctx.restore();
 
     // 7. Render Particles
@@ -457,34 +550,57 @@ export class SkyHopperScene implements GameScene {
   private renderHUD(ctx: CanvasRenderingContext2D): void {
     const w = this.canvas.width;
     ctx.save();
-    ctx.fillStyle = 'rgba(15, 12, 41, 0.85)';
-    ctx.fillRect(0, 0, w, 44);
+    // Taped Placard Header
+    ctx.fillStyle = '#FFFDF8';
+    ctx.fillRect(0, 0, w, 48);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 48);
+    ctx.lineTo(w, 48);
+    ctx.stroke();
 
-    ctx.fillStyle = '#55efc4';
-    ctx.font = 'bold 16px monospace';
+    // Tape strips
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(200, 2, 24, 10);
+    ctx.strokeRect(200, 2, 24, 10);
+    ctx.fillRect(600, 2, 24, 10);
+    ctx.strokeRect(600, 2, 24, 10);
+
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
     ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
 
     const altText =
       this.gameState.mode === 'story'
         ? `ALT: ${this.gameState.altitude} / 5000m`
         : `ALT: ${this.gameState.altitude}m`;
-    ctx.fillText(altText, 20, 28);
+    ctx.fillText(altText, 20, 25);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ffeaa7';
-    ctx.fillText(`SCORE: ${this.gameState.score}`, w / 2, 28);
+    ctx.fillStyle = '#C85A32';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, w / 2, 25);
 
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#dfe6e9';
-    ctx.fillText(`BEST: ${this.gameState.highScore}`, w - 20, 28);
+    ctx.fillStyle = '#6A5D4D';
+    ctx.fillText(`BEST: ${this.gameState.highScore}`, w - 20, 25);
 
     // Mode Badge
-    ctx.fillStyle = this.gameState.mode === 'story' ? '#0984e3' : '#6c5ce7';
-    ctx.fillRect(w / 2 - 190, 10, 75, 24);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 11px sans-serif';
+    ctx.fillStyle = this.gameState.mode === 'story' ? '#3B82F6' : '#8B5CF6';
+    ctx.beginPath();
+    ctx.roundRect(w / 2 - 200, 10, 80, 26, 4);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 13px "Patrick Hand", cursive, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(this.gameState.mode.toUpperCase(), w / 2 - 152, 26);
+    ctx.fillText(this.gameState.mode.toUpperCase(), w / 2 - 160, 24);
 
     ctx.restore();
   }
@@ -494,48 +610,82 @@ export class SkyHopperScene implements GameScene {
     const h = this.canvas.height;
 
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 5, 16, 0.88)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.88)';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.fillStyle = '#55efc4';
-    ctx.font = 'bold 44px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('SKY HOPPER', w / 2, 160);
+    // Cardboard Modal Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(140, 70, 520, 480, 10);
+    ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.font = '16px monospace';
-    ctx.fillText('CLIMB TO THE STARS', w / 2, 200);
+    // Tape strips
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(200, 62, 60, 16);
+    ctx.strokeRect(200, 62, 60, 16);
+    ctx.fillRect(540, 62, 60, 16);
+    ctx.strokeRect(540, 62, 60, 16);
+
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 40px "Patrick Hand", cursive, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('SKY HOPPER', w / 2, 130);
+
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('PAPERCRAFT VERTICAL ASCENT', w / 2, 165);
 
     // Story button
-    ctx.fillStyle = this.gameState.mode === 'story' ? '#0984e3' : '#2d3436';
-    ctx.fillRect(180, 340, 200, 60);
-    ctx.strokeStyle = '#74b9ff';
-    ctx.strokeRect(180, 340, 200, 60);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14px monospace';
-    ctx.fillText('[1] STORY MODE', 280, 365);
-    ctx.font = '11px sans-serif';
-    ctx.fillText('Reach 5,000m Airship', 280, 385);
+    ctx.fillStyle = this.gameState.mode === 'story' ? '#3B82F6' : '#E8DEC8';
+    ctx.beginPath();
+    ctx.roundRect(180, 240, 200, 64, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = this.gameState.mode === 'story' ? '#FFFDF8' : '#3E2723';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('[1] STORY MODE', 280, 268);
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('Reach 5,000m Airship', 280, 290);
 
     // Infinite button
-    ctx.fillStyle = this.gameState.mode === 'infinite' ? '#6c5ce7' : '#2d3436';
-    ctx.fillRect(420, 340, 200, 60);
-    ctx.strokeStyle = '#a29bfe';
-    ctx.strokeRect(420, 340, 200, 60);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14px monospace';
-    ctx.fillText('[2] INFINITE MODE', 520, 365);
-    ctx.font = '11px sans-serif';
-    ctx.fillText('Endless High Altitude Climb', 520, 385);
+    ctx.fillStyle = this.gameState.mode === 'infinite' ? '#8B5CF6' : '#E8DEC8';
+    ctx.beginPath();
+    ctx.roundRect(420, 240, 200, 64, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // Start prompt
-    ctx.fillStyle = '#fdcb6e';
-    ctx.font = 'bold 18px monospace';
-    ctx.fillText('PRESS SPACE TO LAUNCH', w / 2, 450);
+    ctx.fillStyle = this.gameState.mode === 'infinite' ? '#FFFDF8' : '#3E2723';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('[2] INFINITE MODE', 520, 268);
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('Endless High Climb', 520, 290);
 
-    ctx.fillStyle = '#b2bec3';
-    ctx.font = '13px monospace';
-    ctx.fillText('A/D or ◄/► to Move | W or ▲ to Shoot | ESC to Pause', w / 2, 510);
+    // Start prompt button
+    ctx.fillStyle = '#10B981';
+    ctx.beginPath();
+    ctx.roundRect(240, 360, 320, 48, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('PRESS SPACE TO LAUNCH', w / 2, 390);
+
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('A/D or ◄/► to Move | W or ▲ to Shoot | ESC to Pause', w / 2, 450);
     ctx.restore();
   }
 
@@ -544,17 +694,33 @@ export class SkyHopperScene implements GameScene {
     const h = this.canvas.height;
 
     ctx.save();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.85)';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.font = 'bold 36px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('GAME PAUSED', w / 2, h / 2 - 20);
+    // Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(240, 200, 320, 200, 8);
+    ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = '#dfe6e9';
-    ctx.font = '16px monospace';
-    ctx.fillText('Press ESC or Click to Resume', w / 2, h / 2 + 25);
+    // Tape
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(360, 192, 80, 16);
+    ctx.strokeRect(360, 192, 80, 16);
+
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME PAUSED', w / 2, 270);
+
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText('Press ESC or Click to Resume', w / 2, 330);
     ctx.restore();
   }
 
@@ -563,30 +729,52 @@ export class SkyHopperScene implements GameScene {
     const h = this.canvas.height;
 
     ctx.save();
-    ctx.fillStyle = 'rgba(15, 12, 41, 0.9)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.fillStyle = '#ff7675';
-    ctx.font = 'bold 38px monospace';
+    // Cardboard Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(180, 120, 440, 360, 10);
+    ctx.fill();
+    ctx.stroke();
+
+    // Tape
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(230, 112, 60, 16);
+    ctx.strokeRect(230, 112, 60, 16);
+    ctx.fillRect(510, 112, 60, 16);
+    ctx.strokeRect(510, 112, 60, 16);
+
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('FALLEN INTO THE VOID', w / 2, 180);
+    ctx.fillText('FALLEN FROM THE SKY', w / 2, 180);
 
-    ctx.fillStyle = '#dfe6e9';
-    ctx.font = '18px monospace';
-    ctx.fillText(`ALTITUDE REACHED: ${this.gameState.maxAltitude}m`, w / 2, 250);
-    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, w / 2, 290);
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`ALTITUDE REACHED: ${this.gameState.maxAltitude}m`, w / 2, 240);
+    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, w / 2, 275);
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, w / 2, 340);
+    ctx.fillStyle = '#6A5D4D';
+    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, w / 2, 315);
 
     // Play again button
-    ctx.fillStyle = '#e17055';
-    ctx.fillRect(280, 440, 240, 60);
-    ctx.strokeStyle = '#fab1a0';
-    ctx.strokeRect(280, 440, 240, 60);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 18px monospace';
-    ctx.fillText('PLAY AGAIN (SPACE)', w / 2, 477);
+    ctx.fillStyle = '#10B981';
+    ctx.beginPath();
+    ctx.roundRect(240, 360, 320, 48, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('PLAY AGAIN (SPACE)', w / 2, 390);
 
     ctx.restore();
   }
@@ -596,34 +784,57 @@ export class SkyHopperScene implements GameScene {
     const h = this.canvas.height;
 
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 5, 16, 0.92)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.fillStyle = '#55efc4';
-    ctx.font = 'bold 36px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('MOTHERSHIP REACHED!', w / 2, 160);
+    // Cardboard Placard
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(180, 110, 440, 380, 10);
+    ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.font = '18px monospace';
+    // Tape
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(230, 102, 60, 16);
+    ctx.strokeRect(230, 102, 60, 16);
+    ctx.fillRect(510, 102, 60, 16);
+    ctx.strokeRect(510, 102, 60, 16);
+
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('MOTHERSHIP REACHED!', w / 2, 170);
+
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('CONGRATULATIONS HOPPER!', w / 2, 210);
 
-    ctx.fillStyle = '#dfe6e9';
-    ctx.fillText(`5,000m ASCENT COMPLETE`, w / 2, 270);
-    ctx.fillText(`CLEAR BONUS: +2,500 PTS`, w / 2, 310);
-    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, w / 2, 350);
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`5,000m ASCENT COMPLETE`, w / 2, 260);
+    ctx.fillText(`CLEAR BONUS: +2,500 PTS`, w / 2, 290);
+    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, w / 2, 320);
 
-    ctx.fillStyle = '#ffeaa7';
-    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, w / 2, 390);
+    ctx.fillStyle = '#6A5D4D';
+    ctx.fillText(`HIGH SCORE: ${this.gameState.highScore}`, w / 2, 355);
 
     // Play again button
-    ctx.fillStyle = '#00b894';
-    ctx.fillRect(280, 440, 240, 60);
-    ctx.strokeStyle = '#55efc4';
-    ctx.strokeRect(280, 440, 240, 60);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 18px monospace';
-    ctx.fillText('PLAY AGAIN (SPACE)', w / 2, 477);
+    ctx.fillStyle = '#10B981';
+    ctx.beginPath();
+    ctx.roundRect(240, 390, 320, 48, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('PLAY AGAIN (SPACE)', w / 2, 420);
 
     ctx.restore();
   }
