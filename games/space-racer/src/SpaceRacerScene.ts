@@ -197,34 +197,34 @@ export class SpaceRacerScene implements GameScene {
     ctx.save();
 
     // Top-Left: Distance & Speed
-    ctx.font = 'bold 16px monospace';
-    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 16px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
     ctx.textAlign = 'left';
     ctx.fillText(`DIST: ${Math.floor(this.state.distance)}m`, 20, 30);
-    ctx.fillStyle = this.ship.isBoosting ? '#ec4899' : '#00f0ff';
+    ctx.fillStyle = this.ship.isBoosting ? '#E11D48' : '#3B82F6';
     ctx.fillText(`SPEED: ${Math.floor(this.state.speed)} KM/H`, 20, 52);
 
     // Top-Center: Score & Multiplier
     ctx.textAlign = 'center';
-    ctx.font = 'bold 24px monospace';
-    ctx.fillStyle = '#f8fafc';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText(`${this.state.score}`, w / 2, 35);
     const mult = HighwaySpeedPhysics.getSpeedMultiplier(this.state.speed);
-    ctx.font = 'bold 12px monospace';
-    ctx.fillStyle = mult > 1.5 ? '#f59e0b' : '#38bdf8';
+    ctx.font = 'bold 14px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = mult > 1.5 ? '#E09F3E' : '#4A6D56';
     ctx.fillText(`${mult.toFixed(1)}x SPEED BONUS`, w / 2, 52);
 
     // Top-Right: High Score & Shields
     ctx.textAlign = 'right';
-    ctx.font = 'bold 14px monospace';
-    ctx.fillStyle = '#64748b';
+    ctx.font = 'bold 14px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText(`HI: ${Math.max(this.state.score, this.state.highScore)}`, w - 20, 30);
 
     // Shield Pips
     const pips = 3;
     for (let i = 0; i < pips; i++) {
-      ctx.fillStyle = i < this.ship.shieldHp ? '#00f0ff' : '#1e293b';
-      ctx.strokeStyle = '#00f0ff';
+      ctx.fillStyle = i < this.ship.shieldHp ? '#3B82F6' : '#C5A880';
+      ctx.strokeStyle = '#3E2723';
       ctx.lineWidth = 1.5;
       ctx.fillRect(w - 20 - (pips - i) * 22, 40, 16, 12);
       ctx.strokeRect(w - 20 - (pips - i) * 22, 40, 16, 12);
@@ -233,9 +233,9 @@ export class SpaceRacerScene implements GameScene {
     // Boost timer bar
     if (this.ship.isBoosting) {
       const boostRatio = this.ship.boostTimer / 3.0;
-      ctx.fillStyle = '#ec4899';
+      ctx.fillStyle = '#E11D48';
       ctx.fillRect(w / 2 - 100, h - 30, 200 * boostRatio, 8);
-      ctx.strokeStyle = '#f43f5e';
+      ctx.strokeStyle = '#3E2723';
       ctx.strokeRect(w / 2 - 100, h - 30, 200, 8);
     }
 
@@ -252,68 +252,62 @@ export class SpaceRacerScene implements GameScene {
   }
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D, w: number, h: number): void {
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.75)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.92)';
     ctx.fillRect(0, 0, w, h);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 42px monospace';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#3B82F6';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('SPACE RACER', w / 2, h / 2 - 50);
-    ctx.shadowBlur = 0;
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '16px monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
     ctx.fillText('DODGE ASTEROIDS • HIT TURBO RINGS', w / 2, h / 2 - 10);
     ctx.fillText('Steer: [A]/[D], [←]/[→], or Drag Pointer', w / 2, h / 2 + 20);
 
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 20px monospace';
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PRESS SPACE OR TAP TO LAUNCH', w / 2, h / 2 + 70);
   }
 
   private renderPausedOverlay(ctx: CanvasRenderingContext2D, w: number, h: number): void {
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.7)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.9)';
     ctx.fillRect(0, 0, w, h);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#38bdf8';
-    ctx.font = 'bold 36px monospace';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PAUSED', w / 2, h / 2 - 20);
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '16px monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
     ctx.fillText('Press [ESC] or [P] to Resume', w / 2, h / 2 + 20);
   }
 
   private renderGameOverOverlay(ctx: CanvasRenderingContext2D, w: number, h: number): void {
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.85)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.95)';
     ctx.fillRect(0, 0, w, h);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ef4444';
-    ctx.font = 'bold 40px monospace';
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#C85A32';
+    ctx.font = 'bold 42px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('CRITICAL FAILURE', w / 2, h / 2 - 70);
-    ctx.shadowBlur = 0;
 
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 22px monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(`FINAL SCORE: ${this.state.score}`, w / 2, h / 2 - 20);
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '15px monospace';
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
     ctx.fillText(`DISTANCE: ${Math.floor(this.state.distance)}m  •  GATES: ${this.state.gatesCleared}  •  DODGES: ${this.state.asteroidsDodged}`, w / 2, h / 2 + 15);
 
     if (this.state.score >= this.state.highScore && this.state.score > 0) {
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 16px monospace';
+      ctx.fillStyle = '#E09F3E';
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
       ctx.fillText('★ NEW HIGH SCORE! ★', w / 2, h / 2 + 45);
     }
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 18px monospace';
+    ctx.fillStyle = '#4A6D56';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PRESS SPACE OR TAP TO RETRY', w / 2, h / 2 + 85);
   }
 

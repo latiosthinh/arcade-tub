@@ -59,16 +59,15 @@ export class WarpRenderer {
   }
 
   public renderBackground(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-    // Deep space gradient
+    // Deep construction paper indigo starfield
     const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
-    bgGrad.addColorStop(0, '#030712');
-    bgGrad.addColorStop(0.35, '#0b0f19');
-    bgGrad.addColorStop(0.7, '#111827');
-    bgGrad.addColorStop(1, '#0f172a');
+    bgGrad.addColorStop(0, '#1E1B2E');
+    bgGrad.addColorStop(0.5, '#2D2540');
+    bgGrad.addColorStop(1, '#3B3355');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, width, height);
 
-    // Star streaks
+    // Stamped stars and papercut star stickers
     for (const star of this.stars) {
       const depth = Math.max(0.01, star.z);
       const scale = 1.0 / (depth * 2.0 + 0.5);
@@ -76,7 +75,7 @@ export class WarpRenderer {
       const sy = this.horizonY + star.y * scale;
 
       if (sx >= 0 && sx <= width && sy >= 0 && sy <= this.bottomY + 120) {
-        ctx.fillStyle = depth < 0.3 ? '#ffffff' : '#38bdf8';
+        ctx.fillStyle = depth < 0.3 ? '#FFFDF8' : '#F59E0B';
         ctx.beginPath();
         ctx.arc(sx, sy, star.size * Math.min(2.5, scale * 0.5), 0, Math.PI * 2);
         ctx.fill();
@@ -88,20 +87,20 @@ export class WarpRenderer {
     const leftRails = [100, 250, 400, 550, 700];
 
     ctx.save();
-    // Glowing grid / horizon line
-    ctx.strokeStyle = '#0284c7';
-    ctx.lineWidth = 2;
+    // Cardboard horizon boundary line
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, this.horizonY);
     ctx.lineTo(800, this.horizonY);
     ctx.stroke();
 
-    // Perspective lane lines extending past the bottom of the canvas
+    // Perspective stitched lane lines on kraft orbital runway
     for (let i = 0; i < leftRails.length; i++) {
       const bottomX = leftRails[i] ?? 400;
       const isEdge = i === 0 || i === leftRails.length - 1;
 
-      ctx.strokeStyle = isEdge ? '#00f0ff' : 'rgba(14, 165, 233, 0.4)';
+      ctx.strokeStyle = isEdge ? '#F59E0B' : 'rgba(255, 248, 220, 0.4)';
       ctx.lineWidth = isEdge ? 3 : 1.5;
 
       ctx.beginPath();
@@ -113,7 +112,7 @@ export class WarpRenderer {
     // Scrolling crossbars
     const barSpacing = 40;
     const offset = (distance % barSpacing);
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+    ctx.strokeStyle = 'rgba(255, 248, 220, 0.25)';
     ctx.lineWidth = 1;
 
     for (let d = offset; d < 900; d += barSpacing) {
@@ -155,8 +154,9 @@ export class WarpRenderer {
   }
 
   private drawAsteroid(ctx: CanvasRenderingContext2D, radius: number): void {
-    ctx.fillStyle = '#64748b';
-    ctx.strokeStyle = '#94a3b8';
+    // Cardboard asteroid cutout with paper crater indentations
+    ctx.fillStyle = '#C5A880';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
 
     ctx.beginPath();
@@ -173,23 +173,29 @@ export class WarpRenderer {
     ctx.fill();
     ctx.stroke();
 
-    // Shading crater
-    ctx.fillStyle = '#334155';
+    // Layered crater
+    ctx.fillStyle = '#8D5B34';
     ctx.beginPath();
     ctx.arc(radius * 0.2, radius * 0.1, radius * 0.25, 0, Math.PI * 2);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1;
+    ctx.stroke();
   }
 
   private drawPlasmaMine(ctx: CanvasRenderingContext2D, radius: number): void {
-    // Core
-    ctx.fillStyle = '#ef4444';
+    // Papercut spiky hazard disc
+    ctx.fillStyle = '#E11D48';
     ctx.beginPath();
     ctx.arc(0, 0, radius * 0.6, 0, Math.PI * 2);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
-    // Outer warning spikes
-    ctx.strokeStyle = '#f97316';
-    ctx.lineWidth = 3;
+    // Spikes
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 2.5;
     for (let i = 0; i < 4; i++) {
       const angle = (i / 4) * Math.PI * 2;
       ctx.beginPath();
@@ -200,18 +206,16 @@ export class WarpRenderer {
   }
 
   private drawBoostRing(ctx: CanvasRenderingContext2D, radius: number): void {
-    // Glowing neon turbo ring
-    ctx.strokeStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 10;
-    ctx.lineWidth = 5;
+    // Paper origami turbo gate ring
+    ctx.strokeStyle = '#3B82F6';
+    ctx.lineWidth = 4;
 
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Inner gate chevron
-    ctx.strokeStyle = '#a855f7';
+    // Inner origami chevron
+    ctx.strokeStyle = '#F59E0B';
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(-radius * 0.4, -radius * 0.3);
@@ -233,9 +237,9 @@ export class WarpRenderer {
       ctx.globalAlpha = 0.5;
     }
 
-    // Thruster flame
+    // Layered construction paper thruster flame
     const flameH = ship.isBoosting ? 35 + Math.sin(time * 30) * 10 : 20 + Math.sin(time * 20) * 6;
-    ctx.fillStyle = ship.isBoosting ? '#ec4899' : '#00f0ff';
+    ctx.fillStyle = ship.isBoosting ? '#E11D48' : '#F59E0B';
     ctx.beginPath();
     ctx.moveTo(-10, h / 2 - 5);
     ctx.lineTo(0, h / 2 + flameH);
@@ -243,9 +247,9 @@ export class WarpRenderer {
     ctx.closePath();
     ctx.fill();
 
-    // Delta-wing Jet Body
-    ctx.fillStyle = '#1e293b';
-    ctx.strokeStyle = '#38bdf8';
+    // Folded paper / cardboard delta-wing starfighter
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
 
     ctx.beginPath();
@@ -259,15 +263,25 @@ export class WarpRenderer {
     ctx.fill();
     ctx.stroke();
 
-    // Cockpit canopy
-    ctx.fillStyle = '#00f0ff';
+    // Cardboard wing stabilizers
+    ctx.fillStyle = '#C5A880';
+    ctx.fillRect(-w / 2, h / 4, 6, h / 4);
+    ctx.fillRect(w / 2 - 6, h / 4, 6, h / 4);
+    ctx.strokeRect(-w / 2, h / 4, 6, h / 4);
+    ctx.strokeRect(w / 2 - 6, h / 4, 6, h / 4);
+
+    // Paper canopy
+    ctx.fillStyle = '#3B82F6';
     ctx.beginPath();
     ctx.ellipse(0, -h / 6, 6, 12, 0, 0, Math.PI * 2);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // Shield bubble
+    // Shield paper bubble
     if (ship.shieldHp > 0) {
-      ctx.strokeStyle = ship.isBoosting ? '#ec4899' : 'rgba(0, 240, 255, 0.4)';
+      ctx.strokeStyle = ship.isBoosting ? '#E11D48' : 'rgba(59, 130, 246, 0.6)';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.ellipse(0, 0, w * 0.7, h * 0.9, 0, 0, Math.PI * 2);

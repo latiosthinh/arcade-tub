@@ -71,6 +71,7 @@ export class BioArenaRenderer {
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D): void {
+    // Warm kraft parchment bio-arena desktop
     const bgGrad = ctx.createRadialGradient(
       this.width / 2,
       this.height / 2,
@@ -79,14 +80,14 @@ export class BioArenaRenderer {
       this.height / 2,
       500
     );
-    bgGrad.addColorStop(0, '#0f172a');
-    bgGrad.addColorStop(0.6, '#0b0d1b');
-    bgGrad.addColorStop(1, '#05060a');
+    bgGrad.addColorStop(0, '#F4EAD4');
+    bgGrad.addColorStop(0.7, '#E8DEC8');
+    bgGrad.addColorStop(1, '#D8C3A5');
 
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, this.width, this.height);
 
-    // Subtle drifting background cellular organelles
+    // Subtle drifting stamped cellular paper organelles
     ctx.save();
     for (let i = 0; i < 18; i++) {
       const angle = (i * Math.PI * 2) / 18 + this.animTime * 0.05;
@@ -95,7 +96,7 @@ export class BioArenaRenderer {
       const y = this.height / 2 + Math.sin(angle) * dist;
       const r = 3 + (i % 4) * 2;
 
-      ctx.fillStyle = i % 2 === 0 ? 'rgba(56, 189, 248, 0.06)' : 'rgba(168, 85, 247, 0.05)';
+      ctx.fillStyle = i % 2 === 0 ? 'rgba(74, 109, 86, 0.12)' : 'rgba(62, 39, 35, 0.08)';
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
@@ -108,13 +109,13 @@ export class BioArenaRenderer {
     const cx = nucleus.centerX;
     const cy = nucleus.centerY;
 
-    // Concentric rings
+    // Concentric dashed ink guideline rings
     const rings = [100, 180, 260, 340, 420];
     for (let i = 0; i < rings.length; i++) {
       const ringRadius = rings[i];
       if (ringRadius === undefined) continue;
       const r = ringRadius + Math.sin(this.animTime * 1.5 + i) * 3;
-      ctx.strokeStyle = `rgba(34, 211, 238, ${0.08 - i * 0.012})`;
+      ctx.strokeStyle = `rgba(62, 39, 35, ${0.15 - i * 0.02})`;
       ctx.lineWidth = 1.5;
       ctx.setLineDash([8, 12]);
       ctx.beginPath();
@@ -132,32 +133,29 @@ export class BioArenaRenderer {
     const r = nucleus.radius;
     const pulse = Math.sin(this.animTime * 4) * 3;
 
-    // Outer membrane ripple
-    const hpRatio = nucleus.hp / nucleus.maxHp;
-    const coreColor = hpRatio > 0.5 ? '#06b6d4' : hpRatio > 0.25 ? '#f59e0b' : '#ef4444';
-
-    ctx.fillStyle = `${coreColor}18`;
+    // Outer paper shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
     ctx.beginPath();
-    ctx.arc(cx, cy, r + 14 + pulse, 0, Math.PI * 2);
+    ctx.arc(cx + 4, cy + 4, r + 4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Cell wall membrane
-    ctx.strokeStyle = coreColor;
-    ctx.lineWidth = 3;
-    ctx.shadowColor = coreColor;
-    ctx.shadowBlur = 15;
+    // HP ratio color
+    const hpRatio = nucleus.hp / nucleus.maxHp;
+    const coreColor = hpRatio > 0.5 ? '#10B981' : hpRatio > 0.25 ? '#F59E0B' : '#E11D48';
+
+    // Cell wall membrane with ink outline
+    ctx.fillStyle = coreColor;
     ctx.beginPath();
     ctx.arc(cx, cy, r + pulse, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Inner cytoplasmic nucleus
-    const innerGrad = ctx.createRadialGradient(cx, cy, 5, cx, cy, r);
-    innerGrad.addColorStop(0, '#ffffff');
-    innerGrad.addColorStop(0.4, coreColor);
-    innerGrad.addColorStop(1, '#0284c7');
-    ctx.fillStyle = innerGrad;
+    // Inner paper fold details
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
-    ctx.arc(cx, cy, r - 6, 0, Math.PI * 2);
+    ctx.arc(cx - 8, cy - 8, r * 0.35, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -170,24 +168,27 @@ export class BioArenaRenderer {
 
       ctx.save();
       ctx.translate(a.x, a.y);
-      ctx.shadowColor = '#38bdf8';
-      ctx.shadowBlur = 12;
 
-      // Outer glow circle
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+      // Drop shadow
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
       ctx.beginPath();
-      ctx.arc(0, 0, a.radius + 4, 0, Math.PI * 2);
+      ctx.arc(2, 2, a.radius + 2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Cross / Plus nano-antibody shape
-      ctx.fillStyle = '#38bdf8';
+      // Papercut medical cross badge in craft blue
+      ctx.fillStyle = '#3B82F6';
       const w = 4;
-      const l = 10;
+      const l = 12;
       ctx.fillRect(-w / 2, -l / 2, w, l);
       ctx.fillRect(-l / 2, -w / 2, l, w);
 
-      // Core white sparkle
-      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(-w / 2, -l / 2, w, l);
+      ctx.strokeRect(-l / 2, -w / 2, l, w);
+
+      // Core white paper sparkle
+      ctx.fillStyle = '#FFFDF8';
       ctx.beginPath();
       ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
       ctx.fill();
@@ -231,11 +232,9 @@ export class BioArenaRenderer {
     const r = p.radius;
     const pulse = Math.sin(this.animTime * 8 + p.id) * 2;
 
-    ctx.strokeStyle = '#ef4444';
-    ctx.fillStyle = '#dc2626';
+    ctx.strokeStyle = '#3E2723';
+    ctx.fillStyle = '#E11D48';
     ctx.lineWidth = 2;
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 8;
 
     // Spikes radiating outwards
     for (let i = 0; i < spikeCount; i++) {
@@ -251,35 +250,35 @@ export class BioArenaRenderer {
 
       // Spike tip bulb
       ctx.beginPath();
-      ctx.arc(sx, sy, 2, 0, Math.PI * 2);
+      ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // Central viral capsid core
+    // Central papercut capsid core
     ctx.beginPath();
     ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
 
-    ctx.fillStyle = '#fee2e2';
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
-    ctx.arc(0, 0, r * 0.4, 0, Math.PI * 2);
+    ctx.arc(-2, -2, r * 0.35, 0, Math.PI * 2);
     ctx.fill();
   }
 
   private drawSpeedster(ctx: CanvasRenderingContext2D, p: Pathogen): void {
     const r = p.radius;
-    ctx.fillStyle = '#f97316';
-    ctx.strokeStyle = '#ea580c';
+    ctx.fillStyle = '#F97316';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
-    ctx.shadowColor = '#fb923c';
-    ctx.shadowBlur = 10;
 
-    // Aerodynamic capsule
+    // Paper capsule body
     ctx.beginPath();
     ctx.ellipse(0, 0, r * 1.3, r * 0.8, 0, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
 
-    // Trailing flagella tails
+    // Trailing paper flagella ribbons
     const wiggle = Math.sin(this.animTime * 14 + p.id) * 6;
     ctx.beginPath();
     ctx.moveTo(-r * 1.2, -3);
@@ -293,20 +292,18 @@ export class BioArenaRenderer {
     const r = p.radius;
     const blobWobble = Math.sin(this.animTime * 5 + p.id) * 3;
 
-    ctx.fillStyle = '#10b981';
-    ctx.strokeStyle = '#059669';
-    ctx.lineWidth = 2.5;
-    ctx.shadowColor = '#34d399';
-    ctx.shadowBlur = 10;
+    ctx.fillStyle = '#10B981';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
 
-    // Blob body
+    // Dividing paper amoeba blob
     ctx.beginPath();
     ctx.arc(0, 0, r + blobWobble, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
-    // Twin internal division nuclei
-    ctx.fillStyle = '#a7f3d0';
+    // Twin internal papercut nuclei
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
     ctx.arc(-r * 0.35, 0, r * 0.25, 0, Math.PI * 2);
     ctx.arc(r * 0.35, 0, r * 0.25, 0, Math.PI * 2);
@@ -315,29 +312,28 @@ export class BioArenaRenderer {
 
   private drawShieldCarrier(ctx: CanvasRenderingContext2D, p: Pathogen): void {
     const r = p.radius;
-    ctx.fillStyle = '#8b5cf6';
-    ctx.strokeStyle = '#7c3aed';
+    ctx.fillStyle = '#8B5CF6';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 2;
-    ctx.shadowColor = '#a78bfa';
-    ctx.shadowBlur = 12;
 
-    // Heavy virus core
+    // Paper virus core
     ctx.beginPath();
     ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
 
-    // Frontal energy shield arc
-    ctx.strokeStyle = '#c084fc';
+    // Cardboard crescent shield arc
+    ctx.strokeStyle = '#C5A880';
     ctx.lineWidth = 4;
     ctx.beginPath();
     ctx.arc(0, 0, r + 7, -Math.PI / 2.2, Math.PI / 2.2);
     ctx.stroke();
 
-    // Shield HP indicators
-    ctx.fillStyle = '#e9d5ff';
+    // Shield HP pins
+    ctx.fillStyle = '#F59E0B';
     for (let i = 0; i < p.hp; i++) {
       ctx.beginPath();
-      ctx.arc(r + 12, (i - 1) * 6, 2, 0, Math.PI * 2);
+      ctx.arc(r + 12, (i - 1) * 6, 2.5, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -346,11 +342,11 @@ export class BioArenaRenderer {
     ctx.save();
     ctx.translate(turret.x, turret.y);
 
-    // Laser targeting sight guide beam
+    // Dashed ink laser targeting sight line
     ctx.save();
     ctx.rotate(turret.angle);
-    ctx.strokeStyle = 'rgba(34, 211, 238, 0.2)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.3)';
+    ctx.lineWidth = 1.5;
     ctx.setLineDash([4, 6]);
     ctx.beginPath();
     ctx.moveTo(turret.barrelLength, 0);
@@ -358,34 +354,34 @@ export class BioArenaRenderer {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Cannon Barrel
-    ctx.fillStyle = '#0284c7';
+    // Cardboard Cannon Barrel
+    ctx.fillStyle = '#C5A880';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.fillRect(8, -4, turret.barrelLength - 8, 8);
-
-    ctx.fillStyle = '#38bdf8';
-    ctx.fillRect(16, -2, turret.barrelLength - 14, 4);
+    ctx.strokeRect(8, -4, turret.barrelLength - 8, 8);
 
     // Muzzle tip
-    ctx.fillStyle = '#06b6d4';
+    ctx.fillStyle = '#8D5B34';
     ctx.fillRect(turret.barrelLength - 4, -5, 4, 10);
+    ctx.strokeRect(turret.barrelLength - 4, -5, 4, 10);
     ctx.restore();
 
-    // Turret central base pivot
-    ctx.fillStyle = '#1e293b';
-    ctx.strokeStyle = '#38bdf8';
+    // Turret central brass fastener pivot hub
+    ctx.fillStyle = '#C5A880';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 3;
-    ctx.shadowColor = '#38bdf8';
-    ctx.shadowBlur = 8;
     ctx.beginPath();
     ctx.arc(0, 0, 16, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
-    // Inner glowing core
-    ctx.fillStyle = '#22d3ee';
+    // Brass hub
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
     ctx.arc(0, 0, 7, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
 
     ctx.restore();
   }
@@ -396,17 +392,18 @@ export class BioArenaRenderer {
       if (!p.active) continue;
 
       ctx.save();
-      ctx.fillStyle = '#22d3ee';
-      ctx.shadowColor = '#06b6d4';
-      ctx.shadowBlur = 10;
+      ctx.fillStyle = '#3B82F6';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
 
-      // Projectile bullet
+      // Projectile paper pellet
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fill();
+      ctx.stroke();
 
       // Motion trail
-      ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
@@ -424,29 +421,29 @@ export class BioArenaRenderer {
     nucleus: NucleusState
   ): void {
     ctx.save();
-    ctx.font = 'bold 16px monospace';
+    ctx.font = 'bold 15px "Comfortaa", cursive, sans-serif';
 
     // Top-Left: Wave & Multiplier Badge
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText(`WAVE `, 24, 34);
-    ctx.fillStyle = '#38bdf8';
-    ctx.font = 'bold 20px monospace';
-    ctx.fillText(`${gameState.wave}`, 72, 34);
+    ctx.fillStyle = '#3B82F6';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`${gameState.wave}`, 74, 34);
 
     if (gameState.multiplier > 1) {
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 15px monospace';
+      ctx.fillStyle = '#E09F3E';
+      ctx.font = 'bold 16px "Patrick Hand", cursive, sans-serif';
       ctx.fillText(`${gameState.multiplier}x COMBO`, 24, 58);
     }
 
     // Top-Center: Score & High Score
     ctx.textAlign = 'center';
-    ctx.font = 'bold 22px monospace';
-    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText(`${gameState.score.toLocaleString()}`, this.width / 2, 34);
 
-    ctx.font = '12px monospace';
-    ctx.fillStyle = '#64748b';
+    ctx.font = '12px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText(`HI: ${gameState.highScore.toLocaleString()}`, this.width / 2, 54);
 
     // Top-Right: Nucleus HP Bar
@@ -456,20 +453,20 @@ export class BioArenaRenderer {
     const barY = 22;
 
     ctx.textAlign = 'right';
-    ctx.font = 'bold 13px monospace';
-    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 13px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText(`NUCLEUS`, barX - 10, barY + 11);
 
     // Bar background
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1;
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
     ctx.fillRect(barX, barY, barWidth, barHeight);
     ctx.strokeRect(barX, barY, barWidth, barHeight);
 
     // Fill bar
     const hpRatio = Math.max(0, Math.min(1, nucleus.hp / nucleus.maxHp));
-    const hpColor = hpRatio > 0.5 ? '#10b981' : hpRatio > 0.25 ? '#f59e0b' : '#ef4444';
+    const hpColor = hpRatio > 0.5 ? '#10B981' : hpRatio > 0.25 ? '#F59E0B' : '#E11D48';
     ctx.fillStyle = hpColor;
     ctx.fillRect(barX + 2, barY + 2, (barWidth - 4) * hpRatio, barHeight - 4);
 
@@ -488,48 +485,42 @@ export class BioArenaRenderer {
 
   private renderReadyOverlay(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 6, 10, 0.75)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.92)';
     ctx.fillRect(0, 0, this.width, this.height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#38bdf8';
-    ctx.font = 'bold 36px monospace';
-    ctx.shadowColor = '#0284c7';
-    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 44px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('VIRUS DEFENSE', this.width / 2, 220);
 
-    ctx.font = '16px monospace';
-    ctx.fillStyle = '#94a3b8';
-    ctx.shadowBlur = 0;
-    ctx.fillText('Defend the central cellular nucleus from mutating swarms', this.width / 2, 260);
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
+    ctx.fillText('Defend the central cellular nucleus from mutating paper swarms', this.width / 2, 260);
 
-    ctx.fillStyle = '#cbd5e1';
+    ctx.fillStyle = '#6A5D4D';
     ctx.fillText('🎯 Aim: Mouse / Touch Pointer', this.width / 2, 310);
     ctx.fillText('⚡ Fire: Hold Click / Tap Screen', this.width / 2, 340);
     ctx.fillText('💊 Antibodies: Floating capsules repair cell health', this.width / 2, 370);
 
-    ctx.font = 'bold 20px monospace';
-    ctx.fillStyle = '#34d399';
-    const blink = Math.sin(this.animTime * 5) > 0;
-    if (blink) {
-      ctx.fillText('CLICK / TAP OR PRESS SPACE TO START', this.width / 2, 440);
-    }
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#10B981';
+    ctx.fillText('CLICK / TAP OR PRESS SPACE TO START', this.width / 2, 440);
 
     ctx.restore();
   }
 
   private renderPauseOverlay(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 6, 10, 0.8)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.9)';
     ctx.fillRect(0, 0, this.width, this.height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#38bdf8';
-    ctx.font = 'bold 32px monospace';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('PAUSED', this.width / 2, 280);
 
-    ctx.font = '16px monospace';
-    ctx.fillStyle = '#94a3b8';
+    ctx.font = '16px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = '#2B2118';
     ctx.fillText('Press ESC or P to Resume', this.width / 2, 320);
 
     ctx.restore();
@@ -540,37 +531,31 @@ export class BioArenaRenderer {
     gameState: GameState
   ): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(5, 6, 10, 0.88)';
+    ctx.fillStyle = 'rgba(250, 246, 238, 0.95)';
     ctx.fillRect(0, 0, this.width, this.height);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ef4444';
-    ctx.font = 'bold 36px monospace';
-    ctx.shadowColor = '#dc2626';
-    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 42px "Patrick Hand", cursive, sans-serif';
     ctx.fillText('CELL BREACHED', this.width / 2, 190);
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#e2e8f0';
-    ctx.font = 'bold 24px monospace';
+    ctx.fillStyle = '#2B2118';
+    ctx.font = 'bold 26px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(`FINAL SCORE: ${gameState.score.toLocaleString()}`, this.width / 2, 240);
 
-    ctx.fillStyle = '#f59e0b';
-    ctx.font = '16px monospace';
+    ctx.fillStyle = '#E09F3E';
+    ctx.font = 'bold 16px "Patrick Hand", cursive, sans-serif';
     ctx.fillText(`HIGH SCORE: ${gameState.highScore.toLocaleString()}`, this.width / 2, 275);
 
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '15px monospace';
+    ctx.fillStyle = '#6A5D4D';
+    ctx.font = '15px "Comfortaa", cursive, sans-serif';
     ctx.fillText(`Waves Reached: ${gameState.wave}`, this.width / 2, 315);
     ctx.fillText(`Viruses Destroyed: ${gameState.virusesDestroyed}`, this.width / 2, 340);
     ctx.fillText(`Firing Accuracy: ${gameState.accuracyPercentage}%`, this.width / 2, 365);
 
-    ctx.font = 'bold 18px monospace';
-    ctx.fillStyle = '#34d399';
-    const blink = Math.sin(this.animTime * 5) > 0;
-    if (blink) {
-      ctx.fillText('CLICK / TAP OR PRESS SPACE TO RESTART', this.width / 2, 430);
-    }
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = '#10B981';
+    ctx.fillText('CLICK / TAP OR PRESS SPACE TO RESTART', this.width / 2, 430);
 
     ctx.restore();
   }
