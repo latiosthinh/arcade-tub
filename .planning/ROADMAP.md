@@ -21,7 +21,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Auto-runner with instant block stacking underneath paper bird, cliff clearance, perfect landing fever mode.
 - Unit tests for stack height, obstacle collisions, and fever speed multipliers.
 
-### Phase 35: Layers Roll (`games/layers-roll/`)
+### Phase 35: Layers Roll (`games/layers-roll/`) [COMPLETED]
 - Rolling paper roll accumulating colored construction paper layers, obstacle trimmer teeth, finish ribbon line.
 - Unit tests for radius scaling, trimming mechanics, and final score multiplier.
 
