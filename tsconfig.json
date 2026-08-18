@@ -14,6 +14,7 @@
     { "path": "games/space-racer" },
     { "path": "games/virus-defense" },
     { "path": "games/flappy-fish" },
-    { "path": "games/game-2048" }
+    { "path": "games/game-2048" },
+    { "path": "games/snake-eat" }
   ]
 }
