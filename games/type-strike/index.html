@@ -5,10 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Type Strike — Arcade Carnival</title>
   <link rel="stylesheet" href="../../src/styles/tokens.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Comfortaa:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg-primary); display: flex; justify-content: center; align-items: center; height: 100vh; position: relative; overflow: hidden; }
-    canvas { display: block; }
+    body {
+      background-color: #FAF6EE;
+      background-image: radial-gradient(#2B2118 0.75px, transparent 0.75px), radial-gradient(#2B2118 0.75px, #FAF6EE 0.75px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    canvas {
+      display: block;
+      border: 3px solid #2B2118;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #2B2118;
+      background: #FAF6EE;
+    }
   </style>
 </head>
 <body>
