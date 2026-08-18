@@ -30,13 +30,14 @@ export class ParticleSystem {
       const angle = (Math.random() * 0.8 - 0.4) + (dirSign > 0 ? 0 : Math.PI);
       const speed = 120 + Math.random() * 240;
       const maxLife = 0.4 + Math.random() * 0.4;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#8d6e63';
 
       this.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: -Math.abs(Math.sin(angle)) * speed * 0.6 - 50,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 3 + Math.random() * 4,
         alpha: 1.0,
         life: maxLife,
@@ -56,13 +57,14 @@ export class ParticleSystem {
       const angle = Math.random() * Math.PI * 2;
       const speed = 60 + Math.random() * 120;
       const maxLife = 0.6 + Math.random() * 0.5;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#2ecc71';
 
       this.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: -Math.abs(Math.sin(angle)) * speed * 0.5 - 30,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 4 + Math.random() * 5,
         alpha: 1.0,
         life: maxLife,
@@ -82,13 +84,14 @@ export class ParticleSystem {
       const angle = Math.random() * Math.PI * 2;
       const speed = 40 + Math.random() * 140;
       const maxLife = 0.5 + Math.random() * 0.4;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#f1c40f';
 
       this.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: -Math.abs(Math.sin(angle)) * speed - 60,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 2 + Math.random() * 3,
         alpha: 1.0,
         life: maxLife,
@@ -108,13 +111,14 @@ export class ParticleSystem {
       const angle = Math.random() * Math.PI * 2;
       const speed = 100 + Math.random() * 320;
       const maxLife = 0.5 + Math.random() * 0.5;
+      const color = colors[Math.floor(Math.random() * colors.length)] ?? '#e74c3c';
 
       this.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color,
         size: 3 + Math.random() * 6,
         alpha: 1.0,
         life: maxLife,
@@ -131,6 +135,7 @@ export class ParticleSystem {
 
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
+      if (!p) continue;
       p.life -= dt;
 
       if (p.life <= 0) {

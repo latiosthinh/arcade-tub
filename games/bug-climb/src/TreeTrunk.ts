@@ -53,7 +53,12 @@ export class TreeTrunk {
       this.generateInitial();
     }
 
-    const removed = this.segments.shift()!;
+    const removed = this.segments.shift() ?? {
+      id: 0,
+      altitude: 0,
+      branch: BranchSide.NONE,
+      woodVariation: 0,
+    };
     const newBranch = this.generateNextBranch();
 
     this.segments.push({
@@ -71,7 +76,8 @@ export class TreeTrunk {
     if (index < 0 || index >= this.segments.length) {
       return BranchSide.NONE;
     }
-    return this.segments[index].branch;
+    const seg = this.segments[index];
+    return seg ? seg.branch : BranchSide.NONE;
   }
 
   public reset(): void {

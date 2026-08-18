@@ -29,6 +29,7 @@ export default defineConfig({
         'flappy-fish': resolve(__dirname, 'games/flappy-fish/index.html'),
         'game-2048': resolve(__dirname, 'games/game-2048/index.html'),
         'snake-eat': resolve(__dirname, 'games/snake-eat/index.html'),
+        'bug-climb': resolve(__dirname, 'games/bug-climb/index.html'),
       },
     },
   },
