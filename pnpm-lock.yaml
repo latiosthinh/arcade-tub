@@ -30,7 +30,43 @@ importers:
         specifier: workspace:*
         version: link:../../packages/playables-adapter
 
+  games/bug-climb:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
+  games/car-race:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
   games/crate-catch:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
+  games/flappy-fish:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
+  games/game-2048:
     dependencies:
       '@arcade-carnival/game-engine':
         specifier: workspace:*
@@ -76,6 +112,15 @@ importers:
         version: link:../../packages/playables-adapter
 
   games/sky-hopper:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+
+  games/snake-eat:
     dependencies:
       '@arcade-carnival/game-engine':
         specifier: workspace:*

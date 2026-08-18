@@ -27,7 +27,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   padding-bottom: 0.75rem;
-  border-bottom: var(--border-subtle);
+  border-bottom: 2px solid #2B2118;
 }
 
 .ac-player-header-left {
@@ -40,24 +40,24 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--bg-surface);
-  color: var(--neon-cyan);
-  border: var(--border-accent);
+  background: #FFFDF9;
+  color: #2B2118;
+  border: 2px solid #2B2118;
+  box-shadow: 2px 2px 0px #2B2118;
   border-radius: var(--radius-md);
   padding: 0.5rem 1rem;
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   user-select: none;
 }
 
 .ac-btn-back:hover {
-  background: var(--neon-cyan);
-  color: var(--bg-primary);
-  box-shadow: var(--glow-cyan);
+  background: var(--neon-yellow);
   transform: translateX(-2px);
+  box-shadow: 3px 3px 0px #2B2118;
 }
 
 .ac-player-title-info {
@@ -74,7 +74,7 @@
 .ac-player-title {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
-  color: #ffffff;
+  color: #2B2118;
   margin: 0;
   letter-spacing: 0.5px;
 }
@@ -87,9 +87,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: var(--radius-sm);
-  background: rgba(0, 240, 255, 0.15);
-  color: var(--neon-cyan);
-  border: 1px solid rgba(0, 240, 255, 0.3);
+  background: #FFF8EC;
+  color: #2B2118;
+  border: 1.5px solid #2B2118;
+  box-shadow: 1px 1px 0px #2B2118;
 }
 
 .ac-player-header-right {
@@ -102,29 +103,28 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--bg-surface);
-  color: #cbd5e1;
-  border: var(--border-subtle);
+  background: #FFFDF9;
+  color: #2B2118;
+  border: 2px solid #2B2118;
+  box-shadow: 2px 2px 0px #2B2118;
   border-radius: var(--radius-md);
   padding: 0.5rem 0.9rem;
   font-family: var(--font-sans);
   font-size: var(--text-xs);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   user-select: none;
 }
 
 .ac-btn-theater:hover {
-  border-color: var(--neon-cyan);
-  color: var(--neon-cyan);
-  box-shadow: var(--glow-cyan);
+  background: var(--neon-yellow);
+  box-shadow: 3px 3px 0px #2B2118;
 }
 
 .ac-btn-theater.is-active {
-  background: rgba(0, 240, 255, 0.15);
-  color: var(--neon-cyan);
-  border-color: var(--neon-cyan);
+  background: #C85A32;
+  color: #FFFFFF;
 }
 
 /* Game Frame Container & Aspect Ratio */
@@ -220,14 +220,32 @@
   background: #000000;
 }
 
+.ac-player-frame-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - 240px);
+  min-height: 380px;
+  background: #000000;
+  border: var(--border-accent);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), var(--glow-cyan);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Game Details Panel */
 .ac-player-details {
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 1.5rem;
   background: var(--bg-card);
-  border: var(--border-subtle);
+  border: 2px solid #2B2118;
   border-radius: var(--radius-lg);
+  box-shadow: 4px 4px 0px #2B2118;
   padding: 1.5rem;
 }
 
@@ -239,7 +257,7 @@
 
 .ac-details-title {
   font-size: var(--text-xl);
-  color: #ffffff;
+  color: #2B2118;
 }
 
 .ac-details-stats {
@@ -247,12 +265,12 @@
   align-items: center;
   gap: 0.75rem;
   font-size: var(--text-xs);
-  color: #94a3b8;
+  color: #6A5D4D;
 }
 
 .ac-details-desc {
   font-size: var(--text-sm);
-  color: #cbd5e1;
+  color: #2B2118;
   line-height: 1.6;
 }
 
@@ -267,11 +285,13 @@
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
-  background: var(--bg-surface);
-  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: #FFF8EC;
+  border: 1px solid #2B2118;
+  box-shadow: 1px 1px 0px #2B2118;
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
-  color: #e2e8f0;
+  color: #2B2118;
+  font-weight: 700;
 }
 
 /* Score Card */
@@ -281,23 +301,24 @@
 }
 
 .ac-score-card {
-  background: var(--bg-surface);
-  border: var(--border-accent);
+  background: #FFF8EC;
+  border: 2px solid #2B2118;
   border-radius: var(--radius-md);
+  box-shadow: 3px 3px 0px #2B2118;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: var(--glow-cyan);
   height: 100%;
 }
 
 .ac-score-label {
   font-family: var(--font-display);
   font-size: var(--text-xs);
-  color: var(--neon-cyan);
+  color: #C85A32;
+  font-weight: 700;
   letter-spacing: 1px;
   margin-bottom: 0.25rem;
 }
@@ -305,8 +326,7 @@
 .ac-score-num {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  color: #2B2118;
   margin: 0.25rem 0;
 }
 
