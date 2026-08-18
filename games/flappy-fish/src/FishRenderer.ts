@@ -59,51 +59,49 @@ export class FishRenderer {
     gameState: GameState,
     particles: ParticleSystem
   ): void {
-    // 1. Background deep ocean gradient
+    // 1. Background kraft paper ocean
     this.renderBackground(ctx, width, height);
 
-    // 2. Caustic light rays
+    // 2. Sketched caustics
     this.renderCaustics(ctx, width, height);
 
-    // 3. Ambient bubbles
+    // 3. Ambient paper bubbles
     this.renderAmbientBubbles(ctx);
 
-    // 4. Coral Pillars & Pearl Bubbles
+    // 4. Cardboard Coral Pillars & Paper Pearls
     this.renderPillars(ctx, pipeManager.pillars, height);
 
     // 5. Particles
     particles.render(ctx);
 
-    // 6. Fish Entity
+    // 6. Papercut Fish Entity
     this.renderFish(ctx, fish);
 
-    // 7. HUD & Overlay Screens
+    // 7. Taped Placard HUD & Overlay Screens
     this.renderHUD(ctx, width, height, gameState);
   }
 
   private renderBackground(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-    const grad = ctx.createLinearGradient(0, 0, 0, height);
-    grad.addColorStop(0, '#041833'); // top shallow blue
-    grad.addColorStop(0.5, '#030d22'); // mid ocean
-    grad.addColorStop(1, '#01050e'); // abyss floor
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, width, height);
+
+    // Stitched guide lines
+    ctx.save();
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.12)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(10, 10, width - 20, height - 20);
+    ctx.restore();
   }
 
   private renderCaustics(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.globalCompositeOperation = 'screen';
-    ctx.globalAlpha = 0.12;
+    ctx.globalAlpha = 0.08;
 
     const t = this.causticTimer;
     for (let i = 0; i < 5; i++) {
       const xOffset = Math.sin(t * 0.8 + i * 1.5) * 60 + (i * width) / 4;
-      const grad = ctx.createLinearGradient(xOffset, 0, xOffset + 40, height);
-      grad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
-      grad.addColorStop(0.6, 'rgba(0, 240, 255, 0.08)');
-      grad.addColorStop(1, 'transparent');
-
-      ctx.fillStyle = grad;
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
       ctx.beginPath();
       ctx.moveTo(xOffset, 0);
       ctx.lineTo(xOffset + 50, 0);
@@ -120,9 +118,9 @@ export class FishRenderer {
     ctx.save();
     for (const b of this.ambientBubbles) {
       ctx.globalAlpha = b.alpha;
-      ctx.strokeStyle = '#00f0ff';
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
       ctx.lineWidth = 1;
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.15)';
       ctx.beginPath();
       ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
       ctx.fill();
@@ -157,52 +155,41 @@ export class FishRenderer {
   ): void {
     ctx.save();
 
-    // Pillar body gradient (dark bioluminescent coral)
-    const grad = ctx.createLinearGradient(x, 0, x + width, 0);
-    grad.addColorStop(0, '#092736');
-    grad.addColorStop(0.3, '#104d5b');
-    grad.addColorStop(0.7, '#156b7c');
-    grad.addColorStop(1, '#082531');
+    // Paper drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.fillRect(x + 3, y + 3, width, height);
 
-    ctx.fillStyle = grad;
-    ctx.strokeStyle = '#00f0ff';
-    ctx.lineWidth = 2;
-
-    // Body
+    // Corrugated cardboard pillar body
+    ctx.fillStyle = isTop ? '#C5A880' : '#D8C3A5';
     ctx.fillRect(x, y, width, height);
 
-    // Glowing Bioluminescent ridge highlight
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 10;
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.strokeRect(x, y, width, height);
 
-    // Coral cap rim at opening
+    // Decorative paper tape cap at pillar opening
     const capHeight = 16;
     const capY = isTop ? y + height - capHeight : y;
     const capExtra = 6;
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 12;
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.95)';
     ctx.beginPath();
-    ctx.roundRect(x - capExtra / 2, capY, width + capExtra, capHeight, 6);
+    ctx.roundRect(x - capExtra / 2, capY, width + capExtra, capHeight, 4);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // Neon polyps / dots on coral surface
-    ctx.fillStyle = '#ff007f';
-    ctx.shadowColor = '#ff007f';
-    ctx.shadowBlur = 6;
-    const dotSpacing = 28;
-    const dotCount = Math.floor(height / dotSpacing);
-    for (let i = 1; i <= dotCount; i++) {
-      const dotY = isTop ? y + i * dotSpacing - 10 : y + i * dotSpacing + 10;
-      if (dotY >= y + 5 && dotY <= y + height - 5) {
-        ctx.beginPath();
-        ctx.arc(x + width * 0.3, dotY, 2.5, 0, Math.PI * 2);
-        ctx.arc(x + width * 0.7, dotY + 6, 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
+    // Decorative cardboard texture stitches
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(x + 10, y);
+    ctx.lineTo(x + 10, y + height);
+    ctx.moveTo(x + width - 10, y);
+    ctx.lineTo(x + width - 10, y + height);
+    ctx.stroke();
 
     ctx.restore();
   }
@@ -210,30 +197,29 @@ export class FishRenderer {
   private drawPearl(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number): void {
     ctx.save();
 
-    // Floating bobbing effect
     const bob = Math.sin(this.causticTimer * 4) * 3;
     const py = y + bob;
 
-    // Outer iridescent bubble aura
-    ctx.shadowColor = '#ffd700';
-    ctx.shadowBlur = 16;
-    ctx.strokeStyle = '#e0f7fa';
-    ctx.lineWidth = 1.5;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    // Pearl drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.arc(x + 2, py + 2, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Construction yellow pearl cutout
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
     ctx.arc(x, py, radius, 0, Math.PI * 2);
     ctx.fill();
+
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Inner glowing golden pearl
-    const innerGrad = ctx.createRadialGradient(x - 2, py - 2, 1, x, py, radius * 0.65);
-    innerGrad.addColorStop(0, '#ffffff');
-    innerGrad.addColorStop(0.5, '#ffd700');
-    innerGrad.addColorStop(1, '#ff9900');
-
-    ctx.fillStyle = innerGrad;
+    // Inner paper sparkle dot
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
-    ctx.arc(x, py, radius * 0.65, 0, Math.PI * 2);
+    ctx.arc(x - radius * 0.3, py - radius * 0.3, radius * 0.3, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -248,11 +234,19 @@ export class FishRenderer {
     const h = fish.height;
     const finOsc = Math.sin(fish.finPhase) * 6;
 
-    // 1. Oscillating Tail Fin
+    // 1. Oscillating Tail Fin Cutout
     ctx.save();
-    ctx.fillStyle = '#00f0ff';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 8;
+    // Shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.moveTo(-w * 0.35 + 2, 2);
+    ctx.lineTo(-w * 0.6 + 2, -h * 0.45 + finOsc + 2);
+    ctx.lineTo(-w * 0.5 + 2, 2);
+    ctx.lineTo(-w * 0.6 + 2, h * 0.45 + finOsc + 2);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#3B82F6';
     ctx.beginPath();
     ctx.moveTo(-w * 0.35, 0);
     ctx.lineTo(-w * 0.6, -h * 0.45 + finOsc);
@@ -260,59 +254,66 @@ export class FishRenderer {
     ctx.lineTo(-w * 0.6, h * 0.45 + finOsc);
     ctx.closePath();
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
     ctx.restore();
 
-    // 2. Oscillating Dorsal Fin
+    // 2. Oscillating Dorsal Fin Cutout
     ctx.save();
-    ctx.fillStyle = 'rgba(0, 240, 255, 0.8)';
+    ctx.fillStyle = '#60A5FA';
     ctx.beginPath();
     ctx.moveTo(-w * 0.1, -h * 0.35);
     ctx.quadraticCurveTo(0, -h * 0.7 - finOsc * 0.5, w * 0.2, -h * 0.3);
     ctx.closePath();
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
     ctx.restore();
 
-    // 3. Cyber Fish Body (Streamlined Oval)
+    // 3. Construction Paper Fish Body & Shadow
     ctx.save();
-    const bodyGrad = ctx.createRadialGradient(w * 0.1, -h * 0.1, 2, 0, 0, w * 0.5);
-    bodyGrad.addColorStop(0, '#00f0ff');
-    bodyGrad.addColorStop(0.6, '#0072bb');
-    bodyGrad.addColorStop(1, '#002244');
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.ellipse(3, 3, w * 0.45, h * 0.4, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-    ctx.fillStyle = bodyGrad;
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 10;
+    // Paper body
+    ctx.fillStyle = '#C85A32';
     ctx.beginPath();
     ctx.ellipse(0, 0, w * 0.45, h * 0.4, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Cyber scales / body stripes
-    ctx.strokeStyle = '#39ff14';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.arc(-w * 0.05, 0, h * 0.3, -Math.PI * 0.4, Math.PI * 0.4);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.stroke();
 
-    // 4. Glowing Cyber Eye
-    ctx.fillStyle = '#ffffff';
-    ctx.shadowColor = '#ffd700';
-    ctx.shadowBlur = 10;
+    // 4. Hand-drawn Papercraft Eye
+    ctx.fillStyle = '#FFFDF8';
     ctx.beginPath();
-    ctx.arc(w * 0.22, -h * 0.1, 4.5, 0, Math.PI * 2);
+    ctx.arc(w * 0.22, -h * 0.1, 5, 0, Math.PI * 2);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
 
-    ctx.fillStyle = '#ff007f';
+    ctx.fillStyle = '#3E2723';
     ctx.beginPath();
-    ctx.arc(w * 0.24, -h * 0.1, 2.2, 0, Math.PI * 2);
+    ctx.arc(w * 0.24, -h * 0.1, 2.5, 0, Math.PI * 2);
     ctx.fill();
 
     // 5. Pectoral Fin
-    ctx.fillStyle = 'rgba(0, 240, 255, 0.9)';
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
     ctx.moveTo(w * 0.05, h * 0.1);
     ctx.quadraticCurveTo(-w * 0.1, h * 0.45 + finOsc, 0, h * 0.35);
     ctx.closePath();
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
     ctx.restore();
     ctx.restore();
@@ -326,152 +327,200 @@ export class FishRenderer {
   ): void {
     ctx.save();
 
-    // Playing HUD Banner
+    // Playing HUD Banner Placard
     if (gameState.status === 'playing' || gameState.status === 'paused') {
+      ctx.save();
+      // Taped Placard Header
+      ctx.fillStyle = '#FFFDF8';
+      ctx.fillRect(0, 0, width, 52);
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 52);
+      ctx.lineTo(width, 52);
+      ctx.stroke();
+
+      // Tape strips
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(100, 2, 24, 10);
+      ctx.strokeRect(100, 2, 24, 10);
+      ctx.fillRect(280, 2, 24, 10);
+      ctx.strokeRect(280, 2, 24, 10);
+
       // Score in top center
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 10;
-      ctx.font = 'bold 36px monospace';
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 28px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(gameState.score.toString(), width / 2, 50);
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gameState.score.toString(), width / 2, 28);
 
       // Pearls in top right
-      ctx.fillStyle = '#ffd700';
-      ctx.shadowColor = '#ffd700';
-      ctx.shadowBlur = 8;
-      ctx.font = 'bold 18px monospace';
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText(`★ ${gameState.pearls}`, width - 20, 45);
+      ctx.fillText(`★ ${gameState.pearls}`, width - 16, 28);
 
       // High Score top left
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-      ctx.font = '14px monospace';
+      ctx.fillStyle = '#6A5D4D';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(`BEST: ${gameState.highScore}`, 20, 45);
+      ctx.fillText(`BEST: ${gameState.highScore}`, 16, 28);
+      ctx.restore();
     }
 
     // Ready Overlay
     if (gameState.status === 'ready') {
-      ctx.fillStyle = 'rgba(3, 13, 34, 0.7)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.85)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = '#00f0ff';
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 14;
-      ctx.font = 'bold 32px monospace';
+      // Taped Cardboard Card
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(30, height * 0.2, width - 60, height * 0.55, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Top Tape
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(width / 2 - 40, height * 0.2 - 8, 80, 16);
+      ctx.strokeRect(width / 2 - 40, height * 0.2 - 8, 80, 16);
+
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('FLAPPY FISH', width / 2, height * 0.35);
+      ctx.fillText('FLAPPY FISH', width / 2, height * 0.32);
 
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = '#ffffff';
-      ctx.shadowBlur = 6;
-      ctx.font = '16px monospace';
-      ctx.fillText('TAP OR PRESS SPACE TO SWIM', width / 2, height * 0.45);
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('TAP OR PRESS SPACE TO SWIM', width / 2, height * 0.42);
 
-      ctx.fillStyle = '#ffd700';
-      ctx.font = '13px monospace';
-      ctx.fillText('Collect glowing pearls for +3 bonus!', width / 2, height * 0.52);
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = 'bold 15px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('Collect glowing pearls for +3 bonus!', width / 2, height * 0.5);
 
       if (gameState.highScore > 0) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillText(`HIGH SCORE: ${gameState.highScore}`, width / 2, height * 0.62);
+        ctx.fillStyle = '#6A5D4D';
+        ctx.font = '15px "Comfortaa", cursive, sans-serif';
+        ctx.fillText(`HIGH SCORE: ${gameState.highScore}`, width / 2, height * 0.6);
       }
     }
 
     // Paused Overlay
     if (gameState.status === 'paused') {
-      ctx.fillStyle = 'rgba(3, 13, 34, 0.8)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.85)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = '#ffd700';
-      ctx.shadowColor = '#ffd700';
-      ctx.shadowBlur = 12;
-      ctx.font = 'bold 32px monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText('PAUSED', width / 2, height * 0.45);
+      // Placard
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(40, height * 0.32, width - 80, height * 0.3, 8);
+      ctx.fill();
+      ctx.stroke();
 
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '16px monospace';
-      ctx.fillText('PRESS P OR ESC TO RESUME', width / 2, height * 0.55);
+      // Tape
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(width / 2 - 40, height * 0.32 - 8, 80, 16);
+      ctx.strokeRect(width / 2 - 40, height * 0.32 - 8, 80, 16);
+
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('PAUSED', width / 2, height * 0.44);
+
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('PRESS P OR ESC TO RESUME', width / 2, height * 0.54);
     }
 
     // Game Over Screen
     if (gameState.status === 'gameover') {
-      ctx.fillStyle = 'rgba(3, 13, 34, 0.85)';
+      ctx.fillStyle = 'rgba(244, 234, 212, 0.9)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = '#ff007f';
-      ctx.shadowColor = '#ff007f';
-      ctx.shadowBlur = 14;
-      ctx.font = 'bold 34px monospace';
+      // Cardboard Placard
+      const boxW = width - 50;
+      const boxH = height * 0.72;
+      const boxX = 25;
+      const boxY = height * 0.14;
+
+      ctx.fillStyle = '#FFFDF8';
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(boxX, boxY, boxW, boxH, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Tape
+      ctx.fillStyle = 'rgba(255, 248, 220, 0.9)';
+      ctx.strokeStyle = 'rgba(62, 39, 35, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.fillRect(60, boxY - 8, 50, 16);
+      ctx.strokeRect(60, boxY - 8, 50, 16);
+      ctx.fillRect(boxW - 60, boxY - 8, 50, 16);
+      ctx.strokeRect(boxW - 60, boxY - 8, 50, 16);
+
+      ctx.fillStyle = '#E11D48';
+      ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('GAME OVER', width / 2, height * 0.28);
-
-      // Score panel box
-      const boxW = 260;
-      const boxH = 180;
-      const boxX = (width - boxW) / 2;
-      const boxY = height * 0.34;
-
-      ctx.fillStyle = 'rgba(5, 25, 45, 0.9)';
-      ctx.strokeStyle = '#00f0ff';
-      ctx.lineWidth = 2;
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 12;
-      ctx.fillRect(boxX, boxY, boxW, boxH);
-      ctx.strokeRect(boxX, boxY, boxW, boxH);
+      ctx.fillText('GAME OVER', width / 2, boxY + 45);
 
       // Total score details
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '15px monospace';
+      ctx.fillStyle = '#3E2723';
+      ctx.font = '16px "Comfortaa", cursive, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(`Gates Cleared:`, boxX + 20, boxY + 35);
+      ctx.fillText(`Gates Cleared:`, boxX + 24, boxY + 100);
       ctx.textAlign = 'right';
-      ctx.fillText(`${gameState.score}`, boxX + boxW - 20, boxY + 35);
+      ctx.fillText(`${gameState.score}`, boxX + boxW - 24, boxY + 100);
 
-      ctx.fillStyle = '#ffd700';
+      ctx.fillStyle = '#F59E0B';
       ctx.textAlign = 'left';
-      ctx.fillText(`Bonus Pearls:`, boxX + 20, boxY + 65);
+      ctx.fillText(`Bonus Pearls:`, boxX + 24, boxY + 135);
       ctx.textAlign = 'right';
-      ctx.fillText(`+${gameState.pearls * 3} (${gameState.pearls})`, boxX + boxW - 20, boxY + 65);
+      ctx.fillText(`+${gameState.pearls * 3} (${gameState.pearls})`, boxX + boxW - 24, boxY + 135);
 
-      ctx.fillStyle = '#00f0ff';
-      ctx.font = 'bold 18px monospace';
+      ctx.fillStyle = '#C85A32';
+      ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(`TOTAL SCORE:`, boxX + 20, boxY + 105);
+      ctx.fillText(`TOTAL SCORE:`, boxX + 24, boxY + 185);
       ctx.textAlign = 'right';
-      ctx.fillText(`${gameState.totalScore}`, boxX + boxW - 20, boxY + 105);
+      ctx.fillText(`${gameState.totalScore}`, boxX + boxW - 24, boxY + 185);
 
       // Medal Tier Display
       if (gameState.medal !== 'none') {
         const medalColors: Record<MedalTier, string> = {
-          none: '#ffffff',
-          bronze: '#cd7f32',
-          silver: '#c0c0c0',
-          gold: '#ffd700',
-          platinum: '#00f0ff',
+          none: '#3E2723',
+          bronze: '#C85A32',
+          silver: '#6A5D4D',
+          gold: '#F59E0B',
+          platinum: '#10B981',
         };
         ctx.fillStyle = medalColors[gameState.medal];
-        ctx.shadowColor = medalColors[gameState.medal];
-        ctx.shadowBlur = 10;
-        ctx.font = 'bold 14px monospace';
+        ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(`🏅 ${gameState.medal.toUpperCase()} MEDAL`, width / 2, boxY + 145);
+        ctx.fillText(`🏅 ${gameState.medal.toUpperCase()} MEDAL`, width / 2, boxY + 230);
       }
 
       // Best score
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.font = '14px monospace';
+      ctx.fillStyle = '#6A5D4D';
+      ctx.font = '15px "Comfortaa", cursive, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(`BEST SCORE: ${gameState.highScore}`, width / 2, boxY + boxH + 30);
+      ctx.fillText(`BEST SCORE: ${gameState.highScore}`, width / 2, boxY + 280);
 
       // Restart prompt
-      ctx.fillStyle = '#39ff14';
-      ctx.shadowColor = '#39ff14';
-      ctx.shadowBlur = 8;
-      ctx.font = '16px monospace';
-      ctx.fillText('TAP OR SPACE TO RESTART', width / 2, boxY + boxH + 65);
+      ctx.fillStyle = '#10B981';
+      ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText('TAP OR SPACE TO PLAY AGAIN', width / 2, boxY + 340);
     }
 
     ctx.restore();
