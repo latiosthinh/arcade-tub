@@ -39,7 +39,7 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - `mahjong-paper`: Layered tile matching puzzle, free-edge logic, hint & shuffle.
 - Unit tests for merge collision, board generation, and match verification.
 
-### Phase 39: Subway Runner & Prism Laser (`games/subway-runner/`, `games/prism-laser/`)
+### Phase 39: Subway Runner & Prism Laser (`games/subway-runner/`, `games/prism-laser/`) [COMPLETED]
 - `subway-runner`: 3-lane vertical runner with jump/slide mechanics and paper train obstacles.
 - `prism-laser`: Optics puzzle rotating paper mirrors to reflect and split laser beams.
 - Unit tests for lane kinematics and beam tracing.
