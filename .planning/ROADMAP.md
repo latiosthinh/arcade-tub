@@ -78,8 +78,12 @@ Plans:
   2. Oncoming traffic vehicles spawn at variable speeds in different lanes; dodging them close awards slipstream draft bonus points.
   3. Colliding with traffic triggers explosion visual effects, procedural crash audio, and game over screen.
   4. Standalone HTML entry and Vite rollup build bundle cleanly with smooth scrolling road canvas.
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+Plans:
+- [ ] 24-01-PLAN.md — Multi-lane highway geometry, PlayerCar physics (100-350 km/h), TrafficManager & drafting bonus, GameState & 100% unit tests (CAR-01)
+- [ ] 24-02-PLAN.md — CarAudio engine pitch bend & crash FX, Particles, HighwayRenderer synthwave visuals, CarRaceScene controls & Vite packaging (CAR-02)
 
 ### Phase 25: Catalog Expansion & Release Audit
 **Goal**: Integrate all 3 new games into hub catalog with metadata and SVG screenshots, verify multi-page build, ensure bundle < 200KB, and 100% tests pass across all 15 games.
