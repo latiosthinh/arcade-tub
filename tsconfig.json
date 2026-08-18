@@ -18,6 +18,7 @@
     { "path": "games/snake-eat" },
     { "path": "games/bug-climb" },
     { "path": "games/car-race" },
-    { "path": "games/paper-basket" }
+    { "path": "games/paper-basket" },
+    { "path": "games/helix-jump" }
   ]
 }
