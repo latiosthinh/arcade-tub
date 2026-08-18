@@ -78,14 +78,14 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
     const ids = Array.from(visibleCards).map(c => c.getAttribute('data-game-id'));
     expect(ids).toEqual(['brick-blitz', 'type-strike', 'pop-balloon', 'virus-defense', 'car-race']);
 
-    // puzzle filter -> memory-cards, memory-boxes, game-2048
+    // puzzle filter -> memory-cards, memory-boxes, game-2048, potion-merge, mahjong-paper
     store.setState({ activeFilter: 'puzzle' });
     grid.update(store.getState());
 
     const puzzleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
-    expect(puzzleCards.length).toBe(3);
+    expect(puzzleCards.length).toBe(5);
     const puzzleIds = Array.from(puzzleCards).map(c => c.getAttribute('data-game-id'));
-    expect(puzzleIds).toEqual(['memory-cards', 'memory-boxes', 'game-2048']);
+    expect(puzzleIds).toEqual(['memory-cards', 'memory-boxes', 'game-2048', 'potion-merge', 'mahjong-paper']);
 
     grid.destroy();
   });

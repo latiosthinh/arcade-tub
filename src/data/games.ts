@@ -222,6 +222,32 @@ export const GAMES: GameItem[] = [
     themeColor: '#D97706',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
     features: ['Upward Flap Kinematics', 'Swish Streak Multipliers', 'Dynamic Shot Clock & Moving Rims']
+  },
+  {
+    id: 'potion-merge',
+    title: 'Potion Merge',
+    genre: 'Physics Merge / Alchemy',
+    description: 'Suika-style alchemical flask drop-and-merge. Drop bubbly papercraft potions, merge matching tiers to craft grand cosmic elixirs.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '95K plays',
+    icon: '🧪',
+    themeColor: '#8B5CF6',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['11-Tier Potion Crafting', 'Elastic Collision Physics', 'Dropper Aiming & Sparkle Merges']
+  },
+  {
+    id: 'mahjong-paper',
+    title: 'Mahjong Paper',
+    genre: 'Solitaire Tile Matching',
+    description: 'Layered cardstock mahjong solitaire. Clear multi-tiered origami animals, paper flowers, and dragon crests with free-edge matching.',
+    badge: 'New',
+    rating: '4.8 ★',
+    plays: '130K plays',
+    icon: '🀄',
+    themeColor: '#E11D48',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
+    features: ['Layered Cardstock Solitaire', 'Free-Edge Checking Algorithm', 'Hint, Shuffle & Undo Support']
   }
 ];
 

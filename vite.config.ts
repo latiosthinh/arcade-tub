@@ -31,6 +31,8 @@ export default defineConfig({
         'snake-eat': resolve(__dirname, 'games/snake-eat/index.html'),
         'bug-climb': resolve(__dirname, 'games/bug-climb/index.html'),
         'car-race': resolve(__dirname, 'games/car-race/index.html'),
+        'potion-merge': resolve(__dirname, 'games/potion-merge/index.html'),
+        'mahjong-paper': resolve(__dirname, 'games/mahjong-paper/index.html'),
       },
     },
   },

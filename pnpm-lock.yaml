@@ -151,6 +151,25 @@ importers:
         specifier: ^4.1.4
         version: 4.1.10(@types/node@26.2.0)(happy-dom@20.11.2)(vite@7.3.6(@types/node@26.2.0))
 
+  games/mahjong-paper:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.6(@types/node@26.2.0)
+      vitest:
+        specifier: ^4.1.4
+        version: 4.1.10(@types/node@26.2.0)(happy-dom@20.11.2)(vite@7.3.6(@types/node@26.2.0))
+
   games/memory-boxes:
     dependencies:
       '@arcade-carnival/game-engine':
@@ -216,6 +235,25 @@ importers:
         specifier: workspace:*
         version: link:../../packages/playables-adapter
 
+  games/potion-merge:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.6(@types/node@26.2.0)
+      vitest:
+        specifier: ^4.1.4
+        version: 4.1.10(@types/node@26.2.0)(happy-dom@20.11.2)(vite@7.3.6(@types/node@26.2.0))
+
   games/safe-cracker:
     dependencies:
       '@arcade-carnival/game-engine':
@@ -242,6 +280,25 @@ importers:
       '@arcade-carnival/playables-adapter':
         specifier: workspace:*
         version: link:../../packages/playables-adapter
+
+  games/snow-rider:
+    dependencies:
+      '@arcade-carnival/game-engine':
+        specifier: workspace:*
+        version: link:../../packages/game-engine
+      '@arcade-carnival/playables-adapter':
+        specifier: workspace:*
+        version: link:../../packages/playables-adapter
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.6(@types/node@26.2.0)
+      vitest:
+        specifier: ^4.1.4
+        version: 4.1.10(@types/node@26.2.0)(happy-dom@20.11.2)(vite@7.3.6(@types/node@26.2.0))
 
   games/space-racer:
     dependencies:

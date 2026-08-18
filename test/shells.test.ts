@@ -18,6 +18,8 @@ const GAME_IDS = [
   'snake-eat',
   'bug-climb',
   'car-race',
+  'potion-merge',
+  'mahjong-paper',
 ];
 
 describe('Game Shell HTML Containers', () => {
