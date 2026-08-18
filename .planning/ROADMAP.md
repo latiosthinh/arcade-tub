@@ -8,7 +8,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 
 - [x] **Phase 21: Type Strike Arrow Mode** — Mode toggle, arrow sequence badges (↑ ↓ ← → / WASD), directional input & lasers (TS-ARR-01, TS-ARR-02)
 - [x] **Phase 22: Cyber Snake Minigame** — Grid matrix movement, food pellets, tail growth, wall/self collision, particle effects (SNK-01, SNK-02)
-- [ ] **Phase 23: Bug Climb Tree Minigame** — Trunk side-switching, procedural branch obstacles, urgent timer bar, chop particles (BUG-01, BUG-02)
+- [x] **Phase 23: Bug Climb Tree Minigame** — Trunk side-switching, procedural branch obstacles, urgent timer bar, chop particles (BUG-01, BUG-02)
 - [ ] **Phase 24: Neon Highway Car Race Minigame** — Multi-lane traffic dodger, speed control, slipstream draft bonus, crash FX (CAR-01, CAR-02)
 - [ ] **Phase 25: Catalog Expansion & Release Audit** — 15-game catalog registry, SVG screenshots, multi-page Vite build, bundle audit (<200KB), 100% test pass (HUB-CAT-01, HUB-CAT-02)
 
@@ -21,7 +21,7 @@ Arcade Carnival is a cyber-arcade collection of 15 browser-based HTML5 Canvas mi
 | 13–20. v3.0 Game Catalog Expansion (7 Games) | 16/16 | Complete | 2026-08-18 |
 | 21. Type Strike Arrow Mode | 2/2 | Complete | 2026-08-18 |
 | 22. Cyber Snake Minigame | 2/2 | Complete | 2026-08-18 |
-| 23. Bug Climb Tree Minigame | 0/2 | Not started | - |
+| 23. Bug Climb Tree Minigame | 2/2 | Complete | 2026-08-18 |
 | 24. Neon Highway Car Race Minigame | 0/2 | Not started | - |
 | 25. Catalog Expansion & Release Audit | 0/2 | Not started | - |
 

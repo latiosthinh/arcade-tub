@@ -9,8 +9,8 @@
 - [x] **SNK-02**: Snake Eat canvas presentation & packaging (neon segmented snake glow, particle eating bursts, procedural audio, standalone HTML & Vite rollup input)
 
 ## Bug Climb Tree
-- [ ] **BUG-01**: Bug Climb Tree model & logic (trunk column state, branch hazard generation on left/right sides, Left/Right arrow tap side-switching, urgent timer bar, height scoring, 100% unit tests)
-- [ ] **BUG-02**: Bug Climb Tree canvas presentation & packaging (animated climbing bug, falling branch obstacles, wood chop particle effects, procedural audio, standalone HTML & Vite rollup input)
+- [x] **BUG-01**: Bug Climb Tree model & logic (trunk column state, branch hazard generation on left/right sides, Left/Right arrow tap side-switching, urgent timer bar, height scoring, 100% unit tests)
+- [x] **BUG-02**: Bug Climb Tree canvas presentation & packaging (animated climbing bug, falling branch obstacles, wood chop particle effects, procedural audio, standalone HTML & Vite rollup input)
 
 ## Neon Highway (Car Race)
 - [ ] **CAR-01**: Car Race traffic & kinematics model (multi-lane vertical highway, Up/Down speed control and Left/Right lane switching, oncoming traffic spawning with variable speeds, near-miss draft bonus, distance scoring, 100% unit tests)
@@ -28,8 +28,8 @@
 | TS-ARR-02 | Phase 21 | Complete |
 | SNK-01 | Phase 22 | Complete |
 | SNK-02 | Phase 22 | Complete |
-| BUG-01 | Phase 23 | Pending |
-| BUG-02 | Phase 23 | Pending |
+| BUG-01 | Phase 23 | Complete |
+| BUG-02 | Phase 23 | Complete |
 | CAR-01 | Phase 24 | Pending |
 | CAR-02 | Phase 24 | Pending |
 | HUB-CAT-01 | Phase 25 | Pending |
