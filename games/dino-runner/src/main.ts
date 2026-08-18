@@ -1,13 +1,22 @@
-import { GameRunner } from '@arcade-carnival/game-engine';
-import { initPlayables } from '@arcade-carnival/playables-adapter';
+import { GameLoop } from '@arcade-carnival/game-engine';
+import { initPlayables, onPause, onResume } from '@arcade-carnival/playables-adapter';
 import { DinoScene } from './DinoScene.js';
 
-window.addEventListener('DOMContentLoaded', () => {
-  initPlayables();
-  const canvas = document.getElementById('game') as HTMLCanvasElement;
-  if (!canvas) throw new Error('Game canvas not found');
+initPlayables();
 
+const canvas = document.getElementById('game') as HTMLCanvasElement;
+if (canvas) {
+  const loop = new GameLoop(canvas);
   const scene = new DinoScene(canvas);
-  const runner = new GameRunner(scene);
-  runner.start();
-});
+
+  onPause(() => {
+    scene.pause();
+  });
+
+  onResume(() => {
+    scene.resume();
+  });
+
+  loop.setScene(scene);
+  loop.start();
+}

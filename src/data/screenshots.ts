@@ -396,5 +396,394 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
         <rect x="3" y="10" width="14" height="10" rx="2" fill="#FAF6EE" stroke="#3E2723" stroke-width="1.5" />
       </g>
     </svg>
+  `,
+
+  'drift-boss': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Kraft Background -->
+      <rect width="320" height="180" fill="#F4EAD4" />
+      <rect x="8" y="8" width="304" height="164" rx="6" fill="#FAF6EE" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Isometric Cardboard Zig-Zag Platforms -->
+      <polygon points="60,140 160,80 200,105 100,165" fill="#D8C3A5" stroke="#3E2723" stroke-width="2.5" />
+      <polygon points="160,80 260,20 300,45 200,105" fill="#C5A880" stroke="#3E2723" stroke-width="2.5" />
+      <polygon points="100,165 200,105 200,120 100,180" fill="#9C7A53" stroke="#3E2723" stroke-width="2" />
+      <polygon points="200,105 300,45 300,60 200,120" fill="#84623C" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Paper Coin -->
+      <circle cx="210" cy="55" r="8" fill="#F59E0B" stroke="#3E2723" stroke-width="1.5" />
+      <circle cx="210" cy="55" r="5" fill="#FEF08A" stroke="#3E2723" stroke-width="1" />
+
+      <!-- Isometric Drifting Car -->
+      <g transform="translate(135, 95) rotate(-30)">
+        <rect x="0" y="0" width="28" height="16" rx="3" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+        <rect x="6" y="3" width="12" height="10" rx="2" fill="#FAF6EE" stroke="#3E2723" stroke-width="1.5" />
+        <!-- Skid marks -->
+        <line x1="-12" y1="2" x2="-2" y2="2" stroke="#D97706" stroke-width="2" stroke-dasharray="3 2" />
+        <line x1="-12" y1="14" x2="-2" y2="14" stroke="#D97706" stroke-width="2" stroke-dasharray="3 2" />
+      </g>
+    </svg>
+  `,
+
+  'helix-jump': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Dark Craft Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+
+      <!-- Central Cardboard Pole Column -->
+      <rect x="145" y="0" width="30" height="180" fill="#C5A880" stroke="#3E2723" stroke-width="2.5" />
+      <line x1="160" y1="0" x2="160" y2="180" stroke="#FAF6EE" stroke-width="1.5" stroke-dasharray="6 6" />
+
+      <!-- Tier 1 Platforms (Green Cardstock) -->
+      <ellipse cx="160" cy="140" rx="70" ry="20" fill="#059669" stroke="#3E2723" stroke-width="2.5" />
+      <!-- Gap in Tier 1 -->
+      <path d="M 160 140 L 215 152 A 70 20 0 0 1 180 160 Z" fill="#FAF6EE" />
+
+      <!-- Tier 2 Platforms (Ochre + Red Danger Zone) -->
+      <ellipse cx="160" cy="90" rx="65" ry="18" fill="#D97706" stroke="#3E2723" stroke-width="2.5" />
+      <!-- Red Hazard Segment -->
+      <path d="M 160 90 L 105 100 A 65 18 0 0 1 125 74 Z" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+      <!-- Gap in Tier 2 -->
+      <path d="M 160 90 L 160 108 A 65 18 0 0 1 195 104 Z" fill="#FAF6EE" />
+
+      <!-- Tier 3 Platform (Top) -->
+      <ellipse cx="160" cy="40" rx="60" ry="16" fill="#059669" stroke="#3E2723" stroke-width="2.5" />
+
+      <!-- Bouncing Paper Ball with Splash Trail -->
+      <circle cx="160" cy="65" r="9" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+      <circle cx="160" cy="90" r="14" fill="#E11D48" opacity="0.3" />
+    </svg>
+  `,
+
+  'square-bird': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Sky Parchment Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+
+      <!-- Ground Kraft Surface -->
+      <rect x="0" y="145" width="320" height="35" fill="#D8C3A5" stroke="#3E2723" stroke-width="2.5" />
+      <line x1="0" y1="145" x2="320" y2="145" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Cardboard Spike Barrier Obstacles -->
+      <rect x="220" y="85" width="30" height="60" rx="3" fill="#C85A32" stroke="#3E2723" stroke-width="2" />
+      <polygon points="220,85 235,65 250,85" fill="#E11D48" stroke="#3E2723" stroke-width="1.5" />
+
+      <!-- Stack of Square Eggs -->
+      <rect x="80" y="125" width="22" height="20" rx="3" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+      <rect x="80" y="105" width="22" height="20" rx="3" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+      <rect x="80" y="85" width="22" height="20" rx="3" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Square Bird Character on Top -->
+      <rect x="80" y="62" width="22" height="22" rx="4" fill="#F59E0B" stroke="#3E2723" stroke-width="2" />
+      <circle cx="96" cy="70" r="3" fill="#FFFDF8" stroke="#3E2723" stroke-width="1" />
+      <circle cx="97" cy="70" r="1.5" fill="#3E2723" />
+      <!-- Beak -->
+      <polygon points="102,72 108,75 102,78" fill="#E11D48" stroke="#3E2723" stroke-width="1" />
+      <!-- Comb -->
+      <polygon points="85,62 88,56 93,62" fill="#E11D48" stroke="#3E2723" stroke-width="1" />
+    </svg>
+  `,
+
+  'layers-roll': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Kraft Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <rect x="6" y="6" width="308" height="168" rx="8" fill="#F4EAD4" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Runway Tracks with Colored Paper Layers -->
+      <polygon points="30,170 110,40 210,40 290,170" fill="#E8DEC8" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Color Paper Strips on Runway -->
+      <polygon points="80,140 120,70 150,70 125,140" fill="#3B82F6" opacity="0.8" />
+      <polygon points="140,140 160,70 190,70 185,140" fill="#E11D48" opacity="0.8" />
+
+      <!-- Cardboard Scissors Hazard -->
+      <g transform="translate(195, 80) rotate(25)">
+        <ellipse cx="0" cy="0" rx="14" ry="4" fill="#C5A880" stroke="#3E2723" stroke-width="1.5" />
+        <ellipse cx="0" cy="6" rx="14" ry="4" fill="#C5A880" stroke="#3E2723" stroke-width="1.5" />
+      </g>
+
+      <!-- Giant Rolling Paper Cylinder -->
+      <g transform="translate(145, 120)">
+        <ellipse cx="15" cy="18" rx="28" ry="18" fill="#D97706" stroke="#3E2723" stroke-width="2.5" />
+        <ellipse cx="15" cy="18" rx="20" ry="12" fill="#3B82F6" stroke="#3E2723" stroke-width="2" />
+        <ellipse cx="15" cy="18" rx="12" ry="7" fill="#E11D48" stroke="#3E2723" stroke-width="1.5" />
+        <circle cx="15" cy="18" r="4" fill="#FFFDF8" stroke="#3E2723" stroke-width="1" />
+      </g>
+    </svg>
+  `,
+
+  'mini-battles': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Arena Kraft Split View Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <rect x="10" y="10" width="145" height="160" rx="6" fill="#FEE2E2" stroke="#3E2723" stroke-width="2" />
+      <rect x="165" y="10" width="145" height="160" rx="6" fill="#DBEAFE" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Center Divider Tape -->
+      <line x1="160" y1="0" x2="160" y2="180" stroke="#D97706" stroke-width="3" stroke-dasharray="6 4" />
+
+      <!-- Player 1: Red Cardboard Cowboy/Tank -->
+      <g transform="translate(60, 80)">
+        <rect x="0" y="0" width="34" height="24" rx="4" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+        <line x1="34" y1="12" x2="52" y2="12" stroke="#3E2723" stroke-width="3" stroke-linecap="round" />
+        <circle cx="17" cy="12" r="6" fill="#FFFDF8" stroke="#3E2723" stroke-width="1.5" />
+        <text x="17" y="-8" text-anchor="middle" font-family="'Patrick Hand', cursive" font-size="12" font-weight="bold" fill="#E11D48">P1 [TAP]</text>
+      </g>
+
+      <!-- Player 2: Blue Cardboard Cowboy/Tank -->
+      <g transform="translate(225, 80)">
+        <rect x="0" y="0" width="34" height="24" rx="4" fill="#2563EB" stroke="#3E2723" stroke-width="2" />
+        <line x1="0" y1="12" x2="-18" y2="12" stroke="#3E2723" stroke-width="3" stroke-linecap="round" />
+        <circle cx="17" cy="12" r="6" fill="#FFFDF8" stroke="#3E2723" stroke-width="1.5" />
+        <text x="17" y="-8" text-anchor="middle" font-family="'Patrick Hand', cursive" font-size="12" font-weight="bold" fill="#2563EB">P2 [TAP]</text>
+      </g>
+
+      <!-- Mid-air Flying Paper Bullet & Star Clash -->
+      <circle cx="150" cy="92" r="4" fill="#D97706" stroke="#3E2723" stroke-width="1" />
+      <polygon points="160,86 163,91 169,92 164,96 166,101 160,98 154,101 156,96 151,92 157,91" fill="#FEF08A" stroke="#3E2723" stroke-width="1" />
+    </svg>
+  `,
+
+  'dino-runner': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Kraft Desert Parchment Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+
+      <!-- Distant Paper Sun & Cloud -->
+      <circle cx="270" cy="35" r="14" fill="#F59E0B" stroke="#3E2723" stroke-width="1.5" />
+      <ellipse cx="80" cy="40" rx="20" ry="8" fill="#FFFDF8" stroke="#3E2723" stroke-width="1.5" />
+
+      <!-- Desert Horizon Line with Cardboard Stipples -->
+      <line x1="0" y1="140" x2="320" y2="140" stroke="#3E2723" stroke-width="2" />
+      <line x1="40" y1="148" x2="70" y2="148" stroke="#C5A880" stroke-width="1.5" />
+      <line x1="140" y1="152" x2="190" y2="152" stroke="#C5A880" stroke-width="1.5" />
+
+      <!-- Cardboard Cacti Hazards -->
+      <g transform="translate(230, 105)">
+        <rect x="8" y="0" width="6" height="35" fill="#059669" stroke="#3E2723" stroke-width="1.5" />
+        <path d="M 2 12 L 8 12 L 8 18 L 2 18 Z" fill="#059669" stroke="#3E2723" stroke-width="1" />
+        <path d="M 14 8 L 20 8 L 20 16 L 14 16 Z" fill="#059669" stroke="#3E2723" stroke-width="1" />
+      </g>
+
+      <!-- Origami Pterodactyl in Flight -->
+      <g transform="translate(160, 65)">
+        <polygon points="0,8 14,0 18,6 26,4 16,12 8,10" fill="#D97706" stroke="#3E2723" stroke-width="1.5" />
+      </g>
+
+      <!-- Cardboard T-Rex Dinosaur Running -->
+      <g transform="translate(60, 95)">
+        <!-- Head & Jaw -->
+        <rect x="18" y="0" width="16" height="14" rx="2" fill="#4A6D56" stroke="#3E2723" stroke-width="2" />
+        <circle cx="28" cy="4" r="2" fill="#FAF6EE" />
+        <!-- Body & Short Arm -->
+        <rect x="8" y="12" width="16" height="20" rx="3" fill="#4A6D56" stroke="#3E2723" stroke-width="2" />
+        <rect x="22" y="16" width="6" height="3" fill="#4A6D56" stroke="#3E2723" stroke-width="1" />
+        <!-- Tail -->
+        <polygon points="8,16 0,22 8,26" fill="#4A6D56" stroke="#3E2723" stroke-width="1.5" />
+        <!-- Legs -->
+        <rect x="10" y="32" width="4" height="13" fill="#3E2723" />
+        <rect x="18" y="32" width="4" height="10" fill="#3E2723" />
+      </g>
+    </svg>
+  `,
+
+  'snow-rider': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Winter Cardboard Mountain Sky -->
+      <rect width="320" height="180" fill="#E0F2FE" />
+
+      <!-- Mountain Slopes in Background -->
+      <polygon points="0,180 80,60 160,180" fill="#BAE6FD" stroke="#3E2723" stroke-width="1.5" />
+      <polygon points="120,180 220,40 320,180" fill="#E0F2FE" stroke="#3E2723" stroke-width="1.5" />
+
+      <!-- 3D Downhill Snow Slope -->
+      <polygon points="0,180 120,70 200,70 320,180" fill="#FFFDF8" stroke="#3E2723" stroke-width="2.5" />
+
+      <!-- Cardboard Snow Pine Trees -->
+      <g transform="translate(60, 90)">
+        <polygon points="15,0 0,22 30,22" fill="#059669" stroke="#3E2723" stroke-width="1.5" />
+        <polygon points="15,14 2,36 28,36" fill="#047857" stroke="#3E2723" stroke-width="1.5" />
+        <rect x="12" y="36" width="6" height="10" fill="#84623C" stroke="#3E2723" stroke-width="1" />
+      </g>
+      <g transform="translate(230, 80)">
+        <polygon points="12,0 0,18 24,18" fill="#059669" stroke="#3E2723" stroke-width="1.5" />
+        <polygon points="12,12 2,30 22,30" fill="#047857" stroke="#3E2723" stroke-width="1.5" />
+        <rect x="9" y="30" width="6" height="8" fill="#84623C" stroke="#3E2723" stroke-width="1" />
+      </g>
+
+      <!-- Wrapped Gift Box Pickup -->
+      <g transform="translate(190, 125)">
+        <rect x="0" y="0" width="16" height="14" rx="2" fill="#E11D48" stroke="#3E2723" stroke-width="1.5" />
+        <line x1="8" y1="0" x2="8" y2="14" stroke="#FEF08A" stroke-width="2" />
+        <line x1="0" y1="7" x2="16" y2="7" stroke="#FEF08A" stroke-width="2" />
+      </g>
+
+      <!-- Origami Sled Rider Descending -->
+      <g transform="translate(140, 130)">
+        <!-- Sled Runners -->
+        <path d="M -4 16 L 36 16 Q 42 16 40 10" fill="none" stroke="#C85A32" stroke-width="3" />
+        <rect x="4" y="8" width="28" height="6" rx="2" fill="#D97706" stroke="#3E2723" stroke-width="1.5" />
+        <!-- Rider in Blue Parka -->
+        <circle cx="16" cy="-2" r="6" fill="#0284C7" stroke="#3E2723" stroke-width="1.5" />
+        <rect x="10" y="4" width="16" height="8" rx="2" fill="#E11D48" stroke="#3E2723" stroke-width="1.5" />
+      </g>
+    </svg>
+  `,
+
+  'paper-basket': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Gym Kraft Paper Court Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <rect x="8" y="8" width="304" height="164" rx="6" fill="#F4EAD4" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Cardboard Basketball Hoop Backboard & Rim -->
+      <g transform="translate(240, 45)">
+        <rect x="0" y="0" width="12" height="65" rx="2" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+        <rect x="2" y="15" width="8" height="25" rx="1" fill="#E11D48" stroke="#3E2723" stroke-width="1" />
+        <!-- Rim & Net -->
+        <line x1="-30" y1="40" x2="0" y2="40" stroke="#D97706" stroke-width="3" stroke-linecap="round" />
+        <polygon points="-30,40 -24,65 -6,65 0,40" fill="none" stroke="#3E2723" stroke-width="1.5" stroke-dasharray="3 2" />
+      </g>
+
+      <!-- Parabolic Shot Trajectory Dots -->
+      <path d="M 80 130 Q 150 20 225 75" fill="none" stroke="#D97706" stroke-width="2" stroke-dasharray="4 4" />
+
+      <!-- Paper Basketball in Flight with Flap Wings -->
+      <g transform="translate(150, 45)">
+        <circle cx="14" cy="14" r="14" fill="#EA580C" stroke="#3E2723" stroke-width="2" />
+        <line x1="0" y1="14" x2="28" y2="14" stroke="#3E2723" stroke-width="1.5" />
+        <line x1="14" y1="0" x2="14" y2="28" stroke="#3E2723" stroke-width="1.5" />
+        <!-- Wings -->
+        <polygon points="0,8 -10,0 2,2" fill="#FFFDF8" stroke="#3E2723" stroke-width="1" />
+        <polygon points="28,8 38,0 26,2" fill="#FFFDF8" stroke="#3E2723" stroke-width="1" />
+      </g>
+    </svg>
+  `,
+
+  'potion-merge': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Alchemy Paper Desk Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+
+      <!-- Cardboard Flask Container Frame -->
+      <path d="M 95 20 L 95 50 L 60 160 L 260 160 L 225 50 L 225 20 Z" fill="#F4EAD4" stroke="#3E2723" stroke-width="3" />
+
+      <!-- Dropper at Top -->
+      <rect x="150" y="5" width="20" height="24" rx="2" fill="#8B5CF6" stroke="#3E2723" stroke-width="1.5" />
+
+      <!-- Stacked Bubbly Paper Potions Inside Flask -->
+      <!-- Small Green Potion -->
+      <circle cx="100" cy="140" r="14" fill="#10B981" stroke="#3E2723" stroke-width="2" />
+      <circle cx="96" cy="136" r="3" fill="#FFFDF8" />
+      <!-- Medium Yellow Potion -->
+      <circle cx="140" cy="135" r="20" fill="#F59E0B" stroke="#3E2723" stroke-width="2" />
+      <circle cx="134" cy="129" r="4" fill="#FFFDF8" />
+      <!-- Large Purple Cosmic Potion -->
+      <circle cx="205" cy="125" r="28" fill="#8B5CF6" stroke="#3E2723" stroke-width="2.5" />
+      <circle cx="197" cy="117" r="6" fill="#FFFDF8" />
+      <polygon points="215,115 217,120 222,121 218,124 220,129 215,126 210,129 212,124 208,121 213,120" fill="#FEF08A" />
+    </svg>
+  `,
+
+  'mahjong-paper': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Tatami Kraft Table Surface -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <rect x="10" y="10" width="300" height="160" rx="8" fill="#F4EAD4" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Multi-tier Mahjong Cardstock Tiles -->
+      <!-- Bottom Layer (Dimmed Shadow) -->
+      <rect x="50" y="35" width="45" height="55" rx="4" fill="#D8C3A5" stroke="#3E2723" stroke-width="2" />
+      <text x="72" y="70" text-anchor="middle" font-size="20">🎋</text>
+
+      <rect x="105" y="35" width="45" height="55" rx="4" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+      <text x="127" y="70" text-anchor="middle" font-size="20">🀄</text>
+
+      <rect x="165" y="35" width="45" height="55" rx="4" fill="#FFFDF8" stroke="#3E2723" stroke-width="2" />
+      <text x="187" y="70" text-anchor="middle" font-size="20">🀄</text>
+
+      <rect x="220" y="35" width="45" height="55" rx="4" fill="#D8C3A5" stroke="#3E2723" stroke-width="2" />
+      <text x="242" y="70" text-anchor="middle" font-size="20">🌸</text>
+
+      <!-- Top Layer Tier Tiles with Highlight Outline -->
+      <rect x="85" y="80" width="48" height="58" rx="4" fill="#FFFDF8" stroke="#E11D48" stroke-width="2.5" />
+      <text x="109" y="118" text-anchor="middle" font-size="22">🐉</text>
+
+      <rect x="145" y="80" width="48" height="58" rx="4" fill="#FFFDF8" stroke="#059669" stroke-width="2.5" />
+      <text x="169" y="118" text-anchor="middle" font-size="22">🀅</text>
+
+      <rect x="205" y="80" width="48" height="58" rx="4" fill="#FFFDF8" stroke="#E11D48" stroke-width="2.5" />
+      <text x="229" y="118" text-anchor="middle" font-size="22">🐉</text>
+    </svg>
+  `,
+
+  'subway-runner': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Kraft City Skyline Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <polygon points="20,80 50,40 80,80" fill="#D8C3A5" stroke="#3E2723" stroke-width="1.5" />
+      <rect x="100" y="30" width="40" height="50" fill="#C5A880" stroke="#3E2723" stroke-width="1.5" />
+
+      <!-- 3-Lane Perspective Railroad Tracks -->
+      <polygon points="0,180 120,75 200,75 320,180" fill="#E8DEC8" stroke="#3E2723" stroke-width="2.5" />
+      <line x1="106" y1="180" x2="147" y2="75" stroke="#3E2723" stroke-width="2" stroke-dasharray="6 4" />
+      <line x1="214" y1="180" x2="173" y2="75" stroke="#3E2723" stroke-width="2" stroke-dasharray="6 4" />
+
+      <!-- Cardboard Train in Right Lane -->
+      <g transform="translate(195, 80)">
+        <rect x="0" y="0" width="48" height="55" rx="4" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+        <rect x="6" y="8" width="36" height="16" rx="2" fill="#FAF6EE" stroke="#3E2723" stroke-width="1" />
+        <circle cx="14" cy="40" r="4" fill="#FEF08A" />
+        <circle cx="34" cy="40" r="4" fill="#FEF08A" />
+      </g>
+
+      <!-- Road Barrier in Left Lane -->
+      <g transform="translate(70, 125)">
+        <rect x="0" y="0" width="38" height="16" rx="2" fill="#F59E0B" stroke="#3E2723" stroke-width="1.5" />
+        <line x1="0" y1="0" x2="38" y2="16" stroke="#3E2723" stroke-width="1.5" />
+      </g>
+
+      <!-- Origami Runner on Hoverboard in Center Lane -->
+      <g transform="translate(145, 120)">
+        <!-- Hoverboard -->
+        <ellipse cx="15" cy="38" rx="22" ry="6" fill="#059669" stroke="#3E2723" stroke-width="2" />
+        <!-- Skater Body -->
+        <circle cx="15" cy="4" r="7" fill="#C5A880" stroke="#3E2723" stroke-width="1.5" />
+        <rect x="7" y="11" width="16" height="18" rx="3" fill="#2563EB" stroke="#3E2723" stroke-width="1.5" />
+      </g>
+    </svg>
+  `,
+
+  'prism-laser': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Dark Optics Paper Background -->
+      <rect width="320" height="180" fill="#2B2118" />
+      <rect x="6" y="6" width="308" height="168" rx="6" fill="#1F1610" stroke="#FAF6EE" stroke-width="1.5" stroke-dasharray="8 4" />
+
+      <!-- Laser Emitter (Top Left) -->
+      <rect x="30" y="30" width="22" height="18" rx="3" fill="#FAF6EE" stroke="#3E2723" stroke-width="1.5" />
+      <circle cx="48" cy="39" r="4" fill="#E11D48" />
+
+      <!-- Red Laser Beam Path -->
+      <line x1="48" y1="39" x2="160" y2="39" stroke="#E11D48" stroke-width="3" stroke-linecap="round" />
+      <line x1="160" y1="39" x2="160" y2="110" stroke="#E11D48" stroke-width="3" stroke-linecap="round" />
+
+      <!-- 45° Cardboard Mirror -->
+      <g transform="translate(160, 39) rotate(45)">
+        <rect x="-16" y="-3" width="32" height="6" rx="2" fill="#C5A880" stroke="#FAF6EE" stroke-width="1.5" />
+      </g>
+
+      <!-- Glass Prism Splitting Light -->
+      <polygon points="160,110 140,145 180,145" fill="#BAE6FD" opacity="0.8" stroke="#FAF6EE" stroke-width="2" />
+
+      <!-- Split Refracted Beams (Cyan & Magenta) -->
+      <line x1="150" y1="145" x2="110" y2="160" stroke="#06B6D4" stroke-width="2.5" />
+      <line x1="170" y1="145" x2="220" y2="160" stroke="#A855F7" stroke-width="2.5" />
+
+      <!-- Target Paper Crystal Pickups -->
+      <polygon points="110,152 118,160 110,168 102,160" fill="#06B6D4" stroke="#FAF6EE" stroke-width="1.5" />
+      <polygon points="220,152 228,160 220,168 212,160" fill="#A855F7" stroke="#FAF6EE" stroke-width="1.5" />
+    </svg>
   `
 };

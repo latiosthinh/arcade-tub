@@ -18,8 +18,18 @@ const GAME_IDS = [
   'snake-eat',
   'bug-climb',
   'car-race',
+  'drift-boss',
+  'helix-jump',
+  'square-bird',
+  'layers-roll',
+  'mini-battles',
+  'dino-runner',
+  'snow-rider',
+  'paper-basket',
   'potion-merge',
   'mahjong-paper',
+  'subway-runner',
+  'prism-laser',
 ];
 
 describe('Game Shell HTML Containers', () => {
