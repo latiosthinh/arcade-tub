@@ -209,15 +209,11 @@ export class PopBalloonScene implements GameScene {
       ctx.translate(shakeX, shakeY);
     }
 
-    // Background Gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
-    bgGrad.addColorStop(0, '#090d1a');
-    bgGrad.addColorStop(0.6, '#13192f');
-    bgGrad.addColorStop(1, '#1e1b4b');
-    ctx.fillStyle = bgGrad;
+    // Warm Kraft Paper Sky Background
+    ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle background cyber grid / star dust
+    // Subtle paper sky grid
     this.renderBackgroundDetails(ctx, width, height);
 
     // Render active ascending balloons
@@ -243,9 +239,9 @@ export class PopBalloonScene implements GameScene {
 
   private renderBackgroundDetails(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.03)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.05)';
     ctx.lineWidth = 1;
-    const step = 50;
+    const step = 24;
     for (let x = 0; x < width; x += step) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -258,68 +254,113 @@ export class PopBalloonScene implements GameScene {
       ctx.lineTo(width, y);
       ctx.stroke();
     }
+
+    // Dashed outer frame
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(10, 10, width - 20, height - 20);
+    ctx.setLineDash([]);
     ctx.restore();
   }
 
   private renderHUD(ctx: CanvasRenderingContext2D, width: number): void {
     ctx.save();
 
-    // Top-Left: Score & High Score
+    // Top-Left Sticky Note: Score & High Score
+    this.drawStickyNote(ctx, 20, 16, 150, 64, '#FFFDF8');
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 22px monospace';
-    ctx.fillText(`SCORE: ${this.gameState.score}`, 25, 38);
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`SCORE: ${this.gameState.score}`, 30, 40);
 
-    ctx.fillStyle = '#64748b';
-    ctx.font = '14px monospace';
-    ctx.fillText(`BEST: ${this.gameState.highScore}`, 25, 60);
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`BEST: ${this.gameState.highScore}`, 30, 64);
 
-    // Top-Center: Round Timer
+    // Top-Center Sticky Note: Round Timer
     const timeSec = Math.ceil(this.gameState.timeRemaining);
     const timerProgress = Math.max(0, this.gameState.timeRemaining / ROUND_DURATION);
-    const barWidth = 220;
-    const barHeight = 8;
+    const barWidth = 140;
+    const barHeight = 6;
     const barX = width / 2 - barWidth / 2;
-    const barY = 48;
+    const barY = 52;
 
+    this.drawStickyNote(ctx, width / 2 - 90, 16, 180, 64, '#FFFDF8');
     ctx.textAlign = 'center';
-    ctx.font = 'bold 20px monospace';
-    ctx.fillStyle = timeSec <= 10 ? '#ef4444' : '#00f0ff';
-    ctx.fillText(`TIME: ${timeSec}s`, width / 2, 38);
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
+    ctx.fillStyle = timeSec <= 10 ? '#E11D48' : '#3B82F6';
+    ctx.fillText(`TIME: ${timeSec}s`, width / 2, 40);
 
     // Timer bar
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.fillStyle = '#D8C3A5';
     ctx.fillRect(barX, barY, barWidth, barHeight);
-    ctx.fillStyle = timeSec <= 10 ? '#ef4444' : '#00f0ff';
+    ctx.fillStyle = timeSec <= 10 ? '#E11D48' : '#10B981';
     ctx.fillRect(barX, barY, barWidth * timerProgress, barHeight);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(barX, barY, barWidth, barHeight);
 
-    // Top-Right: Combo Streak & Multiplier
+    // Top-Right Sticky Note: Combo Streak & Multiplier
     const streak = this.popEngine.getStreak();
     const multiplier = this.popEngine.getMultiplier();
+    this.drawStickyNote(ctx, width - 175, 16, 155, 64, '#FFFDF8');
     ctx.textAlign = 'right';
 
     if (streak > 1) {
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 20px monospace';
-      ctx.fillText(`COMBO x${multiplier.toFixed(1)} (${streak})`, width - 25, 38);
+      ctx.fillStyle = '#F59E0B';
+      ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+      ctx.fillText(`★ x${multiplier.toFixed(1)} (${streak})`, width - 30, 40);
 
       // Combo decay timer bar
       const comboRatio = Math.max(0, this.popEngine.getComboTimer() / this.popEngine.getComboWindow());
-      const comboBarWidth = 140;
+      const comboBarWidth = 120;
       const comboBarHeight = 5;
-      const comboBarX = width - 25 - comboBarWidth;
-      const comboBarY = 48;
+      const comboBarX = width - 30 - comboBarWidth;
+      const comboBarY = 52;
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.fillStyle = '#D8C3A5';
       ctx.fillRect(comboBarX, comboBarY, comboBarWidth, comboBarHeight);
-      ctx.fillStyle = '#f59e0b';
+      ctx.fillStyle = '#F59E0B';
       ctx.fillRect(comboBarX, comboBarY, comboBarWidth * comboRatio, comboBarHeight);
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(comboBarX, comboBarY, comboBarWidth, comboBarHeight);
     } else {
-      ctx.fillStyle = '#475569';
-      ctx.font = '14px monospace';
-      ctx.fillText('COMBO: READY', width - 25, 38);
+      ctx.fillStyle = 'rgba(62, 39, 35, 0.7)';
+      ctx.font = 'bold 13px "Comfortaa", cursive, sans-serif';
+      ctx.fillText('COMBO: READY', width - 30, 52);
     }
 
+    ctx.restore();
+  }
+
+  private drawStickyNote(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    bg: string,
+  ): void {
+    ctx.save();
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.fillRect(x + 3, y + 3, w, h);
+
+    // Note card
+    ctx.fillStyle = bg;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, w, h);
+
+    // Tape top strip
+    ctx.fillStyle = 'rgba(255, 248, 220, 0.85)';
+    ctx.strokeStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.fillRect(x + w / 2 - 18, y - 5, 36, 10);
+    ctx.strokeRect(x + w / 2 - 18, y - 5, 36, 10);
     ctx.restore();
   }
 
@@ -356,74 +397,84 @@ export class PopBalloonScene implements GameScene {
     prompt: string
   ): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.85)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.9)';
     ctx.fillRect(0, 0, width, height);
 
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 38px monospace';
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 18;
-    ctx.fillText(title, width / 2, height / 2 - 60);
+    const panelW = 460;
+    const panelH = 260;
+    const panelX = width / 2 - panelW / 2;
+    const panelY = height / 2 - panelH / 2;
+    this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#cbd5e1';
-    ctx.font = '15px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 36px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(title, width / 2, panelY + 50);
+
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
 
     const lines = subtitle.split('\n');
     lines.forEach((line, i) => {
-      ctx.fillText(line, width / 2, height / 2 - 10 + i * 24);
+      ctx.fillText(line, width / 2, panelY + 95 + i * 24);
     });
 
-    ctx.fillStyle = '#f59e0b';
-    ctx.font = 'bold 16px monospace';
-    ctx.fillText(prompt, width / 2, height / 2 + 75);
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 20px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(prompt, width / 2, panelY + 200);
 
     ctx.restore();
   }
 
   private drawGameOverModal(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     ctx.save();
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.88)';
+    ctx.fillStyle = 'rgba(244, 234, 212, 0.92)';
     ctx.fillRect(0, 0, width, height);
 
+    const panelW = 440;
+    const panelH = 380;
+    const panelX = width / 2 - panelW / 2;
+    const panelY = height / 2 - panelH / 2 + 10;
+    this.drawStickyNote(ctx, panelX, panelY, panelW, panelH, '#FFFDF8');
+
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#ef4444';
-    ctx.font = 'bold 38px monospace';
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 18;
-    ctx.fillText('TIME UP!', width / 2, 170);
+    ctx.fillStyle = '#E11D48';
+    ctx.font = 'bold 38px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText('TIME UP!', width / 2, panelY + 50);
 
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 24px monospace';
-    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, width / 2, 230);
+    ctx.fillStyle = '#3E2723';
+    ctx.font = 'bold 24px "Patrick Hand", cursive, sans-serif';
+    ctx.fillText(`FINAL SCORE: ${this.gameState.score}`, width / 2, panelY + 95);
 
-    ctx.font = '16px monospace';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText(`Max Combo Streak: ${this.gameState.maxStreak}`, width / 2, 275);
-    ctx.fillText(`Balloons Popped: ${this.gameState.balloonsPopped}`, width / 2, 305);
-    ctx.fillText(`Hazard Bombs Hit: ${this.gameState.bombsHit}`, width / 2, 335);
+    ctx.font = '14px "Comfortaa", cursive, sans-serif';
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.8)';
+    ctx.fillText(`Max Combo Streak: ${this.gameState.maxStreak}`, width / 2, panelY + 135);
+    ctx.fillText(`Balloons Popped: ${this.gameState.balloonsPopped}`, width / 2, panelY + 160);
+    ctx.fillText(`Hazard Bombs Hit: ${this.gameState.bombsHit}`, width / 2, panelY + 185);
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.fillText(`High Score: ${this.gameState.highScore}`, width / 2, 375);
+    ctx.fillStyle = '#F59E0B';
+    ctx.font = 'bold 15px "Comfortaa", cursive, sans-serif';
+    ctx.fillText(`High Score: ${this.gameState.highScore}`, width / 2, panelY + 220);
 
     // Restart button
-    ctx.fillStyle = '#1e293b';
-    ctx.strokeStyle = '#00f0ff';
-    ctx.lineWidth = 2;
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
+    ctx.fillRect(this.restartBtn.x + 3, this.restartBtn.y + 3, this.restartBtn.w, this.restartBtn.h);
+
+    ctx.fillStyle = '#10B981';
     ctx.fillRect(this.restartBtn.x, this.restartBtn.y, this.restartBtn.w, this.restartBtn.h);
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2;
     ctx.strokeRect(this.restartBtn.x, this.restartBtn.y, this.restartBtn.w, this.restartBtn.h);
 
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = 'bold 18px sans-serif';
+    ctx.fillStyle = '#FFFDF8';
+    ctx.font = 'bold 22px "Patrick Hand", cursive, sans-serif';
     ctx.textBaseline = 'middle';
     ctx.fillText('PLAY AGAIN', width / 2, this.restartBtn.y + this.restartBtn.h / 2);
 
-    ctx.fillStyle = '#64748b';
-    ctx.font = '13px sans-serif';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = '13px "Comfortaa", cursive, sans-serif';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText('or Press SPACE', width / 2, 510);
+    ctx.fillText('or Press SPACE', width / 2, panelY + 345);
 
     ctx.restore();
   }

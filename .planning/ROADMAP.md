@@ -14,15 +14,21 @@ Goal: Replace entire visual identity (hub + all 15 games) with handmade 2D paper
 - **Goal:** Update all 15 `games/*/index.html` with papercraft backgrounds, cardboard canvas frames, craft fonts.
 - **Requirements:** [CRAFT-04]
 - **Files:** `games/*/index.html`
-- **Plans:** TBD
-- **Status:** Not started
+- **Plans:** 2 plans
+Plans:
+- [ ] 27-01-PLAN.md — Test harness and update game shells 1-8 (safe-cracker, brick-blitz, sky-hopper, crate-catch, type-strike, memory-cards, memory-boxes, pop-balloon)
+- [ ] 27-02-PLAN.md — Update game shells 9-15 (space-racer, virus-defense, flappy-fish, game-2048, snake-eat, bug-climb, car-race) and full verification
+- **Status:** In progress
 
 #### Phase 28: Simple Game Renderers (5 games)
 - **Goal:** Convert canvas renderers for safe-cracker, memory-cards, memory-boxes, game-2048, pop-balloon to papercraft sprites, backgrounds, and overlays.
 - **Requirements:** [CRAFT-05, CRAFT-08]
 - **Files:** `games/{safe-cracker,memory-cards,memory-boxes,game-2048,pop-balloon}/src/*Renderer.ts`, `*Scene.ts`, `src/data/games.ts`
-- **Plans:** TBD
-- **Status:** Not started
+- **Plans:** 2/2 complete
+Plans:
+- [x] 28-01-PLAN.md — Papercraft conversion for safe-cracker, memory-cards, and memory-boxes
+- [x] 28-02-PLAN.md — Papercraft conversion for game-2048, pop-balloon, metadata update, and verification
+- **Status:** Complete
 
 #### Phase 29: Mid-Complexity Game Renderers (5 games)
 - **Goal:** Convert canvas renderers for brick-blitz, crate-catch, type-strike, flappy-fish, sky-hopper to papercraft.
@@ -43,7 +49,7 @@ Goal: Replace entire visual identity (hub + all 15 games) with handmade 2D paper
 | Phase | Status |
 |-------|--------|
 | 26. Hub Papercraft CSS | Complete |
-| 27. Game Shell HTML | Not started |
-| 28. Simple Renderers (5) | Not started |
+| 27. Game Shell HTML | In progress |
+| 28. Simple Renderers (5) | Complete |
 | 29. Mid Renderers (5) | Not started |
 | 30. Complex Renderers (5) + Audit | Not started |

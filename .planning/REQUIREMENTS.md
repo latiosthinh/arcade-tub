@@ -9,12 +9,12 @@
 - **[CRAFT-04] Game Shell HTML Containers:** All 15 `games/*/index.html` files updated with craft-paper backgrounds, cardboard-framed canvases, and papercraft Google Fonts loaded.
 
 ## In-Game Canvas Renderers
-- **[CRAFT-05] Simple Game Renderers (5 games):** `safe-cracker`, `memory-cards`, `memory-boxes`, `game-2048`, `pop-balloon` — canvas backgrounds as layered construction paper, sprites as paper cutouts with visible edges, HUD text in craft fonts, overlays on sticky-note cards.
+- [x] **[CRAFT-05] Simple Game Renderers (5 games):** `safe-cracker`, `memory-cards`, `memory-boxes`, `game-2048`, `pop-balloon` — canvas backgrounds as layered construction paper, sprites as paper cutouts with visible edges, HUD text in craft fonts, overlays on sticky-note cards.
 - **[CRAFT-06] Mid-Complexity Game Renderers (5 games):** `brick-blitz`, `crate-catch`, `type-strike`, `flappy-fish`, `sky-hopper` — paper cutout paddles/bricks/crates/fish/platforms, cardboard pillar obstacles, torn-paper particle effects, sticky-note score panels.
 - **[CRAFT-07] Complex Game Renderers (5 games):** `snake-eat`, `bug-climb`, `car-race`, `space-racer`, `virus-defense` — origami/folded paper car sprites, paper-cutout ladybug, construction paper road/trunk/arena, craft-paper starfield, cardboard HUD gauges.
 
 ## Metadata & Catalog
-- **[CRAFT-08] Game Catalog Data Update:** `src/data/games.ts` titles, descriptions, icons, theme colors, and banner gradients updated to match papercraft visual language.
+- [x] **[CRAFT-08] Game Catalog Data Update:** `src/data/games.ts` titles, descriptions, icons, theme colors, and banner gradients updated to match papercraft visual language.
 
 ## Quality Gates
 - **[CRAFT-09] Build & Test Integrity:** All 574 unit tests pass, Vite production build succeeds, bundle < 200KB gzipped, deployed to Cloudflare Pages.

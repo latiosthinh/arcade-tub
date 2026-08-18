@@ -19,9 +19,9 @@ export class BalloonRenderer {
   private renderNeonBalloon(ctx: CanvasRenderingContext2D, balloon: Balloon, time: number): void {
     const r = balloon.radius;
 
-    // 1. Swaying String trailing underneath knot
+    // 1. Swaying String ribbon trailing underneath knot
     ctx.save();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.strokeStyle = '#3E2723';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, r * 1.2);
@@ -31,49 +31,41 @@ export class BalloonRenderer {
     ctx.stroke();
     ctx.restore();
 
-    // 2. Balloon Knot
+    // 2. Balloon Knot Triangle
     ctx.fillStyle = balloon.color;
     ctx.beginPath();
-    ctx.moveTo(-4, r * 1.15);
-    ctx.lineTo(4, r * 1.15);
-    ctx.lineTo(0, r * 1.25);
+    ctx.moveTo(-5, r * 1.15);
+    ctx.lineTo(5, r * 1.15);
+    ctx.lineTo(0, r * 1.28);
     ctx.closePath();
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // 3. Oval Balloon Body
+    // 3. Oval Balloon Paper Body & Drop Shadow
     ctx.save();
+    // Drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.2)';
     ctx.beginPath();
-    // Slightly taller oval
-    ctx.ellipse(0, 0, r, r * 1.18, 0, 0, Math.PI * 2);
-
-    if (balloon.type === 'rainbow') {
-      // Shifting rainbow gradient
-      const grad = ctx.createLinearGradient(-r, -r, r, r);
-      const hue = (time * 120) % 360;
-      grad.addColorStop(0, `hsl(${hue}, 100%, 65%)`);
-      grad.addColorStop(0.33, `hsl(${(hue + 90) % 360}, 100%, 65%)`);
-      grad.addColorStop(0.66, `hsl(${(hue + 180) % 360}, 100%, 65%)`);
-      grad.addColorStop(1, `hsl(${(hue + 270) % 360}, 100%, 65%)`);
-      ctx.fillStyle = grad;
-    } else {
-      // Radial glow gradient for glossy 3D look
-      const grad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r * 1.2);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.25, balloon.color);
-      grad.addColorStop(1.0, this.darkenHex(balloon.color, 0.4));
-      ctx.fillStyle = grad;
-    }
-
-    ctx.shadowColor = balloon.color;
-    ctx.shadowBlur = 15;
+    ctx.ellipse(3, 3, r, r * 1.18, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.restore();
 
-    // 4. Glossy Specular Highlight Crescent
-    ctx.save();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    // Construction Paper Main Body
     ctx.beginPath();
-    ctx.ellipse(-r * 0.35, -r * 0.4, r * 0.25, r * 0.45, -Math.PI / 4, 0, Math.PI * 2);
+    ctx.ellipse(0, 0, r, r * 1.18, 0, 0, Math.PI * 2);
+    ctx.fillStyle = balloon.color;
+    ctx.fill();
+
+    // Inked hand-drawn contour
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // 4. Paper Cutout Curved Highlight
+    ctx.fillStyle = 'rgba(255, 253, 248, 0.45)';
+    ctx.beginPath();
+    ctx.ellipse(-r * 0.35, -r * 0.4, r * 0.2, r * 0.42, -Math.PI / 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -84,13 +76,30 @@ export class BalloonRenderer {
     // 1. Spikes around sphere
     const spikeCount = 8;
     const spikeLength = 8;
-    const rot = time * 2; // slow continuous rotation
+    const rot = time * 2;
 
     ctx.save();
-    ctx.fillStyle = '#ef4444';
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 10;
+    // Spikes drop shadow
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    for (let i = 0; i < spikeCount; i++) {
+      const angle = rot + (i * Math.PI * 2) / spikeCount;
+      const x1 = Math.cos(angle - 0.2) * (r - 2) + 3;
+      const y1 = Math.sin(angle - 0.2) * (r - 2) + 3;
+      const x2 = Math.cos(angle + 0.2) * (r - 2) + 3;
+      const y2 = Math.sin(angle + 0.2) * (r - 2) + 3;
+      const tipX = Math.cos(angle) * (r + spikeLength) + 3;
+      const tipY = Math.sin(angle) * (r + spikeLength) + 3;
 
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(tipX, tipY);
+      ctx.lineTo(x2, y2);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Triangular paper spikes
+    ctx.fillStyle = '#E11D48';
     for (let i = 0; i < spikeCount; i++) {
       const angle = rot + (i * Math.PI * 2) / spikeCount;
       const x1 = Math.cos(angle - 0.2) * (r - 2);
@@ -106,34 +115,38 @@ export class BalloonRenderer {
       ctx.lineTo(x2, y2);
       ctx.closePath();
       ctx.fill();
+      ctx.strokeStyle = '#3E2723';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
     }
     ctx.restore();
 
-    // 2. Dark Metallic Shell
+    // 2. Papercut Bomb Shell & Drop Shadow
     ctx.save();
+    ctx.fillStyle = 'rgba(62, 39, 35, 0.25)';
+    ctx.beginPath();
+    ctx.arc(3, 3, r, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.beginPath();
     ctx.arc(0, 0, r, 0, Math.PI * 2);
-    const grad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 2, 0, 0, r);
-    grad.addColorStop(0, '#475569');
-    grad.addColorStop(0.6, '#1e293b');
-    grad.addColorStop(1, '#0f172a');
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#3E2723';
     ctx.fill();
-    ctx.restore();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
 
-    // 3. Pulsing Center Hazard Core
-    const pulse = 0.7 + Math.sin(time * 8) * 0.3;
-    ctx.save();
-    ctx.fillStyle = `rgba(239, 68, 68, ${pulse})`;
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 12 * pulse;
+    // 3. Center Paper Warning Dot
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
-    ctx.arc(0, 0, r * 0.4, 0, Math.PI * 2);
+    ctx.arc(0, 0, r * 0.45, 0, Math.PI * 2);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    // Warning Skull / Hazard Exclamation mark
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 12px sans-serif';
+    ctx.fillStyle = '#3E2723';
+    ctx.font = 'bold 13px "Comfortaa", cursive, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('!', 0, 0);
