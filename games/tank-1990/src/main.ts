@@ -30,6 +30,9 @@ if (!canvas) {
   throw new Error('Canvas element #game not found');
 }
 
+canvas.width = TOTAL_CANVAS_WIDTH;
+canvas.height = TOTAL_CANVAS_HEIGHT;
+
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 if (!ctx) {
   throw new Error('Failed to get 2D context from canvas');
