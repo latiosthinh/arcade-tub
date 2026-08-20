@@ -32,3 +32,12 @@ Replicate and adapt the top 12 popular minigames from CrazyGames (`https://www.c
 ### Wave 5: Game Mechanic Polish (Phase 41)
 - **REQ-617 [Square Bird Timed Blocks]**: Egg blocks have limited lifetime (3.0s), showing visual cracking wear, then expire and trigger crumble particles + gravity fall.
 - **REQ-618 [Square Bird Infinity Mode]**: Endless procedural obstacle streaming, game mode toggle (Levels vs Infinite), and persistent high score tracking.
+
+### Wave 6: No-Brain Arcade Minigames (Phase 42)
+- **REQ-619 [Rainbow Draw & Scratch Reveal]**: Freeform rainbow brush lines with auto-smoothing spline curves and scratch-off craft paper reveal mode.
+- **REQ-620 [Blank Space Fireworks]**: Click/tap anywhere to launch multi-burst procedural rocket fireworks with sound and confetti physics.
+- **REQ-621 [Fruit Flood Endless Blade]**: Continuous endless flood of papercraft fruits with multi-slice blade physics, juice particles, and combo streaks.
+- **REQ-622 [Snow Smash Target Destroyer]**: Snowball catapult physics destroying layered cardboard structures and targets with fracture mechanics.
+- **REQ-623 [Mosquito Net Swat]**: Reflex net swiping to catch swarms of origami mosquitoes with combo streaks and power-up traps.
+- **REQ-624 [Tic-Tac-Toe Papercraft vs AI]**: 3x3 cardboard grid with local 2P and AI opponent (Xiaomi Mimo SG API integration with Minimax offline fallback).
+

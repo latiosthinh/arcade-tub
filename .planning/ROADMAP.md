@@ -50,13 +50,28 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Verify HTML shells, responsive scaling, and run bundle audit.
 - Full test suite run (100% pass target, 806/806 tests passing).
 
-### Phase 41: Square Bird Timed Blocks & Infinity Mode (`games/square-bird/`)
+### Phase 41: Square Bird Timed Blocks & Infinity Mode (`games/square-bird/`) [COMPLETED]
 - Block expiration mechanics: egg blocks decay after a set duration (3s) and dissolve with crumble particle effects and audio.
 - Infinite survival mode: dynamic procedural obstacle streaming ahead of player and separate infinite high score tracking.
 - Interactive mode selection overlay on ready screen (Levels vs Infinite Mode).
 - **Plans:** 2 plans
-- [ ] 41-01-PLAN.md — Timed block decay physics, obstacle streaming generator, infinite mode state & unit tests
-- [ ] 41-02-PLAN.md — Block cracking animations, expiration particles/audio, ready overlay mode selector & HUD
+- [x] 41-01-PLAN.md — Timed block decay physics, obstacle streaming generator, infinite mode state & unit tests
+- [x] 41-02-PLAN.md — Block cracking animations, expiration particles/audio, ready overlay mode selector & HUD
+
+### Phase 42: No-Brain Arcade Minigames Pack (`games/`)
+- Build 6 casual, satisfying papercraft minigames:
+  1. `rainbow-draw`: Freeform rainbow line drawer, auto-smoothing curves, and scratch-off reveal mode.
+  2. `firework-pop`: Blank space tap-anywhere fireworks launcher with procedural particle bursts and sound.
+  3. `fruit-flood`: Ninja fruit infinite flood slicer with multi-blade physics and juice splatters.
+  4. `snow-smash`: Snowball catapult demolishing layered cardboard structures and targets.
+  5. `mosquito-swat`: Fast reflex net swiper catching buzzing mosquito swarms with combo streaks.
+  6. `tic-tac-toe`: Papercraft 3x3 tic-tac-toe vs Xiaomi Mimo SG API / Minimax AI & local 2P.
+- Central catalog registration, SVG screenshot illustrations, and full test suite passing.
+- **Plans:** 3 plans
+- [ ] 42-01-PLAN.md — Build Rainbow Draw & Firework Pop minigames with unit tests
+- [ ] 42-02-PLAN.md — Build Fruit Flood & Snow Smash minigames with unit tests
+- [ ] 42-03-PLAN.md — Build Mosquito Swat & Tic-Tac-Toe (Xiaomi Mimo SG API) minigames, catalog integration & SVG screenshots
+
 
 ---
 
