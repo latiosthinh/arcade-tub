@@ -12,6 +12,7 @@ export interface GameItem {
   themeColor: string;
   bannerBg: string;
   features: string[];
+  disabled?: boolean;
 }
 
 export const GAMES: GameItem[] = [
@@ -228,13 +229,14 @@ export const GAMES: GameItem[] = [
     title: 'Helix Jump',
     genre: 'Cardboard Tower Spiral Drop',
     description: 'Rotate the circular cardboard tower to guide your bouncing paper ball through stage openings, smash through tiered paper rings, and avoid red danger paper zones.',
-    badge: 'New',
+    badge: 'Disabled',
     rating: '4.9 ★',
     plays: '510K plays',
     icon: '🌀',
     themeColor: '#059669',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Tower Rotation Physics', 'Bouncing Splatter Trails', 'Speedy Multi-Tier Smash Drops']
+    features: ['Tower Rotation Physics', 'Bouncing Splatter Trails', 'Speedy Multi-Tier Smash Drops'],
+    disabled: true
   },
   {
     id: 'square-bird',
@@ -254,26 +256,28 @@ export const GAMES: GameItem[] = [
     title: 'Layers Roll',
     genre: 'Paper Ribbon Roll-and-Peel',
     description: 'Roll your origami cylinder across vibrant color paper rolls, peel layered sheets, avoid cutting scissors, and carve giant cardboard statues at the finish line.',
-    badge: 'New',
+    badge: 'Disabled',
     rating: '4.8 ★',
     plays: '330K plays',
     icon: '📜',
     themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['Multi-Layer Paper Ribbon Stacking', 'Obstacle Trimming Dynamics', 'Finish Line Sculpting Multipliers']
+    features: ['Multi-Layer Paper Ribbon Stacking', 'Obstacle Trimming Dynamics', 'Finish Line Sculpting Multipliers'],
+    disabled: true
   },
   {
     id: 'mini-battles',
     title: '12 MiniBattles',
     genre: 'Local 2-Player Paper Party',
     description: 'Chaotic head-to-head 2-player cardboard arcade duel collection. Battle friends in quick-draw showdowns, paper tank duels, soccer, and boxing with 1-button controls.',
-    badge: 'Party',
+    badge: 'Disabled',
     rating: '4.9 ★',
     plays: '670K plays',
     icon: '⚔️',
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['12 Diverse Party Minigames', 'Single-Button Local 2-Player', 'Scoreboard & Tournament Mode']
+    features: ['12 Diverse Party Minigames', 'Single-Button Local 2-Player', 'Scoreboard & Tournament Mode'],
+    disabled: true
   },
   {
     id: 'dino-runner',
@@ -293,13 +297,14 @@ export const GAMES: GameItem[] = [
     title: 'Snow Rider',
     genre: '3D Cardboard Sledding Slope',
     description: 'Downhill 3D papercraft bobsled rush. Steer through snowy cardboard pine forests, leap off frozen ramps, and dodge origami snowmen and rolling snowballs.',
-    badge: 'Winter',
+    badge: 'Disabled',
     rating: '4.9 ★',
     plays: '460K plays',
     icon: '🛷',
     themeColor: '#0284C7',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E0F2FE 100%)',
-    features: ['Pseudo-3D Downhill Slope Kinematics', 'Cardboard Pine Tree & Rock Dodging', 'Gift Box Pickups & Sled Unlocks']
+    features: ['Pseudo-3D Downhill Slope Kinematics', 'Cardboard Pine Tree & Rock Dodging', 'Gift Box Pickups & Sled Unlocks'],
+    disabled: true
   },
   {
     id: 'paper-basket',
@@ -345,26 +350,28 @@ export const GAMES: GameItem[] = [
     title: 'Subway Surfer',
     genre: 'Endless 3-Lane Runner',
     description: 'Endless 3-lane papercraft runner. Swipe to dodge cardboard commuter trains, jump over road barriers, slide under high signal boards, and surf on origami hoverboards.',
-    badge: 'New',
+    badge: 'Disabled',
     rating: '4.9 ★',
     plays: '450K plays',
     icon: '🛹',
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['3-Lane Perspective Kinematics', 'Jump & Slide Mechanics', 'Hoverboard Shield & Coin Magnets']
+    features: ['3-Lane Perspective Kinematics', 'Jump & Slide Mechanics', 'Hoverboard Shield & Coin Magnets'],
+    disabled: true
   },
   {
     id: 'prism-laser',
     title: 'Prism Laser',
     genre: 'Optics Puzzle',
     description: 'Reflect, refract, and filter colored laser beams onto target paper crystals using rotatable cardstock mirrors and triangular prisms.',
-    badge: 'New',
+    badge: 'Disabled',
     rating: '4.9 ★',
     plays: '260K plays',
     icon: '💎',
     themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['45° Angle Reflection Physics', 'White Light Prism Splitting', 'Target Crystal Color Activation']
+    features: ['45° Angle Reflection Physics', 'White Light Prism Splitting', 'Target Crystal Color Activation'],
+    disabled: true
   }
 ];
 

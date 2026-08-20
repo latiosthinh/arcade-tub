@@ -19,27 +19,41 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
     this.game = game;
     this.highScore = state.highScore ?? 0;
 
-    this.element.setAttribute('tabindex', '0');
-    this.element.setAttribute('role', 'button');
-    this.element.setAttribute('aria-label', `Play ${game.title} - ${game.genre}`);
+    if (this.game.disabled) {
+      this.element.classList.add('is-disabled');
+      this.element.setAttribute('aria-disabled', 'true');
+      this.element.removeAttribute('tabindex');
+      this.element.setAttribute('aria-label', `${game.title} - Temporarily Unavailable`);
+    } else {
+      this.element.setAttribute('tabindex', '0');
+      this.element.setAttribute('role', 'button');
+      this.element.setAttribute('aria-label', `Play ${game.title} - ${game.genre}`);
+    }
     this.element.setAttribute('data-game-id', game.id);
 
     this.render();
-    this.setupListeners();
+    if (!this.game.disabled) {
+      this.setupListeners();
+    }
   }
 
   private render(): void {
     const formattedScore = this.highScore > 0 ? this.highScore.toLocaleString() : '---';
     const screenshot = GAME_SCREENSHOTS[this.game.id] || `<span class="ac-card-icon">${this.game.icon}</span>`;
+    const overlayHtml = this.game.disabled
+      ? `<div class="ac-card-play-overlay ac-card-disabled-overlay">
+          <div class="ac-card-disabled-badge">MAINTENANCE</div>
+        </div>`
+      : `<div class="ac-card-play-overlay">
+          <div class="ac-card-play-circle">▶</div>
+        </div>`;
 
     this.element.innerHTML = `
       <div class="ac-card-thumb" style="background: ${this.game.bannerBg}">
         <div class="ac-card-screenshot-container">
           ${screenshot}
         </div>
-        <div class="ac-card-play-overlay">
-          <div class="ac-card-play-circle">▶</div>
-        </div>
+        ${overlayHtml}
       </div>
       <div class="ac-card-meta">
         <div class="ac-card-title-row">
@@ -47,7 +61,7 @@ export class GameCard extends BaseComponent<GameItem, GameCardState> {
         </div>
         <div class="ac-card-genre">${this.game.genre}</div>
         <div class="ac-card-score-row">
-          <span class="ac-card-score-badge">🏆 Best: <strong class="ac-card-score-value">${formattedScore}</strong></span>
+          <span class="ac-card-score-badge">${this.game.disabled ? '🚫 Disabled' : `🏆 Best: <strong class="ac-card-score-value">${formattedScore}</strong>`}</span>
           <span class="ac-card-rating">${this.game.rating}</span>
         </div>
       </div>

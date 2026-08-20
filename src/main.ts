@@ -98,6 +98,11 @@ function bootstrap(): void {
     })
     .on('/game/:id', (params) => {
       const gameId = params.id || '';
+      const targetGame = GAMES.find(g => g.id === gameId);
+      if (targetGame?.disabled) {
+        router.navigate('#/');
+        return;
+      }
       mountView(new GameView(store, gameId), `/game/${gameId}`, params);
     })
     .on('/embed', () => {
