@@ -3,3 +3,7 @@ dist/
 *.local
 .vite/
 *.tsbuildinfo
+audit-gameplay-shots/
+audit-screenshots/
+audit-results.json
+deep-audit-results.json

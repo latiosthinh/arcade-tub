@@ -1,49 +1,163 @@
-import { AudioSynthesizer } from '@arcade-carnival/game-engine';
+const STORAGE_KEY = 'arcade-carnival-muted';
 
 export class BattleAudio {
-  private synth: AudioSynthesizer;
-  private isMuted: boolean = false;
+  private ctx: AudioContext | null = null;
+  private masterGain: GainNode | null = null;
+  private muted: boolean = false;
 
   constructor() {
-    this.synth = new AudioSynthesizer();
+    this.muted = this.readMuteStorage();
+  }
+
+  private readMuteStorage(): boolean {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        return localStorage.getItem(STORAGE_KEY) === 'true';
+      }
+    } catch {
+      // Ignore
+    }
+    return false;
+  }
+
+  private initContext(): AudioContext | null {
+    if (typeof window === 'undefined') return null;
+
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return null;
+      this.ctx = new AudioCtx();
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.setValueAtTime(this.muted ? 0 : 1, this.ctx.currentTime);
+      this.masterGain.connect(this.ctx.destination);
+    }
+
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+
+    return this.ctx;
   }
 
   public playSFX(name: string): void {
-    if (this.isMuted) return;
+    if (this.muted) return;
+    const ctx = this.initContext();
+    if (!ctx || !this.masterGain) return;
+
+    const now = ctx.currentTime;
 
     switch (name) {
       case 'tap':
-        this.synth.playTone(320, 0.05, 'triangle', 0.15);
+      case 'countdown': {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = name === 'tap' ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(name === 'tap' ? 320 : 440, now);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.08);
         break;
-      case 'countdown':
-        this.synth.playTone(440, 0.08, 'sine', 0.2);
+      }
+      case 'whistle': {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(580, now);
+        osc.frequency.linearRampToValueAtTime(880, now + 0.25);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.25);
         break;
-      case 'whistle':
-        this.synth.playSweep(580, 880, 0.25, 'sine', 0.25);
-        break;
+      }
       case 'cheer':
-        this.synth.playFanfare();
+      case 'fanfare': {
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((freq, idx) => {
+          const startTime = now + idx * 0.08;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.2, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.2);
+          osc.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(startTime);
+          osc.stop(startTime + 0.2);
+        });
         break;
-      case 'fanfare':
-        this.synth.playVictory();
+      }
+      case 'draw': {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(180, now + 0.3);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.3);
         break;
-      case 'draw':
-        this.synth.playTone(220, 0.3, 'sawtooth', 0.2);
+      }
+      case 'pop': {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.08);
         break;
-      case 'pop':
-        this.synth.playSweep(800, 200, 0.08, 'triangle', 0.3);
+      }
+      case 'cannon': {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.25);
         break;
-      case 'cannon':
-        this.synth.playNoise(0.2, 0.4);
+      }
+      default: {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.05);
         break;
-      default:
-        this.synth.playClick();
-        break;
+      }
     }
   }
 
   public toggleMute(): boolean {
-    this.isMuted = !this.isMuted;
-    return this.isMuted;
+    this.muted = !this.muted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.muted ? 0 : 1, this.ctx.currentTime);
+    }
+    return this.muted;
   }
 }
+
