@@ -40,30 +40,35 @@ export class GameLoop {
   }
 
   private _setupResizeObserver(): void {
-    if (typeof ResizeObserver === 'undefined') {
-      return;
-    }
+    const updateSize = () => {
+      const parent = this._canvas.parentElement || document.body;
+      const containerWidth = parent.clientWidth || window.innerWidth;
+      const containerHeight = parent.clientHeight || window.innerHeight;
 
-    const parent = this._canvas.parentElement;
-    if (!parent) {
-      return;
-    }
+      if (containerWidth > 0 && containerHeight > 0) {
+        const scaleX = containerWidth / this.width;
+        const scaleY = containerHeight / this.height;
+        // Strict aspect-ratio preservation (contain mode - no stretching or distortion)
+        this._scale = Math.min(scaleX, scaleY);
 
-    this._resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width: containerWidth, height: containerHeight } = entry.contentRect;
-        if (containerWidth > 0 && containerHeight > 0) {
-          const scaleX = containerWidth / this.width;
-          const scaleY = containerHeight / this.height;
-          this._scale = Math.min(scaleX, scaleY);
-
-          this._canvas.style.width = `${this.width * this._scale}px`;
-          this._canvas.style.height = `${this.height * this._scale}px`;
-        }
+        this._canvas.style.width = `${Math.floor(this.width * this._scale)}px`;
+        this._canvas.style.height = `${Math.floor(this.height * this._scale)}px`;
+        this._canvas.style.objectFit = 'contain';
       }
-    });
+    };
 
-    this._resizeObserver.observe(parent);
+    if (typeof ResizeObserver !== 'undefined') {
+      const parent = this._canvas.parentElement || document.body;
+      this._resizeObserver = new ResizeObserver(() => {
+        updateSize();
+      });
+      this._resizeObserver.observe(parent);
+    }
+
+    window.addEventListener('resize', updateSize);
+    window.addEventListener('orientationchange', updateSize);
+    // Initial size pass
+    updateSize();
   }
 
   setScene(scene: GameScene): void {
