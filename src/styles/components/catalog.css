@@ -130,13 +130,65 @@
   color: #795548;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .ac-catalog-view {
     padding: 1rem;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
+    gap: 1.25rem;
   }
+
+  .ac-game-grid-container {
+    gap: 1.5rem;
+  }
+
+  .ac-catalog-section {
+    position: relative;
+  }
+
+  /* Carousel / Swipe Slider mode on mobile & tablet */
   .ac-game-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1.25rem;
+    padding: 0.5rem 0.25rem 1rem 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: #D8C3A5 transparent;
+  }
+
+  .ac-game-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .ac-game-grid::-webkit-scrollbar-track {
+    background: rgba(62, 39, 35, 0.05);
+    border-radius: 4px;
+  }
+
+  .ac-game-grid::-webkit-scrollbar-thumb {
+    background: #C85A32;
+    border-radius: 4px;
+  }
+
+  .ac-card {
+    flex: 0 0 280px;
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    scroll-snap-align: start;
+    scroll-margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .ac-card {
+    flex: 0 0 82vw;
+    width: 82vw;
+    min-width: 82vw;
+    max-width: 320px;
   }
 }
