@@ -31,25 +31,21 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    canvas#game {
+    canvas {
       display: block;
-      background: #181512;
       border: 3px solid #2B2118;
       border-radius: 12px;
       box-shadow: 4px 4px 0px #2B2118;
-      width: 100%;
-      height: 100%;
-      max-width: 96vw;
-      max-height: 96vh;
-      object-fit: contain;
-      aspect-ratio: 480 / 416;
+      background: #FAF6EE;
+      max-width: 100%;
+      max-height: 100%;
       touch-action: none;
       image-rendering: pixelated;
     }
   </style>
 </head>
 <body>
-  <canvas id="game" width="480" height="416"></canvas>
+  <canvas id="game"></canvas>
   <script type="module" src="./src/main.ts"></script>
 </body>
 </html>

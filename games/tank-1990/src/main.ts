@@ -38,6 +38,10 @@ if (!ctx) {
   throw new Error('Failed to get 2D context from canvas');
 }
 
+// Draw immediate loading frame before loop starts
+ctx.fillStyle = '#181512';
+ctx.fillRect(0, 0, TOTAL_CANVAS_WIDTH, TOTAL_CANVAS_HEIGHT);
+
 // Core Subsystems
 const grid = new GridMap();
 const bulletManager = new BulletManager(grid);
@@ -186,206 +190,214 @@ function startNewCampaign(): void {
 let lastTime = performance.now();
 
 function update(dt: number): void {
-  gameFlow.update(dt);
-  particleEmitter.update(dt);
+  try {
+    gameFlow.update(dt);
+    particleEmitter.update(dt);
 
-  if (gameFlow.state === GameState.STAGE_INTRO) {
-    // Stage intro curtain rolling open
-    return;
-  }
-
-  if (gameFlow.state === GameState.STAGE_TALLY) {
-    if (gameFlow.tallyTimer >= gameFlow.tallyDuration) {
-      gameFlow.nextStage();
-      setupCurrentStage();
+    if (gameFlow.state === GameState.STAGE_INTRO) {
+      // Stage intro curtain rolling open
+      return;
     }
-    return;
-  }
 
-  if (gameFlow.state === GameState.GAME_OVER) {
-    if (gameFlow.gameOverTimer >= 4.0) {
-      gameFlow.goToTitle();
+    if (gameFlow.state === GameState.STAGE_TALLY) {
+      if (gameFlow.tallyTimer >= gameFlow.tallyDuration) {
+        gameFlow.nextStage();
+        setupCurrentStage();
+      }
+      return;
     }
-    return;
-  }
 
-  if (gameFlow.state !== GameState.PLAYING) {
-    return;
-  }
-
-  // Handle Player Input
-  const touchState = touchControls.getState();
-  let moveDir: CardinalDirection | null = touchState.direction;
-
-  if (!moveDir) {
-    if (activeKeys.has('ArrowUp') || activeKeys.has('KeyW')) moveDir = 'UP';
-    else if (activeKeys.has('ArrowDown') || activeKeys.has('KeyS')) moveDir = 'DOWN';
-    else if (activeKeys.has('ArrowLeft') || activeKeys.has('KeyA')) moveDir = 'LEFT';
-    else if (activeKeys.has('ArrowRight') || activeKeys.has('KeyD')) moveDir = 'RIGHT';
-  }
-
-  const isFiring =
-    touchState.isFiring ||
-    activeKeys.has('Space') ||
-    activeKeys.has('KeyJ') ||
-    activeKeys.has('KeyZ');
-
-  // Player Movement & Engine Audio
-  if (moveDir && !playerTank.isDead) {
-    playerTank.move(moveDir, dt);
-    tankAudio.updateEngineSound(true);
-  } else {
-    playerTank.update(dt);
-    tankAudio.updateEngineSound(false);
-  }
-
-  // Player Weapon Firing
-  if (isFiring && !playerTank.isDead) {
-    const stats = playerTank.getStats();
-    if (bulletManager.canFire('PLAYER', stats.maxBullets)) {
-      bulletManager.fire(
-        playerTank.x,
-        playerTank.y,
-        playerTank.direction,
-        'PLAYER',
-        {
-          bulletSpeed: stats.bulletSpeed,
-          canDestroySteel: stats.canDestroySteel,
-          canCutTrees: stats.canCutTrees,
-          damage: 1,
-        },
-        playerTank.width
-      );
-      tankAudio.playPlayerFire();
+    if (gameFlow.state === GameState.GAME_OVER) {
+      if (gameFlow.gameOverTimer >= 4.0) {
+        gameFlow.goToTitle();
+      }
+      return;
     }
-  }
 
-  // Enemy AI, Spawning & Firing
-  enemySpawner.update(dt, playerTank.getState(), (enemyTank) => {
-    const eStats = enemyTank.getConfig();
-    if (bulletManager.canFire('ENEMY', eStats.maxBullets)) {
-      bulletManager.fire(
-        enemyTank.x,
-        enemyTank.y,
-        enemyTank.direction,
-        'ENEMY',
-        {
-          bulletSpeed: eStats.bulletSpeed,
-          canDestroySteel: false,
-          canCutTrees: false,
-          damage: 1,
-        },
-        enemyTank.width
-      );
-      tankAudio.playEnemyFire();
+    if (gameFlow.state !== GameState.PLAYING) {
+      return;
     }
-  });
 
-  // Power-up Lifecycle & Player Pickup Collision
-  powerUpSystem.update(dt);
-  if (!playerTank.isDead) {
-    powerUpSystem.checkPlayerCollision(playerTank, enemySpawner);
-  }
+    // Handle Player Input
+    const touchState = touchControls.getState();
+    let moveDir: CardinalDirection | null = touchState.direction;
 
-  // Bullet Ballistics & Combat Ray Collisions
-  const combatTargets = [
-    {
-      id: 'player',
-      x: playerTank.x,
-      y: playerTank.y,
-      width: playerTank.width,
-      height: playerTank.height,
-      isPlayer: true,
-      isDead: playerTank.isDead,
-      isInvulnerable: playerTank.isInvulnerable,
-      takeDamage: (_damage: number) => {
-        if (playerTank.isInvulnerable || playerTank.isDead) return false;
-        playerTank.takeDamage();
-        tankAudio.playTankExplosion();
-        particleEmitter.emitExplosion(
-          playerTank.x + playerTank.width / 2,
-          playerTank.y + playerTank.height / 2,
-          true
+    if (!moveDir) {
+      if (activeKeys.has('ArrowUp') || activeKeys.has('KeyW')) moveDir = 'UP';
+      else if (activeKeys.has('ArrowDown') || activeKeys.has('KeyS')) moveDir = 'DOWN';
+      else if (activeKeys.has('ArrowLeft') || activeKeys.has('KeyA')) moveDir = 'LEFT';
+      else if (activeKeys.has('ArrowRight') || activeKeys.has('KeyD')) moveDir = 'RIGHT';
+    }
+
+    const isFiring =
+      touchState.isFiring ||
+      activeKeys.has('Space') ||
+      activeKeys.has('KeyJ') ||
+      activeKeys.has('KeyZ');
+
+    // Player Movement & Engine Audio
+    if (moveDir && !playerTank.isDead) {
+      playerTank.move(moveDir, dt);
+      tankAudio.updateEngineSound(true);
+    } else {
+      playerTank.update(dt);
+      tankAudio.updateEngineSound(false);
+    }
+
+    // Player Weapon Firing
+    if (isFiring && !playerTank.isDead) {
+      const stats = playerTank.getStats();
+      if (bulletManager.canFire('PLAYER', stats.maxBullets)) {
+        bulletManager.fire(
+          playerTank.x,
+          playerTank.y,
+          playerTank.direction,
+          'PLAYER',
+          {
+            bulletSpeed: stats.bulletSpeed,
+            canDestroySteel: stats.canDestroySteel,
+            canCutTrees: stats.canCutTrees,
+            damage: 1,
+          },
+          playerTank.width
         );
-        if (playerTank.lives <= 0) {
+        tankAudio.playPlayerFire();
+      }
+    }
+
+    // Enemy AI, Spawning & Firing
+    enemySpawner.update(dt, playerTank.getState(), (enemyTank) => {
+      const eStats = enemyTank.getConfig();
+      if (bulletManager.canFire('ENEMY', eStats.maxBullets)) {
+        bulletManager.fire(
+          enemyTank.x,
+          enemyTank.y,
+          enemyTank.direction,
+          'ENEMY',
+          {
+            bulletSpeed: eStats.bulletSpeed,
+            canDestroySteel: false,
+            canCutTrees: false,
+            damage: 1,
+          },
+          enemyTank.width
+        );
+        tankAudio.playEnemyFire();
+      }
+    });
+
+    // Power-up Lifecycle & Player Pickup Collision
+    powerUpSystem.update(dt);
+    if (!playerTank.isDead) {
+      powerUpSystem.checkPlayerCollision(playerTank, enemySpawner);
+    }
+
+    // Bullet Ballistics & Combat Ray Collisions
+    const combatTargets = [
+      {
+        id: 'player',
+        x: playerTank.x,
+        y: playerTank.y,
+        width: playerTank.width,
+        height: playerTank.height,
+        isPlayer: true,
+        isDead: playerTank.isDead,
+        isInvulnerable: playerTank.isInvulnerable,
+        takeDamage: (_damage: number) => {
+          if (playerTank.isInvulnerable || playerTank.isDead) return false;
+          playerTank.takeDamage();
+          tankAudio.playTankExplosion();
+          particleEmitter.emitExplosion(
+            playerTank.x + playerTank.width / 2,
+            playerTank.y + playerTank.height / 2,
+            true
+          );
+          if (playerTank.lives <= 0) {
+            gameFlow.triggerGameOver();
+            tankAudio.playGameOverCadence();
+          }
+          return true;
+        },
+      },
+      ...enemySpawner.getActiveEnemies(),
+    ];
+
+    bulletManager.update(dt, combatTargets);
+
+    // Process Bullet Hit Events
+    const events = bulletManager.getEvents();
+    for (let i = 0; i < events.length; i++) {
+      const ev = events[i]!;
+      switch (ev.type) {
+        case 'BRICK':
+          tankAudio.playBrickDestroy();
+          particleEmitter.emitBrickDebris(ev.x, ev.y, 8);
+          break;
+        case 'STEEL':
+        case 'BOUNDARY':
+          tankAudio.playBulletHitMetal();
+          particleEmitter.emitSparks(ev.x, ev.y, 6);
+          break;
+        case 'BULLET_CANCEL':
+          tankAudio.playBulletCancel();
+          particleEmitter.emitSparks(ev.x, ev.y, 10);
+          break;
+        case 'EAGLE':
+          grid.destroyEagle();
+          tankAudio.playEagleDestroyed();
+          particleEmitter.emitExplosion(ev.x, ev.y, true);
           gameFlow.triggerGameOver();
           tankAudio.playGameOverCadence();
-        }
-        return true;
-      },
-    },
-    ...enemySpawner.getActiveEnemies(),
-  ];
-
-  bulletManager.update(dt, combatTargets);
-
-  // Process Bullet Hit Events
-  const events = bulletManager.getEvents();
-  for (let i = 0; i < events.length; i++) {
-    const ev = events[i]!;
-    switch (ev.type) {
-      case 'BRICK':
-        tankAudio.playBrickDestroy();
-        particleEmitter.emitBrickDebris(ev.x, ev.y, 8);
-        break;
-      case 'STEEL':
-      case 'BOUNDARY':
-        tankAudio.playBulletHitMetal();
-        particleEmitter.emitSparks(ev.x, ev.y, 6);
-        break;
-      case 'BULLET_CANCEL':
-        tankAudio.playBulletCancel();
-        particleEmitter.emitSparks(ev.x, ev.y, 10);
-        break;
-      case 'EAGLE':
-        grid.destroyEagle();
-        tankAudio.playEagleDestroyed();
-        particleEmitter.emitExplosion(ev.x, ev.y, true);
-        gameFlow.triggerGameOver();
-        tankAudio.playGameOverCadence();
-        break;
+          break;
+      }
     }
-  }
-  bulletManager.clearEvents();
+    bulletManager.clearEvents();
 
-  // Eagle Loss Check
-  if (grid.isEagleDestroyed() && gameFlow.state === GameState.PLAYING) {
-    gameFlow.triggerGameOver();
-    tankAudio.playGameOverCadence();
-  }
+    // Eagle Loss Check
+    if (grid.isEagleDestroyed() && gameFlow.state === GameState.PLAYING) {
+      gameFlow.triggerGameOver();
+      tankAudio.playGameOverCadence();
+    }
 
-  // Wave Clear Check
-  if (enemySpawner.isWaveCleared() && gameFlow.state === GameState.PLAYING) {
-    gameFlow.onStageCleared();
-    tankAudio.playStageStartFanfare();
+    // Wave Clear Check
+    if (enemySpawner.isWaveCleared() && gameFlow.state === GameState.PLAYING) {
+      gameFlow.onStageCleared();
+      tankAudio.playStageStartFanfare();
+    }
+  } catch (err) {
+    console.error('[Tank1990 Update Error]:', err);
   }
 }
 
 function render(): void {
-  const renderData: RenderSceneData = {
-    grid: {
-      getCell: (c, r) => grid.getCell(c, r),
-      isEagleDestroyed: () => grid.isEagleDestroyed(),
-      eagleState: grid.eagleState,
-      getSubTileBoxes: (c, r) => grid.getSubTileBoxes(c, r),
-    },
-    playerTank: playerTank.getState(),
-    enemyTanks: enemySpawner.getActiveEnemies().map((e) => e.getState()),
-    bullets: bulletManager.getBullets(),
-    powerUps: powerUpSystem.getItems(),
-    hudState: gameFlow.getHUDState(
-      enemySpawner.getRemainingCount(),
-      playerTank.lives,
-      playerTank.tier
-    ),
-    gameState: gameFlow.state,
-    curtainProgress: gameFlow.getCurtainProgress(),
-    tallyProgress: gameFlow.getTallyProgress(),
-    tallyResult: scoreManager.getStageTally(gameFlow.currentStage),
-    time: performance.now() / 1000,
-  };
+  try {
+    const renderData: RenderSceneData = {
+      grid: {
+        getCell: (c, r) => grid.getCell(c, r),
+        isEagleDestroyed: () => grid.isEagleDestroyed(),
+        eagleState: grid.eagleState,
+        getSubTileBoxes: (c, r) => grid.getSubTileBoxes(c, r),
+      },
+      playerTank: playerTank.getState(),
+      enemyTanks: enemySpawner.getActiveEnemies().map((e) => e.getState()),
+      bullets: bulletManager.getBullets(),
+      powerUps: powerUpSystem.getItems(),
+      hudState: gameFlow.getHUDState(
+        enemySpawner.getRemainingCount(),
+        playerTank.lives,
+        playerTank.tier
+      ),
+      gameState: gameFlow.state,
+      curtainProgress: gameFlow.getCurtainProgress(),
+      tallyProgress: gameFlow.getTallyProgress(),
+      tallyResult: scoreManager.getStageTally(gameFlow.currentStage),
+      time: performance.now() / 1000,
+    };
 
-  tankRenderer.renderScene(ctx, renderData, particleEmitter);
+    tankRenderer.renderScene(ctx, renderData, particleEmitter);
+  } catch (err) {
+    console.error('[Tank1990 Render Error]:', err);
+  }
 }
 
 function gameLoop(timestamp: number): void {

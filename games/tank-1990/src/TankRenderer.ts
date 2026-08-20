@@ -887,16 +887,16 @@ export class TankRenderer {
     const state = data.gameState ?? GameState.PLAYING;
 
     switch (state) {
+      case GameState.TITLE:
+        this.drawTitleScreen(ctx, data.hudState?.highScore ?? 20000);
+        break;
+
       case GameState.STAGE_INTRO:
         this.drawStageIntroCurtain(ctx, data.hudState?.stage ?? 1, data.curtainProgress ?? 0);
         break;
 
       case GameState.STAGE_TALLY:
         this.drawStageTallyScreen(ctx, data.tallyResult, data.tallyProgress ?? 1.0);
-        break;
-
-      case GameState.TITLE:
-        this.drawTitleScreen(ctx, data.hudState?.highScore ?? 20000);
         break;
 
       case GameState.GAME_OVER:
@@ -1130,7 +1130,7 @@ export class TankRenderer {
   private drawTitleScreen(ctx: CanvasRenderingContext2D, highScore: number): void {
     ctx.save();
     ctx.fillStyle = '#181512';
-    ctx.fillRect(0, 0, ARENA_WIDTH, ARENA_HEIGHT);
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // High Score Banner
     ctx.fillStyle = '#e74c3c';
