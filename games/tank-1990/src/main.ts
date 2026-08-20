@@ -20,7 +20,7 @@ import { TankAudio } from './TankAudio';
 import { TouchControls } from './TouchControls';
 import { ViewportManager } from './ViewportManager';
 import { ParticleEmitter } from './ParticleEmitter';
-import { loadStageIntoGrid } from './stages';
+import { loadStage } from './stages';
 
 // Initialize Playables SDK Adapter
 initPlayables();
@@ -166,7 +166,7 @@ canvas.addEventListener('pointerdown', (e) => {
 });
 
 function setupCurrentStage(): void {
-  loadStageIntoGrid(grid, gameFlow.currentStage);
+  loadStage(grid, gameFlow.currentStage);
   bulletManager.clear();
   particleEmitter.clear();
   playerTank.spawn();

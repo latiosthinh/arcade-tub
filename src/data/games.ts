@@ -613,6 +613,20 @@ export const GAMES: GameItem[] = [
     themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #DBEAFE 100%)',
     features: ['Paper Notebook Theme & Chalk Dust', 'Local 2-Player Pass & Play', 'Xiaomi Mimo AI & Minimax Engine']
+  },
+  {
+    id: 'tank-1990',
+    title: 'Tank 1990',
+    genre: 'Tactical Retro Tank Combat',
+    category: 'action',
+    description: 'Authentic 2D papercraft Battle City arcade shooter. Defend your cardboard Eagle HQ, blast through destructible microgrids, upgrade your tank across 4 tiers, collect tactical powerups, and battle 20-tank enemy waves across 35 classic stages.',
+    badge: 'Retro',
+    rating: '5.0 ★',
+    plays: '150K plays',
+    icon: '🛡️',
+    themeColor: '#D97706',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['26×26 Destructible Microgrid', '4-Tier Tank Upgrades & 8 Powerups', 'Procedural 8-Bit Web Audio & Confetti FX']
   }
 ];
 

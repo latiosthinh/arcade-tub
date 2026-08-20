@@ -1061,5 +1061,106 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
       <!-- Food Pellet -->
       <circle cx="180" cy="80" r="3" fill="#B45309" stroke="#2B2118" stroke-width="1" />
     </svg>
+  `,
+
+  'tank-1990': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Dark Cardboard Arena Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <rect x="6" y="6" width="308" height="168" rx="8" fill="#181412" stroke="#2B2118" stroke-width="2.5" />
+
+      <!-- Top Score / HUD Banner -->
+      <rect x="6" y="6" width="308" height="18" rx="4" fill="#2B2118" />
+      <text x="24" y="19" fill="#F4EAD4" font-family="'Comfortaa', sans-serif" font-size="10" font-weight="bold">STAGE 01</text>
+      <text x="160" y="19" text-anchor="middle" fill="#F59E0B" font-family="'Comfortaa', sans-serif" font-size="10" font-weight="bold">SCORE 04800</text>
+      <text x="290" y="19" text-anchor="end" fill="#E11D48" font-family="'Comfortaa', sans-serif" font-size="10" font-weight="bold">LIVES: 3</text>
+
+      <!-- Sub-Tile Brick Wall Clusters -->
+      <!-- Left Column Bricks -->
+      <rect x="36" y="36" width="18" height="18" fill="#B84920" stroke="#2B2118" stroke-width="1" />
+      <line x1="45" y1="36" x2="45" y2="54" stroke="#2B2118" stroke-width="0.8" />
+      <line x1="36" y1="45" x2="54" y2="45" stroke="#2B2118" stroke-width="0.8" />
+      <rect x="36" y="58" width="18" height="18" fill="#B84920" stroke="#2B2118" stroke-width="1" />
+      <line x1="45" y1="58" x2="45" y2="76" stroke="#2B2118" stroke-width="0.8" />
+      <line x1="36" y1="67" x2="54" y2="67" stroke="#2B2118" stroke-width="0.8" />
+
+      <!-- Right Column Bricks -->
+      <rect x="266" y="36" width="18" height="18" fill="#B84920" stroke="#2B2118" stroke-width="1" />
+      <rect x="266" y="58" width="18" height="18" fill="#B84920" stroke="#2B2118" stroke-width="1" />
+
+      <!-- Center Steel Blocks -->
+      <rect x="151" y="44" width="18" height="18" fill="#94A3B8" stroke="#2B2118" stroke-width="1" />
+      <circle cx="155" cy="48" r="1.5" fill="#E2E8F0" />
+      <circle cx="165" cy="48" r="1.5" fill="#E2E8F0" />
+      <circle cx="155" cy="58" r="1.5" fill="#E2E8F0" />
+      <circle cx="165" cy="58" r="1.5" fill="#E2E8F0" />
+
+      <!-- Water Pond Pool -->
+      <rect x="80" y="70" width="34" height="24" rx="3" fill="#38BDF8" stroke="#0284C7" stroke-width="1" />
+      <path d="M 84 78 Q 97 74 110 78" fill="none" stroke="#E0F2FE" stroke-width="1.5" />
+      <path d="M 84 86 Q 97 82 110 86" fill="none" stroke="#E0F2FE" stroke-width="1.5" />
+
+      <!-- Enemy Tank 1 (Red Fast Cruiser - Moving Down) -->
+      <g transform="translate(70, 32)">
+        <rect x="0" y="0" width="22" height="22" rx="2" fill="#E11D48" stroke="#2B2118" stroke-width="1.2" />
+        <rect x="-3" y="2" width="4" height="18" rx="1" fill="#881337" />
+        <rect x="21" y="2" width="4" height="18" rx="1" fill="#881337" />
+        <circle cx="11" cy="11" r="5" fill="#F43F5E" stroke="#2B2118" stroke-width="1" />
+        <line x1="11" y1="11" x2="11" y2="25" stroke="#2B2118" stroke-width="2.5" stroke-linecap="round" />
+      </g>
+
+      <!-- Enemy Tank 2 (White Armor Heavy - Moving Left) -->
+      <g transform="translate(220, 75) rotate(90)">
+        <rect x="0" y="0" width="24" height="24" rx="2" fill="#E2E8F0" stroke="#2B2118" stroke-width="1.2" />
+        <rect x="-3" y="2" width="4" height="20" rx="1" fill="#64748B" />
+        <rect x="23" y="2" width="4" height="20" rx="1" fill="#64748B" />
+        <circle cx="12" cy="12" r="6" fill="#F8FAFC" stroke="#2B2118" stroke-width="1" />
+        <line x1="12" y1="12" x2="12" y2="27" stroke="#2B2118" stroke-width="3" stroke-linecap="round" />
+      </g>
+
+      <!-- Player Tank (Yellow/Ochre Heavy Tier 3 - Moving Up) -->
+      <g transform="translate(148, 100)">
+        <rect x="0" y="0" width="24" height="24" rx="2" fill="#F59E0B" stroke="#2B2118" stroke-width="1.5" />
+        <!-- Tread Tracks -->
+        <rect x="-4" y="2" width="5" height="20" rx="1" fill="#B45309" stroke="#2B2118" stroke-width="1" />
+        <rect x="23" y="2" width="5" height="20" rx="1" fill="#B45309" stroke="#2B2118" stroke-width="1" />
+        <!-- Turret & Cannon -->
+        <circle cx="12" cy="12" r="6" fill="#FDE68A" stroke="#2B2118" stroke-width="1.2" />
+        <line x1="10" y1="12" x2="10" y2="-4" stroke="#2B2118" stroke-width="2" stroke-linecap="round" />
+        <line x1="14" y1="12" x2="14" y2="-4" stroke="#2B2118" stroke-width="2" stroke-linecap="round" />
+        <!-- Invulnerability Ring -->
+        <circle cx="12" cy="12" r="17" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="4 2" />
+      </g>
+
+      <!-- Bullet & Spark FX -->
+      <circle cx="158" cy="80" r="2.5" fill="#FEF08A" stroke="#EA580C" stroke-width="1" />
+      <line x1="158" y1="84" x2="158" y2="92" stroke="#F97316" stroke-width="1.5" opacity="0.7" />
+
+      <!-- Star Power-up Item -->
+      <g transform="translate(200, 40)">
+        <rect x="0" y="0" width="18" height="18" rx="2" fill="#FEF08A" stroke="#2B2118" stroke-width="1" />
+        <polygon points="9,2 11,7 16,7 12,10 14,15 9,12 4,15 6,10 2,7 7,7" fill="#F59E0B" />
+      </g>
+
+      <!-- Cardboard Trees Canopy (Overlapping) -->
+      <g opacity="0.95">
+        <rect x="180" y="90" width="28" height="24" rx="4" fill="#059669" stroke="#065F46" stroke-width="1" />
+        <circle cx="188" cy="98" r="4" fill="#10B981" />
+        <circle cx="200" cy="104" r="5" fill="#34D399" />
+        <circle cx="192" cy="108" r="3" fill="#10B981" />
+      </g>
+
+      <!-- Cardboard Eagle HQ Base -->
+      <g transform="translate(146, 142)">
+        <!-- Fortress Brick Border -->
+        <rect x="-8" y="-6" width="44" height="6" fill="#B84920" stroke="#2B2118" stroke-width="0.8" />
+        <rect x="-8" y="0" width="6" height="24" fill="#B84920" stroke="#2B2118" stroke-width="0.8" />
+        <rect x="30" y="0" width="6" height="24" fill="#B84920" stroke="#2B2118" stroke-width="0.8" />
+        <!-- Eagle Crest -->
+        <rect x="0" y="0" width="28" height="24" rx="2" fill="#D8C3A5" stroke="#2B2118" stroke-width="1.2" />
+        <polygon points="14,3 23,10 19,21 9,21 5,10" fill="#B45309" stroke="#2B2118" stroke-width="1" />
+        <polygon points="14,6 20,11 14,18 8,11" fill="#FDE68A" />
+      </g>
+    </svg>
   `
 };
