@@ -1,0 +1,10 @@
+{
+  "name": "@arcade-carnival/pop-it",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@arcade-carnival/playables-adapter": "workspace:*",
+    "@arcade-carnival/game-engine": "workspace:*"
+  }
+}
