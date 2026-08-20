@@ -313,8 +313,8 @@ export class CrateCatchScene implements GameScene {
     ctx.lineTo(160, 254);
     ctx.stroke();
 
-    // Top-right Chute (Blue conveyor chute #3B82F6 for back lane)
-    ctx.strokeStyle = '#3B82F6';
+    // Top-right Chute (Orange conveyor chute #F97316 for back lane)
+    ctx.strokeStyle = '#F97316';
     ctx.lineWidth = 10;
     ctx.beginPath();
     ctx.moveTo(740, 0);
@@ -382,11 +382,11 @@ export class CrateCatchScene implements GameScene {
   }
 
   private renderTracks(ctx: CanvasRenderingContext2D): void {
-    // Back Track (Sapphire Blue Conveyor Strip #3B82F6 matching blue boxes)
+    // Back Track (Bright Orange Conveyor Strip #F97316 matching orange boxes)
     const backY = 440 + 28 * 0.85; // ~464
-    ctx.fillStyle = '#60A5FA';
+    ctx.fillStyle = '#FB923C';
     ctx.fillRect(0, backY, 800, 10);
-    ctx.strokeStyle = '#1D4ED8';
+    ctx.strokeStyle = '#C2410C';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(0, backY, 800, 10);
 
@@ -395,7 +395,7 @@ export class CrateCatchScene implements GameScene {
     ctx.beginPath();
     ctx.rect(0, backY, 800, 10);
     ctx.clip();
-    ctx.strokeStyle = '#1E3A8A';
+    ctx.strokeStyle = '#9A3412';
     ctx.lineWidth = 3;
     for (let x = -24 + this.conveyorOffsetBack; x < 824; x += 24) {
       ctx.beginPath();
@@ -513,13 +513,14 @@ export class CrateCatchScene implements GameScene {
     } else {
       // Construction paper boxes with paper tape cross and drop shadow
       const isBackLane = item.lane === 'back';
-      let baseCol = isBackLane ? '#3B82F6' : '#10B981';
+      // Front lane = #10B981 Emerald Green, Back lane = #F97316 Vibrant Orange
+      let baseCol = isBackLane ? '#F97316' : '#10B981';
       let tapeCol = 'rgba(255, 248, 220, 0.9)';
 
-      if (type === 'crate_golden') {
+      if (type === 'crate_large') {
+        baseCol = isBackLane ? '#EA580C' : '#059669';
+      } else if (type === 'crate_golden') {
         baseCol = '#F59E0B';
-      } else if (type === 'crate_large') {
-        baseCol = isBackLane ? '#1D4ED8' : '#059669';
       }
 
       // Drop shadow
@@ -638,12 +639,12 @@ export class CrateCatchScene implements GameScene {
       ctx.translate(-crateW / 2, -crateH);
 
       const isBackLane = c.lane === 'back';
-      let baseCol = isBackLane ? '#3B82F6' : '#F59E0B';
+      let baseCol = isBackLane ? '#F97316' : '#10B981';
 
-      if (c.type === 'crate_golden') {
-        baseCol = '#10B981';
-      } else if (c.type === 'crate_large') {
-        baseCol = isBackLane ? '#1D4ED8' : '#C85A32';
+      if (c.type === 'crate_large') {
+        baseCol = isBackLane ? '#EA580C' : '#059669';
+      } else if (c.type === 'crate_golden') {
+        baseCol = '#F59E0B';
       }
 
       // Drop shadow for stacked crate
@@ -686,14 +687,14 @@ export class CrateCatchScene implements GameScene {
 
   private renderHUD(ctx: CanvasRenderingContext2D): void {
     ctx.save();
-    // Top Placard Header - Theme accented (Green/Blue dual-tone)
+    // Top Placard Header - Theme accented (Green/Orange dual-tone)
     ctx.fillStyle = '#FFFDF8';
     ctx.fillRect(0, 0, 800, 52);
 
     // Dynamic dual-tone top rail indicator matching falling boxes
-    // Front lane active = #10B981 (Emerald Green), Back lane active = #3B82F6 (Sapphire Blue)
+    // Front lane active = #10B981 (Emerald Green), Back lane active = #F97316 (Vibrant Orange)
     const isBackActive = this.cart.lane === 'back';
-    const topAccentColor = isBackActive ? '#3B82F6' : '#10B981';
+    const topAccentColor = isBackActive ? '#F97316' : '#10B981';
 
     // Accent header ribbon
     ctx.fillStyle = topAccentColor;
@@ -706,8 +707,8 @@ export class CrateCatchScene implements GameScene {
     ctx.lineTo(800, 52);
     ctx.stroke();
 
-    // Tape strips on top HUD (tinted green/blue)
-    ctx.fillStyle = isBackActive ? 'rgba(59, 130, 246, 0.2)' : 'rgba(16, 185, 129, 0.2)';
+    // Tape strips on top HUD (tinted green/orange)
+    ctx.fillStyle = isBackActive ? 'rgba(249, 115, 22, 0.2)' : 'rgba(16, 185, 129, 0.2)';
     ctx.strokeStyle = topAccentColor;
     ctx.lineWidth = 1.5;
     ctx.fillRect(160, 2, 28, 10);
@@ -741,7 +742,7 @@ export class CrateCatchScene implements GameScene {
     ctx.font = 'bold 18px "Patrick Hand", cursive, sans-serif';
     const mult = this.stackPhysics.getMultiplier();
     const count = this.stackPhysics.crates.length;
-    const laneTag = isBackActive ? '🔵 BACK TRACK' : '🟢 FRONT TRACK';
+    const laneTag = isBackActive ? '🟠 BACK TRACK' : '🟢 FRONT TRACK';
     ctx.fillText(
       `SCORE: ${this.gameState.score}   |   STACK: ${count} (${mult}x)   |   ${laneTag}`,
       400,
@@ -754,13 +755,13 @@ export class CrateCatchScene implements GameScene {
       ctx.font = 'bold 14px "Patrick Hand", cursive, sans-serif';
       ctx.fillText(`SPACE: BANK STACK (+${this.stackPhysics.crates.reduce((a, b) => a + b.basePoints, 0) * mult} PTS)`, 400, 42);
     } else if (this.stackPhysics.isShieldActive()) {
-      ctx.fillStyle = '#3B82F6';
+      ctx.fillStyle = '#F59E0B';
       ctx.font = 'bold 14px "Patrick Hand", cursive, sans-serif';
       ctx.fillText(`MAGNETIC SHIELD: ${this.stackPhysics.shieldTimer.toFixed(1)}s`, 400, 42);
     } else {
       ctx.fillStyle = topAccentColor;
       ctx.font = 'bold 13px "Patrick Hand", cursive, sans-serif';
-      ctx.fillText(`ACTIVE LANE: ${isBackActive ? 'UP/W (BLUE BOXES)' : 'DOWN/S (GREEN BOXES)'}`, 400, 42);
+      ctx.fillText(`ACTIVE LANE: ${isBackActive ? 'UP/W (ORANGE BOXES)' : 'DOWN/S (GREEN BOXES)'}`, 400, 42);
     }
 
     // Right: Missed Crates Allowance (5 items)
