@@ -167,6 +167,10 @@ describe('EnemyTank Unit Tests', () => {
 
     it('collides with other combat tanks and does not overlap', () => {
       const enemy1 = new EnemyTank(EnemyType.BASIC, grid, bulletManager, { id: 'e1', x: 100, y: 80, direction: 'DOWN' });
+      // Enemy width/height is 28px; placed at y:110, bounds are [110..138].
+      // When moving DOWN towards otherTank, enemy1 must be clamped above y:110 (so enemy1.y + 28 <= 110).
+      // Freeze turnCooldown to prevent AI from turning LEFT/RIGHT and bypassing the obstacle.
+      enemy1.turnCooldown = 999;
       const otherTank = {
         id: 'other',
         x: 100,
