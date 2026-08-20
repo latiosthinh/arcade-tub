@@ -278,6 +278,17 @@ export class GameView extends BaseComponent<AppState> {
     };
     this.addListener(window, 'keydown', onKeyDown);
 
+    // Window fullscreen change listener to keep store in sync if user exits via ESC
+    const onFullscreenChange = () => {
+      const isDocFullscreen = Boolean(document.fullscreenElement);
+      if (!isDocFullscreen && this.store.getState().isTheaterMode) {
+        // Exited browser fullscreen via browser ESC or gesture
+        this.store.setState({ isTheaterMode: false });
+      }
+    };
+    this.addListener(document, 'fullscreenchange', onFullscreenChange);
+    this.addListener(document, 'webkitfullscreenchange', onFullscreenChange);
+
     // Focus iframe if accessible
     requestAnimationFrame(() => {
       this.iframeElement?.focus?.();
@@ -316,6 +327,36 @@ export class GameView extends BaseComponent<AppState> {
   private toggleTheater(): void {
     const isTheater = !this.store.getState().isTheaterMode;
     this.store.setState({ isTheaterMode: isTheater });
+
+    if (typeof document !== 'undefined') {
+      try {
+        if (isTheater) {
+          // Request browser fullscreen on the element or document root if available
+          const docEl = document.documentElement as HTMLElement & {
+            webkitRequestFullscreen?: () => Promise<void>;
+          };
+          if (docEl.requestFullscreen) {
+            docEl.requestFullscreen().catch(() => {});
+          } else if (docEl.webkitRequestFullscreen) {
+            docEl.webkitRequestFullscreen().catch(() => {});
+          }
+        } else {
+          // Exit browser fullscreen
+          const doc = document as Document & {
+            webkitExitFullscreen?: () => Promise<void>;
+          };
+          if (document.fullscreenElement) {
+            if (doc.exitFullscreen) {
+              doc.exitFullscreen().catch(() => {});
+            } else if (doc.webkitExitFullscreen) {
+              doc.webkitExitFullscreen().catch(() => {});
+            }
+          }
+        }
+      } catch {
+        // Fullscreen API may be blocked by browser user-gesture policies
+      }
+    }
   }
 
   public update(state: AppState): void {
