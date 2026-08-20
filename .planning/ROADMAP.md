@@ -13,7 +13,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
 - [x] **Phase 52: Game Flow, State Machine & Tally HUD** - Title screen, stage intro curtains, HUD sidebar, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
 - [x] **Phase 53: Tactile Papercraft Visuals & Procedural Web Audio** - Multi-pass Canvas 2D cardboard rendering, confetti explosion bursts, and zero-asset procedural 8-bit Web Audio synthesis with dynamics compression.
-- [ ] **Phase 54: Mobile Virtual Controls & Responsive Viewport** - 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and 416×416 aspect ratio scaling.
+- [x] **Phase 54: Mobile Virtual Controls & Responsive Viewport** - 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and 416×416 aspect ratio scaling.
 - [ ] **Phase 55: Hub Catalog Registration, Test Suite & Integration** - Standalone packaging in `games/tank-1990/`, catalog registration with custom SVG screenshot, Vite multi-page config, and full Vitest suite verification.
 
 ---
@@ -28,7 +28,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | 51. Enemy AI, Wave Spawner & Powerups | 2/2 | Complete | 2026-08-20 |
 | 52. Game Flow, State Machine & Tally HUD | 2/2 | Complete | 2026-08-20 |
 | 53. Papercraft Visuals & Procedural Audio | 2/2 | Complete | 2026-08-20 |
-| 54. Mobile Virtual Controls & Viewport | 0/2 | Not started | - |
+| 54. Mobile Virtual Controls & Viewport | 2/2 | Complete | 2026-08-20 |
 | 55. Hub Integration & Milestone Audit | 0/2 | Not started | - |
 
 ---
@@ -132,7 +132,10 @@ Plans:
   2. Dedicated touch Fire button enables responsive single-tap and rapid firing.
   3. Multi-touch handling allows holding D-Pad direction while tapping Fire without gesture stutter or screen scrolling.
   4. Game arena scales with crisp pixel art aspect ratio preservation across mobile portrait, landscape, and desktop viewports.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 54-01-PLAN.md — TouchControls with angular hysteresis, multi-touch tracking, and ViewportManager aspect-ratio letterbox scaling
+- [x] 54-02-PLAN.md — Comprehensive Vitest unit test suite covering virtual D-Pad directional angles, deadzone clamping, multi-pointer isolation, and viewport coordinate projections
 **UI hint**: yes
 
 ### Phase 55: Hub Catalog Registration, Test Suite & Integration
