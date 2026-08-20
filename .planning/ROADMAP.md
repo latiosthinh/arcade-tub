@@ -7,7 +7,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 
 ## Phases
 
-- [ ] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
+- [x] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
 - [ ] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
 - [ ] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
 - [ ] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
@@ -22,7 +22,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 48. GridMap Engine & Sub-Tile Destruction | 0/2 | Not started | - |
+| 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
 | 49. Player Tank Kinematics & Upgrade Tiers | 0/2 | Not started | - |
 | 50. Ballistics System & Combat Collisions | 0/2 | Not started | - |
 | 51. Enemy AI, Wave Spawner & Powerups | 0/2 | Not started | - |
@@ -47,8 +47,8 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
   5. 35 authentic stage map layouts load accurately into grid memory.
 **Plans**: 2 plans
 Plans:
-- [ ] 48-01-PLAN.md — GridMap core engine, tile types, bitmask chipping, terrain query methods, Eagle HQ state
-- [ ] 48-02-PLAN.md — 35 authentic stage map data encodings, stage loader, and comprehensive Vitest unit test suite
+- [x] 48-01-PLAN.md — GridMap core engine, tile types, bitmask chipping, terrain query methods, Eagle HQ state
+- [x] 48-02-PLAN.md — 35 authentic stage map data encodings, stage loader, and comprehensive Vitest unit test suite
 **UI hint**: yes
 
 ### Phase 49: Player Tank Kinematics & Upgrade Tiers

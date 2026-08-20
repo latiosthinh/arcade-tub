@@ -8,13 +8,13 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 ## Active Requirements
 
 ### Grid Terrain & Destruction Engine
-- [ ] **GRID-01**: System maintains a 26×26 sub-tile microgrid (16×16px cells on 416×416 field) supporting 6 terrain types: Empty, Brick, Steel, Water, Trees/Grass, and Ice.
-- [ ] **GRID-02**: System supports 4-quadrant sub-tile bitmask chipping for Brick walls when hit by projectiles.
-- [ ] **GRID-03**: System implements impassable Water barriers that block tank movement but permit projectile flight.
-- [ ] **GRID-04**: System supports Trees/Grass canopy tiles rendered above entity layer for visual camouflage concealment.
-- [ ] **GRID-05**: System supports Ice tiles causing low-friction sliding drift when tanks navigate over them.
-- [ ] **GRID-06**: System manages Eagle Base HQ entity with destructible 2×2 footprint, instant Game Over on destruction, and destroyed papercraft state.
-- [ ] **GRID-07**: System encodes and loads 35 authentic stage map layouts into the grid engine.
+- [x] **GRID-01**: System maintains a 26×26 sub-tile microgrid (16×16px cells on 416×416 field) supporting 6 terrain types: Empty, Brick, Steel, Water, Trees/Grass, and Ice.
+- [x] **GRID-02**: System supports 4-quadrant sub-tile bitmask chipping for Brick walls when hit by projectiles.
+- [x] **GRID-03**: System implements impassable Water barriers that block tank movement but permit projectile flight.
+- [x] **GRID-04**: System supports Trees/Grass canopy tiles rendered above entity layer for visual camouflage concealment.
+- [x] **GRID-05**: System supports Ice tiles causing low-friction sliding drift when tanks navigate over them.
+- [x] **GRID-06**: System manages Eagle Base HQ entity with destructible 2×2 footprint, instant Game Over on destruction, and destroyed papercraft state.
+- [x] **GRID-07**: System encodes and loads 35 authentic stage map layouts into the grid engine.
 
 ### Player Tank Kinematics & Upgrades
 - [ ] **TANK-01**: User can steer player tank in 4 cardinal directions with orthogonal corner auto-snapping ($\le 4\text{px}$ deadzone) to smoothly navigate 1-tile corridors without snagging.
@@ -80,13 +80,13 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 
 | Requirement | Phase | Status |
 |---|---|---|
-| **GRID-01** | Phase 48 | Pending |
-| **GRID-02** | Phase 48 | Pending |
-| **GRID-03** | Phase 48 | Pending |
-| **GRID-04** | Phase 48 | Pending |
-| **GRID-05** | Phase 48 | Pending |
-| **GRID-06** | Phase 48 | Pending |
-| **GRID-07** | Phase 48 | Pending |
+| **GRID-01** | Phase 48 | Complete |
+| **GRID-02** | Phase 48 | Complete |
+| **GRID-03** | Phase 48 | Complete |
+| **GRID-04** | Phase 48 | Complete |
+| **GRID-05** | Phase 48 | Complete |
+| **GRID-06** | Phase 48 | Complete |
+| **GRID-07** | Phase 48 | Complete |
 | **TANK-01** | Phase 49 | Pending |
 | **TANK-02** | Phase 49 | Pending |
 | **TANK-03** | Phase 49 | Pending |
