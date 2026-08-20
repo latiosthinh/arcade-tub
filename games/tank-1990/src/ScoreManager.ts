@@ -122,6 +122,14 @@ export class ScoreManager {
   /**
    * Calculates end-stage kill tally breakdown per enemy archetype.
    */
+  public getStageTally(stage: number): StageTallyResult {
+    return this.calculateStageTally(stage);
+  }
+
+  public addPowerUpPoints(points: number): void {
+    this.addScore(points);
+  }
+
   public calculateStageTally(stage: number): StageTallyResult {
     const order: EnemyType[] = [
       EnemyType.BASIC,
