@@ -111,8 +111,7 @@ export class ViewportManager {
 
     // Apply CSS dimensions and styling for retro pixel rendering
     const style = this.canvas.style;
-    style.imageRendering = 'pixelated';
-    (style as any).imageRendering = 'crisp-edges';
+    (style as any).imageRendering = 'pixelated';
 
     style.position = 'absolute';
     style.width = `${Math.round(this.virtualWidth * this.metrics.scale)}px`;
