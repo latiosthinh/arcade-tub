@@ -106,14 +106,17 @@ export class LevelGenerator {
       if (from === to) continue;
       const source = tubes[from];
       const target = tubes[to];
+      if (!source || !target) continue;
 
       if (source.length === 0) continue;
       if (target.length >= this.tubeCapacity) continue;
 
       // Transfer 1 unit from source to target
-      const unit = source.pop()!;
-      target.push(unit);
-      successfulSteps++;
+      const unit = source.pop();
+      if (unit) {
+        target.push(unit);
+        successfulSteps++;
+      }
     }
 
     // Ensure at least 1 tube remains empty for comfortable play
@@ -123,19 +126,24 @@ export class LevelGenerator {
       let minIdx = -1;
       let minLen = 999;
       for (let i = 0; i < tubes.length; i++) {
-        if (tubes[i].length > 0 && tubes[i].length < minLen) {
-          minLen = tubes[i].length;
+        const currentTube = tubes[i];
+        if (currentTube && currentTube.length > 0 && currentTube.length < minLen) {
+          minLen = currentTube.length;
           minIdx = i;
         }
       }
       if (minIdx !== -1) {
-        const itemsToMove = [...tubes[minIdx]];
-        tubes[minIdx] = [];
-        for (const item of itemsToMove) {
-          for (let i = 0; i < tubes.length; i++) {
-            if (i !== minIdx && tubes[i].length < this.tubeCapacity) {
-              tubes[i].push(item);
-              break;
+        const sourceTube = tubes[minIdx];
+        if (sourceTube) {
+          const itemsToMove = [...sourceTube];
+          tubes[minIdx] = [];
+          for (const item of itemsToMove) {
+            for (let i = 0; i < tubes.length; i++) {
+              const destTube = tubes[i];
+              if (destTube && i !== minIdx && destTube.length < this.tubeCapacity) {
+                destTube.push(item);
+                break;
+              }
             }
           }
         }
@@ -148,11 +156,13 @@ export class LevelGenerator {
     if (engine.isSolved() && tubes.length > 2) {
       // Force swap a unit between two non-empty tubes
       const nonEmpties = tubes.filter(t => t.length > 0);
-      if (nonEmpties.length >= 2) {
-        const u1 = nonEmpties[0].pop()!;
-        const u2 = nonEmpties[1].pop()!;
-        nonEmpties[0].push(u2);
-        nonEmpties[1].push(u1);
+      if (nonEmpties.length >= 2 && nonEmpties[0] && nonEmpties[1]) {
+        const u1 = nonEmpties[0].pop();
+        const u2 = nonEmpties[1].pop();
+        if (u1 && u2) {
+          nonEmpties[0].push(u2);
+          nonEmpties[1].push(u1);
+        }
       }
     }
   }

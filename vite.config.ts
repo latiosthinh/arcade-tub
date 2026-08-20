@@ -52,6 +52,7 @@ export default defineConfig({
         'soap-carve': resolve(__dirname, 'games/soap-carve/index.html'),
         'hydraulic-crush': resolve(__dirname, 'games/hydraulic-crush/index.html'),
         'sand-zen': resolve(__dirname, 'games/sand-zen/index.html'),
+        'liquid-sort': resolve(__dirname, 'games/liquid-sort/index.html'),
       },
     },
   },

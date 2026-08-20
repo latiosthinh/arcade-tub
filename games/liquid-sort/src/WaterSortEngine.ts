@@ -66,7 +66,7 @@ export class WaterSortEngine {
   public getTopColor(tubeIndex: number): string | null {
     const tube = this.tubes[tubeIndex];
     if (!tube || tube.length === 0) return null;
-    return tube[tube.length - 1];
+    return tube[tube.length - 1] ?? null;
   }
 
   /**
@@ -76,6 +76,7 @@ export class WaterSortEngine {
     const tube = this.tubes[tubeIndex];
     if (!tube || tube.length === 0) return 0;
     const topColor = tube[tube.length - 1];
+    if (!topColor) return 0;
     let count = 0;
     for (let i = tube.length - 1; i >= 0; i--) {
       if (tube[i] === topColor) {
@@ -97,11 +98,14 @@ export class WaterSortEngine {
 
     const source = this.tubes[fromIndex];
     const target = this.tubes[toIndex];
+    if (!source || !target) return false;
 
     if (source.length === 0) return false; // Source empty
     if (target.length >= this.tubeCapacity) return false; // Target full
 
     const sourceTop = source[source.length - 1];
+    if (!sourceTop) return false;
+
     if (target.length === 0) return true; // Empty destination is always valid
 
     const targetTop = target[target.length - 1];
@@ -114,8 +118,11 @@ export class WaterSortEngine {
   public getTransferCount(fromIndex: number, toIndex: number): number {
     if (!this.canPour(fromIndex, toIndex)) return 0;
 
+    const target = this.tubes[toIndex];
+    if (!target) return 0;
+
     const sourceRun = this.getTopRunLength(fromIndex);
-    const targetAvailable = this.tubeCapacity - this.tubes[toIndex].length;
+    const targetAvailable = this.tubeCapacity - target.length;
 
     return Math.min(sourceRun, targetAvailable);
   }
@@ -129,7 +136,10 @@ export class WaterSortEngine {
 
     const source = this.tubes[fromIndex];
     const target = this.tubes[toIndex];
+    if (!source || !target || source.length === 0) return null;
+
     const color = source[source.length - 1];
+    if (!color) return null;
 
     for (let i = 0; i < count; i++) {
       source.pop();
@@ -156,6 +166,7 @@ export class WaterSortEngine {
 
     const source = this.tubes[lastMove.fromIndex];
     const target = this.tubes[lastMove.toIndex];
+    if (!source || !target) return lastMove;
 
     // Revert transferred units from target back to source
     for (let i = 0; i < lastMove.count; i++) {
