@@ -291,9 +291,10 @@ export class CrateCatchScene implements GameScene {
       ctx.stroke();
     }
 
-    // Cardboard / Craft paper Pipes with Inked Edges
+    // Cardboard / Craft paper Pipes & Conveyor Chutes with Inked Edges
+    // Top-left Chute (Green conveyor chute #10B981 for front lane)
     ctx.save();
-    ctx.strokeStyle = '#C5A880';
+    ctx.strokeStyle = '#10B981';
     ctx.lineWidth = 12;
     ctx.beginPath();
     ctx.moveTo(60, 0);
@@ -312,7 +313,8 @@ export class CrateCatchScene implements GameScene {
     ctx.lineTo(160, 254);
     ctx.stroke();
 
-    ctx.strokeStyle = '#D8C3A5';
+    // Top-right Chute (Blue conveyor chute #3B82F6 for back lane)
+    ctx.strokeStyle = '#3B82F6';
     ctx.lineWidth = 10;
     ctx.beginPath();
     ctx.moveTo(740, 0);
@@ -380,11 +382,11 @@ export class CrateCatchScene implements GameScene {
   }
 
   private renderTracks(ctx: CanvasRenderingContext2D): void {
-    // Back Track (Cardboard Kraft Strip)
+    // Back Track (Sapphire Blue Conveyor Strip #3B82F6 matching blue boxes)
     const backY = 440 + 28 * 0.85; // ~464
-    ctx.fillStyle = '#D8C3A5';
+    ctx.fillStyle = '#60A5FA';
     ctx.fillRect(0, backY, 800, 10);
-    ctx.strokeStyle = '#3E2723';
+    ctx.strokeStyle = '#1D4ED8';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(0, backY, 800, 10);
 
@@ -393,7 +395,7 @@ export class CrateCatchScene implements GameScene {
     ctx.beginPath();
     ctx.rect(0, backY, 800, 10);
     ctx.clip();
-    ctx.strokeStyle = 'rgba(62, 39, 35, 0.3)';
+    ctx.strokeStyle = '#1E3A8A';
     ctx.lineWidth = 3;
     for (let x = -24 + this.conveyorOffsetBack; x < 824; x += 24) {
       ctx.beginPath();
@@ -403,11 +405,11 @@ export class CrateCatchScene implements GameScene {
     }
     ctx.restore();
 
-    // Front Track (Corrugated Cardboard Strip)
+    // Front Track (Emerald Green Conveyor Strip #10B981 matching green boxes)
     const frontY = 520 + 28; // 548
-    ctx.fillStyle = '#C5A880';
+    ctx.fillStyle = '#34D399';
     ctx.fillRect(0, frontY, 800, 12);
-    ctx.strokeStyle = '#3E2723';
+    ctx.strokeStyle = '#047857';
     ctx.lineWidth = 2;
     ctx.strokeRect(0, frontY, 800, 12);
 
@@ -416,7 +418,7 @@ export class CrateCatchScene implements GameScene {
     ctx.beginPath();
     ctx.rect(0, frontY, 800, 12);
     ctx.clip();
-    ctx.strokeStyle = '#3E2723';
+    ctx.strokeStyle = '#064E3B';
     ctx.lineWidth = 3;
     for (let x = -24 + this.conveyorOffsetFront; x < 824; x += 24) {
       ctx.beginPath();
