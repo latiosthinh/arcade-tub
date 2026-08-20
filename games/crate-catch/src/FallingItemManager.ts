@@ -171,21 +171,23 @@ export class FallingItemManager {
 
   checkCatch(cart: Cart, stackPhysics: StackPhysics): ItemCollisionResult[] {
     const results: ItemCollisionResult[] = [];
+    const scale = cart.getEffectiveScale();
     const cartY = cart.lane === 'front' ? cart.frontLaneY : cart.backLaneY;
     const targetCatchY = stackPhysics.crates.length > 0 ? stackPhysics.getStackTopY(cartY) : cartY;
     const topCrate = stackPhysics.crates.length > 0 ? stackPhysics.crates[stackPhysics.crates.length - 1] : null;
-    const catchWidth = topCrate ? topCrate.width + 20 : cart.width;
-    const catchCenterX = cart.x + cart.width / 2;
+    const catchWidth = (topCrate ? topCrate.width + 30 : cart.width + 20) * scale;
+    const catchCenterX = cart.x + (cart.width * scale) / 2;
 
     for (const item of this.items) {
       if (!item.alive) continue;
       if (item.lane !== cart.lane) continue;
 
       const itemCenterX = item.x + item.width / 2;
-      const horizontalMatch = Math.abs(itemCenterX - catchCenterX) <= catchWidth / 2 + item.width / 4;
+      const horizontalMatch = Math.abs(itemCenterX - catchCenterX) <= catchWidth / 2 + item.width / 3;
 
+      // Generous vertical catch window: catches even when falling fast or close to the rim/top
       const itemBottom = item.y + item.height;
-      const verticalMatch = itemBottom >= targetCatchY - 8 && itemBottom <= targetCatchY + 18;
+      const verticalMatch = itemBottom >= targetCatchY - 24 && item.y <= targetCatchY + 36;
 
       if (horizontalMatch && verticalMatch) {
         item.alive = false;
