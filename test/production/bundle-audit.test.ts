@@ -53,6 +53,21 @@ describe('Production Bundle Audit (< 250KB Gzipped Budget)', () => {
       'games/mahjong-paper/index.html',
       'games/subway-runner/index.html',
       'games/prism-laser/index.html',
+      'games/rainbow-draw/index.html',
+      'games/firework-pop/index.html',
+      'games/fruit-flood/index.html',
+      'games/snow-smash/index.html',
+      'games/mosquito-swat/index.html',
+      'games/tic-tac-toe/index.html',
+      'games/bubble-pop/index.html',
+      'games/pop-it/index.html',
+      'games/soap-carve/index.html',
+      'games/hydraulic-crush/index.html',
+      'games/sand-zen/index.html',
+      'games/liquid-sort/index.html',
+      'games/fidget-spin/index.html',
+      'games/grass-mow/index.html',
+      'games/koi-pond/index.html',
     ];
 
     for (const entry of requiredEntries) {
