@@ -9,10 +9,10 @@ describe('Cart', () => {
   });
 
   it('initializes on front lane with default values', () => {
-    expect(cart.x).toBe(350);
+    expect(cart.x).toBe(330);
     expect(cart.y).toBe(520);
-    expect(cart.width).toBe(100);
-    expect(cart.height).toBe(28);
+    expect(cart.width).toBe(140);
+    expect(cart.height).toBe(30);
     expect(cart.lane).toBe('front');
     expect(cart.maxSpeed).toBe(500);
     expect(cart.getEffectiveScale()).toBe(1.0);
@@ -66,13 +66,13 @@ describe('Cart', () => {
   it('updates horizontal position and clamps within screen bounds', () => {
     cart.vx = 500;
     cart.update(0.1);
-    expect(cart.x).toBe(350 + 50);
+    expect(cart.x).toBe(330 + 50);
 
-    // Test right clamp (800 - 100 = 700)
-    cart.x = 690;
+    // Test right clamp (800 - 140 = 660)
+    cart.x = 650;
     cart.vx = 500;
     cart.update(0.1);
-    expect(cart.x).toBe(700);
+    expect(cart.x).toBe(660);
 
     // Test left clamp (0)
     cart.x = 20;
@@ -103,8 +103,8 @@ describe('Cart', () => {
     cart.switchLane('back');
     cart.y = 440;
 
-    cart.reset(350);
-    expect(cart.x).toBe(350);
+    cart.reset(330);
+    expect(cart.x).toBe(330);
     expect(cart.vx).toBe(0);
     expect(cart.lane).toBe('front');
     expect(cart.y).toBe(520);
@@ -114,10 +114,10 @@ describe('Cart', () => {
   it('returns valid bounding box info', () => {
     const bounds = cart.getBounds();
     expect(bounds).toEqual({
-      x: 350,
+      x: 330,
       y: 520,
-      width: 100,
-      height: 28,
+      width: 140,
+      height: 30,
       lane: 'front'
     });
   });

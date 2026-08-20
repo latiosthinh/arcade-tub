@@ -1,11 +1,11 @@
 export type TrackLane = 'front' | 'back';
 
 export class Cart {
-  x: number = 350;
+  x: number = 330;
   y: number = 520;
   vx: number = 0;
-  width: number = 100;
-  height: number = 28;
+  width: number = 140; // Expanded to fit ~3 crates side-by-side
+  height: number = 30;
   frontLaneY: number = 520;
   backLaneY: number = 440;
   targetY: number = 520;
@@ -15,7 +15,7 @@ export class Cart {
   friction: number = 0.001;
   screenWidth: number = 800;
 
-  reset(startX: number = 350): void {
+  reset(startX: number = 330): void {
     this.x = startX;
     this.vx = 0;
     this.lane = 'front';

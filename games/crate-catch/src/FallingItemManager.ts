@@ -175,7 +175,7 @@ export class FallingItemManager {
     const cartY = cart.lane === 'front' ? cart.frontLaneY : cart.backLaneY;
     const targetCatchY = stackPhysics.crates.length > 0 ? stackPhysics.getStackTopY(cartY) : cartY;
     const topCrate = stackPhysics.crates.length > 0 ? stackPhysics.crates[stackPhysics.crates.length - 1] : null;
-    const catchWidth = (topCrate ? topCrate.width + 30 : cart.width + 20) * scale;
+    const effectiveWidth = (topCrate ? Math.max(cart.width, topCrate.width + 40) : cart.width) * scale;
     const catchCenterX = cart.x + (cart.width * scale) / 2;
 
     for (const item of this.items) {
@@ -183,7 +183,7 @@ export class FallingItemManager {
       if (item.lane !== cart.lane) continue;
 
       const itemCenterX = item.x + item.width / 2;
-      const horizontalMatch = Math.abs(itemCenterX - catchCenterX) <= catchWidth / 2 + item.width / 3;
+      const horizontalMatch = Math.abs(itemCenterX - catchCenterX) <= effectiveWidth / 2 + item.width / 2;
 
       // Generous vertical catch window: catches even when falling fast or close to the rim/top
       const itemBottom = item.y + item.height;
