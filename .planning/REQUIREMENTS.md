@@ -17,10 +17,10 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **GRID-07**: System encodes and loads 35 authentic stage map layouts into the grid engine.
 
 ### Player Tank Kinematics & Upgrades
-- [ ] **TANK-01**: User can steer player tank in 4 cardinal directions with orthogonal corner auto-snapping ($\le 4\text{px}$ deadzone) to smoothly navigate 1-tile corridors without snagging.
-- [ ] **TANK-02**: User progresses through 4 distinct tank upgrade tiers: Tier 1 (Basic slow single-shot), Tier 2 (Speed Tank), Tier 3 (Heavy Tank with 2 concurrent rapid bullets), Tier 4 (Armor-Piercing Super Tank capable of destroying Steel walls and mowing Trees).
-- [ ] **TANK-03**: System manages spawn invulnerability shield bubble timer on player spawn and respawn.
-- [ ] **TANK-04**: System manages player lives counter, extra lives gain, and death/respawn cycle.
+- [x] **TANK-01**: User can steer player tank in 4 cardinal directions with orthogonal corner auto-snapping ($\le 4\text{px}$ deadzone) to smoothly navigate 1-tile corridors without snagging.
+- [x] **TANK-02**: User progresses through 4 distinct tank upgrade tiers: Tier 1 (Basic slow single-shot), Tier 2 (Speed Tank), Tier 3 (Heavy Tank with 2 concurrent rapid bullets), Tier 4 (Armor-Piercing Super Tank capable of destroying Steel walls and mowing Trees).
+- [x] **TANK-03**: System manages spawn invulnerability shield bubble timer on player spawn and respawn.
+- [x] **TANK-04**: System manages player lives counter, extra lives gain, and death/respawn cycle.
 
 ### Ballistics & Combat Collisions
 - [ ] **COMBAT-01**: System simulates projectile trajectory with 120Hz sub-stepping or continuous ray-sweep to prevent collision tunneling.

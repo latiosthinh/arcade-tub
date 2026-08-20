@@ -8,7 +8,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 ## Phases
 
 - [x] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
-- [ ] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
+- [x] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
 - [ ] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
 - [ ] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
 - [ ] **Phase 52: Game Flow, State Machine & Tally HUD** - Title screen, stage intro curtains, HUD sidebar, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
@@ -23,7 +23,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
-| 49. Player Tank Kinematics & Upgrade Tiers | 1/2 | In progress | - |
+| 49. Player Tank Kinematics & Upgrade Tiers | 2/2 | Complete | 2026-08-20 |
 | 50. Ballistics System & Combat Collisions | 0/2 | Not started | - |
 | 51. Enemy AI, Wave Spawner & Powerups | 0/2 | Not started | - |
 | 52. Game Flow, State Machine & Tally HUD | 0/2 | Not started | - |
@@ -63,7 +63,7 @@ Plans:
 **Plans**: 2 plans
 Plans:
 - [x] 49-01-PLAN.md — PlayerTank core class, 4-way kinematics, corner snapping, ice sliding drift, upgrade tiers, shield timer, and lives management
-- [ ] 49-02-PLAN.md — Comprehensive Vitest unit test suite covering kinematics, corner snapping, ice drift, upgrade progression, shield expiration, and respawn cycle
+- [x] 49-02-PLAN.md — Comprehensive Vitest unit test suite covering kinematics, corner snapping, ice drift, upgrade progression, shield expiration, and respawn cycle
 
 ### Phase 50: Ballistics System & Combat Collisions
 **Goal**: Simulate high-velocity projectiles with continuous sub-stepping collision sweep, mid-air bullet cancellation, tier-dependent terrain destruction, and enemy damage resolution.
