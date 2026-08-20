@@ -1,174 +1,137 @@
-# Domain Pitfalls: UI/UX Refactor for Minigame Hub & Canvas Games
+# Domain Pitfalls: Battle City / Tank 1990 (HTML5 Canvas)
 
-**Domain:** Vanilla TypeScript Game Hub, Iframe Management, Hash Routing, Canvas UI/UX
-**Researched:** 2026-08-17
-**Overall confidence:** HIGH
+**Domain:** 2D Grid-Based Tank Action / Battle City Retro Clone
+**Researched:** 2026-08-20
+**Target Architecture:** TypeScript, Native Canvas 2D, Procedural Web Audio API, Zero Runtime Dependencies
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause system instability, audio breakage, memory leaks, or platform rejection.
+Mistakes that cause movement stutter, broken terrain destruction, AI deadlocks, and game-breaking state desync.
 
-### Pitfall 1: Browser Autoplay Policy & AudioContext Suspension Across Iframe Boundaries
-**What goes wrong:**
-Audio does not play when a user navigates to a game or clicks inside the game iframe. Web Audio `AudioContext` stays in `suspended` state. In YouTube Playables or modern browsers, nested iframe audio policies are strict. If the parent page creates an `AudioContext` or toggles audio, child iframes running their own `AudioSynthesizer` remain unaware or locked.
-**Why it happens:**
-Browsers require user gesture activation on the specific `window` frame where the `AudioContext` is created. If the parent hub initializes audio on a button click, the iframe's `AudioContext` is NOT unlocked unless a gesture occurs inside the iframe or the parent delegates permission via iframe `allow="autoplay"`. Furthermore, navigating between hub and iframe without resuming the iframe's context causes silence.
-**Consequences:**
-Silent gameplay, broken sound effects, rejected submission on YouTube Playables.
+### Pitfall 1: Coordinate-Free Grid Movement & Corner Catching (The Corridor Glitch)
+**What goes wrong:** Tank gets stuck when turning into 1-tile or 2-tile corridors unless player reaches exact integer pixel alignment. Tank fails to turn or stops dead when pressing perpendicular direction near wall corners.
+**Why it happens:** Original NES Battle City uses a 13x13 macro-grid (16x16 px) composed of 26x26 micro-tiles (8x8 px). A tank is 16x16 px (2x2 sub-tiles). When moving along X and pressing Y, if `tank.x % subTileSize !== 0`, perpendicular bounding box collides with adjacent wall corner.
+**Consequences:** Sluggish, frustrating controls. Game feels unresponsive compared to original NES physics.
 **Prevention:**
-1. Explicitly add `allow="autoplay; fullscreen"` attribute on all game iframes.
-2. In each game scene / entry point, attach a one-time user pointerdown/keydown listener that calls `audio.initContext()` or `ctx.resume()`.
-3. In `playables-adapter`, broadcast audio mute/unmute state changes from host to iframe via `postMessage({ type: 'mute', muted })` and sync `AudioSynthesizer` instances.
-**Detection:**
-Browser console warning: `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.`
+- Implement "Corner Assisted Snapping / Auto-Alignment" on turn:
+  - When switching axes (e.g. Horizontal to Vertical), if orthogonal offset `offset = tank.x % halfTileSize` is within snapping threshold ($\le 4\text{ px}$ in 16px tile scale), smoothly pull tank coordinate to nearest grid line instead of rejecting turn.
+  - Constrain 1D movement along current heading while clamping orthogonal axis to grid coordinate.
+**Detection:** Tank cannot cleanly turn corners while holding diagonal/turn inputs in maze sections.
+**Test Cases to Write:**
+- `test('tank turns up into corridor when 3px off-center snaps to grid line')`
+- `test('tank rejects turn when obstacle is strictly blocking turn radius')`
 
----
-
-### Pitfall 2: Iframe Lifecycle Leaks & Double Game Loops (Zombie Frames)
-**What goes wrong:**
-Navigating back to the hub from a game leaves `requestAnimationFrame` loops, event listeners (`keydown`, `keyup`, `resize`), and audio nodes running in detached iframes. Memory usage grows with every game launch, degrading frame rate from 60fps to under 20fps.
-**Why it happens:**
-Replacing `innerHTML` or removing an iframe element without invoking explicit teardown (`GameLoop.destroy()`, `InputManager.destroy()`, `cancelAnimationFrame()`) leaves async event loops and DOM references active until garbage collection, which may never occur if closures retain references to `window` or global singletons.
-**Consequences:**
-App lag, audio overlap (sounds playing from previously closed games), memory leaks, mobile tab crashes.
+### Pitfall 2: Whole-Tile Destruction vs 4-Quadrant Sub-Tile Micro-Chipping
+**What goes wrong:** A bullet hit wipes out entire 16x16 brick block instead of chipping only the struck 8x8 or 4x8 sub-quadrant. Bullets pass through partially chipped walls or get blocked by empty space.
+**Why it happens:** Treating grid map as coarse 13x13 matrix rather than 26x26 micro-grid (or 52x52 bitmask) with quadrant destructibility.
+**Consequences:** Narrow tunnels (half-brick tunneling) become impossible; high-tier tank gameplay and authentic tactical shooting fail.
 **Prevention:**
-1. Never rely on raw `innerHTML = ''` for iframe teardown.
-2. Maintain explicit view lifecycle hooks (`mount()`, `unmount()`).
-3. Set `iframe.src = 'about:blank'` before removing the iframe from DOM to immediately terminate its JavaScript execution context and audio thread.
-4. Call `embed.destroy()` which cleans up `window.removeEventListener('message', ...)`.
-**Detection:**
-Performance tab / memory profiling showing detached DOM trees, accumulating `requestAnimationFrame` callbacks, or sounds playing after closing a game.
+- Store terrain as 26x26 micro-tile grid (8x8 px sub-tiles).
+- Each 16x16 block consists of 4 micro-tiles: Top-Left, Top-Right, Bottom-Left, Bottom-Right.
+- Bullets have 3-4px hitbox. Upon collision:
+  - Calculate exact micro-tiles intersecting bullet front edge.
+  - A standard shot destroys up to 2 adjacent 8x8 micro-tiles along collision front.
+  - Tier 4 armor-piercing shot chips steel sub-tiles in same quadrant format.
+**Detection:** Firing at top corner of brick wall destroys entire block; tanks cannot carve narrow half-lane path.
+**Test Cases to Write:**
+- `test('bullet moving UP hitting bottom edge of brick block destroys only bottom-left and bottom-right micro-tiles')`
+- `test('bullet passes through carved half-corridor without colliding with destroyed micro-tiles')`
 
----
-
-### Pitfall 3: Keyboard and Focus Trap Desynchronization (Canvas vs Parent Hub)
-**What goes wrong:**
-When launching keyboard-intensive games like *Type Strike* or *Safe Cracker* (Spacebar / Typing), keystrokes are captured by the parent hub (triggering hub scrolling or search input shortcuts) instead of reaching the canvas inside the iframe, or vice-versa (player cannot Tab or Escape back to hub controls).
-**Why it happens:**
-Iframe focus is not automatically transferred on mount. Clicking outside the iframe loses focus without restoring it to the active canvas when returning. Also, default browser actions (Space scrolling page down, Arrow keys panning) intercept game inputs.
-**Consequences:**
-Game feels unresponsive; player loses game immediately (e.g. Type Strike misses letters, Crate Catch misses drop keys); accessible navigation fails.
+### Pitfall 3: Bullet Tunneling & Bullet-vs-Bullet Cancellation Misses
+**What goes wrong:** Fast bullets (player tier 2+ or fast enemies) skip collision frames, passing through thin walls or through each other without canceling.
+**Why it happens:** Discrete Euler step (`pos += vel * dt`) where bullet speed (e.g., 240-360 px/s) exceeds bullet bounding box diameter (3-4 px) per frame at variable frame rates ($dt > 16.6\text{ms}$).
+**Consequences:** Player and enemy fire directly through each other; walls fail to register hits; base eagle destroyed through intact steel barrier.
 **Prevention:**
-1. Call `iframe.focus()` or `iframe.contentWindow.focus()` immediately upon game launch / view transition.
-2. Inside `InputManager.ts` / game loop, call `event.preventDefault()` specifically for recognized gameplay keys (Space, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Enter, Tab if controlled).
-3. Handle Escape key inside the iframe to send a `postMessage({ type: 'close' })` or yield focus back to the parent hub.
-**Detection:**
-Pressing Spacebar scrolls the parent container instead of executing in-game jump/bank action; pressing keyboard letters in Type Strike does nothing until clicking canvas.
+- Fixed timestep sub-stepping for projectile physics (e.g. 120Hz physics tick or raymarching segment between `prevPos` and `newPos`).
+- Segment-box sweep against micro-tile grid.
+- Bullet-to-bullet cancellation check: pairwise line-segment intersection or bounding-box overlap check after movement step.
+**Detection:** Bullets passing through each other when fired head-to-head; bullets teleporting through 4px chipped walls.
+**Test Cases to Write:**
+- `test('opposing bullets on same line cancel each other and spawn collision sparks')`
+- `test('high-velocity bullet does not tunnel through 8px steel wall at 30fps delta time')`
 
----
-
-### Pitfall 4: Hash Routing Conflicts with Embedded Iframe Navigation & Back Button Trap
-**What goes wrong:**
-Using `window.location.hash` (e.g., `#/games/brick-blitz`) causes infinite loops, unexpected iframe reloads, or broken browser Back/Forward navigation when games themselves modify URLs or when navigating between hub views.
-**Why it happens:**
-If an iframe changes its own `src` or internal history, browser history adds an entry for the iframe. Clicking the browser "Back" button navigates the iframe's internal history instead of the top-level hub route, trapping the user. Conversely, re-rendering the whole page on `hashchange` destroys and recreates the running game iframe.
-**Consequences:**
-User clicks "Back" button expecting Hub home, but nothing happens or iframe reloads with lost game state; UI flickers.
+### Pitfall 4: Enemy AI Getting Trapped in Infinite Turn Loops or Wall Corners
+**What goes wrong:** Enemy tanks jitter against corners, get stuck in infinite ping-pong direction flips, or clump together in spawn corners.
+**Why it happens:** Naive random direction picking upon collision immediately chooses reverse direction or perpendicular blocked direction every frame.
+**Consequences:** Dumb, static enemies; game difficulty drops to zero; stage becomes non-interactive.
 **Prevention:**
-1. Use top-level hash routing (`window.addEventListener('hashchange', ...)`) only for hub-level state (`#/`, `#/game/safe-cracker`, `#/embed`, `#/settings`).
-2. Keep game iframes static (never change iframe internal location/history).
-3. Avoid full page rebuilds in `hashchange`: inspect diff of target route vs current route. If route changes from `#/game/A` to `#/`, unmount game view cleanly; if parameters change, update state without tearing down unrelated DOM trees.
-**Detection:**
-Browser back button takes 2-3 clicks to exit a game, or pressing back button reloads the game canvas from scratch instead of returning to feed.
-
----
-
-### Pitfall 5: CSS Design Token Cascading Failure Across Iframe Boundary
-**What goes wrong:**
-Parent hub defines custom CSS variables (`--ac-primary`, `--ac-font-arcade`, `--ac-bg-dark`), but game iframes and embed components render with default browser fonts, broken styles, or mismatched colors.
-**Why it happens:**
-CSS custom properties do not cross iframe boundaries. An iframe has an isolated DOM and CSSOM.
-**Consequences:**
-Inconsistent styling, broken retro-modern theme in games vs hub, duplicated CSS files that get out of sync.
-**Prevention:**
-1. Package design tokens into a standalone CSS file (`packages/theme/tokens.css` or `src/styles/tokens.css`) imported by both `index.html` (hub), `embed.html`, and every `games/*/index.html`.
-2. Do not rely on parent DOM stylesheet inheritance for anything rendered inside an iframe.
-3. Use strict CSS token naming conventions with zero runtime JS dependency.
-**Detection:**
-Visual mismatches between hub badges and in-game UI overlay fonts; missing variables evaluating to initial/fallback values in child frames.
+- Replicate authentic NES Battle City AI state machine:
+  1. Direction choice happens only at grid alignment nodes (`x % tileSize === 0 && y % tileSize === 0`) or upon obstacle collision.
+  2. Maintain direction lock timer (minimum movement duration before choosing new direction unless blocked).
+  3. Weighted direction picking:
+     - 60-70% bias towards Player HQ (Eagle base at bottom center) or Player tank.
+     - 20% bias to continue forward.
+     - 10% bias for lateral patrol.
+     - Never reverse $180^\circ$ immediately unless forward and both flanks are completely blocked.
+  4. Periodic random shooting timer (1.0 - 2.5s) + instant fire trigger if player or base is in direct line of sight.
+**Detection:** 3 enemy tanks stuck vibrating in top-left spawn point.
+**Test Cases to Write:**
+- `test('enemy AI at intersection does not select 180-degree reverse if forward path is clear')`
+- `test('blocked enemy picks valid unblocked orthogonal direction within 1 tick')`
 
 ---
 
 ## Moderate Pitfalls
 
-Mistakes that cause performance degradation, responsive layout bugs, or test regressions.
-
-### Pitfall 6: Full `innerHTML` Rebuilds Destroying Ephemeral State and Triggering Layout Thrashing
-**What goes wrong:**
-In `src/hub.ts`, the current implementation calls `renderUI()` on every search input, filter chip click, and audio mute toggle, rebuilding the entire `#app` innerHTML. In the refactored UI, doing this causes input focus loss, scroll position reset, and canvas context destruction.
-**Why it happens:**
-Treating vanilla DOM like a virtual DOM framework without a diffing engine.
-**Consequences:**
-Janky UI, dropped frames, search input losing focus on every keystroke (currently worked around by manual `document.getElementById('search-input')?.focus()`), video/canvas flicker.
+### Pitfall 5: Web Audio Voice Stealing & Audio Distortion / Clipping
+**What goes wrong:** Continuous engine hums, rapid fire pops, explosion noise bursts, and alarm beeps cause harsh digital clipping or crash audio context on mobile browsers.
+**Why it happens:** Creating new `OscillatorNode` / `AudioBufferSourceNode` without gain staging or master limiter; leaking untracked oscillator nodes; mobile browsers suspending `AudioContext` on start.
+**Consequences:** Ear-piercing crackles, distorted audio output, mobile silent failure.
 **Prevention:**
-1. Split UI into lightweight component modules (`Header`, `Sidebar`, `GameGrid`, `PlayerView`, `BottomNav`).
-2. Only update targeted DOM elements (`element.textContent = ...`, `classList.toggle(...)`, or mounting/unmounting specific view containers).
-3. Keep the search input element stable in the DOM; update only the `.yt-game-grid` container during search/filter operations.
-**Detection:**
-Search input loses cursor position or keyboard closes on mobile; visible flashing when toggling dark mode or audio mute.
+- Master gain node set to 0.7 max with `DynamicsCompressorNode` on master bus.
+- Monophonic or capped voice pool for sound effects (max 4 concurrent SFX).
+- Single shared engine loop oscillator with dynamic frequency modulation (`frequency.setTargetAtTime`) rather than instantiating new audio nodes per frame.
+- Proper user-gesture resume handler (`audioCtx.resume()`) wired to first touch/click.
+**Detection:** Audio crackles when Grenade power-up explodes 4 tanks at once.
+**Test Cases to Write:**
+- `test('audio manager caps concurrent sound effects to max pool limit')`
+- `test('engine sound modulates frequency without reallocating AudioNodes')`
 
----
-
-### Pitfall 7: Canvas Scaling & Aspect Ratio Distortion on Mobile Touch Screens
-**What goes wrong:**
-Canvas appears blurry on high-DPI (Retina) mobile screens, touch coordinates are offset from visual elements, or bottom virtual navigation bars clip game canvas controls.
-**Why it happens:**
-`GameLoop.ts` handles aspect ratio using `ResizeObserver` and CSS pixel dimensions, but does not account for `window.devicePixelRatio`, or touch coordinates from `TouchEvent` are not mapped through the `_scale` factor. Additionally, fixed 800x600 canvas in portrait mobile creates massive letterboxing or horizontal overflow.
-**Consequences:**
-Blurry rendering, impossible touch input (tapping buttons taps 50px away), unplayable on mobile browsers with dynamic address bars.
+### Pitfall 6: Touch Control Virtual D-Pad Latency & Diagonal Drift
+**What goes wrong:** Virtual D-Pad feels floaty, sticks in previous direction on finger roll, or emits unwanted diagonals that halt tank grid alignment.
+**Why it happens:** Raw `touchmove` angle calculations without deadzone hysteresis and 4-way orthogonal clamping; default browser gesture handling causing zoom/scroll delays.
+**Consequences:** Unplayable on mobile devices; tank stops unexpectedly mid-combat.
 **Prevention:**
-1. Calculate touch/pointer coordinates relative to canvas bounding client rect: `(touch.clientX - rect.left) * (canvas.width / rect.width)`.
-2. Use CSS `touch-action: none` on canvas elements to prevent pull-to-refresh and pinch-to-zoom interference.
-3. Ensure player view wrapper uses CSS `aspect-ratio: 4 / 3` or responsive flex container with `max-height: calc(100vh - var(--nav-height) - var(--header-height))`.
-**Detection:**
-Tapping on mobile safe cracker dial or brick blitz paddle registers touches outside the target bounding box; mobile browser attempts to scroll/zoom during swipe controls.
+- Explicit 4-way direction quadrant mapping with angular hysteresis (switching direction requires crossing a $\pm 15^\circ$ threshold beyond $45^\circ$ axis).
+- CSS `touch-action: none; user-select: none;` on canvas container.
+- Direct pointer event tracking with explicit Pointer ID binding (prevent multi-touch interference between D-pad and Fire button).
+**Detection:** Rolling thumb from RIGHT to UP causes tank to stop moving for 300ms.
+**Test Cases to Write:**
+- `test('virtual dpad maps (x: 0.8, y: 0.3) strictly to RIGHT direction')`
+- `test('multi-touch fire button tap does not interrupt active dpad pointer movement')`
 
----
-
-### Pitfall 8: Breaking Existing 191 Tests During Refactoring
-**What goes wrong:**
-Refactoring file structures, module exports, or class signatures in `packages/game-engine` or `packages/playables-adapter` breaks unit tests in `games/*/test/`.
-**Why it happens:**
-Tightly coupled test assertions expecting specific mock structures, global window properties, or adapter interfaces.
-**Consequences:**
-Broken test suite, regressions in core game math/physics (angular collision in Safe Cracker, bounce deflection in Brick Blitz, stack physics in Crate Catch).
+### Pitfall 7: Base Fortification (Shovel Powerup) State Leak & Timer Overwrite
+**What goes wrong:** Collecting Shovel turns HQ perimeter to steel. When effect expires, destroyed wall tiles revert to original brick instead of remaining air, or picking a second Shovel resets base to brick prematurely.
+**Why it happens:** Failing to snapshot terrain state before Shovel application, or overlapping timer callbacks restoring stale tile maps.
+**Consequences:** Exploitative wall regeneration or accidental Eagle exposure.
 **Prevention:**
-1. Keep game engine logic pure and decoupled from DOM UI.
-2. Run `pnpm test` (or `vitest run`) on every incremental phase.
-3. Do not modify exported signatures of `initPlayables`, `reportScore`, `saveData`, `loadData`, `onPause`, `onResume`, `AudioSynthesizer`, `InputManager`, or `GameLoop` without updating adapters backward-compatibly.
-**Detection:**
-`vitest` test failures on CI or local run.
+- Distinct layer for Base Defense Wall state.
+- Keep track of pre-shovel damage state: micro-tiles that were already empty air before Shovel activation must NOT magically turn into brick when Shovel expires.
+- Reset/extend active countdown timer ID when picking another Shovel during active fortification.
+- Revert steel tiles back to brick ONLY if the steel tile was intact; air remains air.
+**Detection:** Destroying brick around base, grabbing Shovel, waiting for timer to expire -> previously destroyed brick respawns.
+**Test Cases to Write:**
+- `test('shovel expiry preserves previously destroyed micro-tile air gaps')`
+- `test('picking second shovel extends timer without flashing back to brick')`
 
 ---
 
 ## Minor Pitfalls
 
-### Pitfall 9: Bundle Size Bloat via Unused Fonts or Polyfills
-**What goes wrong:**
-Importing multiple web font weights (e.g. 4 weights of arcade retro pixel fonts + Google Fonts), heavy SVG libraries, or router utility packages blows through the <200KB gzipped budget.
-**Why it happens:**
-Adding external font formats (`.ttf` instead of compressed `.woff2`) or npm packages for routing/state management.
+### Pitfall 8: Canvas Pixel Blurriness on High-DPI Displays (Papercraft Texture Crispness)
+**What goes wrong:** Crisp pixel art / papercraft textures and grid edges appear blurry or smudged on Retina / high-DPI screens.
+**Why it happens:** Canvas internal resolution (`canvas.width`) matches CSS display size (`canvas.style.width`) instead of device pixel ratio (`window.devicePixelRatio`).
 **Prevention:**
-1. Zero runtime dependencies rule: write custom 30-line hash router.
-2. Use modern system font fallbacks + single subset `.woff2` font for arcade titles.
-3. Keep all icons as inline SVGs or unicode symbols.
-**Detection:**
-Vite build output showing bundle exceeding budget or slow first contentful paint (FCP).
+- Scale canvas backing buffer by `window.devicePixelRatio` (capped at 2.0 or 3.0).
+- Set `ctx.imageSmoothingEnabled = false` for pixel crispness or render procedural vector paper shapes scaled to virtual 1000x1000 coordinate space.
 
----
-
-### Pitfall 10: Mobile Bottom Nav Occluding In-Game Action Controls
-**What goes wrong:**
-On mobile devices, fixed bottom navigation bars overlay the bottom 60px of the screen, hiding paddle controls in Brick Blitz or the bank button in Crate Catch.
-**Why it happens:**
-Player view container uses `height: 100vh` without accounting for viewport safe areas (`env(safe-area-inset-bottom)`) and the mobile bottom navigation bar height.
+### Pitfall 9: Ice Tile Sliding Physics Breaking Grid Collision
+**What goes wrong:** Tank entering ice tiles slides into walls and gets permanently embedded inside solid tiles.
+**Why it happens:** Applying sliding momentum as simple delta translation without running grid-boundary collision checks during slide frames.
 **Prevention:**
-1. Hide or collapse the bottom navigation bar when a game is in active fullscreen/player view, or reserve explicit padding: `padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))`.
-2. Use `dvh` (dynamic viewport height units: `100dvh`) instead of `100vh` to handle mobile browser address bar expand/collapse.
-**Detection:**
-Bottom controls unreachable on iPhone Safari or Android Chrome when address bar is visible.
+- Treat ice slide state as an autonomous forward velocity pulse with standard collision clipping per tick. Stop slide immediately upon obstacle contact.
 
 ---
 
@@ -176,18 +139,16 @@ Bottom controls unreachable on iPhone Safari or Android Chrome when address bar 
 
 | Phase Topic | Likely Pitfall | Mitigation |
 |-------------|---------------|------------|
-| **Design Tokens & Theme Setup** | Tokens not propagating into game iframes (Pitfall 5) | Create shared `tokens.css` referenced in root and each game `index.html`. |
-| **Component Hub Architecture** | `innerHTML` thrashing & focus loss (Pitfall 6) | Build discrete component mount/update pattern; avoid whole-page innerHTML rebuilds. |
-| **Hash Router & Navigation** | Back button trap & zombie iframe loops (Pitfall 2, 4) | Explicit unmount/destroy hooks; clean top-level hash router with route diffing. |
-| **Iframe & Game Embed Kit** | Autoplay policy lock & focus trapping (Pitfall 1, 3) | Set `allow="autoplay; fullscreen"`, auto-focus iframe on mount, resume AudioContext on first interaction. |
-| **Mobile & Touch UX** | Touch coordinate offset & bottom nav occlusion (Pitfall 7, 10) | Use `touch-action: none`, client rect coordinate mapping, and `100dvh` layout with safe-area insets. |
-| **Playables Integration & Tests** | Adapter signature breakage (Pitfall 8) | Maintain existing adapter API; run Vitest suite after every phase. |
+| **Phase 1: Grid & Micro-Tile Engine** | Whole-tile collision instead of 8x8 sub-tile chipping; corner catching on turn | 26x26 micro-grid bitmask; orthogonal coordinate snapping algorithm ($\le 4\text{px}$). |
+| **Phase 2: Entity & Projectile Physics** | Bullet tunneling at variable frame rates; bullet cancellation failure | 120Hz sub-step physics tick; line segment sweep collision; bullet-vs-bullet pairing. |
+| **Phase 3: Enemy AI & Spawners** | AI getting stuck in corners or vibrating in place | Grid-node direction choices; minimum forward duration timer; anti-reverse bias. |
+| **Phase 4: Power-ups & State Transitions** | Shovel timer overwrite regenerating destroyed walls; Clock freeze breaking spawner | Fortification delta-state mask; Clock freeze flag decoupling timer logic from render loop. |
+| **Phase 5: Audio & Tactile Mobile Polish** | Web Audio clipping; D-Pad diagonal deadlocks | Master DynamicsCompressor; 4-way orthogonal hysteresis clamp; touch-action none. |
 
 ---
 
 ## Sources
 
-- W3C Web Audio Autoplay Policy Specification & MDN Autoplay Guide (HIGH confidence)
-- YouTube Playables SDK & Iframe Lifecycle Standards (HIGH confidence)
-- Chrome / Safari Mobile Viewport & Touch Event Specifications (HIGH confidence)
-- Arcade Carnival Codebase (`src/hub.ts`, `packages/playables-adapter`, `packages/game-engine`, `vitest.config.ts`) (HIGH confidence)
+- NES Battle City (Namco 1985 / YSB 1990) disassembly & technical specification analysis.
+- HTML5 Canvas 2D Game Engine Best Practices (Fixed Timestep & Micro-Tile Bitmasks).
+- W3C Web Audio API Dynamics Compression & Oscillator Node Lifecycle guidelines.

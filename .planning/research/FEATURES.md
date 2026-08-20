@@ -1,82 +1,111 @@
-# Feature Landscape: Modern Arcade Game Launcher Hub (v2.0 Refactor)
+# Feature Landscape
 
-**Domain:** Web-based Arcade Hub / Minigame Launcher (YouTube Playables compatible)
-**Researched:** 2026-08-17
-**Overall confidence:** HIGH
+**Domain:** 2D Grid Tactical Arcade / Tank 1990 (Battle City) Papercraft Minigame
+**Researched:** 2026-08-20
+**Overall Confidence:** HIGH (Directly derived from authentic Battle City / Tank 1990 ROM mechanics & ArcadeTub architecture)
 
-## Table Stakes (Must-Haves)
+## Table Stakes
 
-Features users expect for basic usability and stability. Missing features make the hub feel broken, clunky, or unpolished.
+Features required for authentic Battle City / Tank 1990 gameplay. Missing any makes the game feel broken or counterfeit.
 
-| Feature | Why Expected | Complexity | Dependency / Impact on Existing Hub | Notes |
-|---------|--------------|------------|-------------------------------------|-------|
-| **URL Hash Routing (`#/` & `#/game/:id`)** | Essential browser navigation. Back/forward buttons currently break and reset state. Direct link sharing to games requires deep linking. | Low | Replaces `activePlayingGame` state in `src/hub.ts` with `hashchange` listener and router. | Table stakes UX fix. Must support browser history popstate/hashchange. |
-| **Component DOM Diffing / Targeted Updates** | Full `innerHTML` redraw on keystroke/filter drops focus, interrupts active DOM state, and prevents CSS transition continuity. | Medium | Refactors `renderUI()` into discrete component mount/update lifecycle (header, filter chips, grid, player). | Preserves input focus naturally without hacky `document.getElementById('search-input')?.focus()`. |
-| **Iframe Loading Skeleton & Ready Signal** | Launching an iframe currently shows a blank white/black box before game assets initialize. | Low | Wraps `#active-game-frame` in loader container; listens to `postMessage` or iframe `load` event. | Shows arcade-themed spinner or skeleton card until canvas renders first frame. |
-| **Mobile-First Responsive Shell (Bottom Nav Bar)** | Below 900px, existing sidebar disappears completely, leaving mobile users with no top-level navigation. | Medium | Replaces `.yt-sidebar` media queries in `src/hub.css` with a fixed bottom action bar on viewports `< 768px`. | Includes touch-friendly tap targets (minimum 44x44px), sticky bottom bar for Home / Search / Embed kit. |
-| **Unified Design Tokens (Hub + Embed Kit)** | Currently `embed.html` uses an independent inline stylesheet disconnected from `src/hub.css`. | Low | Extracts core CSS variables into shared token stylesheet imported by both `index.html` and `embed.html`. | Tokens for colors, borders, typography, shadows, elevation, and spacing. |
-| **Mute/Audio Persistence & State Sync** | Hub header sound toggle must accurately reflect audio system status and persist preference across sessions. | Low | Existing `audio.toggleMute()` in `packages/game-engine` wired to `localStorage` + UI indicator. | High score and mute preference sync cleanly. |
-| **Keyboard Accessibility & Focus States** | Keyboard users need Escape to exit player/theater mode, Arrow/Tab navigation across game cards. | Low | Add global keydown listener (`Escape` -> `window.closeGame()`, `/` -> focus search). | Polishes navigation ergonomics. |
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| **13x13 (26x26 Sub-tile) Terrain Grid** | Core game world structure. Bricks, steel, water, trees/grass, ice, and eagle base. | Med | Sub-tile (8x8) destruction precision needed for brick chipping. |
+| **Quarter-Tile Brick Destruction** | Bullets chip away portions of brick walls (4x4 or 8x8 blocks) rather than full 16x16 tiles. | Med | Essential for carving narrow corridors and shooting around corners. |
+| **Defensible Eagle / Phoenix HQ** | Central win/lose condition at bottom. If destroyed by player or enemy bullet, instant Game Over. | Low | Must support brick wall perimeter and base destroyed sprite/confetti state. |
+| **Terrain Modifiers (Water, Trees, Ice)** | Water blocks tank passage but lets bullets fly. Trees conceal tanks. Ice causes movement drift. | Med | Water requires raycast check for bullets vs AABB for tanks. Ice needs sliding inertia vector. |
+| **4-Tier Player Tank Upgrades** | Tier 1 (Slow single shot) → Tier 2 (Fast single shot) → Tier 3 (Dual fast shots) → Tier 4 (Armor-piercing cannon). | Med | Tier 4 destroys steel and clears trees/grass. Loss of tier or life on death. |
+| **4 Enemy Tank Archetypes** | Basic Tank (100pt), Fast Cruiser (200pt), Rapid Fire Tank (300pt), Heavy Armor Tank (400pt, 4 hits). | Med | Heavy tank changes color palette (green → yellow → red) per hit. |
+| **Flashing / Bonus Enemy Tanks** | 4th, 11th, 18th spawned enemies flash red/white. Destroying one drops a random powerup. | Low | Fixed sequence per 20-tank wave. Spawns item at random free map coordinate. |
+| **Core Powerup Drops** | Star (tier upgrade), Shovel (temporary steel base), Grenade (screen clear), Clock (enemy freeze), Helmet (shield), Tank (+1 life). | Med | Shovel requires timed revert from steel back to brick (flashing warning before revert). |
+| **Bullet-vs-Bullet Cancellation** | Two opposing bullets colliding head-on destroy each other mid-air. | Low | Core tactical defense mechanic against enemy incoming fire. |
+| **Grid Corner Snapping / Alignment Assist** | Tanks turning perpendicular to narrow corridors auto-snap to sub-tile grid without snagging. | Med | Prevents clunky mobile/keyboard controls where tanks get stuck on 1-pixel corner overhangs. |
+| **20-Enemy Wave Progression & HUD** | 20 enemy tanks queued per stage, 3 spawn points at top, max 4-6 simultaneous active enemies. | Med | HUD sidebar shows remaining enemy tank icons, player lives, stage number, score. |
+| **Stage Clear Tally Screen** | Classic end-of-stage animated breakdown showing kill counts per enemy class and point totals. | Low | Essential retro pacing and satisfaction loop before loading next stage. |
+| **Virtual Touch Controls (Mobile)** | 4-way D-Pad / virtual joystick + tactile Fire button with multi-touch support. | Med | Zero-latency, large tap targets, haptic feedback on shot/hit. |
+| **Procedural 8-Bit Web Audio** | Engine hum, shot pop, brick crunch, steel ricochet, powerup jingle, stage start fanfare. | Low | Pure Web Audio API synthesis with zero external audio assets. |
 
 ## Differentiators
 
-Features that establish a distinct visual brand identity, elevate Arcade Carnival above generic dark-themed dashboards, and deliver tactile game feel.
+Features that elevate the title within ArcadeTub's unique platform ecosystem without compromising classic feel.
 
-| Feature | Value Proposition | Complexity | Dependency / Impact on Existing Hub | Notes |
-|---------|-------------------|------------|-------------------------------------|-------|
-| **Retro-Modern Arcade Design System** | Replaces YouTube-dark clone aesthetic (`#0f0f0f`, `--yt-*` classes) with custom neon cyber-arcade styling (synthwave purples, glowing cyan/amber accents, pixel/display typography). | Medium | Replaces all `.yt-*` class hierarchies and CSS variable sets across `src/hub.css` and HTML templates. | High brand recognition; distinct visual identity tailored to minigames. |
-| **View Transitions / Micro-Animations** | Smooth fluid transitions between grid view and theater/player view; hover tilt and glow on game cards. | Medium | Native CSS `view-transition-name` / FLIP animation triggers during route swap. | Hardware-accelerated CSS transforms. Zero runtime library overhead. |
-| **Synthesized UI Audio Feedback** | Satisfying retro synthesizer beeps, clicks, and swooshes on card hover, filter toggle, modal open, and game launch. | Low | Extends existing Web Audio synthesis in `packages/game-engine` (`audio.playClick()`, `audio.playChime()`). | Zero external audio asset downloads; synthesized dynamically via Web Audio API. |
-| **Interactive Game Card Badges & Score Highlights** | Dynamic glow borders for personal best high scores, "NEW", "HOT", and genre badges with animated pulse. | Low | Enhances `.yt-card` rendering in `renderFeedView()`. | Connects directly to local storage high scores. |
-| **Scanline / CRT Toggle Effect** | Optional retro CRT monitor filter (scanlines, subtle curvature, bloom) over launcher or game iframe. | Low | Pure CSS overlay class on main wrapper (`mix-blend-mode`, scanline gradient). | Can be toggled on/off in settings/header for immersion. |
-| **Game Trailer / Animated Canvas Previews** | Lightweight animated canvas thumbnail or CSS sprite animation on card hover instead of static emoji icon. | Medium | Game card components mount micro canvas or animated SVG preview on pointer hover. | Vastly improves visual polish and click-through appeal. |
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| **Tactile 2D Papercraft Visuals** | Cardboard cutout tank chassis, rolling paper track ripples, layered shadow offsets, and confetti explosions. | Med | Aligns with ArcadeTub v5.0+ design language; distinctive and modern yet nostalgic. |
+| **Tank 1990 Gun & Boat Powerups** | Pistol powerup (instant Tier 4 upgrade) and Boat powerup (cross water terrain). | Low | High nostalgic value for players who grew up playing the 1990 pirate hack. |
+| **Screen Shake & Particle Debris** | Tactile impact when firing heavy cannon, destroying armor tanks, or exploding the base. | Low | Canvas 2D particle burst system with zero performance overhead. |
+| **Smart AI Pathfinding Variety** | Base-seeking AI bias vs Player-hunting AI bias vs Random roamers depending on tank type. | Med | Keeps tactical pressure high without feeling unfair or robotic. |
+| **Quick Stage Selector & Endless Mode** | Play any unlocked campaign stage (1–35) or endless procedural challenge. | Low | Stored in `localStorage`. Fits instant-play casual web portal expectations. |
 
-## Anti-Features (What NOT to Build)
+## Anti-Features
 
-Features that add bloat, violate constraints, or introduce unwanted friction.
+Features explicitly avoided to preserve scope, performance, and retro authenticity.
 
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
-| **External UI Frameworks (React, Vue, Svelte, Tailwind)** | Violates core project constraint: zero runtime dependencies, bundle budget < 200KB gzipped. | Use vanilla TypeScript components with native template literals and scoped CSS custom properties. |
-| **Heavy Raster / Video Background Assets** | Bloats bundle size, slows down initial load on mobile connections, causes frame drops on mid-range devices. | Use CSS gradients, SVG geometric motifs, and procedural canvas effects. |
-| **Heavy Audio MP3/WAV Asset Packs** | Adds asset weight and network latency for simple UI clicks. | Synthesize all UI sound effects procedurally via existing Web Audio API engine. |
-| **Complex Multi-Page Architecture / Full Framework SPA** | Over-engineering for 5 minigames; adds unnecessary routing complexity. | Clean hash-based router (`#/`, `#/game/:id`, `#/embed`) in vanilla TypeScript. |
-| **User Account / Cloud Auth System** | Out of scope for YouTube Playables standalone environment; Playables SDK handles player identity via adapter. | Use `localStorage` + `@arcade-carnival/playables-adapter` for score persistence. |
-| **Intrusive Interstitial Launch Overlays / Countdown Clocks** | Adds friction between click and gameplay. Playables need instant play. | Immediate iframe insertion with responsive skeleton placeholder while loading. |
+| **Complex Box2D/Matter.js Physics** | Overkill for grid-based tile collision; adds unnecessary bundle weight and breaks grid snapping. | Custom lightweight 2D AABB / sub-tile bitmask collision. |
+| **Realtime Online Multiplayer (WebSockets)** | High server cost, networking desync, lag compensation complexity for twitch shooter. | Focus on high-polish single-player arcade campaign with local high scores. |
+| **Complex 3D Meshes / WebGL Engines (Three.js/Babylon)** | Violates zero runtime dependency constraint; hurts 350KB bundle limit and low-end mobile performance. | Pure Canvas 2D isometric/top-down papercraft rendering with layered shadows. |
+| **External Audio Assets (MP3/WAV/OGG)** | Increases load times, creates asset 404 risks, violates zero asset dependency rule. | Procedural Web Audio API sound synthesis (custom 8-bit oscillator / noise synth). |
+| **Overly Complex Custom Map Editor** | High UI complexity, low engagement for casual instant-play minigame catalog. | Ship 35 authentic curated stage layouts stored as compact RLE string arrays. |
 
 ## Feature Dependencies
 
 ```
-Shared Design Tokens (CSS) ──┬──> Retro-Modern Arcade Shell (HTML/CSS)
-                             ├──> Unified Embed Kit Styling
-                             └──> Mobile Bottom Nav Bar
+[13x13 / 26x26 Sub-Tile Grid Engine]
+    ├── [Brick Sub-Tile Chipping & Steel Tiles]
+    │       ├── [Bullet-Tile Collision]
+    │       └── [Tier 4 Super Cannon Destruction]
+    ├── [Special Terrain: Water / Grass / Ice]
+    │       ├── [Water Passage Blocking & Bullet Pass-through]
+    │       ├── [Grass Visual Camouflage Overlay]
+    │       └── [Ice Sliding Inertia Controller]
+    └── [Eagle Base HQ Entity]
+            └── [Base Destruction Win/Loss Condition]
 
-DOM Component Refactor ─────┬──> URL Hash Router (Deep Linking & History)
-                             ├──> Iframe Loading Skeleton State
-                             └──> View Transitions (Grid <-> Player)
+[Player & Enemy Tank Entity Controller]
+    ├── [Grid Movement & Corner Snapping]
+    ├── [Tank Upgrade Tier State (Tiers 1-4)]
+    ├── [Bullet Pool & Bullet-vs-Bullet Collision]
+    └── [Enemy Wave Spawner & AI Behaviors]
+            ├── [Flashing Tank Trigger]
+            │       └── [Power-up Drop Manager]
+            │               ├── [Star / Gun / Helmet / Tank]
+            │               ├── [Shovel Base Fortification]
+            │               └── [Grenade & Clock Screen Effects]
+            └── [Damage & Color State for Heavy Armor Tanks]
 
-Web Audio Synth Engine ─────> UI Sound Effects (Hover / Launch / Filter)
+[Game Flow & UI]
+    ├── [Stage Intro / Transition Curtain]
+    ├── [HUD Overlay (Lives, Enemy Queue, Stage, Score)]
+    ├── [Stage Tally Summary Screen]
+    ├── [Mobile Virtual D-Pad & Fire Touch Controls]
+    └── [Web Audio Procedural Sound Engine]
 ```
 
-## MVP Recommendation for v2.0
+## MVP Recommendation
 
-### Priority 1: Table Stakes UX Foundation
-1. **URL Hash Routing:** Instant back/forward support and direct links (`#/game/brick-blitz`).
-2. **DOM Component Architecture:** Eliminate full `innerHTML` re-renders; targeted DOM updates.
-3. **Responsive Mobile Shell:** Mobile bottom navigation bar replacing hidden sidebar.
-4. **Iframe Loading State:** Skeleton loader preventing black/white flashes on game load.
+Prioritize for Milestone v8.0:
 
-### Priority 2: Brand Identity & Polish (Differentiators)
-1. **Arcade Carnival Visual Theme:** Replace all `--yt-*` CSS vars with retro-modern arcade design tokens.
-2. **Synthesized UI Audio:** Hook Web Audio clicks and hover blips to UI interactions.
-3. **Card Micro-Interactions:** Smooth card hover elevation, glow borders, and transition into player view.
-4. **Unified Embed Kit:** Align `embed.html` with new brand design tokens.
+1. **Phase 1: Grid & Terrain Destruction Engine**
+   - 26x26 sub-tile map model with brick chipping, steel, water, grass, ice, and eagle base.
+2. **Phase 2: Player Tank & Projectile Mechanics**
+   - 4 upgrade tiers, smooth grid turning/snapping, bullet-vs-bullet cancellation, muzzle flash.
+3. **Phase 3: Enemy AI, Wave Spawner & Powerups**
+   - 4 enemy types (Basic, Fast, Rapid, Heavy Armor), flashing bonus tanks, 6 classic powerups + Tank 1990 pistol/boat.
+4. **Phase 4: Stage Sequence, Tally Screen & HUD**
+   - 20-tank wave logic, stage intro/clear transitions, end-stage tally counter, high scores.
+5. **Phase 5: Papercraft Visual Polish & Web Audio Synthesizer**
+   - Cardboard textures, drop shadows, confetti debris, 8-bit oscillator audio cues.
+6. **Phase 6: Mobile Virtual Controls & Catalog Integration**
+   - Virtual D-Pad, touch buttons, responsive viewport scaling, Vitest suite, Playwright test.
 
-### Defer to v2.1+ / Future
-- Animated canvas thumbnail previews on hover (adds rendering overhead; static icons + CSS glows sufficient for v2.0).
-- CRT scanline shader customizer (keep as simple CSS toggle or defer).
+Defer:
+- **Custom Map Editor:** Defer to future tool milestone; built-in 35 stages are sufficient for full retro campaign.
+- **2-Player Co-op Mode:** Defer to separate local multiplayer initiative across ArcadeTub.
 
 ## Sources
-- `.planning/PROJECT.md` — Core constraints, game list, tech stack.
-- `.planning/seeds/SEED-001-unique-ui-ux-refactor.md` — Problem analysis of YouTube-dark clone and v2.0 refactor goals.
-- `src/hub.ts` & `src/hub.css` — Existing implementation analysis.
+
+- Original *Battle City* (Namco 1985) NES ROM technical specifications & grid structure.
+- *Tank 1990* (Yanshan Software) powerup and terrain mechanics.
+- ArcadeTub Project Architecture (`.planning/PROJECT.md`) & Canvas 2D micro-engine standards.
