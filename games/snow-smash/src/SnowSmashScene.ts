@@ -1,4 +1,4 @@
-import { GameScene } from '@arcade-carnival/game-engine';
+import type { GameScene } from '@arcade-carnival/game-engine';
 import { reportScore, saveData, loadData } from '@arcade-carnival/playables-adapter';
 import { SnowballPhysics, Snowball } from './SnowballPhysics.js';
 import { TargetStructure, StructureBlock } from './TargetStructure.js';

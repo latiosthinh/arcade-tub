@@ -1,4 +1,4 @@
-import { GameScene } from '@arcade-carnival/game-engine';
+import type { GameScene } from '@arcade-carnival/game-engine';
 import { DrawEngine, DrawMode } from './DrawEngine.js';
 import { audio } from '@arcade-carnival/game-engine';
 

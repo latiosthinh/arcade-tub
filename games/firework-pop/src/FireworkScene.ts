@@ -1,4 +1,4 @@
-import { GameScene } from '@arcade-carnival/game-engine';
+import type { GameScene } from '@arcade-carnival/game-engine';
 import { FireworkPhysics, FireworkType } from './FireworkPhysics.js';
 import { FireworkAudio } from './FireworkAudio.js';
 
