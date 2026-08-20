@@ -98,12 +98,7 @@ export class GameGrid extends BaseComponent<AppState> {
         game.description.toLowerCase().includes(query) ||
         game.genre.toLowerCase().includes(query);
 
-      const matchesFilter = filter === 'all' ||
-        (filter === 'nobrain' && ['rainbow-draw', 'firework-pop', 'fruit-flood', 'snow-smash', 'mosquito-swat', 'koi-pond', 'tic-tac-toe'].includes(game.id)) ||
-        (filter === 'action' && ['brick-blitz', 'type-strike', 'virus-defense', 'pop-balloon', 'car-race'].includes(game.id)) ||
-        (filter === 'arcade' && ['safe-cracker', 'crate-catch', 'space-racer', 'snake-eat', 'paper-basket'].includes(game.id)) ||
-        (filter === 'puzzle' && ['memory-cards', 'memory-boxes', 'game-2048', 'potion-merge', 'mahjong-paper'].includes(game.id)) ||
-        (filter === 'casual' && ['sky-hopper', 'flappy-fish', 'bug-climb', 'koi-pond'].includes(game.id));
+      const matchesFilter = filter === 'all' || game.category === filter;
 
       if (matchesSearch && matchesFilter) {
         card.element.classList.remove('is-hidden');

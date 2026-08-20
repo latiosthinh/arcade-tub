@@ -68,12 +68,13 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
     const grid = new GameGrid(store);
     grid.mount(container);
 
-    // action filter -> brick-blitz, type-strike, pop-balloon, virus-defense, car-race
+    // action filter
     store.setState({ activeFilter: 'action' });
     grid.update(store.getState());
 
     const visibleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
-    expect(visibleCards.length).toBe(5);
+    const expectedActionCount = GAMES.filter(g => (g.category === 'action' || !g.category) && !g.disabled).length;
+    expect(visibleCards.length).toBe(GAMES.filter(g => g.category === 'action').length);
 
     const ids = Array.from(visibleCards).map(c => c.getAttribute('data-game-id'));
     expect(ids).toContain('brick-blitz');
@@ -82,18 +83,22 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
     expect(ids).toContain('virus-defense');
     expect(ids).toContain('car-race');
 
-    // puzzle filter -> memory-cards, memory-boxes, game-2048, potion-merge, mahjong-paper
-    store.setState({ activeFilter: 'puzzle' });
+    // nobrain filter
+    store.setState({ activeFilter: 'nobrain' });
     grid.update(store.getState());
 
-    const puzzleCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
-    expect(puzzleCards.length).toBe(5);
-    const puzzleIds = Array.from(puzzleCards).map(c => c.getAttribute('data-game-id'));
-    expect(puzzleIds).toContain('memory-cards');
-    expect(puzzleIds).toContain('memory-boxes');
-    expect(puzzleIds).toContain('game-2048');
-    expect(puzzleIds).toContain('potion-merge');
-    expect(puzzleIds).toContain('mahjong-paper');
+    const nobrainCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
+    const expectedNobrainCount = GAMES.filter(g => g.category === 'nobrain' && !g.disabled).length;
+    expect(nobrainCards.length).toBe(expectedNobrainCount);
+    const nobrainIds = Array.from(nobrainCards).map(c => c.getAttribute('data-game-id'));
+    expect(nobrainIds).toContain('bubble-pop');
+    expect(nobrainIds).toContain('soap-carve');
+    expect(nobrainIds).toContain('sand-zen');
+    expect(nobrainIds).toContain('fidget-spin');
+    expect(nobrainIds).toContain('liquid-sort');
+    expect(nobrainIds).toContain('pop-it');
+    expect(nobrainIds).toContain('grass-mow');
+    expect(nobrainIds).toContain('hydraulic-crush');
 
     grid.destroy();
   });
