@@ -6,17 +6,23 @@
 .ac-player-view {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  max-width: 1200px;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  height: calc(100vh - 64px);
+  max-height: calc(100vh - 64px);
+  overflow: hidden;
+  box-sizing: border-box;
   transition: max-width 0.3s ease, padding 0.3s ease;
 }
 
 .ac-player-view.is-theater {
   max-width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
+  height: 100vh;
+  max-height: 100vh;
 }
 
 /* Header Toolbar */
@@ -117,6 +123,29 @@
   user-select: none;
 }
 
+.ac-btn-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFDF9;
+  color: #2B2118;
+  border: 2px solid #2B2118;
+  box-shadow: 2px 2px 0px #2B2118;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.ac-btn-info:hover {
+  background: var(--neon-yellow);
+  box-shadow: 3px 3px 0px #2B2118;
+}
+
 .ac-btn-theater:hover {
   background: var(--neon-yellow);
   box-shadow: 3px 3px 0px #2B2118;
@@ -131,9 +160,10 @@
 .ac-player-frame-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: calc(100vh - 240px);
-  min-height: 380px;
+  flex: 1;
+  height: calc(100vh - 150px);
+  max-height: calc(100vh - 150px);
+  min-height: 480px;
   background: #000000;
   border: var(--border-accent);
   border-radius: var(--radius-lg);
@@ -144,8 +174,8 @@
 
 .ac-player-frame-wrapper.is-theater {
   aspect-ratio: auto;
-  height: calc(100vh - 120px);
-  max-height: calc(100vh - 120px);
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
   border-radius: var(--radius-md);
 }
 
@@ -223,16 +253,79 @@
   justify-content: center;
 }
 
-/* Game Details Panel */
-.ac-player-details {
+/* Details Modal Overlay (Hidden by default, triggered by Info button) */
+.ac-details-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 33, 24, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.ac-details-modal-backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  display: none !important;
+}
+
+.ac-player-details-modal {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 300px;
   gap: 1.5rem;
-  background: var(--bg-card);
-  border: 2px solid #2B2118;
+  background: #FAF6EE;
+  border: 3px solid #2B2118;
   border-radius: var(--radius-lg);
-  box-shadow: 4px 4px 0px #2B2118;
-  padding: 1.5rem;
+  box-shadow: 8px 8px 0px #2B2118;
+  padding: 2rem;
+  max-width: 860px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: ac-modal-pop 0.18s ease-out;
+}
+
+.ac-modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FFFDF9;
+  border: 2px solid #2B2118;
+  box-shadow: 2px 2px 0px #2B2118;
+  color: #2B2118;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.ac-modal-close-btn:hover {
+  background: var(--neon-pink);
+  color: #FFF;
+  transform: scale(1.08);
+}
+
+@keyframes ac-modal-pop {
+  from {
+    transform: scale(0.95) translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 .ac-details-left {
@@ -353,7 +446,7 @@
 
 /* Responsive Breakpoints */
 @media (max-width: 900px) {
-  .ac-player-details {
+  .ac-player-details-modal {
     grid-template-columns: 1fr;
   }
 }

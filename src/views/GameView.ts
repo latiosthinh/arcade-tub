@@ -16,6 +16,9 @@ export class GameView extends BaseComponent<AppState> {
   private frameWrapperElement: HTMLElement | null = null;
   private theaterBtnElement: HTMLButtonElement | null = null;
   private scoreNumElement: HTMLElement | null = null;
+  private infoBtnElement: HTMLButtonElement | null = null;
+  private modalBackdropElement: HTMLElement | null = null;
+  private modalCloseBtnElement: HTMLButtonElement | null = null;
 
   constructor(store: Store<AppState>, gameId: string) {
     super('div', 'ac-player-view');
@@ -69,6 +72,10 @@ export class GameView extends BaseComponent<AppState> {
           </div>
         </div>
         <div class="ac-player-header-right">
+          <button class="ac-btn-info" type="button" aria-label="Game Info & High Score (I)" title="Game Info & High Score (I)">
+            <span class="ac-info-icon">ℹ️</span>
+            <span class="ac-info-label">Info</span>
+          </button>
           <button class="ac-btn-theater" type="button" aria-label="Toggle Theater Mode (T)" title="Toggle Theater Mode (T)">
             <span class="ac-theater-icon">⤡</span>
             <span class="ac-theater-label">Theater</span>
@@ -89,22 +96,26 @@ export class GameView extends BaseComponent<AppState> {
         ></iframe>
       </div>
 
-      <div class="ac-player-details">
-        <div class="ac-details-left">
-          <h3 class="ac-details-title">${game.title}</h3>
-          <div class="ac-details-stats">
-            <span>${game.rating}</span> • <span>Verified Arcade</span>
+      <!-- Modal Overlay for Game Details & High Scores -->
+      <div class="ac-details-modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="ac-modal-title">
+        <div class="ac-player-details-modal">
+          <button class="ac-modal-close-btn" type="button" aria-label="Close Info Modal">✕</button>
+          <div class="ac-details-left">
+            <h3 id="ac-modal-title" class="ac-details-title">${game.icon} ${game.title}</h3>
+            <div class="ac-details-stats">
+              <span>${game.rating}</span> • <span>Verified Arcade</span> • <span>${game.plays}</span>
+            </div>
+            <p class="ac-details-desc">${game.description}</p>
+            <div class="ac-features-tags">
+              ${game.features.map(f => `<span class="ac-tag">✓ ${f}</span>`).join('')}
+            </div>
           </div>
-          <p class="ac-details-desc">${game.description}</p>
-          <div class="ac-features-tags">
-            ${game.features.map(f => `<span class="ac-tag">✓ ${f}</span>`).join('')}
-          </div>
-        </div>
-        <div class="ac-details-right">
-          <div class="ac-score-card">
-            <div class="ac-score-label">PERSONAL HIGH SCORE</div>
-            <div class="ac-score-num">${initialScore > 0 ? initialScore.toLocaleString() : '---'}</div>
-            <div class="ac-score-hint">Scores auto-save locally in your browser</div>
+          <div class="ac-details-right">
+            <div class="ac-score-card">
+              <div class="ac-score-label">PERSONAL HIGH SCORE</div>
+              <div class="ac-score-num">${initialScore > 0 ? initialScore.toLocaleString() : '---'}</div>
+              <div class="ac-score-hint">Scores auto-save locally in your browser</div>
+            </div>
           </div>
         </div>
       </div>
@@ -114,6 +125,9 @@ export class GameView extends BaseComponent<AppState> {
     this.skeletonElement = this.element.querySelector('.ac-skeleton-loader');
     this.frameWrapperElement = this.element.querySelector('.ac-player-frame-wrapper');
     this.theaterBtnElement = this.element.querySelector('.ac-btn-theater');
+    this.infoBtnElement = this.element.querySelector('.ac-btn-info');
+    this.modalBackdropElement = this.element.querySelector('.ac-details-modal-backdrop');
+    this.modalCloseBtnElement = this.element.querySelector('.ac-modal-close-btn');
     this.scoreNumElement = this.element.querySelector('.ac-score-num');
   }
 
@@ -130,6 +144,31 @@ export class GameView extends BaseComponent<AppState> {
       this.addListener(backBtn, 'click', () => {
         uiAudio.playTransition();
         window.location.hash = '#/';
+      });
+    }
+
+    // Info modal toggle button
+    if (this.infoBtnElement) {
+      this.addListener(this.infoBtnElement, 'click', () => {
+        uiAudio.playClick();
+        this.openInfoModal();
+      });
+    }
+
+    // Modal close button
+    if (this.modalCloseBtnElement) {
+      this.addListener(this.modalCloseBtnElement, 'click', () => {
+        uiAudio.playClick();
+        this.closeInfoModal();
+      });
+    }
+
+    // Backdrop click dismisses modal
+    if (this.modalBackdropElement) {
+      this.addListener(this.modalBackdropElement, 'click', (e: MouseEvent) => {
+        if (e.target === this.modalBackdropElement) {
+          this.closeInfoModal();
+        }
       });
     }
 
@@ -183,11 +222,18 @@ export class GameView extends BaseComponent<AppState> {
       if (activeTag === 'input' || activeTag === 'textarea') return;
 
       if (e.key === 'Escape') {
+        if (this.modalBackdropElement && !this.modalBackdropElement.classList.contains('is-hidden')) {
+          this.closeInfoModal();
+          return;
+        }
         uiAudio.playTransition();
         window.location.hash = '#/';
       } else if (e.key === 't' || e.key === 'T' || e.code === 'KeyT') {
         uiAudio.playClick();
         this.toggleTheater();
+      } else if (e.key === 'i' || e.key === 'I' || e.code === 'KeyI') {
+        uiAudio.playClick();
+        this.toggleInfoModal();
       }
     };
     this.addListener(window, 'keydown', onKeyDown);
@@ -201,6 +247,29 @@ export class GameView extends BaseComponent<AppState> {
   private hideSkeleton(): void {
     if (this.skeletonElement) {
       this.skeletonElement.classList.add('is-hidden');
+    }
+  }
+
+  private openInfoModal(): void {
+    if (this.modalBackdropElement) {
+      this.modalBackdropElement.classList.remove('is-hidden');
+    }
+  }
+
+  private closeInfoModal(): void {
+    if (this.modalBackdropElement) {
+      this.modalBackdropElement.classList.add('is-hidden');
+      this.iframeElement?.focus?.();
+    }
+  }
+
+  private toggleInfoModal(): void {
+    if (this.modalBackdropElement) {
+      if (this.modalBackdropElement.classList.contains('is-hidden')) {
+        this.openInfoModal();
+      } else {
+        this.closeInfoModal();
+      }
     }
   }
 
@@ -247,6 +316,9 @@ export class GameView extends BaseComponent<AppState> {
     this.skeletonElement = null;
     this.frameWrapperElement = null;
     this.theaterBtnElement = null;
+    this.infoBtnElement = null;
+    this.modalBackdropElement = null;
+    this.modalCloseBtnElement = null;
     this.scoreNumElement = null;
   }
 }
