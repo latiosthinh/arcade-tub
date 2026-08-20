@@ -38,7 +38,48 @@
 .ac-game-grid-container {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+}
+
+.ac-catalog-section {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+}
+
+.ac-group-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px dashed rgba(62, 39, 35, 0.2);
+}
+
+.ac-group-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--paper-ink);
+}
+
+.ac-group-badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.ac-badge-playable {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+.ac-badge-maintenance {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1px solid #FFCC80;
 }
 
 .ac-game-grid {

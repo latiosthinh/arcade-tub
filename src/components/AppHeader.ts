@@ -19,9 +19,9 @@ export class AppHeader extends BaseComponent<AppState> {
 
     this.element.innerHTML = `
       <div class="ac-header-left">
-        <a href="#/" class="ac-logo" aria-label="Arcade Carnival Home">
+        <a href="#/" class="ac-logo" aria-label="ArcadeTub Home">
           <span class="ac-logo-icon">🕹️</span>
-          <span class="ac-logo-text">ARCADE CARNIVAL</span>
+          <span class="ac-logo-text">ARCADETUB</span>
           <span class="ac-logo-badge">ARCADE</span>
         </a>
       </div>

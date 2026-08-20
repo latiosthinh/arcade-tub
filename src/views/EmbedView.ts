@@ -26,9 +26,9 @@ export class EmbedView extends BaseComponent<AppState> {
   private render(): void {
     this.element.innerHTML = `
       <header class="ac-embed-header">
-        <h2 class="ac-embed-title">&lt;/&gt; Arcade Carnival Embed Kit</h2>
+        <h2 class="ac-embed-title">&lt;/&gt; ArcadeTub Embed Kit</h2>
         <p class="ac-embed-subtitle">
-          Embed any of our 5 60-FPS HTML5 Canvas arcade games directly into your React, Vue, or static website with full score tracking, lifecycle control, and zero runtime dependencies.
+          Embed any of our 60-FPS HTML5 Canvas arcade games directly into your React, Vue, or static website with full score tracking, lifecycle control, and zero runtime dependencies.
         </p>
       </header>
 

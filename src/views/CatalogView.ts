@@ -25,7 +25,7 @@ export class CatalogView extends BaseComponent<AppState> {
     const sectionHeader = document.createElement('div');
     sectionHeader.className = 'ac-section-header';
     sectionHeader.innerHTML = `
-      <h3 class="ac-section-title">Arcade Games (${GAMES.length} Games)</h3>
+      <h3 class="ac-section-title">ArcadeTub Games (${GAMES.length} Games)</h3>
       <span class="ac-section-sub">No install required • 60 FPS Canvas Arcade Games</span>
     `;
     this.element.appendChild(sectionHeader);

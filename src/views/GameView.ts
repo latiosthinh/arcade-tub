@@ -37,7 +37,7 @@ export class GameView extends BaseComponent<AppState> {
       <div class="ac-player-not-found">
         <div class="ac-not-found-icon">👾</div>
         <h2 class="ac-not-found-title">Game Not Found</h2>
-        <p class="ac-not-found-desc">The requested game could not be found in the Arcade Carnival registry.</p>
+        <p class="ac-not-found-desc">The requested game could not be found in the ArcadeTub registry.</p>
         <button class="ac-btn-back" type="button">
           ← Back to Catalog
         </button>
