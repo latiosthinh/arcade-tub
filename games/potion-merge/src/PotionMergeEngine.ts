@@ -1,5 +1,5 @@
 import { FlaskPhysics, PotionBody } from './FlaskPhysics.js';
-import { GameState, POTION_TIERS } from './GameState.js';
+import { GameState, GEM_TIERS } from './GameState.js';
 
 export interface DropGuide {
   x: number;
@@ -22,7 +22,7 @@ export class PotionMergeEngine {
   }
 
   public moveDropper(targetX: number): void {
-    const tierDef = POTION_TIERS[this.state.currentTier - 1] || POTION_TIERS[0];
+    const tierDef = GEM_TIERS[this.state.currentTier - 1] || GEM_TIERS[0];
     const minX = this.physics.flaskLeft + tierDef.radius + 4;
     const maxX = this.physics.flaskRight - tierDef.radius - 4;
     this.dropperX = Math.max(minX, Math.min(maxX, targetX));

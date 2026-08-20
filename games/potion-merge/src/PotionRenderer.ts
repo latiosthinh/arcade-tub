@@ -120,11 +120,11 @@ export class PotionRenderer {
     const top = engine.physics.dangerCeilingY - 30;
 
     ctx.save();
-    // Flask cutout container shadow
+    // Vault cutout container shadow
     ctx.fillStyle = 'rgba(43, 33, 24, 0.08)';
     ctx.fillRect(left + 6, top + 6, right - left, bottom - top);
 
-    // Flask container base paper
+    // Vault container base paper
     ctx.fillStyle = '#F4EAD4';
     ctx.fillRect(left, top, right - left, bottom - top);
 
@@ -173,7 +173,7 @@ export class PotionRenderer {
       ctx.fillStyle = '#E11D48';
       ctx.font = 'bold 13px "Patrick Hand", cursive';
       ctx.textAlign = 'center';
-      ctx.fillText(`OVERFLOW WARNING! (${(3 - engine.state.overflowTimer).toFixed(1)}s)`, (left + right) / 2, y - 8);
+      ctx.fillText(`OVERFLOW WARNING! (${Math.max(0, 3 - engine.state.overflowTimer).toFixed(1)}s)`, (left + right) / 2, y - 8);
     } else {
       ctx.strokeStyle = 'rgba(225, 29, 72, 0.4)';
       ctx.lineWidth = 1.5;
@@ -238,21 +238,22 @@ export class PotionRenderer {
   }
 
   private drawFacetPath(ctx: CanvasRenderingContext2D, shape: GemDef['shape'], r: number, ox: number, oy: number): void {
+    const validR = Math.max(2, isNaN(r) ? 10 : r);
     ctx.beginPath();
     switch (shape) {
       case 'diamond': {
-        ctx.moveTo(ox, oy - r);
-        ctx.lineTo(ox + r * 0.9, oy);
-        ctx.lineTo(ox, oy + r);
-        ctx.lineTo(ox - r * 0.9, oy);
+        ctx.moveTo(ox, oy - validR);
+        ctx.lineTo(ox + validR * 0.9, oy);
+        ctx.lineTo(ox, oy + validR);
+        ctx.lineTo(ox - validR * 0.9, oy);
         ctx.closePath();
         break;
       }
       case 'hexagon': {
         for (let i = 0; i < 6; i++) {
           const angle = (i * Math.PI) / 3;
-          const px = ox + r * Math.cos(angle);
-          const py = oy + r * Math.sin(angle);
+          const px = ox + validR * Math.cos(angle);
+          const py = oy + validR * Math.sin(angle);
           if (i === 0) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
@@ -262,8 +263,8 @@ export class PotionRenderer {
       case 'octagon': {
         for (let i = 0; i < 8; i++) {
           const angle = (i * Math.PI) / 4 + Math.PI / 8;
-          const px = ox + r * Math.cos(angle);
-          const py = oy + r * Math.sin(angle);
+          const px = ox + validR * Math.cos(angle);
+          const py = oy + validR * Math.sin(angle);
           if (i === 0) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
@@ -272,8 +273,8 @@ export class PotionRenderer {
       }
       case 'star': {
         const spikes = 8;
-        const outerRadius = r;
-        const innerRadius = r * 0.65;
+        const outerRadius = validR;
+        const innerRadius = validR * 0.65;
         let rot = (Math.PI / 2) * 3;
         const step = Math.PI / spikes;
 
@@ -295,7 +296,7 @@ export class PotionRenderer {
       }
       case 'circle':
       default: {
-        ctx.arc(ox, oy, r, 0, Math.PI * 2);
+        ctx.arc(ox, oy, validR, 0, Math.PI * 2);
         break;
       }
     }
@@ -349,7 +350,7 @@ export class PotionRenderer {
     const x = engine.dropperX;
     const y = engine.physics.dangerCeilingY - 25;
     const currentTier = engine.state.currentTier;
-    const tierDef = POTION_TIERS[currentTier - 1] || POTION_TIERS[0];
+    const tierDef = GEM_TIERS[currentTier - 1] || GEM_TIERS[0];
 
     ctx.save();
 
@@ -376,7 +377,7 @@ export class PotionRenderer {
     ctx.fill();
     ctx.stroke();
 
-    // Floating potion preview
+    // Floating gem preview
     const previewPotion: GemBody = {
       id: 0,
       tier: currentTier,
@@ -438,15 +439,16 @@ export class PotionRenderer {
     ctx.font = 'bold 18px "Patrick Hand", cursive';
     ctx.fillText('NEXT GEM', 696, 70);
 
-    const nextDef = GEM_TIERS[engine.state.nextTier - 1] || GEM_TIERS[0];
+    const nextTier = engine.state.nextTier || 1;
+    const nextDef = GEM_TIERS[nextTier - 1] || GEM_TIERS[0];
     const previewNext: GemBody = {
       id: -1,
-      tier: engine.state.nextTier,
+      tier: nextTier,
       x: 696,
       y: 125,
       vx: 0,
       vy: 0,
-      radius: nextDef.radius * 0.85,
+      radius: (nextDef.radius || 20) * 0.85,
       settled: false,
       markedForRemoval: false,
       spawnAnimation: 1,

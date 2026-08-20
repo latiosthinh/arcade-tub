@@ -3,7 +3,7 @@ import { InputManager } from '@arcade-carnival/game-engine';
 import { PotionMergeEngine } from './PotionMergeEngine.js';
 import { PotionRenderer } from './PotionRenderer.js';
 import { PotionAudio } from './PotionAudio.js';
-import { POTION_TIERS } from './GameState.js';
+import { GEM_TIERS } from './GameState.js';
 
 export class PotionScene implements GameScene {
   public engine: PotionMergeEngine;
@@ -142,7 +142,7 @@ export class PotionScene implements GameScene {
 
     for (const evt of mergeEvents) {
       this.audio.playMerge(evt.mergedTier);
-      const tierDef = POTION_TIERS[evt.mergedTier - 1] || POTION_TIERS[POTION_TIERS.length - 1];
+      const tierDef = GEM_TIERS[evt.mergedTier - 1] || GEM_TIERS[GEM_TIERS.length - 1];
       this.renderer.spawnMergeSparkles(evt.x, evt.y, tierDef.color);
     }
 
