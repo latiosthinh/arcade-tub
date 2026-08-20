@@ -10,7 +10,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
 - [x] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
 - [ ] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
-- [ ] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
+- [x] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
 - [ ] **Phase 52: Game Flow, State Machine & Tally HUD** - Title screen, stage intro curtains, HUD sidebar, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
 - [ ] **Phase 53: Tactile Papercraft Visuals & Procedural Web Audio** - Multi-pass Canvas 2D cardboard rendering, confetti explosion bursts, and zero-asset procedural 8-bit Web Audio synthesis with dynamics compression.
 - [ ] **Phase 54: Mobile Virtual Controls & Responsive Viewport** - 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and 416×416 aspect ratio scaling.
@@ -25,7 +25,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
 | 49. Player Tank Kinematics & Upgrade Tiers | 2/2 | Complete | 2026-08-20 |
 | 50. Ballistics System & Combat Collisions | 2/2 | Complete | 2026-08-20 |
-| 51. Enemy AI, Wave Spawner & Powerups | 0/2 | Not started | - |
+| 51. Enemy AI, Wave Spawner & Powerups | 2/2 | Complete | 2026-08-20 |
 | 52. Game Flow, State Machine & Tally HUD | 0/2 | Not started | - |
 | 53. Papercraft Visuals & Procedural Audio | 0/2 | Not started | - |
 | 54. Mobile Virtual Controls & Viewport | 0/2 | Not started | - |
@@ -88,8 +88,8 @@ Plans:
   5. Shovel powerup temporarily fortifies base perimeter with steel and cleanly restores original undamaged brick state upon 20s timeout.
 **Plans**: 2 plans
 Plans:
-- [ ] 51-01-PLAN.md — EnemyTank, EnemySpawner, grid-node steering AI, and flashing tank powerup drop mechanics
-- [ ] 51-02-PLAN.md — PowerUpSystem managing all 8 tactical items, shovel base fortification terrain caching/restoration, and comprehensive Vitest unit test suite
+- [x] 51-01-PLAN.md — EnemyTank, EnemySpawner, grid-node steering AI, and flashing tank powerup drop mechanics
+- [x] 51-02-PLAN.md — PowerUpSystem managing all 8 tactical items, shovel base fortification terrain caching/restoration, and comprehensive Vitest unit test suite
 
 ### Phase 52: Game Flow, State Machine & Tally HUD
 **Goal**: Orchestrate full arcade loop including title screen, stage select, stage intro curtains, active HUD side panel, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.

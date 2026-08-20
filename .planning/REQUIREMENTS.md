@@ -29,12 +29,12 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [ ] **COMBAT-04**: System detects bullet hits on enemy tanks, dealing damage and accounting for armor hit points.
 
 ### Enemy AI, Spawner & Powerups
-- [ ] **ENEMY-01**: System manages a 20-tank wave queue with up to 4 concurrent enemy tanks spawning at 3 top spawn portals.
-- [ ] **ENEMY-02**: System implements 4 distinct enemy archetypes: Basic Tank (slow, low points), Fast Cruiser (high speed), Power Tank (rapid-fire), and Heavy Armor Tank (requires 4 hits to destroy, color changes per hit).
-- [ ] **ENEMY-03**: System executes grid-node steering AI with goal-oriented pathing bias (targeting player or Eagle HQ) and anti-oscillation direction locking.
-- [ ] **ENEMY-04**: System spawns flashing bonus tanks (4th, 11th, 18th spawns) that drop a random tactical powerup upon taking damage.
-- [ ] **ENEMY-05**: User can collect 8 tactical powerup items: Star (upgrade tier), Shovel (fortifies base perimeter with steel for 20s), Grenade (instantly destroys all active enemies on screen), Clock (freezes all enemies for 10s), Helmet (temporary invulnerability shield for 10s), Tank (grants +1 extra life), Gun (instantly promotes to Tier 4), and Boat (enables crossing water terrain).
-- [ ] **ENEMY-06**: System manages shovel fortification timeout restoration, caching underlying terrain state without leaving empty voids.
+- [x] **ENEMY-01**: System manages a 20-tank wave queue with up to 4 concurrent enemy tanks spawning at 3 top spawn portals.
+- [x] **ENEMY-02**: System implements 4 distinct enemy archetypes: Basic Tank (slow, low points), Fast Cruiser (high speed), Power Tank (rapid-fire), and Heavy Armor Tank (requires 4 hits to destroy, color changes per hit).
+- [x] **ENEMY-03**: System executes grid-node steering AI with goal-oriented pathing bias (targeting player or Eagle HQ) and anti-oscillation direction locking.
+- [x] **ENEMY-04**: System spawns flashing bonus tanks (4th, 11th, 18th spawns) that drop a random tactical powerup upon taking damage.
+- [x] **ENEMY-05**: User can collect 8 tactical powerup items: Star (upgrade tier), Shovel (fortifies base perimeter with steel for 20s), Grenade (instantly destroys all active enemies on screen), Clock (freezes all enemies for 10s), Helmet (temporary invulnerability shield for 10s), Tank (grants +1 extra life), Gun (instantly promotes to Tier 4), and Boat (enables crossing water terrain).
+- [x] **ENEMY-06**: System manages shovel fortification timeout restoration, caching underlying terrain state without leaving empty voids.
 
 ### Stage Progression, Game Flow & HUD
 - [ ] **LOOP-01**: System displays title screen with Game Start, Stage Select, and high score display.
@@ -95,12 +95,12 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | **COMBAT-02** | Phase 50 | Pending |
 | **COMBAT-03** | Phase 50 | Pending |
 | **COMBAT-04** | Phase 50 | Pending |
-| **ENEMY-01** | Phase 51 | Pending |
-| **ENEMY-02** | Phase 51 | Pending |
-| **ENEMY-03** | Phase 51 | Pending |
-| **ENEMY-04** | Phase 51 | Pending |
-| **ENEMY-05** | Phase 51 | Pending |
-| **ENEMY-06** | Phase 51 | Pending |
+| **ENEMY-01** | Phase 51 | Complete |
+| **ENEMY-02** | Phase 51 | Complete |
+| **ENEMY-03** | Phase 51 | Complete |
+| **ENEMY-04** | Phase 51 | Complete |
+| **ENEMY-05** | Phase 51 | Complete |
+| **ENEMY-06** | Phase 51 | Complete |
 | **LOOP-01** | Phase 52 | Pending |
 | **LOOP-02** | Phase 52 | Pending |
 | **LOOP-03** | Phase 52 | Pending |
