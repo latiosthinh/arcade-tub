@@ -107,11 +107,11 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | **LOOP-04** | Phase 52 | Complete |
 | **LOOP-05** | Phase 52 | Complete |
 | **LOOP-06** | Phase 52 | Complete |
-| **VISUAL-01** | Phase 53 | Pending |
-| **VISUAL-02** | Phase 53 | Pending |
-| **VISUAL-03** | Phase 53 | Pending |
-| **VISUAL-04** | Phase 53 | Pending |
-| **VISUAL-05** | Phase 53 | Pending |
+| **VISUAL-01** | Phase 53 | Complete |
+| **VISUAL-02** | Phase 53 | Complete |
+| **VISUAL-03** | Phase 53 | Complete |
+| **VISUAL-04** | Phase 53 | Complete |
+| **VISUAL-05** | Phase 53 | Complete |
 | **MOBILE-01** | Phase 54 | Pending |
 | **MOBILE-02** | Phase 54 | Pending |
 | **MOBILE-03** | Phase 54 | Pending |
