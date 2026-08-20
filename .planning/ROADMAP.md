@@ -9,12 +9,12 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 
 - [x] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
 - [x] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
-- [ ] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
+- [x] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
 - [x] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
 - [x] **Phase 52: Game Flow, State Machine & Tally HUD** - Title screen, stage intro curtains, HUD sidebar, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
 - [x] **Phase 53: Tactile Papercraft Visuals & Procedural Web Audio** - Multi-pass Canvas 2D cardboard rendering, confetti explosion bursts, and zero-asset procedural 8-bit Web Audio synthesis with dynamics compression.
 - [x] **Phase 54: Mobile Virtual Controls & Responsive Viewport** - 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and 416×416 aspect ratio scaling.
-- [ ] **Phase 55: Hub Catalog Registration, Test Suite & Integration** - Standalone packaging in `games/tank-1990/`, catalog registration with custom SVG screenshot, Vite multi-page config, and full Vitest suite verification.
+- [x] **Phase 55: Hub Catalog Registration, Test Suite & Integration** - Standalone packaging in `games/tank-1990/`, catalog registration with custom SVG screenshot, Vite multi-page config, and full Vitest suite verification.
 
 ---
 
@@ -29,7 +29,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | 52. Game Flow, State Machine & Tally HUD | 2/2 | Complete | 2026-08-20 |
 | 53. Papercraft Visuals & Procedural Audio | 2/2 | Complete | 2026-08-20 |
 | 54. Mobile Virtual Controls & Viewport | 2/2 | Complete | 2026-08-20 |
-| 55. Hub Integration & Milestone Audit | 0/2 | Not started | - |
+| 55. Hub Integration & Milestone Audit | 2/2 | Complete | 2026-08-20 |
 
 ---
 
@@ -147,7 +147,10 @@ Plans:
   2. Game is registered in `src/data/games.ts` with metadata, tags (`action`, `retro`, `arcade`), and custom SVG screenshot.
   3. Game is wired into `vite.config.ts` multi-page input build configuration.
   4. Comprehensive Vitest unit tests covering grid micro-chipping, corner-snapping, projectile sweeps, enemy AI node routing, and powerup mechanics achieve 100% pass rate.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [x] 55-01-PLAN.md — Standalone game loop assembly, Vite multi-page input, catalog metadata registration, and SVG screenshot
+- [x] 55-02-PLAN.md — Production bundle audit update, platform regression testing, type check, and build verification
 **UI hint**: yes
 
 ---

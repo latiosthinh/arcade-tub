@@ -23,10 +23,10 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **TANK-04**: System manages player lives counter, extra lives gain, and death/respawn cycle.
 
 ### Ballistics & Combat Collisions
-- [ ] **COMBAT-01**: System simulates projectile trajectory with 120Hz sub-stepping or continuous ray-sweep to prevent collision tunneling.
-- [ ] **COMBAT-02**: System cancels intersecting opposing projectiles upon collision with micro spark particle burst.
-- [ ] **COMBAT-03**: System applies tier-dependent projectile damage to terrain (regular shot chips bricks; tier-4 heavy shot penetrates steel and clears trees).
-- [ ] **COMBAT-04**: System detects bullet hits on enemy tanks, dealing damage and accounting for armor hit points.
+- [x] **COMBAT-01**: System simulates projectile trajectory with 120Hz sub-stepping or continuous ray-sweep to prevent collision tunneling.
+- [x] **COMBAT-02**: System cancels intersecting opposing projectiles upon collision with micro spark particle burst.
+- [x] **COMBAT-03**: System applies tier-dependent projectile damage to terrain (regular shot chips bricks; tier-4 heavy shot penetrates steel and clears trees).
+- [x] **COMBAT-04**: System detects bullet hits on enemy tanks, dealing damage and accounting for armor hit points.
 
 ### Enemy AI, Spawner & Powerups
 - [x] **ENEMY-01**: System manages a 20-tank wave queue with up to 4 concurrent enemy tanks spawning at 3 top spawn portals.
@@ -45,22 +45,22 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **LOOP-06**: System persists personal best high scores in `localStorage`.
 
 ### Tactile Papercraft Visuals & Procedural Web Audio
-- [ ] **VISUAL-01**: System renders layered cardboard cutouts with drop shadows, rolling tread trails, and turret recoil animations.
-- [ ] **VISUAL-02**: System generates paper confetti burst particles for explosions, brick debris crumbs, and bullet sparks.
-- [ ] **VISUAL-03**: System executes multi-pass canvas composition: Ground Layer -> Entities & Powerups -> Grass Canopy Overlay -> Particle FX -> HUD Overlay.
-- [ ] **VISUAL-04**: System synthesizes procedural 8-bit Web Audio with zero external audio assets: chiptune engine pitch-shifted hums, sharp shot pops, crunchy wall crumble, metallic steel clangs, explosion booms, item pickup fanfares, and base destruction alarm.
-- [ ] **VISUAL-05**: Audio subsystem routes all sounds through a master `DynamicsCompressorNode` to prevent clipping and distortion during high-volume particle explosions.
+- [x] **VISUAL-01**: System renders layered cardboard cutouts with drop shadows, rolling tread trails, and turret recoil animations.
+- [x] **VISUAL-02**: System generates paper confetti burst particles for explosions, brick debris crumbs, and bullet sparks.
+- [x] **VISUAL-03**: System executes multi-pass canvas composition: Ground Layer -> Entities & Powerups -> Grass Canopy Overlay -> Particle FX -> HUD Overlay.
+- [x] **VISUAL-04**: System synthesizes procedural 8-bit Web Audio with zero external audio assets: chiptune engine pitch-shifted hums, sharp shot pops, crunchy wall crumble, metallic steel clangs, explosion booms, item pickup fanfares, and base destruction alarm.
+- [x] **VISUAL-05**: Audio subsystem routes all sounds through a master `DynamicsCompressorNode` to prevent clipping and distortion during high-volume particle explosions.
 
 ### Mobile Virtual Controls & Responsive Viewport
-- [ ] **MOBILE-01**: System provides responsive touch controls with 4-way cardinal virtual D-Pad (with angular hysteresis deadzone) and dedicated Fire button.
-- [ ] **MOBILE-02**: System scales the 416×416 game arena with pixel-crisp aspect ratio preservation inside mobile and desktop viewports.
-- [ ] **MOBILE-03**: Touch input handles multi-touch simultaneously (holding D-Pad direction while tapping Fire) without gesture stutter or screen scrolling.
+- [x] **MOBILE-01**: System provides responsive touch controls with 4-way cardinal virtual D-Pad (with angular hysteresis deadzone) and dedicated Fire button.
+- [x] **MOBILE-02**: System scales the 416×416 game arena with pixel-crisp aspect ratio preservation inside mobile and desktop viewports.
+- [x] **MOBILE-03**: Touch input handles multi-touch simultaneously (holding D-Pad direction while tapping Fire) without gesture stutter or screen scrolling.
 
 ### Catalog Registration, Test Suite & Integration
-- [ ] **INTEG-01**: Game is packaged in standalone directory `games/tank-1990/` with zero runtime dependencies.
-- [ ] **INTEG-02**: Game is registered in `src/data/games.ts` with metadata, tags (`action`, `retro`, `arcade`), and custom SVG screenshot.
-- [ ] **INTEG-03**: Game is wired into `vite.config.ts` multi-page input build configuration.
-- [ ] **INTEG-04**: System provides comprehensive Vitest unit tests covering grid micro-chipping, kinematics corner-snapping, projectile sweeps, enemy AI node routing, and powerup mechanics with 100% test pass rate.
+- [x] **INTEG-01**: Game is packaged in standalone directory `games/tank-1990/` with zero runtime dependencies.
+- [x] **INTEG-02**: Game is registered in `src/data/games.ts` with metadata, tags (`action`, `retro`, `arcade`), and custom SVG screenshot.
+- [x] **INTEG-03**: Game is wired into `vite.config.ts` multi-page input build configuration.
+- [x] **INTEG-04**: System provides comprehensive Vitest unit tests covering grid micro-chipping, kinematics corner-snapping, projectile sweeps, enemy AI node routing, and powerup mechanics with 100% test pass rate.
 
 ---
 
@@ -87,14 +87,14 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | **GRID-05** | Phase 48 | Complete |
 | **GRID-06** | Phase 48 | Complete |
 | **GRID-07** | Phase 48 | Complete |
-| **TANK-01** | Phase 49 | Pending |
-| **TANK-02** | Phase 49 | Pending |
-| **TANK-03** | Phase 49 | Pending |
-| **TANK-04** | Phase 49 | Pending |
-| **COMBAT-01** | Phase 50 | Pending |
-| **COMBAT-02** | Phase 50 | Pending |
-| **COMBAT-03** | Phase 50 | Pending |
-| **COMBAT-04** | Phase 50 | Pending |
+| **TANK-01** | Phase 49 | Complete |
+| **TANK-02** | Phase 49 | Complete |
+| **TANK-03** | Phase 49 | Complete |
+| **TANK-04** | Phase 49 | Complete |
+| **COMBAT-01** | Phase 50 | Complete |
+| **COMBAT-02** | Phase 50 | Complete |
+| **COMBAT-03** | Phase 50 | Complete |
+| **COMBAT-04** | Phase 50 | Complete |
 | **ENEMY-01** | Phase 51 | Complete |
 | **ENEMY-02** | Phase 51 | Complete |
 | **ENEMY-03** | Phase 51 | Complete |
@@ -112,10 +112,10 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | **VISUAL-03** | Phase 53 | Complete |
 | **VISUAL-04** | Phase 53 | Complete |
 | **VISUAL-05** | Phase 53 | Complete |
-| **MOBILE-01** | Phase 54 | Pending |
-| **MOBILE-02** | Phase 54 | Pending |
-| **MOBILE-03** | Phase 54 | Pending |
-| **INTEG-01** | Phase 55 | Pending |
-| **INTEG-02** | Phase 55 | Pending |
-| **INTEG-03** | Phase 55 | Pending |
-| **INTEG-04** | Phase 55 | Pending |
+| **MOBILE-01** | Phase 54 | Complete |
+| **MOBILE-02** | Phase 54 | Complete |
+| **MOBILE-03** | Phase 54 | Complete |
+| **INTEG-01** | Phase 55 | Complete |
+| **INTEG-02** | Phase 55 | Complete |
+| **INTEG-03** | Phase 55 | Complete |
+| **INTEG-04** | Phase 55 | Complete |
