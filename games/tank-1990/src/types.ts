@@ -126,3 +126,54 @@ export interface PlayerTankState {
   boatActive: boolean;
 }
 
+export type BulletOwner = 'PLAYER' | 'ENEMY';
+export const BULLET_SIZE = 6;
+
+export interface Bullet {
+  id: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  direction: CardinalDirection;
+  speed: number;
+  owner: BulletOwner;
+  canDestroySteel: boolean;
+  canCutTrees: boolean;
+  damage: number;
+  alive: boolean;
+}
+
+export type BulletHitType =
+  | 'BOUNDARY'
+  | 'BRICK'
+  | 'STEEL'
+  | 'TREE'
+  | 'EAGLE'
+  | 'TANK'
+  | 'BULLET_CANCEL';
+
+export interface BulletHitEvent {
+  type: BulletHitType;
+  x: number;
+  y: number;
+  bulletId: number;
+  targetId?: number | string;
+  cellCol?: number;
+  cellRow?: number;
+}
+
+export interface CombatTankTarget {
+  id: string | number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isPlayer: boolean;
+  isDead: boolean;
+  isInvulnerable?: boolean;
+  armorHp?: number;
+  takeDamage: (damage: number) => boolean;
+}
+
+
