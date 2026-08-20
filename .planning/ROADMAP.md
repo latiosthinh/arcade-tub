@@ -45,7 +45,10 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
   3. Water blocks tank traversal while permitting bullet flight; Trees provide visual camouflage; Ice induces low-friction sliding drift.
   4. Eagle Base HQ (2×2 footprint) triggers instant defeat/game over when destroyed.
   5. 35 authentic stage map layouts load accurately into grid memory.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 48-01-PLAN.md — GridMap core engine, tile types, bitmask chipping, terrain query methods, Eagle HQ state
+- [ ] 48-02-PLAN.md — 35 authentic stage map data encodings, stage loader, and comprehensive Vitest unit test suite
 **UI hint**: yes
 
 ### Phase 49: Player Tank Kinematics & Upgrade Tiers
