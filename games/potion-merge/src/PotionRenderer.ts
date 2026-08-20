@@ -1,6 +1,6 @@
 import { PotionMergeEngine } from './PotionMergeEngine.js';
-import { POTION_TIERS } from './GameState.js';
-import { PotionBody } from './FlaskPhysics.js';
+import { GEM_TIERS, type GemDef } from './GameState.js';
+import { GemBody } from './FlaskPhysics.js';
 
 export interface Particle {
   x: number;
@@ -18,18 +18,18 @@ export class PotionRenderer {
   public particles: Particle[] = [];
 
   public spawnMergeSparkles(x: number, y: number, color: string): void {
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 22; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 40 + Math.random() * 120;
+      const speed = 50 + Math.random() * 140;
       this.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        radius: 2 + Math.random() * 3,
+        radius: 2 + Math.random() * 3.5,
         color,
         alpha: 1,
-        maxLife: 0.5 + Math.random() * 0.3,
+        maxLife: 0.5 + Math.random() * 0.35,
         life: 0,
       });
     }
@@ -187,49 +187,161 @@ export class PotionRenderer {
     ctx.restore();
   }
 
-  private renderPotion(ctx: CanvasRenderingContext2D, potion: PotionBody): void {
-    const tierDef = POTION_TIERS[potion.tier - 1] || POTION_TIERS[POTION_TIERS.length - 1];
-    const r = potion.radius * potion.spawnAnimation;
+  private renderPotion(ctx: CanvasRenderingContext2D, gem: GemBody): void {
+    const tierDef: GemDef = GEM_TIERS[gem.tier - 1] || GEM_TIERS[GEM_TIERS.length - 1];
+    const r = gem.radius * gem.spawnAnimation;
 
     ctx.save();
-    ctx.translate(potion.x, potion.y);
+    ctx.translate(gem.x, gem.y);
+    if (gem.rotation) {
+      ctx.rotate(gem.rotation);
+    }
 
     // Layer 1: Drop shadow
-    ctx.beginPath();
-    ctx.arc(3, 3, r, 0, Math.PI * 2);
+    this.drawFacetPath(ctx, tierDef.shape, r, 3, 3);
     ctx.fillStyle = 'rgba(43, 33, 24, 0.2)';
     ctx.fill();
 
-    // Layer 2: Main colored paper cutout circle
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    // Layer 2: Main gem faceted body
+    this.drawFacetPath(ctx, tierDef.shape, r, 0, 0);
     ctx.fillStyle = tierDef.color;
     ctx.fill();
     ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // Layer 3: Inner fluid bubble arc
-    ctx.beginPath();
-    ctx.arc(0, r * 0.15, r * 0.75, 0.1 * Math.PI, 0.9 * Math.PI);
-    ctx.fillStyle = tierDef.secondaryColor;
-    ctx.fill();
+    // Layer 3: Inner geometric facet lines
+    this.drawGemInnerFacets(ctx, tierDef, r);
 
-    // Layer 4: Alchemical symbol / emoji badge
-    if (r >= 14) {
+    // Layer 4: Gem glyph / symbol
+    if (r >= 16) {
+      ctx.save();
+      // Counter rotate symbol so it stays upright
+      if (gem.rotation) {
+        ctx.rotate(-gem.rotation);
+      }
       ctx.fillStyle = '#2B2118';
-      ctx.font = `bold ${Math.max(10, Math.floor(r * 0.7))}px "Comfortaa", sans-serif`;
+      ctx.font = `bold ${Math.max(10, Math.floor(r * 0.65))}px "Comfortaa", sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(tierDef.symbol, 0, 0);
+      ctx.restore();
     }
 
-    // Layer 5: Paper highlight gleam
+    // Layer 5: Papercraft gleam glint
     ctx.beginPath();
-    ctx.arc(-r * 0.35, -r * 0.35, r * 0.22, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    ctx.arc(-r * 0.35, -r * 0.35, r * 0.2, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
     ctx.fill();
 
+    ctx.restore();
+  }
+
+  private drawFacetPath(ctx: CanvasRenderingContext2D, shape: GemDef['shape'], r: number, ox: number, oy: number): void {
+    ctx.beginPath();
+    switch (shape) {
+      case 'diamond': {
+        ctx.moveTo(ox, oy - r);
+        ctx.lineTo(ox + r * 0.9, oy);
+        ctx.lineTo(ox, oy + r);
+        ctx.lineTo(ox - r * 0.9, oy);
+        ctx.closePath();
+        break;
+      }
+      case 'hexagon': {
+        for (let i = 0; i < 6; i++) {
+          const angle = (i * Math.PI) / 3;
+          const px = ox + r * Math.cos(angle);
+          const py = oy + r * Math.sin(angle);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        break;
+      }
+      case 'octagon': {
+        for (let i = 0; i < 8; i++) {
+          const angle = (i * Math.PI) / 4 + Math.PI / 8;
+          const px = ox + r * Math.cos(angle);
+          const py = oy + r * Math.sin(angle);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        break;
+      }
+      case 'star': {
+        const spikes = 8;
+        const outerRadius = r;
+        const innerRadius = r * 0.65;
+        let rot = (Math.PI / 2) * 3;
+        const step = Math.PI / spikes;
+
+        ctx.moveTo(ox, oy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+          let x = ox + Math.cos(rot) * outerRadius;
+          let y = oy + Math.sin(rot) * outerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+
+          x = ox + Math.cos(rot) * innerRadius;
+          y = oy + Math.sin(rot) * innerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+        }
+        ctx.lineTo(ox, oy - outerRadius);
+        ctx.closePath();
+        break;
+      }
+      case 'circle':
+      default: {
+        ctx.arc(ox, oy, r, 0, Math.PI * 2);
+        break;
+      }
+    }
+  }
+
+  private drawGemInnerFacets(ctx: CanvasRenderingContext2D, tierDef: GemDef, r: number): void {
+    ctx.save();
+    ctx.strokeStyle = tierDef.facetsColor;
+    ctx.fillStyle = tierDef.secondaryColor;
+    ctx.lineWidth = 1.5;
+
+    // Center facet table
+    const tableR = r * 0.55;
+    this.drawFacetPath(ctx, tierDef.shape, tableR, 0, 0);
+    ctx.fill();
+    ctx.stroke();
+
+    // Crease radiating lines from center table to outer corners
+    if (tierDef.shape === 'hexagon') {
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI) / 3;
+        ctx.beginPath();
+        ctx.moveTo(tableR * Math.cos(angle), tableR * Math.sin(angle));
+        ctx.lineTo(r * Math.cos(angle), r * Math.sin(angle));
+        ctx.stroke();
+      }
+    } else if (tierDef.shape === 'diamond') {
+      ctx.beginPath();
+      ctx.moveTo(0, -tableR);
+      ctx.lineTo(0, -r);
+      ctx.moveTo(tableR * 0.9, 0);
+      ctx.lineTo(r * 0.9, 0);
+      ctx.moveTo(0, tableR);
+      ctx.lineTo(0, r);
+      ctx.moveTo(-tableR * 0.9, 0);
+      ctx.lineTo(-r * 0.9, 0);
+      ctx.stroke();
+    } else if (tierDef.shape === 'octagon') {
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI) / 4 + Math.PI / 8;
+        ctx.beginPath();
+        ctx.moveTo(tableR * Math.cos(angle), tableR * Math.sin(angle));
+        ctx.lineTo(r * Math.cos(angle), r * Math.sin(angle));
+        ctx.stroke();
+      }
+    }
     ctx.restore();
   }
 
@@ -265,7 +377,7 @@ export class PotionRenderer {
     ctx.stroke();
 
     // Floating potion preview
-    const previewPotion: PotionBody = {
+    const previewPotion: GemBody = {
       id: 0,
       tier: currentTier,
       x,
@@ -276,6 +388,8 @@ export class PotionRenderer {
       settled: false,
       markedForRemoval: false,
       spawnAnimation: engine.canDrop ? 1 : 0.4,
+      rotation: 0,
+      vRot: 0,
     };
     this.renderPotion(ctx, previewPotion);
 

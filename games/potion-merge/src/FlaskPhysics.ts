@@ -1,6 +1,6 @@
-import { POTION_TIERS } from './GameState.js';
+import { GEM_TIERS, type GemDef } from './GameState.js';
 
-export interface PotionBody {
+export interface GemBody {
   id: number;
   tier: number;
   x: number;
@@ -11,25 +11,29 @@ export interface PotionBody {
   settled: boolean;
   markedForRemoval: boolean;
   spawnAnimation: number; // 0..1 scale
+  rotation: number;
+  vRot: number;
 }
 
+export type PotionBody = GemBody; // Alias for test/caller compatibility
+
 export class FlaskPhysics {
-  public potions: PotionBody[] = [];
+  public potions: GemBody[] = [];
   public gravity: number = 980; // px/s^2
-  public restitution: number = 0.2; // slight paper bounciness
+  public restitution: number = 0.25; // gem facet bounce
   public friction: number = 0.98; // linear air/ground drag
   private nextId: number = 1;
 
-  // Flask vessel bounding box
+  // Vault vessel bounding box
   public readonly flaskLeft: number = 220;
   public readonly flaskRight: number = 580;
   public readonly flaskBottom: number = 550;
   public readonly dangerCeilingY: number = 140;
 
-  public addPotion(x: number, y: number, tier: number, vx: number = 0, vy: number = 0): PotionBody {
-    const tierDef = POTION_TIERS[tier - 1] || POTION_TIERS[POTION_TIERS.length - 1];
+  public addPotion(x: number, y: number, tier: number, vx: number = 0, vy: number = 0): GemBody {
+    const tierDef: GemDef = GEM_TIERS[tier - 1] || GEM_TIERS[GEM_TIERS.length - 1];
     const clampedX = Math.max(this.flaskLeft + tierDef.radius, Math.min(this.flaskRight - tierDef.radius, x));
-    const potion: PotionBody = {
+    const gem: GemBody = {
       id: this.nextId++,
       tier,
       x: clampedX,
@@ -40,9 +44,11 @@ export class FlaskPhysics {
       settled: false,
       markedForRemoval: false,
       spawnAnimation: 0.2,
+      rotation: Math.random() * Math.PI * 2,
+      vRot: (Math.random() - 0.5) * 2,
     };
-    this.potions.push(potion);
-    return potion;
+    this.potions.push(gem);
+    return gem;
   }
 
   public update(dt: number): { mergedTier: number; x: number; y: number }[] {
@@ -63,9 +69,12 @@ export class FlaskPhysics {
         p.vx *= Math.pow(this.friction, subDt * 60);
         p.vy *= Math.pow(this.friction, subDt * 60);
 
-        // Update positions
+        // Update positions & rotation
         p.x += p.vx * subDt;
         p.y += p.vy * subDt;
+        if (p.vRot) {
+          p.rotation = (p.rotation || 0) + p.vRot * subDt;
+        }
 
         // Boundary constraints
         if (p.x - p.radius < this.flaskLeft) {
@@ -104,7 +113,7 @@ export class FlaskPhysics {
             const dist = Math.sqrt(distSq) || 0.001;
 
             // Check merge condition: same tier, not max tier
-            if (p1.tier === p2.tier && p1.tier < POTION_TIERS.length) {
+            if (p1.tier === p2.tier && p1.tier < GEM_TIERS.length) {
               p1.markedForRemoval = true;
               p2.markedForRemoval = true;
 

@@ -321,16 +321,16 @@ export const GAMES: GameItem[] = [
   },
   {
     id: 'potion-merge',
-    title: 'Potion Merge',
-    genre: 'Physics Merge / Alchemy',
-    description: 'Suika-style alchemical flask drop-and-merge. Drop bubbly papercraft potions, merge matching tiers to craft grand cosmic elixirs.',
+    title: 'Gem Merge',
+    genre: 'Physics Merge / Jewels',
+    description: 'Suika-style alchemical gem vault drop-and-merge. Drop sparkling papercraft faceted gems, merge matching crystals to craft the Grand Diamond Crown.',
     badge: 'New',
     rating: '4.9 ★',
     plays: '95K plays',
-    icon: '🧪',
+    icon: '💎',
     themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['11-Tier Potion Crafting', 'Elastic Collision Physics', 'Dropper Aiming & Sparkle Merges']
+    features: ['11-Tier Gem Crystal Crafting', 'Elastic Faceted Collision Physics', 'Dropper Aiming & Sparkle Merges']
   },
   {
     id: 'mahjong-paper',

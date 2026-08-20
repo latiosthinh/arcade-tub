@@ -1,14 +1,20 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { FlaskPhysics } from '../src/FlaskPhysics';
-import { GameState, POTION_TIERS } from '../src/GameState';
+import { GameState, GEM_TIERS } from '../src/GameState';
 import { PotionMergeEngine } from '../src/PotionMergeEngine';
 
-describe('Potion Merge Mechanics', () => {
+describe('Gem Merge Mechanics', () => {
   describe('GameState', () => {
     let state: GameState;
 
     beforeEach(() => {
       state = new GameState();
+    });
+
+    it('has 11 distinct faceted gem tiers', () => {
+      expect(GEM_TIERS.length).toBe(11);
+      expect(GEM_TIERS[0].name).toBe('Quartz Shard');
+      expect(GEM_TIERS[10].name).toBe('Grand Diamond Crown');
     });
 
     it('initializes in ready state with base values', () => {
@@ -30,7 +36,7 @@ describe('Potion Merge Mechanics', () => {
       state.start();
       // 1-2 merges -> 1x multiplier
       const pts1 = state.recordMerge(2);
-      expect(pts1).toBe(POTION_TIERS[1].points * 1);
+      expect(pts1).toBe(GEM_TIERS[1].points * 1);
       expect(state.multiplier).toBe(1);
 
       // 3 merges -> 2x multiplier
