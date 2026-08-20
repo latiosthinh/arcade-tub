@@ -99,6 +99,11 @@ export class GameView extends BaseComponent<AppState> {
           <div class="ac-skeleton-spinner"></div>
           <div class="ac-skeleton-text">INITIALIZING ${game.title.toUpperCase()}...</div>
         </div>
+        <!-- Orientation Hint Banner for Mobile Portrait -->
+        <div class="ac-rotate-device-hint">
+          <span class="ac-rotate-icon">🔄</span>
+          <span class="ac-rotate-text">Rotate device to landscape for full screen experience</span>
+        </div>
         <iframe
           class="ac-game-frame"
           src="/games/${game.id}/index.html"
@@ -150,12 +155,17 @@ export class GameView extends BaseComponent<AppState> {
     });
     this.unbinds.push(unsubStore);
 
-    // Back navigation button
+    // Back navigation button (returns to previous category or root)
     const backBtn = this.element.querySelector('.ac-btn-back');
     if (backBtn) {
       this.addListener(backBtn, 'click', () => {
         uiAudio.playTransition();
-        window.location.hash = '#/';
+        const activeCat = this.store.getState().activeFilter;
+        if (activeCat && activeCat !== 'all') {
+          window.location.hash = `#/category/${activeCat}`;
+        } else {
+          window.location.hash = '#/';
+        }
       });
     }
 
@@ -231,7 +241,12 @@ export class GameView extends BaseComponent<AppState> {
         }
       } else if (data.type === 'close') {
         uiAudio.playTransition();
-        window.location.hash = '#/';
+        const activeCat = this.store.getState().activeFilter;
+        if (activeCat && activeCat !== 'all') {
+          window.location.hash = `#/category/${activeCat}`;
+        } else {
+          window.location.hash = '#/';
+        }
       }
     };
     this.addListener(window, 'message', onMessage);
@@ -247,7 +262,12 @@ export class GameView extends BaseComponent<AppState> {
           return;
         }
         uiAudio.playTransition();
-        window.location.hash = '#/';
+        const activeCat = this.store.getState().activeFilter;
+        if (activeCat && activeCat !== 'all') {
+          window.location.hash = `#/category/${activeCat}`;
+        } else {
+          window.location.hash = '#/';
+        }
       } else if (e.key === 't' || e.key === 'T' || e.code === 'KeyT') {
         uiAudio.playClick();
         this.toggleTheater();

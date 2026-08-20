@@ -451,7 +451,54 @@
   }
 }
 
-/* Floating Exit Button for Mobile Fullscreen Theater */
+/* Mobile Rotate Device Hint Notification */
+.ac-rotate-device-hint {
+  display: none;
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(43, 33, 24, 0.88);
+  border: 1.5px solid #F59E0B;
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  gap: 8px;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  animation: ac-pulse-subtle 2s infinite ease-in-out;
+}
+
+.ac-rotate-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.ac-rotate-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: #FFFDF8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@keyframes ac-pulse-subtle {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.95; }
+  50% { transform: translateX(-50%) scale(1.03); opacity: 1; }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .ac-player-view.is-theater .ac-rotate-device-hint {
+    display: flex;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .ac-player-view.is-theater .ac-rotate-device-hint {
+    display: none !important;
+  }
+}
 .ac-floating-exit-theater {
   display: none;
   position: fixed;
