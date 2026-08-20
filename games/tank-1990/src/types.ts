@@ -176,4 +176,105 @@ export interface CombatTankTarget {
   takeDamage: (damage: number) => boolean;
 }
 
+export enum EnemyType {
+  BASIC = 'BASIC',
+  FAST = 'FAST',
+  POWER = 'POWER',
+  ARMOR = 'ARMOR',
+}
+
+export type ArmorColor = 'GREEN' | 'YELLOW' | 'ORANGE' | 'WHITE';
+
+export interface EnemyConfig {
+  speed: number;
+  bulletSpeed: number;
+  maxBullets: number;
+  hp: number;
+  points: number;
+}
+
+export const ENEMY_CONFIGS: Record<EnemyType, EnemyConfig> = {
+  [EnemyType.BASIC]: {
+    speed: 48,
+    bulletSpeed: 160,
+    maxBullets: 1,
+    hp: 1,
+    points: 100,
+  },
+  [EnemyType.FAST]: {
+    speed: 96,
+    bulletSpeed: 192,
+    maxBullets: 1,
+    hp: 1,
+    points: 200,
+  },
+  [EnemyType.POWER]: {
+    speed: 64,
+    bulletSpeed: 280,
+    maxBullets: 1,
+    hp: 1,
+    points: 300,
+  },
+  [EnemyType.ARMOR]: {
+    speed: 48,
+    bulletSpeed: 160,
+    maxBullets: 1,
+    hp: 4,
+    points: 400,
+  },
+};
+
+export enum PowerUpType {
+  STAR = 'STAR',
+  SHOVEL = 'SHOVEL',
+  GRENADE = 'GRENADE',
+  CLOCK = 'CLOCK',
+  HELMET = 'HELMET',
+  TANK = 'TANK',
+  GUN = 'GUN',
+  BOAT = 'BOAT',
+}
+
+export interface PowerUpItem {
+  id: number;
+  type: PowerUpType;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  alive: boolean;
+  duration?: number;
+  flashTimer?: number;
+}
+
+export interface SpawnPortal {
+  id: number;
+  col: number;
+  row: number;
+  x: number;
+  y: number;
+}
+
+export const SPAWN_PORTALS: SpawnPortal[] = [
+  { id: 0, col: 0, row: 0, x: 0, y: 0 },
+  { id: 1, col: 12, row: 0, x: 192, y: 0 },
+  { id: 2, col: 24, row: 0, x: 384, y: 0 },
+];
+
+export interface EnemyTankState {
+  id: string | number;
+  type: EnemyType;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  direction: CardinalDirection;
+  hp: number;
+  maxHp: number;
+  armorColor?: ArmorColor;
+  isFlashing: boolean;
+  isFrozen: boolean;
+  isDead: boolean;
+}
+
 
