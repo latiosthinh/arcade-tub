@@ -23,7 +23,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
-| 49. Player Tank Kinematics & Upgrade Tiers | 0/2 | Not started | - |
+| 49. Player Tank Kinematics & Upgrade Tiers | 1/2 | In progress | - |
 | 50. Ballistics System & Combat Collisions | 0/2 | Not started | - |
 | 51. Enemy AI, Wave Spawner & Powerups | 0/2 | Not started | - |
 | 52. Game Flow, State Machine & Tally HUD | 0/2 | Not started | - |
@@ -62,7 +62,7 @@ Plans:
   4. System tracks player lives counter, awards extra lives, and cycles through player death and respawn.
 **Plans**: 2 plans
 Plans:
-- [ ] 49-01-PLAN.md — PlayerTank core class, 4-way kinematics, corner snapping, ice sliding drift, upgrade tiers, shield timer, and lives management
+- [x] 49-01-PLAN.md — PlayerTank core class, 4-way kinematics, corner snapping, ice sliding drift, upgrade tiers, shield timer, and lives management
 - [ ] 49-02-PLAN.md — Comprehensive Vitest unit test suite covering kinematics, corner snapping, ice drift, upgrade progression, shield expiration, and respawn cycle
 
 ### Phase 50: Ballistics System & Combat Collisions
