@@ -157,9 +157,9 @@ export class BubbleGrid {
 
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
-        const cell = this.cells[r][c];
-        if (cell.popped) popped++;
-        if (cell.isGolden) goldenCount++;
+        const cell = this.cells[r]?.[c];
+        if (cell?.popped) popped++;
+        if (cell?.isGolden) goldenCount++;
       }
     }
 
