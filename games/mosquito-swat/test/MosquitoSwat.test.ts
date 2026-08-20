@@ -6,6 +6,7 @@ describe('MosquitoSwarm', () => {
 
   beforeEach(() => {
     swarm = new MosquitoSwarm(800, 600);
+    swarm.mosquitoes = []; // clear initial swarm for isolated unit tests
   });
 
   it('spawns initial mosquitoes with types and bounds', () => {

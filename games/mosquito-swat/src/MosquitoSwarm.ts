@@ -48,6 +48,13 @@ export class MosquitoSwarm {
   constructor(width: number = 800, height: number = 600) {
     this.width = width;
     this.height = height;
+
+    // Spawn rich initial swarm
+    for (let i = 0; i < 16; i++) {
+      const roll = Math.random();
+      const type: MosquitoType = roll < 0.5 ? 'standard' : roll < 0.8 ? 'speedy' : 'giant';
+      this.spawnMosquito(type);
+    }
   }
 
   public spawnMosquito(
@@ -117,11 +124,14 @@ export class MosquitoSwarm {
     }
 
     this.spawnTimer += dt;
-    if (this.spawnTimer > 1.2 && this.mosquitoes.length < 25) {
+    if (this.spawnTimer > 0.5 && this.mosquitoes.length < 35) {
       this.spawnTimer = 0;
-      const roll = Math.random();
-      const type: MosquitoType = roll < 0.6 ? 'standard' : roll < 0.85 ? 'speedy' : 'giant';
-      this.spawnMosquito(type);
+      const count = Math.floor(Math.random() * 2) + 1;
+      for (let i = 0; i < count; i++) {
+        const roll = Math.random();
+        const type: MosquitoType = roll < 0.55 ? 'standard' : roll < 0.85 ? 'speedy' : 'giant';
+        this.spawnMosquito(type);
+      }
     }
 
     for (const m of this.mosquitoes) {

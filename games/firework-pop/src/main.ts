@@ -1,15 +1,22 @@
 import { GameLoop } from '@arcade-carnival/game-engine';
+import { initPlayables, onPause, onResume } from '@arcade-carnival/playables-adapter';
 import { FireworkScene } from './FireworkScene.js';
 
-window.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
-  if (!canvas) {
-    throw new Error('Canvas element #game-canvas not found');
-  }
+initPlayables();
 
+const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
+if (canvas) {
+  const loop = new GameLoop(canvas, 800, 600);
   const scene = new FireworkScene(canvas);
   scene.init();
 
-  const loop = new GameLoop(scene);
+  onPause(() => {
+    // optional pause
+  });
+  onResume(() => {
+    // optional resume
+  });
+
+  loop.setScene(scene);
   loop.start();
-});
+}

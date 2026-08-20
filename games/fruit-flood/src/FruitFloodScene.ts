@@ -14,7 +14,7 @@ export interface FloatingText {
   scale: number;
 }
 
-export class FruitFloodScene extends GameScene {
+export class FruitFloodScene implements GameScene {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private physics: FruitPhysics;
@@ -24,13 +24,12 @@ export class FruitFloodScene extends GameScene {
   private score: number = 0;
   private highScore: number = 0;
   private spawnTimer: number = 0;
-  private spawnInterval: number = 0.8; // scales down with flood intensity
+  private spawnInterval: number = 0.6; // flood intensity
   private gameTime: number = 0;
   private isPaused: boolean = false;
   private floatingTexts: FloatingText[] = [];
 
   constructor(canvas: HTMLCanvasElement) {
-    super();
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
     this.physics = new FruitPhysics(canvas.width, canvas.height);
@@ -182,58 +181,58 @@ export class FruitFloodScene extends GameScene {
     }
   }
 
-  public render(): void {
-    const ctx = this.ctx;
+  public render(ctx?: CanvasRenderingContext2D): void {
+    const renderCtx = ctx || this.ctx;
     const w = this.canvas.width;
     const h = this.canvas.height;
 
     // Background kraft paper wash
-    ctx.fillStyle = '#FAF6EE';
-    ctx.fillRect(0, 0, w, h);
+    renderCtx.fillStyle = '#FAF6EE';
+    renderCtx.fillRect(0, 0, w, h);
 
     // Decorative wood-cutting board boundary border
-    ctx.strokeStyle = '#2B2118';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(10, 10, w - 20, h - 20);
+    renderCtx.strokeStyle = '#2B2118';
+    renderCtx.lineWidth = 4;
+    renderCtx.strokeRect(10, 10, w - 20, h - 20);
 
     // Render juice particles
     for (const p of this.physics.particles) {
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, Math.max(1, p.radius * (p.life / p.maxLife)), 0, Math.PI * 2);
-      ctx.fill();
+      renderCtx.fillStyle = p.color;
+      renderCtx.beginPath();
+      renderCtx.arc(p.x, p.y, Math.max(1, p.radius * (p.life / p.maxLife)), 0, Math.PI * 2);
+      renderCtx.fill();
     }
 
     // Render fruit halves
     for (const half of this.physics.fruitHalves) {
-      this.renderFruitHalf(ctx, half);
+      this.renderFruitHalf(renderCtx, half);
     }
 
     // Render whole active fruits
     for (const fruit of this.physics.fruits) {
-      this.renderFruit(ctx, fruit);
+      this.renderFruit(renderCtx, fruit);
     }
 
     // Render blade slice trail
-    this.renderBladeTrail(ctx);
+    this.renderBladeTrail(renderCtx);
 
     // Render floating texts
     for (const ft of this.floatingTexts) {
       const alpha = Math.max(0, ft.life / ft.maxLife);
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.font = `bold ${Math.round(20 * ft.scale)}px 'Cabin Sketch', cursive, sans-serif`;
-      ctx.fillStyle = ft.color;
-      ctx.strokeStyle = '#2B2118';
-      ctx.lineWidth = 3;
-      ctx.textAlign = 'center';
-      ctx.strokeText(ft.text, ft.x, ft.y);
-      ctx.fillText(ft.text, ft.x, ft.y);
-      ctx.restore();
+      renderCtx.save();
+      renderCtx.globalAlpha = alpha;
+      renderCtx.font = `bold ${Math.round(20 * ft.scale)}px 'Cabin Sketch', cursive, sans-serif`;
+      renderCtx.fillStyle = ft.color;
+      renderCtx.strokeStyle = '#2B2118';
+      renderCtx.lineWidth = 3;
+      renderCtx.textAlign = 'center';
+      renderCtx.strokeText(ft.text, ft.x, ft.y);
+      renderCtx.fillText(ft.text, ft.x, ft.y);
+      renderCtx.restore();
     }
 
     // Render UI overlay (Score & Highscore)
-    this.renderUI(ctx, w);
+    this.renderUI(renderCtx, w);
   }
 
   private renderFruit(ctx: CanvasRenderingContext2D, f: FruitItem): void {
