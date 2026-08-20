@@ -13,9 +13,11 @@ Plans:
 - [x] 43-02-PLAN.md — Multi-shape Pop-It silicone fidget boards, 2-way dimple physics, 3D flip animation, and unit tests
 
 ### Phase 44: Soap Carver & Hydraulic Press (`games/soap-carve/`, `games/hydraulic-crush/`)
-- `soap-carve`: Layered soap shaving cutter with curly peel particles, carving depth progression, and hidden figurine discovery.
-- `hydraulic-crush`: Downward hydraulic piston mechanics, squash accordion deformation, squishy splatter physics.
-- Unit tests for shaving depth grids, piston pressure math, and deformation states.
+**Plans:** 2 plans
+
+Plans:
+- [x] 44-01-PLAN.md — Soap Carver depth grid, drag slice cutter, curling ribbon particles, figurine discovery, and unit tests
+- [ ] 44-02-PLAN.md — Hydraulic Press piston mechanics, accordion squash deformation, splatter physics, item roster, and unit tests
 
 ### Phase 45: Sand Zen & Color Water Sort (`games/sand-zen/`, `games/liquid-sort/`)
 - `sand-zen`: Granular sand falling particle simulator, sand hopper dispenser, rake dragging, and dune repose.
