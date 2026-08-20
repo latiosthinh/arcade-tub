@@ -22,22 +22,42 @@ describe('Square Bird Core Mechanics', () => {
 
     it('lifts bird and shifts stack when laying eggs', () => {
       const egg1 = bird.layEgg();
+      expect(egg1).not.toBeNull();
       expect(bird.eggs.length).toBe(1);
       expect(bird.y).toBe(groundY - 72);
-      expect(egg1.y).toBe(groundY - 36);
+      expect(egg1?.y).toBe(groundY - 36);
       expect(bird.getTotalHeight()).toBe(72);
       expect(bird.getBottomY()).toBe(groundY);
 
+      bird.eggCooldownTimer = 0;
       const egg2 = bird.layEgg();
+      expect(egg2).not.toBeNull();
       expect(bird.eggs.length).toBe(2);
       expect(bird.y).toBe(groundY - 108);
       expect(bird.getTotalHeight()).toBe(108);
       expect(bird.getBottomY()).toBe(groundY);
     });
 
+    it('enforces max egg stack and anti-spam limits', () => {
+      for (let i = 0; i < 7; i++) {
+        bird.eggCooldownTimer = 0;
+        const egg = bird.layEgg();
+        expect(egg).not.toBeNull();
+      }
+      expect(bird.eggs.length).toBe(7);
+
+      // Attempt 8th egg -> rejected by max stack limit
+      bird.eggCooldownTimer = 0;
+      const overflowEgg = bird.layEgg();
+      expect(overflowEgg).toBeNull();
+      expect(bird.eggs.length).toBe(7);
+    });
+
     it('removes bottom eggs correctly when obstacle trims stack', () => {
       bird.layEgg();
+      bird.eggCooldownTimer = 0;
       bird.layEgg();
+      bird.eggCooldownTimer = 0;
       bird.layEgg();
       expect(bird.eggs.length).toBe(3);
 
@@ -55,8 +75,9 @@ describe('Square Bird Core Mechanics', () => {
 
     it('tracks egg block lifetime and expires after duration', () => {
       const egg = bird.layEgg(3.0);
-      expect(egg.lifeTime).toBe(3.0);
-      expect(egg.maxLifeTime).toBe(3.0);
+      expect(egg).not.toBeNull();
+      expect(egg?.lifeTime).toBe(3.0);
+      expect(egg?.maxLifeTime).toBe(3.0);
 
       const expiredEggs: any[] = [];
       bird.onEggExpire = (e) => expiredEggs.push(e);
@@ -71,19 +92,20 @@ describe('Square Bird Core Mechanics', () => {
       bird.update(1.6, groundY);
       expect(bird.eggs.length).toBe(0);
       expect(expiredEggs.length).toBe(1);
-      expect(expiredEggs[0].id).toBe(egg.id);
+      expect(expiredEggs[0].id).toBe(egg?.id);
       expect(bird.y).toBe(groundY - 36); // Bird fell back to ground
     });
 
     it('handles multiple eggs expiring at different times and settles stack', () => {
       const egg1 = bird.layEgg(2.0); // bottom egg
+      bird.eggCooldownTimer = 0;
       const egg2 = bird.layEgg(4.0); // top egg under bird
       expect(bird.eggs.length).toBe(2);
 
       // Advance 2.5s -> egg1 expired, egg2 remains
       bird.update(2.5, groundY);
       expect(bird.eggs.length).toBe(1);
-      expect(bird.eggs[0].id).toBe(egg2.id);
+      expect(bird.eggs[0].id).toBe(egg2?.id);
       // Bird and egg2 should fall to ground
       expect(bird.getBottomY()).toBe(groundY);
       expect(bird.y).toBe(groundY - 72);
@@ -197,7 +219,9 @@ describe('Square Bird Core Mechanics', () => {
 
     it('shaves eggs safely when obstacle height matches stack', () => {
       // Lay 2 eggs to clear a 2-block obstacle
+      state.bird.eggCooldownTimer = 0;
       state.layEgg();
+      state.bird.eggCooldownTimer = 0;
       state.layEgg();
 
       state.obstacles = [{

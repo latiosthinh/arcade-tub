@@ -80,7 +80,6 @@ export class GameView extends BaseComponent<AppState> {
         <div class="ac-skeleton-loader">
           <div class="ac-skeleton-spinner"></div>
           <div class="ac-skeleton-text">INITIALIZING ${game.title.toUpperCase()}...</div>
-          <div class="ac-skeleton-hint">Press Escape anytime to return to catalog</div>
         </div>
         <iframe
           class="ac-game-frame"

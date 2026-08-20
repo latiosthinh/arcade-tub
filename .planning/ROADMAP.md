@@ -50,6 +50,14 @@ Expand catalog from 15 to 27 games by replicating the top 12 minigames from Craz
 - Verify HTML shells, responsive scaling, and run bundle audit.
 - Full test suite run (100% pass target, 806/806 tests passing).
 
+### Phase 41: Square Bird Timed Blocks & Infinity Mode (`games/square-bird/`)
+- Block expiration mechanics: egg blocks decay after a set duration (3s) and dissolve with crumble particle effects and audio.
+- Infinite survival mode: dynamic procedural obstacle streaming ahead of player and separate infinite high score tracking.
+- Interactive mode selection overlay on ready screen (Levels vs Infinite Mode).
+- **Plans:** 2 plans
+- [ ] 41-01-PLAN.md — Timed block decay physics, obstacle streaming generator, infinite mode state & unit tests
+- [ ] 41-02-PLAN.md — Block cracking animations, expiration particles/audio, ready overlay mode selector & HUD
+
 ---
 
 ## Completed Milestones

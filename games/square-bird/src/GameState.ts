@@ -125,6 +125,8 @@ export class GameState {
     if (this.isFever) return false; // In fever mode, eggs not needed
 
     const egg = this.bird.layEgg();
+    if (!egg) return false; // Stack limit or ceiling reached
+
     this.score += 5;
     this.checkHighScore();
 

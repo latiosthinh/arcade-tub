@@ -304,6 +304,13 @@ export class BirdRenderer {
       ctx.fillText(`STAGE ${state.currentLevel}`, 24, 46);
     }
 
+    // Stack Count Indicator
+    const stackLen = state.bird.eggs.length;
+    const maxStack = state.bird.config.maxEggStack;
+    ctx.font = 'bold 12px "Comfortaa", sans-serif';
+    ctx.fillStyle = stackLen >= maxStack ? '#D63031' : '#636E72';
+    ctx.fillText(`STACK: ${stackLen}/${maxStack}`, 24, 68);
+
     // Progress Bar (Levels Mode) or Distance Indicator (Infinite Mode)
     const barWidth = 220;
     const barHeight = 14;

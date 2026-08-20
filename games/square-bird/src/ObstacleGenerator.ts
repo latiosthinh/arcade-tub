@@ -78,6 +78,24 @@ export class ObstacleGenerator {
         perfectEvaluated: false
       });
 
+      // Periodic high ceiling obstacle / overhead gate that punishes over-stacking
+      if (nextRandom() > 0.65 && blockCount <= 2) {
+        const ceilingClearance = 3 * this.config.blockSize; // 3 blocks clearance
+        const ceilingHeight = this.config.defaultGroundY - (height + ceilingClearance);
+        if (ceilingHeight > 50) {
+          this.obstacles.push({
+            id: this.nextId++,
+            x: currentX + obstacleWidth * 0.5,
+            width: obstacleWidth * 0.8,
+            height: ceilingHeight,
+            groundY: ceilingHeight, // Starts from top down
+            blockHeightCount: Math.ceil(ceilingHeight / this.config.blockSize),
+            passed: false,
+            perfectEvaluated: false
+          });
+        }
+      }
+
       const gap = this.config.minGap + nextRandom() * (this.config.maxGap - this.config.minGap);
       currentX += obstacleWidth + gap;
     }
@@ -122,6 +140,26 @@ export class ObstacleGenerator {
 
       this.obstacles.push(newObs);
       newlyCreated.push(newObs);
+
+      // In infinite mode, spawn ceiling barrier hazards if blockCount is low to prevent infinite sky flying
+      if (Math.random() > 0.6 && blockCount <= 2) {
+        const ceilingClearance = 3 * this.config.blockSize;
+        const ceilingHeight = this.config.defaultGroundY - (height + ceilingClearance);
+        if (ceilingHeight > 50) {
+          const ceilingObs: Obstacle = {
+            id: this.nextId++,
+            x: this.furthestGeneratedX + obstacleWidth * 0.4,
+            width: obstacleWidth * 0.8,
+            height: ceilingHeight,
+            groundY: ceilingHeight,
+            blockHeightCount: Math.ceil(ceilingHeight / this.config.blockSize),
+            passed: false,
+            perfectEvaluated: false
+          };
+          this.obstacles.push(ceilingObs);
+          newlyCreated.push(ceilingObs);
+        }
+      }
 
       // Adaptive gap distance: 200 - 380px, slightly tighter with high difficulty
       const minG = Math.max(200, this.config.minGap - Math.min(60, difficultyLevel * 8));

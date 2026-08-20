@@ -5,6 +5,8 @@ export interface BirdConfig {
   feverSpeed: number;
   gravity: number;
   eggDuration: number;
+  maxEggStack: number;
+  eggCooldown: number;
 }
 
 export interface EggBlock {
@@ -23,6 +25,7 @@ export class BirdPhysics {
   public config: BirdConfig;
   public eggs: EggBlock[];
   public onEggExpire?: (egg: EggBlock) => void;
+  public eggCooldownTimer: number = 0;
   private nextEggId: number;
 
   constructor(customConfig: Partial<BirdConfig> = {}) {
@@ -32,7 +35,9 @@ export class BirdPhysics {
       runSpeed: 280,
       feverSpeed: 520,
       gravity: 1200,
-      eggDuration: 3.0,
+      eggDuration: 2.2,
+      maxEggStack: 7, // Limit maximum egg stack height to prevent soaring over entire course
+      eggCooldown: 0.08, // Minimum interval between successive egg lays (anti-spam)
       ...customConfig
     };
     this.x = this.config.x;
@@ -40,6 +45,7 @@ export class BirdPhysics {
     this.y = 0;
     this.vy = 0;
     this.eggs = [];
+    this.eggCooldownTimer = 0;
     this.nextEggId = 1;
   }
 
@@ -49,7 +55,19 @@ export class BirdPhysics {
     this.y = groundY - this.size;
     this.vy = 0;
     this.eggs = [];
+    this.eggCooldownTimer = 0;
     this.nextEggId = 1;
+  }
+
+  /**
+   * Can lay egg check (stack height limit, cooldown, ceiling clearance)
+   */
+  public canLayEgg(): boolean {
+    if (this.eggCooldownTimer > 0) return false;
+    if (this.eggs.length >= this.config.maxEggStack) return false;
+    // Don't allow stacking beyond top ceiling (y <= 40)
+    if (this.y - this.size < 40) return false;
+    return true;
   }
 
   /**
@@ -57,7 +75,13 @@ export class BirdPhysics {
    * Lifts bird and any existing stack upwards by block size.
    * The new block sits at the base of the bird (or bottom of stack).
    */
-  public layEgg(customDuration?: number): EggBlock {
+  public layEgg(customDuration?: number): EggBlock | null {
+    if (!this.canLayEgg()) {
+      return null;
+    }
+
+    this.eggCooldownTimer = this.config.eggCooldown;
+
     // Lift bird upward
     this.y -= this.size;
     this.vy = 0;
@@ -107,6 +131,10 @@ export class BirdPhysics {
    * Update bird falling physics onto ground or platform and decay egg block timers
    */
   public update(dt: number, groundY: number): void {
+    if (this.eggCooldownTimer > 0) {
+      this.eggCooldownTimer = Math.max(0, this.eggCooldownTimer - dt);
+    }
+
     // 1. Decay egg block timers and handle expiration
     if (this.eggs.length > 0) {
       const survivingEggs: EggBlock[] = [];

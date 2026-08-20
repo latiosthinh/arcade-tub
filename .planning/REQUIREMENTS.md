@@ -28,3 +28,7 @@ Replicate and adapt the top 12 popular minigames from CrazyGames (`https://www.c
 - **REQ-614 [SVG Card Previews]**: Create 12 authentic 2D Papercraft SVG screenshot illustrations in `src/data/screenshots.ts`.
 - **REQ-615 [Genre Filters & Shells]**: Update genre tags and verify responsive standalone HTML shells for all 12 new games.
 - **REQ-616 [Test Coverage & Build]**: Maintain 100% test pass rate across all new game logic and pass bundle size audit (< 250KB gzipped).
+
+### Wave 5: Game Mechanic Polish (Phase 41)
+- **REQ-617 [Square Bird Timed Blocks]**: Egg blocks have limited lifetime (3.0s), showing visual cracking wear, then expire and trigger crumble particles + gravity fall.
+- **REQ-618 [Square Bird Infinity Mode]**: Endless procedural obstacle streaming, game mode toggle (Levels vs Infinite), and persistent high score tracking.
