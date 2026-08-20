@@ -370,8 +370,8 @@ export interface RenderSceneData {
 }
 
 export const ARENA_SIZE = 416;
-export const TOTAL_CANVAS_WIDTH = 512;
-export const TOTAL_CANVAS_HEIGHT = 448;
+export const TOTAL_CANVAS_WIDTH = 480;
+export const TOTAL_CANVAS_HEIGHT = 416;
 
 export interface TouchControlState {
   direction: CardinalDirection | null;

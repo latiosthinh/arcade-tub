@@ -243,8 +243,6 @@ function update(dt: number): void {
       bulletManager.fire(
         playerTank.x,
         playerTank.y,
-        playerTank.width,
-        playerTank.height,
         playerTank.direction,
         'PLAYER',
         {
@@ -252,7 +250,8 @@ function update(dt: number): void {
           canDestroySteel: stats.canDestroySteel,
           canCutTrees: stats.canCutTrees,
           damage: 1,
-        }
+        },
+        playerTank.width
       );
       tankAudio.playPlayerFire();
     }
@@ -265,8 +264,6 @@ function update(dt: number): void {
       bulletManager.fire(
         enemyTank.x,
         enemyTank.y,
-        enemyTank.width,
-        enemyTank.height,
         enemyTank.direction,
         'ENEMY',
         {
@@ -274,7 +271,8 @@ function update(dt: number): void {
           canDestroySteel: false,
           canCutTrees: false,
           damage: 1,
-        }
+        },
+        enemyTank.width
       );
       tankAudio.playEnemyFire();
     }

@@ -521,13 +521,15 @@ export class TankRenderer {
     width: number,
     height: number,
     direction: CardinalDirection,
-    colors: { body: string; dark: string; light: string; accent: string },
+    colors: { body: string; dark: string; light: string; accent: string } | undefined,
     recoilTimer: number = 0,
     boatActive: boolean = false
   ): void {
     ctx.save();
     const cx = x + width / 2;
     const cy = y + height / 2;
+
+    const tankColors = colors || TIER_COLORS[TankTier.TIER_1];
 
     // Cardboard Drop Shadow
     if (this.config.enableShadows) {
@@ -589,17 +591,17 @@ export class TankRenderer {
     // 2. Tank Main Hull
     const hullW = w - treadWidth * 2 - 2;
     const hullH = h - 4;
-    ctx.fillStyle = colors.body;
+    ctx.fillStyle = tankColors.body;
     ctx.fillRect(-hullW / 2, -hullH / 2, hullW, hullH);
 
     // Cardboard bevel highlight & shadow
-    ctx.fillStyle = colors.light;
+    ctx.fillStyle = tankColors.light;
     ctx.fillRect(-hullW / 2, -hullH / 2, hullW, 1.5);
-    ctx.fillStyle = colors.dark;
+    ctx.fillStyle = tankColors.dark;
     ctx.fillRect(-hullW / 2, hullH / 2 - 1.5, hullW, 1.5);
 
     // Rivet dots on hull corners
-    ctx.fillStyle = colors.dark;
+    ctx.fillStyle = tankColors.dark;
     ctx.fillRect(-hullW / 2 + 2, -hullH / 2 + 2, 2, 2);
     ctx.fillRect(hullW / 2 - 4, -hullH / 2 + 2, 2, 2);
     ctx.fillRect(-hullW / 2 + 2, hullH / 2 - 4, 2, 2);
