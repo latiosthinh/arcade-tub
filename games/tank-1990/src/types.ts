@@ -321,5 +321,53 @@ export enum TitleOption {
   CONSTRUCTION = 'CONSTRUCTION',
 }
 
+export type ParticleType = 'CONFETTI' | 'DEBRIS' | 'SPARK' | 'DUST' | 'SMOKE';
+
+export interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  width: number;
+  height: number;
+  rotation: number;
+  vRot: number;
+  color: string;
+  alpha: number;
+  life: number;
+  maxLife: number;
+  type: ParticleType;
+  gravity?: number;
+  drag?: number;
+}
+
+export interface RenderPassConfig {
+  enableShadows?: boolean;
+  enableGridOverlay?: boolean;
+}
+
+export interface RenderSceneData {
+  grid: {
+    getCell: (col: number, row: number) => GridCell | null;
+    isEagleDestroyed: () => boolean;
+    eagleState: EagleState;
+    getSubTileBoxes?: (col: number, row: number) => Rect[];
+  };
+  playerTank?: PlayerTankState | null;
+  playerTankRef?: {
+    recoilTimer?: number;
+  };
+  enemyTanks?: EnemyTankState[];
+  bullets?: Bullet[];
+  powerUps?: PowerUpItem[];
+  hudState?: HUDState;
+  gameState?: GameState;
+  curtainProgress?: number;
+  tallyProgress?: number;
+  tallyResult?: StageTallyResult | null;
+  time?: number;
+}
+
 
 
