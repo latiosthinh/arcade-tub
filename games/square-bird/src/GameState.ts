@@ -1,7 +1,9 @@
 import { BirdPhysics, EggBlock } from './BirdPhysics.js';
 import { ObstacleGenerator, Obstacle } from './ObstacleGenerator.js';
+import { loadData, saveData } from '@arcade-carnival/playables-adapter';
 
 export type GameStatus = 'ready' | 'playing' | 'gameover' | 'victory';
+export type GameMode = 'levels' | 'infinite';
 
 export interface ScoreEvent {
   points: number;
@@ -17,8 +19,10 @@ export interface CrashEvent {
 
 export class GameState {
   public status: GameStatus;
+  public mode: GameMode;
   public score: number;
   public highScore: number;
+  public infiniteHighScore: number;
   public currentLevel: number;
   public distanceTraveled: number;
   public totalDistance: number;
@@ -43,8 +47,10 @@ export class GameState {
 
   constructor() {
     this.status = 'ready';
+    this.mode = 'levels';
     this.score = 0;
     this.highScore = 0;
+    this.infiniteHighScore = 0;
     this.currentLevel = 1;
     this.distanceTraveled = 0;
     this.totalDistance = 5000;
@@ -62,20 +68,55 @@ export class GameState {
     });
     this.obstacles = [];
     this.bird.reset(this.groundY);
+
+    this.loadInfiniteHighScore();
+  }
+
+  public loadInfiniteHighScore(): number {
+    try {
+      const stored = loadData('square-bird-infinite-highscore');
+      const parsed = typeof stored === 'number' ? stored : parseInt(stored as any, 10);
+      this.infiniteHighScore = !isNaN(parsed) && parsed > 0 ? parsed : 0;
+    } catch {
+      this.infiniteHighScore = 0;
+    }
+    return this.infiniteHighScore;
+  }
+
+  public saveInfiniteHighScore(): void {
+    try {
+      saveData('square-bird-infinite-highscore', this.infiniteHighScore);
+    } catch {
+      // Storage unavailable or quota exceeded
+    }
   }
 
   public startLevel(level: number = 1): void {
+    this.startMode('levels', level);
+  }
+
+  public startMode(mode: GameMode = 'levels', level: number = 1): void {
+    this.mode = mode;
     this.currentLevel = level;
     this.status = 'playing';
+    this.score = 0;
     this.distanceTraveled = 0;
-    this.totalDistance = 4000 + level * 1000;
     this.feverGauge = 0;
     this.isFever = false;
     this.feverTimer = 0;
     this.perfectStreak = 0;
 
-    this.generator.config.levelDistance = this.totalDistance;
-    this.obstacles = this.generator.generateLevel(level);
+    if (mode === 'infinite') {
+      this.totalDistance = Infinity;
+      this.generator.reset();
+      this.generator.generateAhead(0, 1800);
+      this.obstacles = this.generator.obstacles;
+    } else {
+      this.totalDistance = 4000 + level * 1000;
+      this.generator.config.levelDistance = this.totalDistance;
+      this.obstacles = this.generator.generateLevel(level);
+    }
+
     this.bird.reset(this.groundY);
   }
 
@@ -85,7 +126,7 @@ export class GameState {
 
     const egg = this.bird.layEgg();
     this.score += 5;
-    if (this.score > this.highScore) this.highScore = this.score;
+    this.checkHighScore();
 
     if (this.onEggLay) this.onEggLay(egg);
     if (this.onScore) {
@@ -105,6 +146,19 @@ export class GameState {
     if (this.onFeverStart) this.onFeverStart();
   }
 
+  private checkHighScore(): void {
+    if (this.mode === 'infinite') {
+      if (this.score > this.infiniteHighScore) {
+        this.infiniteHighScore = this.score;
+        this.saveInfiniteHighScore();
+      }
+    } else {
+      if (this.score > this.highScore) {
+        this.highScore = this.score;
+      }
+    }
+  }
+
   public update(dt: number): void {
     if (this.status !== 'playing') return;
 
@@ -115,7 +169,7 @@ export class GameState {
 
       // Passive fever score
       this.score += Math.round(dt * 50);
-      if (this.score > this.highScore) this.highScore = this.score;
+      this.checkHighScore();
 
       if (this.feverTimer <= 0) {
         this.isFever = false;
@@ -129,12 +183,19 @@ export class GameState {
     const distanceDelta = currentSpeed * dt;
     this.distanceTraveled += distanceDelta;
 
-    // Check Victory
-    if (this.distanceTraveled >= this.totalDistance) {
+    // Infinite mode obstacle streaming and culling
+    if (this.mode === 'infinite') {
+      this.generator.generateAhead(this.distanceTraveled, 1800);
+      this.generator.cullBehind(this.distanceTraveled, 300);
+      this.obstacles = this.generator.obstacles;
+    }
+
+    // Check Victory (levels mode only)
+    if (this.mode === 'levels' && this.distanceTraveled >= this.totalDistance) {
       this.status = 'victory';
       const bonus = 1000 + this.bird.eggs.length * 50;
       this.score += bonus;
-      if (this.score > this.highScore) this.highScore = this.score;
+      this.checkHighScore();
       if (this.onVictory) this.onVictory();
       return;
     }
@@ -181,7 +242,7 @@ export class GameState {
           if (!obs.passed) {
             obs.passed = true;
             this.score += 100;
-            if (this.score > this.highScore) this.highScore = this.score;
+            this.checkHighScore();
             if (this.onCrash) {
               this.onCrash({
                 obstacle: obs,
@@ -197,6 +258,7 @@ export class GameState {
         if (birdBox.bottom > obsBox.top && birdBox.top < obsBox.bottom) {
           // Bird head hit obstacle directly -> Instant Death
           this.status = 'gameover';
+          this.checkHighScore();
           if (this.onCrash) {
             this.onCrash({
               obstacle: obs,
@@ -272,14 +334,13 @@ export class GameState {
           }
         }
 
-        if (this.score > this.highScore) {
-          this.highScore = this.score;
-        }
+        this.checkHighScore();
       }
     }
   }
 
   public getProgress(): number {
+    if (this.mode === 'infinite') return 0;
     if (this.totalDistance <= 0) return 1;
     return Math.min(1, Math.max(0, this.distanceTraveled / this.totalDistance));
   }

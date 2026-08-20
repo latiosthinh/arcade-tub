@@ -107,6 +107,33 @@ describe('Square Bird Core Mechanics', () => {
         expect(obs.x).toBeLessThan(2000);
       }
     });
+
+    it('streams procedural obstacles ahead and culls passed obstacles in infinite mode', () => {
+      const gen = new ObstacleGenerator({ blockSize: 36 });
+      gen.reset();
+
+      // Initially empty
+      expect(gen.obstacles.length).toBe(0);
+
+      // Generate initial chunk ahead
+      const spawned = gen.generateAhead(0, 1800);
+      expect(spawned.length).toBeGreaterThan(2);
+      expect(gen.obstacles.length).toBe(spawned.length);
+
+      const firstObsX = gen.obstacles[0].x;
+      expect(firstObsX).toBeGreaterThanOrEqual(600);
+
+      // Advance player to 3000px and generate more
+      const nextChunk = gen.generateAhead(3000, 1800);
+      expect(nextChunk.length).toBeGreaterThan(0);
+      expect(gen.furthestGeneratedX).toBeGreaterThanOrEqual(4800);
+
+      // Cull obstacles behind 2000px
+      const totalBeforeCull = gen.obstacles.length;
+      gen.cullBehind(2000, 300);
+      expect(gen.obstacles.length).toBeLessThan(totalBeforeCull);
+      expect(gen.obstacles[0].x + gen.obstacles[0].width).toBeGreaterThanOrEqual(1700);
+    });
   });
 
   describe('GameState & Collision Mechanics', () => {
@@ -122,6 +149,26 @@ describe('Square Bird Core Mechanics', () => {
       expect(state.distanceTraveled).toBe(0);
       expect(state.score).toBe(0);
       expect(state.isFever).toBe(false);
+    });
+
+    it('supports switching to infinite mode and stream progression', () => {
+      state.startMode('infinite');
+      expect(state.mode).toBe('infinite');
+      expect(state.totalDistance).toBe(Infinity);
+      expect(state.obstacles.length).toBeGreaterThan(0);
+      expect(state.getProgress()).toBe(0);
+
+      // Advance game loop in infinite mode
+      state.update(1.0);
+      expect(state.distanceTraveled).toBeGreaterThan(0);
+      expect(state.status).toBe('playing'); // Never triggers victory in infinite mode
+    });
+
+    it('tracks and persists infinite high score', () => {
+      state.startMode('infinite');
+      state.score = 500;
+      state.layEgg();
+      expect(state.infiniteHighScore).toBe(505);
     });
 
     it('awards points when laying egg', () => {

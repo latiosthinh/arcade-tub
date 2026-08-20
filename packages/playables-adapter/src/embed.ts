@@ -78,7 +78,7 @@ export class ArcadeEmbed {
 }
 
 // Web Component for HTML usage: <arcade-game game="brick-blitz"></arcade-game>
-export class ArcadeGameElement extends HTMLElement {
+export class ArcadeGameElement extends (typeof HTMLElement !== 'undefined' ? HTMLElement : (class {} as any)) {
   private embed: ArcadeEmbed | null = null;
 
   static get observedAttributes(): string[] {
@@ -90,7 +90,7 @@ export class ArcadeGameElement extends HTMLElement {
   }
 
   attributeChangedCallback(): void {
-    if (this.isConnected) {
+    if ((this as any).isConnected) {
       this.render();
     }
   }
@@ -102,27 +102,27 @@ export class ArcadeGameElement extends HTMLElement {
 
   private render(): void {
     this.embed?.destroy();
-    const game = (this.getAttribute('game') || 'safe-cracker') as ArcadeEmbedOptions['game'];
-    const baseUrl = this.getAttribute('base-url') || '';
-    const width = this.getAttribute('width') || '100%';
-    const height = this.getAttribute('height') || '600px';
+    const game = ((this as any).getAttribute('game') || 'safe-cracker') as ArcadeEmbedOptions['game'];
+    const baseUrl = (this as any).getAttribute('base-url') || '';
+    const width = (this as any).getAttribute('width') || '100%';
+    const height = (this as any).getAttribute('height') || '600px';
 
     this.embed = new ArcadeEmbed({
-      container: this,
+      container: this as any,
       game,
       baseUrl,
       width,
       height,
       onScore: (score, gameName) => {
-        this.dispatchEvent(new CustomEvent('score', { detail: { score, game: gameName }, bubbles: true }));
+        (this as any).dispatchEvent(new CustomEvent('score', { detail: { score, game: gameName }, bubbles: true }));
       },
       onGameReady: () => {
-        this.dispatchEvent(new CustomEvent('ready', { bubbles: true }));
+        (this as any).dispatchEvent(new CustomEvent('ready', { bubbles: true }));
       },
     });
   }
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get('arcade-game')) {
-  customElements.define('arcade-game', ArcadeGameElement);
+  customElements.define('arcade-game', ArcadeGameElement as any);
 }
