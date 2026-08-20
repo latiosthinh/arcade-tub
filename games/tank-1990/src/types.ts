@@ -277,4 +277,49 @@ export interface EnemyTankState {
   isDead: boolean;
 }
 
+export enum GameState {
+  TITLE = 'TITLE',
+  STAGE_INTRO = 'STAGE_INTRO',
+  PLAYING = 'PLAYING',
+  PAUSED = 'PAUSED',
+  STAGE_TALLY = 'STAGE_TALLY',
+  GAME_OVER = 'GAME_OVER',
+  VICTORY = 'VICTORY',
+}
+
+export type KillTallyStats = Record<EnemyType, number>;
+
+export interface EnemyTallyRow {
+  type: EnemyType;
+  count: number;
+  unitPoints: number;
+  totalPoints: number;
+}
+
+export interface StageTallyResult {
+  stage: number;
+  rows: EnemyTallyRow[];
+  totalKills: number;
+  totalStagePoints: number;
+  cumulativeScore: number;
+  isNewHighScore: boolean;
+}
+
+export interface HUDState {
+  stage: number;
+  lives: number;
+  score: number;
+  highScore: number;
+  enemyReserveCount: number;
+  playerTier: TankTier;
+  isGameOver: boolean;
+  isPaused: boolean;
+}
+
+export enum TitleOption {
+  ONE_PLAYER = 'ONE_PLAYER',
+  CONSTRUCTION = 'CONSTRUCTION',
+}
+
+
 
