@@ -101,7 +101,10 @@ Plans:
   3. Active HUD side panel displays remaining enemy reserve tank icons, player lives, current stage number, and real-time score.
   4. Clearing a stage presents end-stage kill tally screen breaking down points earned per enemy class destroyed.
   5. Victory advances to next stage; defeat shows Game Over banner and restart prompt; personal best high scores persist in localStorage.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 52-01-PLAN.md — GameFlow manager, ScoreManager, state transitions, stage intro curtain timer, kill tally roll-up, and localStorage high score persistence
+- [ ] 52-02-PLAN.md — Comprehensive Vitest unit test suite covering state transitions, stage advancement, score tally calculations, and high score persistence
 **UI hint**: yes
 
 ### Phase 53: Tactile Papercraft Visuals & Procedural Web Audio
