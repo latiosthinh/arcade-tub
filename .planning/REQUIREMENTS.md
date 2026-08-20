@@ -37,12 +37,12 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 - [x] **ENEMY-06**: System manages shovel fortification timeout restoration, caching underlying terrain state without leaving empty voids.
 
 ### Stage Progression, Game Flow & HUD
-- [ ] **LOOP-01**: System displays title screen with Game Start, Stage Select, and high score display.
-- [ ] **LOOP-02**: System renders stage intro curtain transition ("STAGE X") before each round.
-- [ ] **LOOP-03**: System renders active HUD side panel showing remaining enemy reserve tank icons, player lives, current stage number, and current score.
-- [ ] **LOOP-04**: System presents end-stage kill tally screen breaking down points earned per enemy tank class destroyed.
-- [ ] **LOOP-05**: System manages victory sequence (advancing to next stage) and defeat sequence (Game Over banner and restart prompt).
-- [ ] **LOOP-06**: System persists personal best high scores in `localStorage`.
+- [x] **LOOP-01**: System displays title screen with Game Start, Stage Select, and high score display.
+- [x] **LOOP-02**: System renders stage intro curtain transition ("STAGE X") before each round.
+- [x] **LOOP-03**: System renders active HUD side panel showing remaining enemy reserve tank icons, player lives, current stage number, and current score.
+- [x] **LOOP-04**: System presents end-stage kill tally screen breaking down points earned per enemy tank class destroyed.
+- [x] **LOOP-05**: System manages victory sequence (advancing to next stage) and defeat sequence (Game Over banner and restart prompt).
+- [x] **LOOP-06**: System persists personal best high scores in `localStorage`.
 
 ### Tactile Papercraft Visuals & Procedural Web Audio
 - [ ] **VISUAL-01**: System renders layered cardboard cutouts with drop shadows, rolling tread trails, and turret recoil animations.
@@ -101,12 +101,12 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 | **ENEMY-04** | Phase 51 | Complete |
 | **ENEMY-05** | Phase 51 | Complete |
 | **ENEMY-06** | Phase 51 | Complete |
-| **LOOP-01** | Phase 52 | Pending |
-| **LOOP-02** | Phase 52 | Pending |
-| **LOOP-03** | Phase 52 | Pending |
-| **LOOP-04** | Phase 52 | Pending |
-| **LOOP-05** | Phase 52 | Pending |
-| **LOOP-06** | Phase 52 | Pending |
+| **LOOP-01** | Phase 52 | Complete |
+| **LOOP-02** | Phase 52 | Complete |
+| **LOOP-03** | Phase 52 | Complete |
+| **LOOP-04** | Phase 52 | Complete |
+| **LOOP-05** | Phase 52 | Complete |
+| **LOOP-06** | Phase 52 | Complete |
 | **VISUAL-01** | Phase 53 | Pending |
 | **VISUAL-02** | Phase 53 | Pending |
 | **VISUAL-03** | Phase 53 | Pending |
