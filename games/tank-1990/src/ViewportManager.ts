@@ -28,8 +28,8 @@ export class ViewportManager {
 
   constructor(options: ViewportManagerOptions) {
     this.canvas = options.canvas;
-    this.virtualWidth = options.virtualWidth || 512;
-    this.virtualHeight = options.virtualHeight || 448;
+    this.virtualWidth = options.virtualWidth || 480;
+    this.virtualHeight = options.virtualHeight || 416;
 
     this.resizeListenerBound = () => {
       const parent = this.canvas.parentElement || document.body;
@@ -109,15 +109,8 @@ export class ViewportManager {
       this.canvas.height = this.virtualHeight;
     }
 
-    // Apply CSS dimensions and styling for retro pixel rendering
     const style = this.canvas.style;
     (style as any).imageRendering = 'pixelated';
-
-    style.position = 'absolute';
-    style.width = `${Math.round(this.virtualWidth * this.metrics.scale)}px`;
-    style.height = `${Math.round(this.virtualHeight * this.metrics.scale)}px`;
-    style.left = `${Math.round(this.metrics.offsetX)}px`;
-    style.top = `${Math.round(this.metrics.offsetY)}px`;
   }
 
   /**
@@ -136,6 +129,10 @@ export class ViewportManager {
       baseTop = containerRect.top;
     } else if (this.canvas.parentElement) {
       const rect = this.canvas.parentElement.getBoundingClientRect();
+      baseLeft = rect.left;
+      baseTop = rect.top;
+    } else {
+      const rect = this.canvas.getBoundingClientRect();
       baseLeft = rect.left;
       baseTop = rect.top;
     }

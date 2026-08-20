@@ -64,26 +64,20 @@ describe('ViewportManager', () => {
   });
 
   describe('Canvas Element DOM Styling', () => {
-    it('applies pixelated image rendering, absolute positioning and dimensions to canvas element', () => {
+    it('applies pixelated image rendering and dimensions to canvas element', () => {
       viewportManager.resize(1024, 896);
 
       expect(canvas.width).toBe(512);
       expect(canvas.height).toBe(448);
-      expect(canvas.style.position).toBe('absolute');
-      expect(canvas.style.width).toBe('1024px');
-      expect(canvas.style.height).toBe('896px');
-      expect(canvas.style.left).toBe('0px');
-      expect(canvas.style.top).toBe('0px');
       expect(canvas.style.imageRendering).toBe('pixelated');
     });
 
-    it('updates position offsets on canvas styling during pillarboxing', () => {
-      viewportManager.resize(1200, 896);
+    it('calculates metrics during pillarboxing', () => {
+      const metrics = viewportManager.resize(1200, 896);
 
-      expect(canvas.style.width).toBe('1024px');
-      expect(canvas.style.height).toBe('896px');
-      expect(canvas.style.left).toBe('88px');
-      expect(canvas.style.top).toBe('0px');
+      expect(metrics.scale).toBe(2.0);
+      expect(metrics.offsetX).toBe(88);
+      expect(metrics.offsetY).toBe(0);
     });
   });
 

@@ -58,14 +58,14 @@ const viewportManager = new ViewportManager({
 const touchControls = new TouchControls({
   dpad: {
     centerX: 70,
-    centerY: 378,
+    centerY: 346,
     radius: 54,
     deadzone: 10,
     hysteresisAngleDeg: 10,
   },
   fireButton: {
-    centerX: 442,
-    centerY: 378,
+    centerX: 410,
+    centerY: 346,
     radius: 36,
   },
   container: canvas,
