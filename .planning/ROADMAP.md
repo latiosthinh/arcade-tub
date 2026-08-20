@@ -60,7 +60,10 @@ Plans:
   2. Player tank progresses through 4 tiers: Tier 1 (Basic), Tier 2 (Fast), Tier 3 (Heavy dual-shot), Tier 4 (Armor-piercing cannon destroying steel/trees).
   3. Player tank spawns and respawns with active temporary invulnerability shield bubble.
   4. System tracks player lives counter, awards extra lives, and cycles through player death and respawn.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 49-01-PLAN.md — PlayerTank core class, 4-way kinematics, corner snapping, ice sliding drift, upgrade tiers, shield timer, and lives management
+- [ ] 49-02-PLAN.md — Comprehensive Vitest unit test suite covering kinematics, corner snapping, ice drift, upgrade progression, shield expiration, and respawn cycle
 
 ### Phase 50: Ballistics System & Combat Collisions
 **Goal**: Simulate high-velocity projectiles with continuous sub-stepping collision sweep, mid-air bullet cancellation, tier-dependent terrain destruction, and enemy damage resolution.
