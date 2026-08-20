@@ -1,6 +1,9 @@
+import { initPlayables } from '@arcade-carnival/playables-adapter';
 import { GrassMowScene } from './GrassMowScene';
 
-window.addEventListener('DOMContentLoaded', () => {
+initPlayables();
+
+const startApp = () => {
   const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -8,4 +11,10 @@ window.addEventListener('DOMContentLoaded', () => {
   scene.start();
 
   (window as unknown as { grassMowScene: GrassMowScene }).grassMowScene = scene;
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}

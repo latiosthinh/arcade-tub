@@ -1,7 +1,10 @@
+import { initPlayables } from '@arcade-carnival/playables-adapter';
 import { LiquidSortScene } from './LiquidSortScene';
 import { liquidAudio } from './LiquidAudio';
 
-window.addEventListener('DOMContentLoaded', () => {
+initPlayables();
+
+const startApp = () => {
   const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -58,8 +61,14 @@ window.addEventListener('DOMContentLoaded', () => {
   muteBtn?.addEventListener('click', () => {
     const isMuted = !liquidAudio.isMuted();
     liquidAudio.setMuted(isMuted);
-    muteBtn.innerText = isMuted ? '🔇' : '🔊';
+    if (muteBtn) muteBtn.innerText = isMuted ? '🔇' : '🔊';
   });
 
   updateUI();
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}

@@ -1,7 +1,10 @@
+import { initPlayables } from '@arcade-carnival/playables-adapter';
 import { SoapCarveScene } from './SoapCarveScene';
 import { carveAudio } from './CarveAudio';
 
-window.addEventListener('DOMContentLoaded', () => {
+initPlayables();
+
+const startApp = () => {
   const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -49,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
   muteBtn?.addEventListener('click', () => {
     const isMuted = !carveAudio.getMuted();
     carveAudio.setMuted(isMuted);
-    muteBtn.innerText = isMuted ? '🔇' : '🔊';
+    if (muteBtn) muteBtn.innerText = isMuted ? '🔇' : '🔊';
   });
 
   victoryCloseBtn?.addEventListener('click', () => {
@@ -62,4 +65,10 @@ window.addEventListener('DOMContentLoaded', () => {
     victoryModal?.classList.add('hidden');
     scene.nextFigurine();
   });
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
