@@ -19,6 +19,7 @@ export class GameView extends BaseComponent<AppState> {
   private infoBtnElement: HTMLButtonElement | null = null;
   private modalBackdropElement: HTMLElement | null = null;
   private modalCloseBtnElement: HTMLButtonElement | null = null;
+  private floatingExitBtnElement: HTMLButtonElement | null = null;
 
   constructor(store: Store<AppState>, gameId: string) {
     super('div', 'ac-player-view');
@@ -88,6 +89,11 @@ export class GameView extends BaseComponent<AppState> {
         </div>
       </header>
 
+      <!-- Floating Exit Theater Button for Mobile/Tablet Fullscreen Mode -->
+      <button class="ac-floating-exit-theater" type="button" aria-label="Exit Fullscreen Theater" title="Exit Fullscreen (T)">
+        ✕
+      </button>
+
       <div class="ac-player-frame-wrapper">
         <div class="ac-skeleton-loader">
           <div class="ac-skeleton-spinner"></div>
@@ -133,6 +139,7 @@ export class GameView extends BaseComponent<AppState> {
     this.infoBtnElement = this.element.querySelector('.ac-btn-info');
     this.modalBackdropElement = this.element.querySelector('.ac-details-modal-backdrop');
     this.modalCloseBtnElement = this.element.querySelector('.ac-modal-close-btn');
+    this.floatingExitBtnElement = this.element.querySelector('.ac-floating-exit-theater');
     this.scoreNumElement = this.element.querySelector('.ac-score-num');
   }
 
@@ -180,6 +187,14 @@ export class GameView extends BaseComponent<AppState> {
     // Theater mode toggle button
     if (this.theaterBtnElement) {
       this.addListener(this.theaterBtnElement, 'click', () => {
+        uiAudio.playClick();
+        this.toggleTheater();
+      });
+    }
+
+    // Floating exit theater button (mobile fullscreen)
+    if (this.floatingExitBtnElement) {
+      this.addListener(this.floatingExitBtnElement, 'click', () => {
         uiAudio.playClick();
         this.toggleTheater();
       });
@@ -324,6 +339,7 @@ export class GameView extends BaseComponent<AppState> {
     this.infoBtnElement = null;
     this.modalBackdropElement = null;
     this.modalCloseBtnElement = null;
+    this.floatingExitBtnElement = null;
     this.scoreNumElement = null;
   }
 }

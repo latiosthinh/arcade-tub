@@ -451,7 +451,42 @@
   }
 }
 
+/* Floating Exit Button for Mobile Fullscreen Theater */
+.ac-floating-exit-theater {
+  display: none;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(250, 246, 238, 0.9);
+  border: 2px solid #2B2118;
+  box-shadow: 2px 2px 0px #2B2118;
+  color: #2B2118;
+  font-weight: 900;
+  font-size: 1.1rem;
+  z-index: 10001;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.ac-floating-exit-theater:hover,
+.ac-floating-exit-theater:active {
+  background: var(--neon-pink);
+  color: #FFF;
+  transform: scale(1.1);
+}
+
 @media (max-width: 1024px) {
+  /* Hide main global app header when theater mode is active on mobile/tablet */
+  body:has(.ac-player-view.is-theater) .ac-header,
+  body:has(.ac-player-view.is-theater) .ac-bottom-nav {
+    display: none !important;
+  }
+
   .ac-player-view {
     padding: 0.5rem;
     padding-bottom: 70px;
@@ -461,25 +496,29 @@
 
   .ac-player-view.is-theater {
     padding: 0;
+    margin: 0;
+    width: 100vw;
     height: 100vh;
-    max-height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
     position: fixed;
-    inset: 0;
-    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
     background: #000000;
+    overflow: hidden;
   }
 
+  /* Hide player toolbar header in mobile fullscreen theater */
   .ac-player-view.is-theater .ac-player-header {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    z-index: 10;
-    background: rgba(250, 246, 238, 0.92);
-    border-radius: var(--radius-md);
-    padding: 0.35rem 0.6rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    border-bottom: none;
+    display: none !important;
+  }
+
+  /* Show floating corner exit button in mobile fullscreen theater */
+  .ac-player-view.is-theater .ac-floating-exit-theater {
+    display: flex;
   }
 
   .ac-player-frame-wrapper {
@@ -494,9 +533,22 @@
 
   .ac-player-frame-wrapper.is-theater {
     width: 100vw;
+    width: 100dvw;
     height: 100vh;
-    max-height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    max-width: 100dvw;
     border-radius: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ac-player-frame-wrapper.is-theater iframe.ac-game-frame {
+    width: 100vw;
+    width: 100dvw;
+    height: 100vh;
+    height: 100dvh;
     border: none;
   }
 }
