@@ -614,7 +614,7 @@ export class TankRenderer {
     // Turret Barrel (pointing straight UP in local coordinates)
     const barrelWidth = 4;
     const barrelLength = 12;
-    ctx.fillStyle = colors.dark;
+    ctx.fillStyle = tankColors.dark;
     ctx.fillRect(
       -barrelWidth / 2,
       -halfH - barrelLength + 4 + recoilOffset,
@@ -623,7 +623,7 @@ export class TankRenderer {
     );
 
     // Barrel Muzzle Tip
-    ctx.fillStyle = colors.accent;
+    ctx.fillStyle = tankColors.accent;
     ctx.fillRect(
       -barrelWidth / 2 - 0.5,
       -halfH - barrelLength + 4 + recoilOffset,
@@ -632,13 +632,13 @@ export class TankRenderer {
     );
 
     // Turret Cupola / Dome
-    ctx.fillStyle = colors.accent;
+    ctx.fillStyle = tankColors.accent;
     ctx.beginPath();
     ctx.arc(0, 0 + recoilOffset * 0.5, turretRadius, 0, Math.PI * 2);
     ctx.fill();
 
     // Turret center rivet
-    ctx.fillStyle = colors.light;
+    ctx.fillStyle = tankColors.light;
     ctx.beginPath();
     ctx.arc(0, 0 + recoilOffset * 0.5, 2, 0, Math.PI * 2);
     ctx.fill();
