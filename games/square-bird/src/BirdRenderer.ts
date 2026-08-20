@@ -287,40 +287,63 @@ export class BirdRenderer {
     _height: number
   ): void {
     ctx.save();
-    ctx.font = 'bold 22px "Comfortaa", -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.font = 'bold 20px "Comfortaa", -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
 
-    // Score Board
+    // Mode Badge & Level / Infinite Info
+    const isInfinite = state.mode === 'infinite';
     ctx.fillStyle = '#2B2118';
-    ctx.fillText(`Score: ${state.score}`, 24, 20);
+    if (isInfinite) {
+      ctx.fillText(`Score: ${state.score}`, 24, 18);
+      ctx.font = 'bold 14px "Comfortaa", sans-serif';
+      ctx.fillText(`DIST: ${Math.floor(state.distanceTraveled / 10)}m  •  BEST: ${state.infiniteHighScore}`, 24, 46);
+    } else {
+      ctx.fillText(`Score: ${state.score}`, 24, 18);
+      ctx.font = 'bold 14px "Comfortaa", sans-serif';
+      ctx.fillText(`STAGE ${state.currentLevel}`, 24, 46);
+    }
 
-    // Level & Distance
-    ctx.font = 'bold 16px "Comfortaa", sans-serif';
-    ctx.fillText(`Level ${state.currentLevel}`, 24, 52);
-
-    // Progress Bar
-    const barWidth = 240;
+    // Progress Bar (Levels Mode) or Distance Indicator (Infinite Mode)
+    const barWidth = 220;
     const barHeight = 14;
     const barX = width / 2 - barWidth / 2;
-    const barY = 24;
+    const barY = 22;
 
-    ctx.fillStyle = '#FAF6EE';
-    ctx.strokeStyle = '#2B2118';
-    ctx.lineWidth = 2;
-    ctx.fillRect(barX, barY, barWidth, barHeight);
-    ctx.strokeRect(barX, barY, barWidth, barHeight);
+    if (!isInfinite) {
+      ctx.fillStyle = '#FAF6EE';
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 2;
+      ctx.fillRect(barX, barY, barWidth, barHeight);
+      ctx.strokeRect(barX, barY, barWidth, barHeight);
 
-    ctx.fillStyle = '#00B894';
-    ctx.fillRect(barX + 2, barY + 2, (barWidth - 4) * state.getProgress(), barHeight - 4);
+      ctx.fillStyle = '#00B894';
+      ctx.fillRect(barX + 2, barY + 2, (barWidth - 4) * state.getProgress(), barHeight - 4);
+    } else {
+      // Infinite Mode Badge
+      ctx.save();
+      ctx.fillStyle = '#6C5CE7';
+      ctx.fillRect(barX + 20, barY - 4, barWidth - 40, 24);
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(barX + 20, barY - 4, barWidth - 40, 24);
+
+      ctx.fillStyle = '#FAF6EE';
+      ctx.font = 'bold 12px "Comfortaa", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('∞ INFINITE SURVIVAL', width / 2, barY + 1);
+      ctx.restore();
+    }
 
     // Fever Bar
     const feverX = width - 180;
-    const feverY = 24;
+    const feverY = 22;
     const feverW = 150;
     const feverH = 14;
 
     ctx.fillStyle = '#FAF6EE';
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
     ctx.fillRect(feverX, feverY, feverW, feverH);
     ctx.strokeRect(feverX, feverY, feverW, feverH);
 

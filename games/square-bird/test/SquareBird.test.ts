@@ -246,5 +246,15 @@ describe('Square Bird Core Mechanics', () => {
       expect(state.status).toBe('victory');
       expect(state.score).toBeGreaterThanOrEqual(1000);
     });
+
+    it('handles startMode validation and switches correctly between levels and infinite', () => {
+      state.startMode('levels', 3);
+      expect(state.mode).toBe('levels');
+      expect(state.currentLevel).toBe(3);
+
+      state.startMode('infinite');
+      expect(state.mode).toBe('infinite');
+      expect(state.totalDistance).toBe(Infinity);
+    });
   });
 });
