@@ -149,7 +149,7 @@ export class PowerUpSystem {
     }
   }
 
-  public update(dt: number, player: PlayerTank, spawner: EnemySpawner): void {
+  public update(dt: number, player?: PlayerTank, spawner?: EnemySpawner): void {
     const safeDt = Math.min(Math.max(0, dt), 0.1);
 
     // 1. Shovel base fortification timer countdown
@@ -161,7 +161,7 @@ export class PowerUpSystem {
     }
 
     // 2. AABB collection detection against PlayerTank
-    if (!player.isDead) {
+    if (player && !player.isDead) {
       const playerBounds = player.getBounds();
 
       for (const item of this.items) {
@@ -169,7 +169,9 @@ export class PowerUpSystem {
 
         if (this.checkAABB(playerBounds, item)) {
           item.alive = false;
-          this.applyPowerUpEffect(item.type, player, spawner);
+          if (spawner) {
+            this.applyPowerUpEffect(item.type, player, spawner);
+          }
 
           const event: PowerUpPickupEvent = {
             type: item.type,
@@ -186,6 +188,33 @@ export class PowerUpSystem {
     }
 
     // 3. Remove collected / dead items
+    this.items = this.items.filter((item) => item.alive);
+  }
+
+  public checkPlayerCollision(player: PlayerTank, spawner: EnemySpawner): void {
+    if (!player || player.isDead) return;
+    const playerBounds = player.getBounds();
+
+    for (const item of this.items) {
+      if (!item.alive) continue;
+
+      if (this.checkAABB(playerBounds, item)) {
+        item.alive = false;
+        this.applyPowerUpEffect(item.type, player, spawner);
+
+        const event: PowerUpPickupEvent = {
+          type: item.type,
+          points: POWERUP_SCORE,
+          x: item.x,
+          y: item.y,
+        };
+
+        if (this.onPowerUpCollected) {
+          this.onPowerUpCollected(event);
+        }
+      }
+    }
+
     this.items = this.items.filter((item) => item.alive);
   }
 

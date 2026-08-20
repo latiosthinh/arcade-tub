@@ -492,6 +492,10 @@ export class TankAudio {
   /**
    * Stage intro fanfare (Battle City 10-note opening theme).
    */
+  public playStageStartFanfare(): void {
+    this.playStageStart();
+  }
+
   public playStageStart(): void {
     const ctx = this.ensureContext();
     if (!ctx || !this.masterGain) return;

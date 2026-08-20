@@ -388,16 +388,16 @@ export class TankRenderer {
     }
 
     // 2. Enemy Tanks
-    if (data.enemyTanks) {
+    if (data.enemyTanks && Array.isArray(data.enemyTanks)) {
       for (const enemy of data.enemyTanks) {
-        if (!enemy.isDead) {
+        if (enemy && !enemy.isDead) {
           this.drawEnemyTank(ctx, enemy, time);
         }
       }
     }
 
     // 3. Player Tank
-    if (data.playerTank && !data.playerTank.isDead) {
+    if (data.playerTank && typeof data.playerTank === 'object' && !data.playerTank.isDead) {
       const recoilTimer = data.playerTankRef?.recoilTimer ?? 0;
       this.drawPlayerTank(ctx, data.playerTank, recoilTimer, time);
     }
