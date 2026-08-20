@@ -369,5 +369,49 @@ export interface RenderSceneData {
   time?: number;
 }
 
+export const ARENA_SIZE = 416;
+export const TOTAL_CANVAS_WIDTH = 512;
+export const TOTAL_CANVAS_HEIGHT = 448;
+
+export interface TouchControlState {
+  direction: CardinalDirection | null;
+  isFiring: boolean;
+  dpadActive: boolean;
+  fireActive: boolean;
+  rawVector: { x: number; y: number };
+}
+
+export interface DPadConfig {
+  centerX: number;
+  centerY: number;
+  radius: number;
+  deadzone: number;
+  hysteresisAngleDeg?: number;
+}
+
+export interface FireButtonConfig {
+  centerX: number;
+  centerY: number;
+  radius: number;
+}
+
+export interface ViewportTransform {
+  scale: number;
+  offsetX: number;
+  offsetY: number;
+}
+
+export interface ViewportMetrics {
+  scale: number;
+  offsetX: number;
+  offsetY: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  gameWidth: number;
+  gameHeight: number;
+  isLandscape: boolean;
+}
+
+
 
 
