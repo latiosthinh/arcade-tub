@@ -1,0 +1,35 @@
+{
+  "name": "ArcadeTub",
+  "short_name": "ArcadeTub",
+  "description": "Instant 60-FPS HTML5 Canvas retro-modern papercraft arcade games.",
+  "start_url": "/#/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAF6EE",
+  "theme_color": "#2B2118",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64 128x128 192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Relax & No-Brain",
+      "url": "/#/category/nobrain",
+      "description": "Play calming casual games like Zen Koi Pond and Firework Pop"
+    },
+    {
+      "name": "Action & Defense",
+      "url": "/#/category/action",
+      "description": "Play high-octane brick breakers and typing defense"
+    },
+    {
+      "name": "Puzzle & Gem Merge",
+      "url": "/#/category/puzzle",
+      "description": "Play Gem Merge, Mahjong and 2048"
+    }
+  ]
+}

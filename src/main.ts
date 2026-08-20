@@ -94,7 +94,13 @@ function bootstrap(): void {
 
   router
     .on('/', () => {
+      store.setState({ activeFilter: 'all' });
       mountView(new CatalogView(store), '/');
+    })
+    .on('/category/:cat', (params) => {
+      const cat = params.cat || 'all';
+      store.setState({ activeFilter: cat });
+      mountView(new CatalogView(store), `/category/${cat}`, params);
     })
     .on('/game/:id', (params) => {
       const gameId = params.id || '';
@@ -114,6 +120,13 @@ function bootstrap(): void {
 
   // 5. Start router with View Transitions enabled
   router.start(true);
+}
+
+// Service Worker Registration for PWA / Pin to Home Screen support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
 }
 
 // Bootstrap on DOM ready

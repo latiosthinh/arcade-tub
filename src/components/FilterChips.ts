@@ -45,6 +45,11 @@ export class FilterChips extends BaseComponent<AppState> {
         const filter = btn.getAttribute('data-filter') || 'all';
         uiAudio.playClick();
         this.store.setState({ activeFilter: filter });
+        if (filter === 'all') {
+          window.location.hash = '#/';
+        } else {
+          window.location.hash = `#/category/${filter}`;
+        }
       });
     }
   }
