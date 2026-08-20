@@ -107,7 +107,7 @@ export class SandAudio {
     if (now - this.lastChimeTime < 0.12) return; // Prevent spam
     this.lastChimeTime = now;
 
-    const freq = this.chimeFreqs[Math.floor(Math.random() * this.chimeFreqs.length)];
+    const freq = this.chimeFreqs[Math.floor(Math.random() * this.chimeFreqs.length)] ?? 440;
 
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();

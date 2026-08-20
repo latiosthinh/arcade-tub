@@ -85,7 +85,7 @@ export class SandGrid {
     if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
       return CELL_WALL;
     }
-    return this.grid[y * this.width + x];
+    return this.grid[y * this.width + x] ?? CELL_EMPTY;
   }
 
   public setCell(x: number, y: number, value: number): void {
@@ -199,7 +199,7 @@ export class SandGrid {
       const stepX = leftToRight ? 1 : -1;
 
       for (let x = startX; x !== endX; x += stepX) {
-        const cell = this.nextGrid[rowOffset + x];
+        const cell = this.nextGrid[rowOffset + x] ?? CELL_EMPTY;
 
         // Only process sand grains
         if (cell === CELL_EMPTY || cell === CELL_WALL) {
@@ -207,7 +207,7 @@ export class SandGrid {
         }
 
         // 1. Check straight down
-        const down = this.nextGrid[nextRowOffset + x];
+        const down = this.nextGrid[nextRowOffset + x] ?? CELL_WALL;
         if (down === CELL_EMPTY) {
           this.nextGrid[nextRowOffset + x] = cell;
           this.nextGrid[rowOffset + x] = CELL_EMPTY;
@@ -224,12 +224,12 @@ export class SandGrid {
         const x2 = x + dir2;
 
         let slid = false;
-        if (x1 >= 0 && x1 < this.width && this.nextGrid[nextRowOffset + x1] === CELL_EMPTY) {
+        if (x1 >= 0 && x1 < this.width && (this.nextGrid[nextRowOffset + x1] ?? CELL_WALL) === CELL_EMPTY) {
           this.nextGrid[nextRowOffset + x1] = cell;
           this.nextGrid[rowOffset + x] = CELL_EMPTY;
           moved++;
           slid = true;
-        } else if (x2 >= 0 && x2 < this.width && this.nextGrid[nextRowOffset + x2] === CELL_EMPTY) {
+        } else if (x2 >= 0 && x2 < this.width && (this.nextGrid[nextRowOffset + x2] ?? CELL_WALL) === CELL_EMPTY) {
           this.nextGrid[nextRowOffset + x2] = cell;
           this.nextGrid[rowOffset + x] = CELL_EMPTY;
           moved++;
@@ -244,16 +244,16 @@ export class SandGrid {
           const lateral2 = x + dir2;
           if (
             lateral1 >= 0 && lateral1 < this.width &&
-            this.nextGrid[rowOffset + lateral1] === CELL_EMPTY &&
-            this.nextGrid[(y + 2) * this.width + lateral1] === CELL_EMPTY
+            (this.nextGrid[rowOffset + lateral1] ?? CELL_WALL) === CELL_EMPTY &&
+            (this.nextGrid[(y + 2) * this.width + lateral1] ?? CELL_WALL) === CELL_EMPTY
           ) {
             this.nextGrid[rowOffset + lateral1] = cell;
             this.nextGrid[rowOffset + x] = CELL_EMPTY;
             moved++;
           } else if (
             lateral2 >= 0 && lateral2 < this.width &&
-            this.nextGrid[rowOffset + lateral2] === CELL_EMPTY &&
-            this.nextGrid[(y + 2) * this.width + lateral2] === CELL_EMPTY
+            (this.nextGrid[rowOffset + lateral2] ?? CELL_WALL) === CELL_EMPTY &&
+            (this.nextGrid[(y + 2) * this.width + lateral2] ?? CELL_WALL) === CELL_EMPTY
           ) {
             this.nextGrid[rowOffset + lateral2] = cell;
             this.nextGrid[rowOffset + x] = CELL_EMPTY;

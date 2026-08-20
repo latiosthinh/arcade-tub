@@ -23,12 +23,12 @@ export class ZenToolManager {
   private hopperDropTimer: number = 0;
 
   public get currentPalette(): SandPalette {
-    return SAND_PALETTES[this.paletteIndex % SAND_PALETTES.length];
+    return SAND_PALETTES[this.paletteIndex % SAND_PALETTES.length] ?? SAND_PALETTES[0]!;
   }
 
   public get activeColor(): number {
     const pal = this.currentPalette;
-    return pal.colors[this.currentColorIndex % pal.colors.length];
+    return pal.colors[this.currentColorIndex % pal.colors.length] ?? pal.colors[0] ?? 0xFFFFFFFF;
   }
 
   public setTool(tool: ZenToolType): void {

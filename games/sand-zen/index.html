@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Sand Zen - ASMR Granular Garden</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #141312;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #ede8df;
+    }
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+    /* Top & Bottom HUD */
+    .hud-header {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 600px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+    .hud-header * {
+      pointer-events: auto;
+    }
+    .title-badge {
+      background: rgba(30, 27, 24, 0.75);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #dfd8cb;
+    }
+    .hud-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .hud-btn {
+      background: rgba(30, 27, 24, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #eae3d2;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .hud-btn:active {
+      transform: scale(0.92);
+      background: rgba(50, 45, 40, 0.9);
+    }
+    /* Bottom Toolbar */
+    .hud-footer {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 600px;
+      padding: 10px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      pointer-events: none;
+    }
+    .hud-footer * {
+      pointer-events: auto;
+    }
+    .swatches-bar {
+      display: flex;
+      gap: 10px;
+      background: rgba(26, 23, 20, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: transform 0.15s ease;
+    }
+    .swatch.active {
+      border-color: #ffffff;
+      transform: scale(1.2);
+    }
+    .tools-bar {
+      display: flex;
+      gap: 10px;
+      background: rgba(26, 23, 20, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 6px 12px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tool-btn {
+      background: transparent;
+      border: none;
+      color: #9e9484;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+    .tool-btn.active {
+      background: rgba(230, 215, 185, 0.15);
+      color: #f7f1e4;
+      font-weight: 600;
+      border: 1px solid rgba(230, 215, 185, 0.3);
+    }
+    .tool-btn:active {
+      transform: scale(0.95);
+    }
+    .hopper-toggle.active {
+      background: rgba(240, 180, 50, 0.2);
+      color: #f5c04e;
+      border-color: rgba(240, 180, 50, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div class="hud-header">
+      <div class="title-badge">✨ Sand Zen</div>
+      <div class="hud-controls">
+        <button id="clearBtn" class="hud-btn" title="Clear Sand">🧹</button>
+        <button id="paletteBtn" class="hud-btn" title="Next Palette">🎨</button>
+        <button id="muteBtn" class="hud-btn" title="Toggle Sound">🔊</button>
+      </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="hud-footer">
+      <div id="swatchesContainer" class="swatches-bar"></div>
+      <div class="tools-bar">
+        <button class="tool-btn active" data-tool="stream">⏳ Pour</button>
+        <button class="tool-btn" data-tool="rake">🎋 Rake</button>
+        <button class="tool-btn" data-tool="funnel">📐 Funnel</button>
+        <button id="hopperBtn" class="tool-btn hopper-toggle">🔄 Hopper</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
