@@ -50,6 +50,44 @@ export class BirdAudio {
     osc.stop(t + 0.08);
   }
 
+  public playEggExpire(): void {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    // Synthesize subtle, crisp paper crumble click via filtered noise burst
+    try {
+      const bufferSize = this.ctx.sampleRate * 0.06; // 60ms
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = this.ctx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      const t = this.ctx.currentTime;
+      filter.frequency.setValueAtTime(800, t);
+      filter.frequency.exponentialRampToValueAtTime(200, t + 0.06);
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0.18, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      whiteNoise.start(t);
+      whiteNoise.stop(t + 0.06);
+    } catch {
+      // Audio context error fallback
+    }
+  }
+
   public playEggShatter(): void {
     if (this.isMuted) return;
     this.initContext();

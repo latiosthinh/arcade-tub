@@ -26,6 +26,33 @@ export class BirdParticles {
     this.particles = [];
   }
 
+  public emitEggExpire(x: number, y: number, size: number): void {
+    const count = 9;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.8;
+      const speed = 40 + Math.random() * 90;
+      this.particles.push({
+        x: x + (Math.random() - 0.5) * size * 0.8,
+        y: y + (Math.random() - 0.5) * size * 0.8,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 40,
+        rotation: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 10,
+        width: 3 + Math.random() * 4,
+        height: 3 + Math.random() * 4,
+        color: Math.random() > 0.5 ? '#D4A373' : '#E9C46A', // Kraft paper & dried origami fibers
+        alpha: 1,
+        life: 0.3 + Math.random() * 0.15,
+        maxLife: 0.45
+      });
+    }
+
+    // T-41-04: Cap particle array length to 100 max
+    if (this.particles.length > 100) {
+      this.particles.splice(0, this.particles.length - 100);
+    }
+  }
+
   public emitEggShatter(x: number, y: number, size: number): void {
     const count = 12;
     for (let i = 0; i < count; i++) {

@@ -158,9 +158,18 @@ export class BirdRenderer {
     for (const egg of state.bird.eggs) {
       const eggX = screenX;
       const eggY = egg.y;
+      const lifeRatio = egg.maxLifeTime > 0 ? egg.lifeTime / egg.maxLifeTime : 1;
+      const isDying = egg.lifeTime < 1.0 || lifeRatio < 0.33;
 
-      // Cardboard Egg Block
-      ctx.fillStyle = '#FAEDCD'; // Warm eggshell cream
+      // Base Egg Block Color (Flash amber/white if expiring)
+      if (isDying) {
+        // Pulsate 8Hz
+        const pulse = Math.sin(Date.now() * 0.02) * 0.5 + 0.5;
+        ctx.fillStyle = pulse > 0.5 ? '#FFF3B0' : '#E76F51';
+      } else {
+        ctx.fillStyle = '#FAEDCD'; // Warm eggshell cream
+      }
+
       ctx.strokeStyle = '#2B2118';
       ctx.lineWidth = 3;
 
@@ -168,18 +177,42 @@ export class BirdRenderer {
       ctx.strokeRect(eggX, eggY, egg.size, egg.size);
 
       // Inner Egg Pattern (Origami fold mark)
-      ctx.strokeStyle = '#D4A373';
+      ctx.strokeStyle = isDying ? '#9E2A2B' : '#D4A373';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(eggX + 6, eggY + 6);
       ctx.lineTo(eggX + egg.size - 6, eggY + egg.size - 6);
       ctx.stroke();
 
-      // Cardboard speckle details
-      ctx.fillStyle = '#D4A373';
-      ctx.beginPath();
-      ctx.arc(eggX + egg.size * 0.3, eggY + egg.size * 0.7, 2, 0, Math.PI * 2);
-      ctx.fill();
+      // Cracking crease lines when decaying
+      if (isDying) {
+        ctx.save();
+        ctx.strokeStyle = '#540B0E';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        // Jagged crack 1
+        ctx.moveTo(eggX + egg.size * 0.2, eggY + 4);
+        ctx.lineTo(eggX + egg.size * 0.45, eggY + egg.size * 0.5);
+        ctx.lineTo(eggX + egg.size * 0.3, eggY + egg.size - 4);
+
+        // Jagged crack 2
+        ctx.moveTo(eggX + egg.size * 0.8, eggY + 6);
+        ctx.lineTo(eggX + egg.size * 0.55, eggY + egg.size * 0.45);
+        ctx.lineTo(eggX + egg.size * 0.75, eggY + egg.size - 5);
+        ctx.stroke();
+
+        // Little expiration timer notch at top
+        ctx.fillStyle = '#9E2A2B';
+        const notchW = (egg.size - 8) * Math.max(0, egg.lifeTime / 1.0);
+        ctx.fillRect(eggX + 4, eggY + 2, notchW, 2);
+        ctx.restore();
+      } else {
+        // Normal cardboard speckle details
+        ctx.fillStyle = '#D4A373';
+        ctx.beginPath();
+        ctx.arc(eggX + egg.size * 0.3, eggY + egg.size * 0.7, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
     ctx.restore();
   }
