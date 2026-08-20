@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Soap Carver - ASMR Antistress Sandbox</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #EDE5D8;
+      font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    #gameCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+    .header-bar {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .header-bar > * {
+      pointer-events: auto;
+    }
+    .title-pill {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+      color: #534538;
+      font-size: 15px;
+    }
+    .progress-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      font-size: 12px;
+      font-weight: 600;
+      color: #6C584C;
+      gap: 4px;
+    }
+    .progress-bar-track {
+      width: 120px;
+      height: 6px;
+      background: #E0D7C9;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: #A1E5AB;
+      border-radius: 3px;
+      transition: width 0.15s ease;
+    }
+    .button-group {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .btn {
+      pointer-events: auto;
+      background: #FFFFFF;
+      border: 1px solid #E2D7C5;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #554439;
+      box-shadow: 0 4px 10px rgba(70, 50, 40, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s, background 0.2s;
+    }
+    .btn:active {
+      transform: scale(0.96);
+      background: #F4EDE2;
+    }
+    .hub-link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.hidden {
+      display: none;
+    }
+    .modal-card {
+      background: #FFFFFF;
+      padding: 24px 32px;
+      border-radius: 24px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 320px;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-card h2 {
+      color: #3E3024;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .modal-card p {
+      color: #7A695B;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div class="header-bar">
+      <div class="title-pill">✨ Soap Carver</div>
+      <div class="progress-box">
+        <span id="progressText">0% Uncovered</span>
+        <div class="progress-bar-track">
+          <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+      <button id="muteBtn" class="btn" style="padding: 8px 12px;">🔊</button>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="button-group">
+      <a href="/" class="hub-link"><button class="btn">🏠 Hub</button></a>
+      <button id="paletteBtn" class="btn">🎨 Palette</button>
+      <button id="figurineBtn" class="btn">🦢 Next Figurine</button>
+      <button id="resetBtn" class="btn">🔄 Reset</button>
+    </div>
+
+    <div id="victoryModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h2>🎉 Collectible Found!</h2>
+        <p id="victoryTitle">You discovered the Origami Swan!</p>
+        <div class="modal-buttons">
+          <button id="victoryCloseBtn" class="btn">Keep Carving</button>
+          <button id="victoryNextBtn" class="btn" style="background: #A1E5AB; color: #234E2A;">Next Soap Bar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
