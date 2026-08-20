@@ -57,3 +57,72 @@ export interface TerrainQueryResult {
   isEagle: boolean;
   cell?: GridCell;
 }
+
+export enum TankTier {
+  TIER_1 = 1, // Basic tank
+  TIER_2 = 2, // Fast tank (1.5x speed)
+  TIER_3 = 3, // Heavy tank (dual-shot)
+  TIER_4 = 4, // Super tank (armor-piercing, destroys steel & cuts trees)
+}
+
+export interface TankTierStats {
+  speed: number;
+  bulletSpeed: number;
+  maxBullets: number;
+  canDestroySteel: boolean;
+  canCutTrees: boolean;
+}
+
+export const TANK_TIER_CONFIGS: Record<TankTier, TankTierStats> = {
+  [TankTier.TIER_1]: {
+    speed: 64,
+    bulletSpeed: 160,
+    maxBullets: 1,
+    canDestroySteel: false,
+    canCutTrees: false,
+  },
+  [TankTier.TIER_2]: {
+    speed: 96,
+    bulletSpeed: 240,
+    maxBullets: 1,
+    canDestroySteel: false,
+    canCutTrees: false,
+  },
+  [TankTier.TIER_3]: {
+    speed: 96,
+    bulletSpeed: 240,
+    maxBullets: 2,
+    canDestroySteel: false,
+    canCutTrees: false,
+  },
+  [TankTier.TIER_4]: {
+    speed: 96,
+    bulletSpeed: 280,
+    maxBullets: 2,
+    canDestroySteel: true,
+    canCutTrees: true,
+  },
+};
+
+export const TANK_SIZE = 28;
+export const SPAWN_X = 128; // col 8 * 16
+export const SPAWN_Y = 384; // col 24 * 16
+export const SPAWN_SHIELD_DURATION = 3.0; // 3.0s invulnerability
+export const CORNER_SNAP_THRESHOLD = 4; // <= 4px deadzone for orthogonal corridor auto-alignment
+export const ICE_SLIDE_DECEL = 180; // px/s² deceleration when drifting on ice
+
+export interface PlayerTankState {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  direction: CardinalDirection;
+  tier: TankTier;
+  shieldTimer: number;
+  isInvulnerable: boolean;
+  lives: number;
+  isDead: boolean;
+  isSliding: boolean;
+  boatActive: boolean;
+}
+
