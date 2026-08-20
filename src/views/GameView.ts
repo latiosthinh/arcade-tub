@@ -30,6 +30,11 @@ export class GameView extends BaseComponent<AppState> {
       return;
     }
 
+    // Default to theater / full-screen mode on mobile & tablet devices (<1024px)
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
+      this.store.setState({ isTheaterMode: true });
+    }
+
     this.renderPlayer(this.game);
     this.setupListeners();
     this.update(this.store.getState());

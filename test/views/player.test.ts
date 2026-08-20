@@ -115,6 +115,7 @@ describe('GameView', () => {
   });
 
   it('toggles theater mode via button and T key shortcut without recreating iframe (PLAY-04)', () => {
+    store.setState({ isTheaterMode: false });
     const clickSpy = vi.spyOn(uiAudio, 'playClick');
     const view = new GameView(store, 'safe-cracker');
     view.mount(container);
@@ -122,6 +123,10 @@ describe('GameView', () => {
     const initialIframe = container.querySelector('iframe.ac-game-frame');
     const theaterBtn = container.querySelector('.ac-btn-theater') as HTMLButtonElement;
     const frameWrapper = container.querySelector('.ac-player-frame-wrapper') as HTMLElement;
+
+    // Reset explicitly for desktop test environment
+    store.setState({ isTheaterMode: false });
+    view.update(store.getState());
 
     expect(store.getState().isTheaterMode).toBe(false);
     expect(frameWrapper.classList.contains('is-theater')).toBe(false);

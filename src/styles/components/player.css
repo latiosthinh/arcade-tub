@@ -451,25 +451,79 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .ac-player-view {
-    padding: 1rem;
-    padding-bottom: 80px;
+    padding: 0.5rem;
+    padding-bottom: 70px;
+    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
   }
 
-  .ac-player-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
+  .ac-player-view.is-theater {
+    padding: 0;
+    height: 100vh;
+    max-height: 100vh;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000000;
   }
 
-  .ac-player-header-right {
-    width: 100%;
-    justify-content: space-between;
+  .ac-player-view.is-theater .ac-player-header {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 10;
+    background: rgba(250, 246, 238, 0.92);
+    border-radius: var(--radius-md);
+    padding: 0.35rem 0.6rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-bottom: none;
   }
 
   .ac-player-frame-wrapper {
-    aspect-ratio: 4 / 3;
-    min-height: 260px;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+
+  .ac-player-frame-wrapper.is-theater {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ac-player-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .ac-player-header-left {
+    gap: 0.5rem;
+  }
+
+  .ac-player-title {
+    font-size: var(--text-lg);
+  }
+
+  .ac-player-badge {
+    display: none;
+  }
+
+  .ac-player-header-right {
+    width: auto;
+    justify-content: flex-end;
+    gap: 0.4rem;
   }
 }

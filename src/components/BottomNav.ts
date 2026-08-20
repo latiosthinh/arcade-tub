@@ -20,9 +20,9 @@ export class BottomNav extends BaseComponent<AppState> {
         <span class="ac-bottom-label">Home</span>
       </a>
 
-      <a href="#/" class="ac-bottom-item ac-bottom-games" data-path="/" aria-label="Games Catalog">
-        <span class="ac-bottom-icon">🕹️</span>
-        <span class="ac-bottom-label">Games</span>
+      <a href="#/category/nobrain" class="ac-bottom-item ac-bottom-nobrain" data-path="/category/nobrain" aria-label="Relax Games">
+        <span class="ac-bottom-icon">🧠</span>
+        <span class="ac-bottom-label">Relax</span>
       </a>
 
       <a href="#/embed" class="ac-bottom-item ac-bottom-embed" data-path="/embed" aria-label="Embed Kit">
