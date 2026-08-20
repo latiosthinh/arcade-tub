@@ -9,8 +9,8 @@ Expand ArcadeTub by implementing 8 dedicated sensory antistress sandbox minigame
 **Plans:** 2 plans
 
 Plans:
-- [ ] 43-01-PLAN.md — Bubble wrap pop sheet, swipe sweeps, golden rainbow cascade chords, and unit tests
-- [ ] 43-02-PLAN.md — Multi-shape Pop-It silicone fidget boards, 2-way dimple physics, 3D flip animation, and unit tests
+- [x] 43-01-PLAN.md — Bubble wrap pop sheet, swipe sweeps, golden rainbow cascade chords, and unit tests
+- [x] 43-02-PLAN.md — Multi-shape Pop-It silicone fidget boards, 2-way dimple physics, 3D flip animation, and unit tests
 
 ### Phase 44: Soap Carver & Hydraulic Press (`games/soap-carve/`, `games/hydraulic-crush/`)
 - `soap-carve`: Layered soap shaving cutter with curly peel particles, carving depth progression, and hidden figurine discovery.
