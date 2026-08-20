@@ -20,14 +20,18 @@ Plans:
 - [ ] 44-02-PLAN.md — Hydraulic Press piston mechanics, accordion squash deformation, splatter physics, item roster, and unit tests
 
 ### Phase 45: Sand Zen & Color Water Sort (`games/sand-zen/`, `games/liquid-sort/`)
-- `sand-zen`: Granular sand falling particle simulator, sand hopper dispenser, rake dragging, and dune repose.
-- `liquid-sort`: Liquid test tube stacking, pouring transfer validation, stratification checks, and undo history.
-- Unit tests for cellular automaton / granular sand grid and water sort transfer rules.
+**Plans:** 2 plans
+
+Plans:
+- [ ] 45-01-PLAN.md — Granular sand falling particle simulator, sand hopper dispenser, rake dragging, and dune repose
+- [ ] 45-02-PLAN.md — Liquid test tube stacking, pouring transfer validation, stratification checks, and undo history
 
 ### Phase 46: Fidget Spinner & Grass Mower (`games/fidget-spin/`, `games/grass-mow/`)
-- `fidget-spin`: Angular inertia velocity solver, RPM tachometer, neon light trail renderer, and harmonic bearing hum.
-- `grass-mow`: Grid mowing terrain, blade cutting confetti effects, yard path clearing metrics.
-- Unit tests for rotational physics deceleration and lawn grid cutting coverage.
+**Plans:** 2 plans
+
+Plans:
+- [x] 46-01-PLAN.md — Fidget Spinner angular inertia solver, RPM tachometer, neon trail renderer, harmonic bearing hum, and unit tests
+- [ ] 46-02-PLAN.md — Grass Mower steerable mini vehicle, 2D lawn grid cutting, grass confetti particles, buzzing engine Web Audio, and unit tests
 
 ### Phase 47: Antistress Hub Integration & Final Milestone Audit
 - Register all 8 games in `src/data/games.ts` (bringing total catalog to **42 games**).
