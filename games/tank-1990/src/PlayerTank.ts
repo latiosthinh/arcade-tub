@@ -275,10 +275,17 @@ export class PlayerTank {
   }
 
   /**
+   * Convenience steering alias for update(dt, dir)
+   */
+  public move(direction: CardinalDirection, dt: number): void {
+    this.update(dt, direction);
+  }
+
+  /**
    * Updates player tank kinematics, corner snapping, ice sliding, and shield timer.
    * Clamps dt to 0.1s max to prevent tunneling through walls during frame drops (T-49-01).
    */
-  public update(dt: number, inputDirection: CardinalDirection | null): void {
+  public update(dt: number, inputDirection: CardinalDirection | null = null): void {
     if (this.isDead) return;
 
     const safeDt = Math.min(Math.max(0, dt), 0.1);

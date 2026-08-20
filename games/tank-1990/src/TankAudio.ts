@@ -582,6 +582,13 @@ export class TankAudio {
   }
 
   /**
+   * Updates or starts continuous engine hum (idle vs moving).
+   */
+  public updateEngineSound(isMoving: boolean): void {
+    this.startEngine(isMoving);
+  }
+
+  /**
    * Continuous engine hum (45Hz idle, 65Hz moving).
    */
   public startEngine(isMoving: boolean = false): void {
