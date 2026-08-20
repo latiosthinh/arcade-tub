@@ -8,9 +8,10 @@ describe('Zen Koi Pond Physics & Simulation', () => {
     pond = new PondPhysics(800, 600);
   });
 
-  it('spawns initial school of swimming koi fish', () => {
-    expect(pond.fishes.length).toBe(6);
+  it('spawns initial school of swimming koi fish with distinct colors', () => {
+    expect(pond.fishes.length).toBe(8);
     for (const f of pond.fishes) {
+      expect(f.colorType).toBeDefined();
       expect(f.x).toBeGreaterThan(0);
       expect(f.x).toBeLessThan(800);
       expect(f.y).toBeGreaterThan(0);
@@ -18,13 +19,15 @@ describe('Zen Koi Pond Physics & Simulation', () => {
     }
   });
 
-  it('drops food pellet and attracts nearest koi', () => {
-    const food = pond.dropFood(400, 300);
+  it('drops color-matched food pellet and attracts matching koi only', () => {
+    const targetType = pond.fishes[0].colorType;
+    const food = pond.dropFood(400, 300, targetType);
     expect(pond.foods.length).toBe(1);
     expect(food.x).toBe(400);
     expect(food.y).toBe(300);
+    expect(food.colorType).toBe(targetType);
 
-    // Place fish near food (distance > eating radius)
+    // Place matching fish near food
     pond.fishes[0].x = 480;
     pond.fishes[0].y = 300;
 

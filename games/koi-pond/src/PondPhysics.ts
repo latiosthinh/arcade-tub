@@ -1,5 +1,24 @@
+export type FishColorType = 'coral' | 'gold' | 'white' | 'black' | 'blue';
+
+export interface FishColorDef {
+  type: FishColorType;
+  name: string;
+  body: string;
+  fin: string;
+  foodColor: string;
+}
+
+export const KOI_COLORS: FishColorDef[] = [
+  { type: 'coral', name: 'Coral Koi', body: '#FF7675', fin: '#FAB1A0', foodColor: '#FF7675' },
+  { type: 'gold', name: 'Golden Koi', body: '#FFA502', fin: '#FFEAA7', foodColor: '#FFA502' },
+  { type: 'white', name: 'Tancho Koi', body: '#FFFFFF', fin: '#E17055', foodColor: '#F8FAFC' },
+  { type: 'black', name: 'Ink Koi', body: '#2D3436', fin: '#636E72', foodColor: '#2D3436' },
+  { type: 'blue', name: 'Dragon Koi', body: '#0984E3', fin: '#74B9FF', foodColor: '#0984E3' }
+];
+
 export interface Fish {
   id: number;
+  colorType: FishColorType;
   x: number;
   y: number;
   vx: number;
@@ -18,6 +37,8 @@ export interface FoodPellet {
   id: number;
   x: number;
   y: number;
+  colorType: FishColorType;
+  color: string;
   radius: number;
   alpha: number;
   eaten: boolean;
@@ -44,18 +65,11 @@ export class PondPhysics {
     this.width = width;
     this.height = height;
 
-    const colors = [
-      { body: '#FF7675', fin: '#FAB1A0' }, // Coral red koi
-      { body: '#FFA502', fin: '#FFEAA7' }, // Golden orange koi
-      { body: '#FFFFFF', fin: '#E17055' }, // White/Tancho koi
-      { body: '#2D3436', fin: '#636E72' }, // Ink black koi
-      { body: '#0984E3', fin: '#74B9FF' }  // Blue dragon koi
-    ];
-
-    for (let i = 0; i < 6; i++) {
-      const c = colors[i % colors.length];
+    for (let i = 0; i < 8; i++) {
+      const c = KOI_COLORS[i % KOI_COLORS.length];
       this.fishes.push({
         id: this.nextId++,
+        colorType: c.type,
         x: Math.random() * (width - 160) + 80,
         y: Math.random() * (height - 160) + 80,
         vx: (Math.random() - 0.5) * 60,
@@ -72,28 +86,35 @@ export class PondPhysics {
     }
   }
 
-  public addRipple(x: number, y: number, isFood: boolean = false): void {
+  public addRipple(x: number, y: number, isFood: boolean = false, rippleColor?: string): void {
     this.ripples.push({
       x,
       y,
       radius: 4,
-      maxRadius: isFood ? 35 : 70,
+      maxRadius: isFood ? 40 : 75,
       alpha: 0.85,
-      color: isFood ? '#F39C12' : '#74B9FF'
+      color: rippleColor ?? (isFood ? '#F39C12' : '#74B9FF')
     });
   }
 
-  public dropFood(x: number, y: number): FoodPellet {
+  public dropFood(x: number, y: number, specificColor?: FishColorType): FoodPellet {
+    const randomDef = KOI_COLORS[Math.floor(Math.random() * KOI_COLORS.length)];
+    const chosenDef = specificColor
+      ? (KOI_COLORS.find(c => c.type === specificColor) || randomDef)
+      : randomDef;
+
     const food: FoodPellet = {
       id: this.nextId++,
       x,
       y,
-      radius: 4,
+      colorType: chosenDef.type,
+      color: chosenDef.foodColor,
+      radius: 5,
       alpha: 1.0,
       eaten: false
     };
     this.foods.push(food);
-    this.addRipple(x, y, true);
+    this.addRipple(x, y, true, chosenDef.foodColor);
     return food;
   }
 
@@ -136,25 +157,26 @@ export class PondPhysics {
           f.speed = 55 + Math.random() * 25;
         }
       } else if (this.foods.length > 0) {
-        // Swim toward nearest food
-        let nearestFood: FoodPellet | null = null;
+        // Koi only seeks food matching its own color type!
+        let matchingFood: FoodPellet | null = null;
         let minDist = Infinity;
         for (const food of this.foods) {
+          if (food.colorType !== f.colorType) continue;
           const d = Math.hypot(food.x - f.x, food.y - f.y);
           if (d < minDist) {
             minDist = d;
-            nearestFood = food;
+            matchingFood = food;
           }
         }
 
-        if (nearestFood && minDist < 350) {
-          f.targetAngle = Math.atan2(nearestFood.y - f.y, nearestFood.x - f.x);
-          f.speed = 105;
+        if (matchingFood && minDist < 450) {
+          f.targetAngle = Math.atan2(matchingFood.y - f.y, matchingFood.x - f.x);
+          f.speed = 120;
 
-          // Eat food if reached
-          if (minDist < f.length * 0.5 + nearestFood.radius + 6) {
-            nearestFood.eaten = true;
-            this.addRipple(nearestFood.x, nearestFood.y, true);
+          // Eat matching food pellet if reached
+          if (minDist < f.length * 0.5 + matchingFood.radius + 6) {
+            matchingFood.eaten = true;
+            this.addRipple(matchingFood.x, matchingFood.y, true, f.color);
             f.speed = 45; // Relaxes after eating
           }
         }

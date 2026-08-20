@@ -1,12 +1,18 @@
 import type { GameScene } from '@arcade-carnival/game-engine';
-import { PondPhysics, Fish } from './PondPhysics.js';
+import { PondPhysics, Fish, KOI_COLORS } from './PondPhysics.js';
 
 export class KoiPondScene implements GameScene {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private physics: PondPhysics;
   private audioCtx: AudioContext | null = null;
-  private mode: 'feed' | 'splash' = 'feed';
+
+  // Touch handling for mobile & tablet (tap = splash, hold/long-touch or 2-finger tap = feed)
+  private touchStartTime: number = 0;
+  private touchStartX: number = 0;
+  private touchStartY: number = 0;
+  private isHoldingTouch: boolean = false;
+  private holdFeedInterval: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -46,43 +52,102 @@ export class KoiPondScene implements GameScene {
     } catch {}
   }
 
+  private getPos(clientX: number, clientY: number): { x: number; y: number } {
+    const rect = this.canvas.getBoundingClientRect();
+    const scaleX = this.canvas.width / rect.width;
+    const scaleY = this.canvas.height / rect.height;
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  }
+
   private setupEvents(): void {
-    const handleTap = (clientX: number, clientY: number) => {
+    // 1. Mouse Events: Left-click (0) = Splash, Right-click (2) = Feed color food
+    this.canvas.addEventListener('mousedown', (e) => {
       this.initAudio();
-      const rect = this.canvas.getBoundingClientRect();
-      const scaleX = this.canvas.width / rect.width;
-      const scaleY = this.canvas.height / rect.height;
-      const x = (clientX - rect.left) * scaleX;
-      const y = (clientY - rect.top) * scaleY;
+      const { x, y } = this.getPos(e.clientX, e.clientY);
 
-      // Mode switch button at top toolbar
-      if (y < 60 && x > this.canvas.width - 160) {
-        this.mode = this.mode === 'feed' ? 'splash' : 'feed';
-        return;
-      }
-
-      if (this.mode === 'feed') {
+      if (e.button === 2) {
+        // Right click -> Feed random color food
         this.physics.dropFood(x, y);
         this.playWaterPlop(true);
-      } else {
+      } else if (e.button === 0) {
+        // Left click -> Splash water (fishes scatter)
         this.physics.tapWater(x, y);
         this.playWaterPlop(false);
       }
-    };
-
-    this.canvas.addEventListener('mousedown', (e) => {
-      handleTap(e.clientX, e.clientY);
     });
 
+    // Prevent context menu on right click so feeding is seamless
+    this.canvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    // 2. Touch Events for Mobile / Tablet:
+    // - Quick tap = Splash water
+    // - Press & Hold / Drag or 2-finger tap = Sprinkle color food pellets
     this.canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      if (e.touches.length > 0) {
-        handleTap(e.touches[0].clientX, e.touches[0].clientY);
+      this.initAudio();
+
+      if (e.touches.length >= 2) {
+        // Two-finger tap -> Feed food at touch position
+        const { x, y } = this.getPos(e.touches[0].clientX, e.touches[0].clientY);
+        this.physics.dropFood(x, y);
+        this.playWaterPlop(true);
+        this.isHoldingTouch = false;
+        return;
       }
+
+      if (e.touches.length === 1) {
+        const { x, y } = this.getPos(e.touches[0].clientX, e.touches[0].clientY);
+        this.touchStartTime = performance.now();
+        this.touchStartX = x;
+        this.touchStartY = y;
+        this.isHoldingTouch = true;
+      }
+    }, { passive: false });
+
+    this.canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (e.touches.length > 0 && this.isHoldingTouch) {
+        const { x, y } = this.getPos(e.touches[0].clientX, e.touches[0].clientY);
+        this.touchStartX = x;
+        this.touchStartY = y;
+      }
+    }, { passive: false });
+
+    this.canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      const elapsed = performance.now() - this.touchStartTime;
+
+      if (this.isHoldingTouch && elapsed < 260) {
+        // Quick short tap -> Splash water
+        this.physics.tapWater(this.touchStartX, this.touchStartY);
+        this.playWaterPlop(false);
+      }
+      this.isHoldingTouch = false;
     }, { passive: false });
   }
 
   public update(dt: number): void {
+    // Touch hold feeding loop for mobile/tablets
+    if (this.isHoldingTouch) {
+      const elapsed = performance.now() - this.touchStartTime;
+      if (elapsed >= 260) {
+        this.holdFeedInterval += dt;
+        if (this.holdFeedInterval >= 0.18) {
+          this.holdFeedInterval = 0;
+          this.physics.dropFood(
+            this.touchStartX + (Math.random() - 0.5) * 20,
+            this.touchStartY + (Math.random() - 0.5) * 20
+          );
+          this.playWaterPlop(true);
+        }
+      }
+    }
+
     this.physics.update(dt);
   }
 
@@ -91,11 +156,11 @@ export class KoiPondScene implements GameScene {
     const w = this.canvas.width;
     const h = this.canvas.height;
 
-    // 1. Water Basin background (Tranquil Zen Pond palette)
+    // 1. Water Basin background
     renderCtx.fillStyle = '#E0F2FE';
     renderCtx.fillRect(0, 0, w, h);
 
-    // Subtle water caustics / sand ripples
+    // Subtle water caustics waves
     renderCtx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
     renderCtx.lineWidth = 2;
     for (let y = 30; y < h; y += 45) {
@@ -123,15 +188,24 @@ export class KoiPondScene implements GameScene {
       renderCtx.globalAlpha = 1.0;
     }
 
-    // 4. Food Pellets
+    // 4. Color-Coded Food Pellets
     for (const food of this.physics.foods) {
-      renderCtx.fillStyle = '#B45309';
+      renderCtx.save();
+      renderCtx.fillStyle = food.color;
       renderCtx.beginPath();
       renderCtx.arc(food.x, food.y, food.radius, 0, Math.PI * 2);
       renderCtx.fill();
       renderCtx.strokeStyle = '#2B2118';
-      renderCtx.lineWidth = 1;
+      renderCtx.lineWidth = 1.5;
       renderCtx.stroke();
+
+      // Shimmer ring
+      renderCtx.strokeStyle = '#FFFFFF';
+      renderCtx.lineWidth = 1;
+      renderCtx.beginPath();
+      renderCtx.arc(food.x - 1, food.y - 1, food.radius * 0.45, 0, Math.PI * 2);
+      renderCtx.stroke();
+      renderCtx.restore();
     }
 
     // 5. Swimming Koi Fishes
@@ -144,8 +218,8 @@ export class KoiPondScene implements GameScene {
     renderCtx.lineWidth = 4;
     renderCtx.strokeRect(10, 10, w - 20, h - 20);
 
-    // 7. Top HUD & Mode Toggle
-    this.renderHUD(renderCtx, w);
+    // 7. Minimal Zen HUD Controls Guide
+    this.renderZenGuide(renderCtx, w);
   }
 
   private renderLilyPad(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void {
@@ -244,31 +318,23 @@ export class KoiPondScene implements GameScene {
     ctx.restore();
   }
 
-  private renderHUD(ctx: CanvasRenderingContext2D, width: number): void {
+  private renderZenGuide(ctx: CanvasRenderingContext2D, width: number): void {
     ctx.save();
     // Top banner
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-    ctx.fillRect(20, 18, 220, 36);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+    ctx.fillRect(20, 18, width - 40, 36);
     ctx.strokeStyle = '#2B2118';
     ctx.lineWidth = 2;
-    ctx.strokeRect(20, 18, 220, 36);
-
-    ctx.fillStyle = '#2B2118';
-    ctx.font = 'bold 14px "Comfortaa", sans-serif';
-    ctx.fillText('🐠 ZEN KOI POND', 32, 42);
-
-    // Mode Toggle Button
-    const btnX = width - 180;
-    ctx.fillStyle = this.mode === 'feed' ? '#FEF08A' : '#93C5FD';
-    ctx.fillRect(btnX, 18, 160, 36);
-    ctx.strokeStyle = '#2B2118';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(btnX, 18, 160, 36);
+    ctx.strokeRect(20, 18, width - 40, 36);
 
     ctx.fillStyle = '#2B2118';
     ctx.font = 'bold 13px "Comfortaa", sans-serif';
-    ctx.fillText(this.mode === 'feed' ? 'MODE: 🍞 FEED FISH' : 'MODE: 🌊 SPLASH WATER', btnX + 10, 42);
+    ctx.textAlign = 'left';
+    ctx.fillText('🐠 ZEN KOI POND', 32, 41);
 
+    ctx.font = '12px "Comfortaa", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('🖱️ LEFT: Splash  •  RIGHT: Feed Colors  |  📱 TAP: Splash  •  HOLD / 2-FINGER: Feed', width - 36, 41);
     ctx.restore();
   }
 }
