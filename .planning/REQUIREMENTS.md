@@ -1,43 +1,56 @@
-# Requirements: Milestone v6.0 — CrazyGames Minigame Replication
+# Requirements: Milestone v7.0 — Sensory Antistress Sandbox (8 Minigames)
 
-## 1. Scope Overview
-Replicate and adapt the top 12 popular minigames from CrazyGames (`https://www.crazygames.com/t/mini`) into Arcade Carnival's 2D Papercraft aesthetic with procedural Web Audio, zero external assets, touch/keyboard controls, unit tests, and hub catalog registration.
+## 1. Functional Requirements
 
-## 2. Minigame Requirements
+### FR-01: Bubble Wrap Pop (`bubble-pop`)
+- Grid of interactive papercraft bubble cells with pop states and pop sounds.
+- Multi-touch swipe/drag popping and cursor sweeps.
+- Rare golden rainbow pop bubbles that trigger chord cascade harmonies.
+- Infinite regeneration / fresh sheet reset button.
 
-### Wave 1: Core Reflex & Physics (Phases 31–33)
-- **REQ-601 [Paper Basket]**: Tap-to-flap ball physics, trajectory arcing, moving cardboard hoops, net rim bounce, swish clean score multipliers.
-- **REQ-602 [Drift Boss]**: One-button press-and-hold right turn / release left turn, isometric zigzag track generation, coin pickups, edge fall detection.
-- **REQ-603 [Helix Jump]**: Drag/arrow left-right tower rotation, bouncing ink droplet, segmented cardboard floor cutouts, paint splatter death hazards.
-- **REQ-604 [Square Bird]**: Auto-runner, tap to spawn stacked paper square blocks under bird, clear cliffs and fences, fever mode landing bonus.
+### FR-02: Soap & Wood Carver (`soap-carve`)
+- 3D layered pastel soap bar / wood block sliceable by dragging gesture.
+- Shaving curl physics that peel off with procedural scraping/cutting sound effects.
+- Progressive carving depth revealing hidden collectible origami figurines.
 
-### Wave 2: Hyper-Casual & Party (Phases 34–36)
-- **REQ-605 [Layers Roll]**: Forward roll peeling paper layers, expanding roll diameter, color gates, shaving hurdles, end-of-run length scoring.
-- **REQ-606 [12 MiniBattles]**: 1-button party minigame engine with 12 rapid minigames (Quick Draw, Balloon Pop, Soccer, Tug of War, Lava Jump, etc.) against CPU or P2.
-- **REQ-607 [Dino Runner]**: Endless paper desert runner, jump (Up/Space), duck/crouch (Down), origami cactus barriers and flying pterodactyls, day/night paper shifts.
-- **REQ-608 [Snow Rider]**: Pseudo-3D downhill sledding runner, left/right steering, cardboard pine trees, snow ramps, snowman obstacles, gift box pickups.
+### FR-03: Sand Zen Sandbox (`sand-zen`)
+- Interactive granular physics simulation with falling multi-color glowing sand streams.
+- Tools: Zen Rake, Color Hopper, Sand Funnels, Clear Basin.
+- Natural dune angle of repose and satisfying granular avalanches.
 
-### Wave 3: Puzzle & Strategy (Phases 37–39)
-- **REQ-609 [Potion Merge]**: Drop flask physics into cauldron grid (Suika/Watermelon merge style), merge matching potion tiers into supreme elixir.
-- **REQ-610 [Mahjong Paper]**: Classic 3D layer tile matching puzzle, free-edge detection, papercraft kanji/symbol glyphs, shuffle and hint helpers.
-- **REQ-611 [Subway Runner]**: 3-lane vertical runner with swipe/arrow lane shifts, jump over cardboard barricades, roll under signs, collect paper ticket tokens.
-- **REQ-612 [Prism Laser]**: Grid-based laser reflection optics, rotate 45° paper mirrors and beam splitters to illuminate crystal targets.
+### FR-04: Fidget Spinner Speed (`fidget-spin`)
+- Angular momentum physics spinner with inertia and low bearing friction.
+- Swipe velocity tracker calculating RPM, max speed, and total revolutions.
+- Unlocks: neon blade trails, harmonic hum pitch scaling with RPM.
 
-### Wave 4: Hub & Integration (Phase 40)
-- **REQ-613 [Catalog Integration]**: Register all 12 games in `src/data/games.ts` (expanding to 27 games total).
-- **REQ-614 [SVG Card Previews]**: Create 12 authentic 2D Papercraft SVG screenshot illustrations in `src/data/screenshots.ts`.
-- **REQ-615 [Genre Filters & Shells]**: Update genre tags and verify responsive standalone HTML shells for all 12 new games.
-- **REQ-616 [Test Coverage & Build]**: Maintain 100% test pass rate across all new game logic and pass bundle size audit (< 250KB gzipped).
+### FR-05: Color Water Sort (`liquid-sort`)
+- Test tubes with layered colored liquid pigments.
+- Tap source tube then destination tube to pour top matching color.
+- Undo, restart, and procedural soothing liquid glug sound effects.
 
-### Wave 5: Game Mechanic Polish (Phase 41)
-- **REQ-617 [Square Bird Timed Blocks]**: Egg blocks have limited lifetime (3.0s), showing visual cracking wear, then expire and trigger crumble particles + gravity fall.
-- **REQ-618 [Square Bird Infinity Mode]**: Endless procedural obstacle streaming, game mode toggle (Levels vs Infinite), and persistent high score tracking.
+### FR-06: Pop-It Fidget Toy (`pop-it`)
+- Geometric silicone board (Heart, Star, Hexagon, Bear) with 2-way dimple buttons.
+- Rubbery pop tactile audio on press and automatic board flip when cleared.
+- Multi-color pastel / rainbow themes.
 
-### Wave 6: No-Brain Arcade Minigames (Phase 42)
-- **REQ-619 [Rainbow Draw & Scratch Reveal]**: Freeform rainbow brush lines with auto-smoothing spline curves and scratch-off craft paper reveal mode.
-- **REQ-620 [Blank Space Fireworks]**: Click/tap anywhere to launch multi-burst procedural rocket fireworks with sound and confetti physics.
-- **REQ-621 [Fruit Flood Endless Blade]**: Continuous endless flood of papercraft fruits with multi-slice blade physics, juice particles, and combo streaks.
-- **REQ-622 [Snow Smash Target Destroyer]**: Snowball catapult physics destroying layered cardboard structures and targets with fracture mechanics.
-- **REQ-623 [Mosquito Net Swat]**: Reflex net swiping to catch swarms of origami mosquitoes with combo streaks and power-up traps.
-- **REQ-624 [Tic-Tac-Toe Papercraft vs AI]**: 3x3 cardboard grid with local 2P and AI opponent (Xiaomi Mimo SG API integration with Minimax offline fallback).
+### FR-07: Grass Mower Swirl (`grass-mow`)
+- Steerable mini cardboard lawn mower with simple directional touch / arrow controls.
+- Tall layered paper grass blades sliced into airborne confetti ribbons.
+- Mowing percentage tracker with garden pattern generation.
 
+### FR-08: Hydraulic Press Crusher (`hydraulic-crush`)
+- Hydraulic stamping press operated by holding click/space/touch.
+- Squishy papercraft targets (Rubber Duck, Clock, Can, Watermelon, Diamond).
+- Elastic accordion flattening animation, splatter particle burst, and hydraulic hiss audio.
+
+## 2. Platform & Catalog Integration
+
+### FR-09: Hub Catalog Registration & Categories
+- Register all 8 games under `src/data/games.ts` assigned to `nobrain` / `casual` categories.
+- Create 8 custom 2D Papercraft SVG screenshot illustrations in `src/data/screenshots.ts`.
+- Register all 8 HTML entry points in `vite.config.ts` multi-page build configuration.
+
+### FR-10: Quality & Production Budgets
+- 100% test pass rate across all new physics and state engines with Vitest.
+- Total production bundle size strictly under 300KB gzipped budget.
+- Full mobile standalone PWA support and edge-to-edge fullscreen theater mode.
