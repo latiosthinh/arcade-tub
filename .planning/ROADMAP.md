@@ -117,7 +117,10 @@ Plans:
   3. Explosions, wall chipping, and bullet impacts emit paper confetti particles and muzzle sparks.
   4. Procedural 8-bit Web Audio synthesizes engine hums, shot pops, wall crumble crunch, steel clangs, explosions, item pickup fanfares, and base destruction alarm without external assets.
   5. Master DynamicsCompressor routes all audio channels to prevent clipping and distortion during heavy explosion sequences.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 53-01-PLAN.md — Multi-pass Canvas 2D TankRenderer, cardboard aesthetics, drop shadows, grass canopy camouflage layer, and ParticleEmitter
+- [ ] 53-02-PLAN.md — Zero-asset procedural 8-bit Web Audio TankAudio with DynamicsCompressorNode and comprehensive Vitest unit test suites
 **UI hint**: yes
 
 ### Phase 54: Mobile Virtual Controls & Responsive Viewport
