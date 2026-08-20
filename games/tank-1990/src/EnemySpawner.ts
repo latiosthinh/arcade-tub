@@ -89,11 +89,19 @@ export class EnemySpawner {
     return this.waveQueue.length;
   }
 
+  public getRemainingCount(): number {
+    return this.waveQueue.length + this.activeEnemies.length;
+  }
+
   public getTotalRemaining(): number {
     return this.waveQueue.length + this.activeEnemies.length;
   }
 
   public isWaveComplete(): boolean {
+    return this.waveQueue.length === 0 && this.activeEnemies.length === 0;
+  }
+
+  public isWaveCleared(): boolean {
     return this.waveQueue.length === 0 && this.activeEnemies.length === 0;
   }
 
