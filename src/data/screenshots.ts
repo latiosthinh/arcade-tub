@@ -663,26 +663,32 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
 
   'potion-merge': `
     <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
-      <!-- Alchemy Paper Desk Background -->
+      <!-- Gem Vault Parchment Desk Background -->
       <rect width="320" height="180" fill="#FAF6EE" />
 
-      <!-- Cardboard Flask Container Frame -->
-      <path d="M 95 20 L 95 50 L 60 160 L 260 160 L 225 50 L 225 20 Z" fill="#F4EAD4" stroke="#3E2723" stroke-width="3" />
+      <!-- Cardboard Vault Container Frame -->
+      <rect x="75" y="25" width="170" height="140" rx="4" fill="#F4EAD4" stroke="#2B2118" stroke-width="3" />
 
-      <!-- Dropper at Top -->
-      <rect x="150" y="5" width="20" height="24" rx="2" fill="#8B5CF6" stroke="#3E2723" stroke-width="1.5" />
+      <!-- Dropper Guideline at Top -->
+      <line x1="160" y1="5" x2="160" y2="35" stroke="#2B2118" stroke-width="2" stroke-dasharray="3,3" />
+      <polygon points="152,10 168,10 160,25" fill="#8B5CF6" stroke="#2B2118" stroke-width="1.5" />
 
-      <!-- Stacked Bubbly Paper Potions Inside Flask -->
-      <!-- Small Green Potion -->
-      <circle cx="100" cy="140" r="14" fill="#10B981" stroke="#3E2723" stroke-width="2" />
-      <circle cx="96" cy="136" r="3" fill="#FFFDF8" />
-      <!-- Medium Yellow Potion -->
-      <circle cx="140" cy="135" r="20" fill="#F59E0B" stroke="#3E2723" stroke-width="2" />
-      <circle cx="134" cy="129" r="4" fill="#FFFDF8" />
-      <!-- Large Purple Cosmic Potion -->
-      <circle cx="205" cy="125" r="28" fill="#8B5CF6" stroke="#3E2723" stroke-width="2.5" />
-      <circle cx="197" cy="117" r="6" fill="#FFFDF8" />
-      <polygon points="215,115 217,120 222,121 218,124 220,129 215,126 210,129 212,124 208,121 213,120" fill="#FEF08A" />
+      <!-- Faceted Papercraft Gemstones Inside Vault -->
+      <!-- Small Quartz Diamond -->
+      <polygon points="105,130 118,142 105,154 92,142" fill="#E2E8F0" stroke="#2B2118" stroke-width="2" />
+      <polygon points="105,135 113,142 105,149 97,142" fill="#CBD5E1" stroke="#94A3B8" stroke-width="1" />
+
+      <!-- Medium Amber Citrine Hexagon -->
+      <polygon points="148,126 160,120 172,126 172,140 160,146 148,140" fill="#FDE047" stroke="#2B2118" stroke-width="2" />
+      <polygon points="152,129 160,124 168,129 168,137 160,141 152,137" fill="#EAB308" stroke="#CA8A04" stroke-width="1" />
+
+      <!-- Large Ruby Core Faceted Diamond -->
+      <polygon points="205,100 230,125 205,150 180,125" fill="#FDA4AF" stroke="#2B2118" stroke-width="2.5" />
+      <polygon points="205,110 220,125 205,140 190,125" fill="#F43F5E" stroke="#BE123C" stroke-width="1.5" />
+      <circle cx="196" cy="115" r="3" fill="#FFFFFF" />
+
+      <!-- Sparkle Star Accent -->
+      <path d="M 125 75 L 128 82 L 135 85 L 128 88 L 125 95 L 122 88 L 115 85 L 122 82 Z" fill="#F59E0B" />
     </svg>
   `,
 

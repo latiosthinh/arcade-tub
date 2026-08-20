@@ -416,7 +416,7 @@ export class PotionRenderer {
     ctx.textAlign = 'left';
     ctx.fillStyle = '#2B2118';
     ctx.font = 'bold 20px "Patrick Hand", cursive';
-    ctx.fillText('ALCHEMY LAB', 36, 70);
+    ctx.fillText('GEM VAULT', 36, 70);
 
     ctx.font = '14px "Comfortaa", sans-serif';
     ctx.fillStyle = '#C85A32';
@@ -431,15 +431,15 @@ export class PotionRenderer {
       ctx.fillText(`COMBO x${engine.state.multiplier}!`, 36, 186);
     }
 
-    // Right Sidebar Note: Next Potion & Legend
+    // Right Sidebar Note: Next Gem & Legend
     this.drawPaperCard(ctx, 616, 40, 160, 200, '#FFFDF8');
     ctx.textAlign = 'center';
     ctx.fillStyle = '#2B2118';
     ctx.font = 'bold 18px "Patrick Hand", cursive';
-    ctx.fillText('NEXT POTION', 696, 70);
+    ctx.fillText('NEXT GEM', 696, 70);
 
-    const nextDef = POTION_TIERS[engine.state.nextTier - 1] || POTION_TIERS[0];
-    const previewNext: PotionBody = {
+    const nextDef = GEM_TIERS[engine.state.nextTier - 1] || GEM_TIERS[0];
+    const previewNext: GemBody = {
       id: -1,
       tier: engine.state.nextTier,
       x: 696,
@@ -450,6 +450,8 @@ export class PotionRenderer {
       settled: false,
       markedForRemoval: false,
       spawnAnimation: 1,
+      rotation: 0,
+      vRot: 0,
     };
     this.renderPotion(ctx, previewNext);
 
@@ -462,7 +464,7 @@ export class PotionRenderer {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#2B2118';
     ctx.font = '13px "Comfortaa", sans-serif';
-    ctx.fillText('MOUSE/TOUCH/ARROWS: Aim Dropper  •  CLICK/SPACE: Drop Potion  •  ESC: Pause', 400, 580);
+    ctx.fillText('MOUSE/TOUCH/ARROWS: Aim Dropper  •  CLICK/SPACE: Drop Gem  •  ESC: Pause', 400, 580);
 
     ctx.restore();
   }
@@ -495,14 +497,14 @@ export class PotionRenderer {
 
       this.drawPaperCard(ctx, 180, 120, 440, 360, '#FFFDF8');
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#C85A32';
+      ctx.fillStyle = '#8B5CF6';
       ctx.font = 'bold 36px "Patrick Hand", cursive';
-      ctx.fillText('POTION MERGE', 400, 180);
+      ctx.fillText('GEM MERGE', 400, 180);
 
       ctx.fillStyle = '#2B2118';
       ctx.font = '15px "Comfortaa", sans-serif';
-      ctx.fillText('Drop alchemical papercraft potions into flask.', 400, 220);
-      ctx.fillText('Touch matching tiers to brew grander elixirs!', 400, 250);
+      ctx.fillText('Drop sparkling papercraft faceted gems into vault.', 400, 220);
+      ctx.fillText('Touch matching crystals to craft the Grand Diamond Crown!', 400, 250);
       ctx.fillText('Watch out for danger ceiling overflow.', 400, 280);
 
       ctx.fillStyle = '#10B981';
@@ -518,7 +520,7 @@ export class PotionRenderer {
       ctx.textAlign = 'center';
       ctx.fillStyle = '#2B2118';
       ctx.font = 'bold 32px "Patrick Hand", cursive';
-      ctx.fillText('LAB PAUSED', 400, 280);
+      ctx.fillText('VAULT PAUSED', 400, 280);
       ctx.font = '15px "Comfortaa", sans-serif';
       ctx.fillText('Press ESC to Resume', 400, 330);
       ctx.restore();
@@ -531,7 +533,7 @@ export class PotionRenderer {
       ctx.textAlign = 'center';
       ctx.fillStyle = '#E11D48';
       ctx.font = 'bold 36px "Patrick Hand", cursive';
-      ctx.fillText('FLASK OVERFLOWED!', 400, 180);
+      ctx.fillText('VAULT OVERFLOWED!', 400, 180);
 
       ctx.fillStyle = '#2B2118';
       ctx.font = 'bold 24px "Patrick Hand", cursive';
@@ -542,7 +544,7 @@ export class PotionRenderer {
 
       ctx.fillStyle = '#10B981';
       ctx.font = 'bold 22px "Patrick Hand", cursive';
-      ctx.fillText('Click to Brew Again', 400, 380);
+      ctx.fillText('Click to Merge Again', 400, 380);
       ctx.restore();
     }
   }
