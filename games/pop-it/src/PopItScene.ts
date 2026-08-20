@@ -566,12 +566,7 @@ export class PopItScene {
     const isMuted = this.audio.getIsMuted();
     this.renderButton(this.btnMuteRect, isMuted ? '🔇' : '🔊', '#f1f5f9', '#334155');
 
-    // Back to Hub Button
-    const backW = 70;
-    const backX = muteX - backW - pad;
-    const backY = 22;
-    this.btnBackRect = { x: backX, y: backY, w: backW, h: btnH };
-    this.renderButton(this.btnBackRect, '← Hub', '#f1f5f9', '#334155');
+    this.btnBackRect = { x: -100, y: -100, w: 0, h: 0 };
 
     // Shape Selector Pill Bar
     const shapes: PopItShape[] = ['square', 'heart', 'hexagon', 'star'];

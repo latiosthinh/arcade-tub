@@ -565,12 +565,7 @@ export class BubbleScene {
     const isMuted = this.audio.getIsMuted();
     this.renderButton(this.btnMuteRect, isMuted ? '🔇' : '🔊', '#f1f5f9', '#334155');
 
-    // Back to hub button
-    const backW = 75;
-    const backX = muteX - backW - pad;
-    const backY = 24;
-    this.btnBackRect = { x: backX, y: backY, w: backW, h: btnH };
-    this.renderButton(this.btnBackRect, '← Hub', '#f1f5f9', '#334155');
+    this.btnBackRect = { x: -100, y: -100, w: 0, h: 0 };
 
     // Bottom subtle hint
     this.ctx.font = '13px system-ui, -apple-system, sans-serif';

@@ -1,8 +1,11 @@
+import { initPlayables } from '@arcade-carnival/playables-adapter';
 import { SandZenScene } from './SandZenScene';
 import { sandAudio } from './SandAudio';
 import { ZenToolType } from './ZenTools';
 
-window.addEventListener('DOMContentLoaded', () => {
+initPlayables();
+
+const startApp = () => {
   const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -74,6 +77,12 @@ window.addEventListener('DOMContentLoaded', () => {
   muteBtn?.addEventListener('click', () => {
     const isMuted = !sandAudio.isMuted();
     sandAudio.setMuted(isMuted);
-    muteBtn.innerText = isMuted ? '🔇' : '🔊';
+    if (muteBtn) muteBtn.innerText = isMuted ? '🔇' : '🔊';
   });
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
