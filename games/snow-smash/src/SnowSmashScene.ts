@@ -4,7 +4,7 @@ import { SnowballPhysics, Snowball } from './SnowballPhysics.js';
 import { TargetStructure, StructureBlock } from './TargetStructure.js';
 import { SnowSmashAudio } from './SnowSmashAudio.js';
 
-export class SnowSmashScene extends GameScene {
+export class SnowSmashScene implements GameScene {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private physics: SnowballPhysics;
@@ -15,7 +15,7 @@ export class SnowSmashScene extends GameScene {
   private highScore: number = 0;
   private currentLevel: number = 1;
   private maxLevels: number = 4;
-  private snowballsRemaining: number = 5;
+  private snowballsRemaining: number = 999; // relaxed / infinite arcade casual mode
 
   private isDragging: boolean = false;
   private dragStartX: number = 0;
@@ -25,12 +25,20 @@ export class SnowSmashScene extends GameScene {
   private slingshotAnchorX: number = 140;
   private slingshotAnchorY: number = 420;
 
+  // Continuous grow & auto-rapid throw mechanics
+  private snowballScale: number = 1.0;
+  private prevDragDistance: number = 0;
+  private isHoldingGunMode: boolean = false;
+  private gunHoldTimer: number = 0;
+  private gunRapidTimer: number = 0;
+  private holdTargetX: number = 0;
+  private holdTargetY: number = 0;
+
   private isPaused: boolean = false;
   private levelState: 'playing' | 'cleared' | 'failed' = 'playing';
   private transitionTimer: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
-    super();
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
     this.physics = new SnowballPhysics(canvas.width, canvas.height);
@@ -78,78 +86,142 @@ export class SnowSmashScene extends GameScene {
     };
 
     this.canvas.addEventListener('mousedown', (e) => {
-      if (this.levelState !== 'playing' || this.snowballsRemaining <= 0) return;
+      if (this.levelState !== 'playing') return;
       const { x, y } = getPos(e);
       // Click near slingshot
-      if (Math.hypot(x - this.slingshotAnchorX, y - this.slingshotAnchorY) < 90) {
+      if (Math.hypot(x - this.slingshotAnchorX, y - this.slingshotAnchorY) < 110) {
         this.isDragging = true;
         this.dragStartX = x;
         this.dragStartY = y;
         this.currentDragX = x;
         this.currentDragY = y;
+        this.snowballScale = 1.0;
+      } else {
+        this.isHoldingGunMode = true;
+        this.holdTargetX = x;
+        this.holdTargetY = y;
+        this.gunRapidTimer = 0;
+        this.fireGunSnowball(x, y);
       }
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (!this.isDragging) return;
       const { x, y } = getPos(e);
-      this.currentDragX = x;
-      this.currentDragY = y;
+      if (this.isDragging) {
+        const delta = Math.hypot(x - this.currentDragX, y - this.currentDragY);
+        this.snowballScale = Math.min(3.2, this.snowballScale + delta * 0.003);
+        this.currentDragX = x;
+        this.currentDragY = y;
+      } else if (this.isHoldingGunMode) {
+        this.holdTargetX = x;
+        this.holdTargetY = y;
+      }
     });
 
     window.addEventListener('mouseup', () => {
       if (this.isDragging) {
         this.releaseSlingshot();
       }
+      this.isHoldingGunMode = false;
     });
 
     this.canvas.addEventListener('touchstart', (e) => {
-      if (this.levelState !== 'playing' || this.snowballsRemaining <= 0) return;
+      if (this.levelState !== 'playing') return;
       if (e.touches.length > 0) {
         const { x, y } = getPos(e.touches[0]);
-        if (Math.hypot(x - this.slingshotAnchorX, y - this.slingshotAnchorY) < 90) {
+        if (Math.hypot(x - this.slingshotAnchorX, y - this.slingshotAnchorY) < 110) {
           this.isDragging = true;
           this.dragStartX = x;
           this.dragStartY = y;
           this.currentDragX = x;
           this.currentDragY = y;
+          this.snowballScale = 1.0;
+        } else {
+          this.isHoldingGunMode = true;
+          this.holdTargetX = x;
+          this.holdTargetY = y;
+          this.gunRapidTimer = 0;
+          this.fireGunSnowball(x, y);
         }
       }
     }, { passive: false });
 
     window.addEventListener('touchmove', (e) => {
-      if (!this.isDragging || e.touches.length === 0) return;
+      if (e.touches.length === 0) return;
       const { x, y } = getPos(e.touches[0]);
-      this.currentDragX = x;
-      this.currentDragY = y;
+      if (this.isDragging) {
+        const delta = Math.hypot(x - this.currentDragX, y - this.currentDragY);
+        this.snowballScale = Math.min(3.2, this.snowballScale + delta * 0.003);
+        this.currentDragX = x;
+        this.currentDragY = y;
+      } else if (this.isHoldingGunMode) {
+        this.holdTargetX = x;
+        this.holdTargetY = y;
+      }
     }, { passive: false });
 
     window.addEventListener('touchend', () => {
       if (this.isDragging) {
         this.releaseSlingshot();
       }
+      this.isHoldingGunMode = false;
     });
+  }
+
+  private fireGunSnowball(targetX: number, targetY: number): void {
+    const dx = targetX - this.slingshotAnchorX;
+    const dy = targetY - this.slingshotAnchorY;
+    const dist = Math.hypot(dx, dy) || 1;
+    const speed = 800;
+
+    this.physics.launchCustomBall(
+      this.slingshotAnchorX,
+      this.slingshotAnchorY,
+      (dx / dist) * speed,
+      (dy / dist) * speed - 80,
+      14
+    );
+    this.audio.playSlingshotRelease();
   }
 
   private releaseSlingshot(): void {
     this.isDragging = false;
     const pullDist = Math.hypot(this.slingshotAnchorX - this.currentDragX, this.slingshotAnchorY - this.currentDragY);
-    if (pullDist < 12) return; // Too small pull
+    if (pullDist < 12) {
+      this.snowballScale = 1.0;
+      return;
+    }
 
-    this.physics.launchFromSlingshot(
+    const pullX = this.slingshotAnchorX - this.currentDragX;
+    const pullY = this.slingshotAnchorY - this.currentDragY;
+    const power = Math.min(pullDist, 180) * 5.5;
+    const angle = Math.atan2(pullY, pullX);
+    const radius = 16 * this.snowballScale;
+
+    this.physics.launchCustomBall(
       this.slingshotAnchorX,
       this.slingshotAnchorY,
-      this.currentDragX,
-      this.currentDragY,
-      9.0
+      Math.cos(angle) * power,
+      Math.sin(angle) * power,
+      radius
     );
 
-    this.snowballsRemaining--;
+    this.snowballScale = 1.0;
     this.audio.playSlingshotRelease();
   }
 
   public update(dt: number): void {
     if (this.isPaused) return;
+
+    // Gun continuous firing loop
+    if (this.isHoldingGunMode && this.levelState === 'playing') {
+      this.gunHoldTimer += dt;
+      this.gunRapidTimer += dt;
+      if (this.gunHoldTimer > 0.25 && this.gunRapidTimer >= 0.12) {
+        this.gunRapidTimer = 0;
+        this.fireGunSnowball(this.holdTargetX, this.holdTargetY);
+      }
+    }
 
     this.physics.update(dt);
     this.structure.updatePhysics(dt);

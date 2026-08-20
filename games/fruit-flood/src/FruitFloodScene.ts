@@ -26,7 +26,9 @@ export class FruitFloodScene implements GameScene {
   private spawnTimer: number = 0;
   private spawnInterval: number = 0.6; // flood intensity
   private gameTime: number = 0;
-  private isPaused: boolean = false;
+  private isFrenzyActive: boolean = false;
+  private frenzyTimer: number = 0;
+  private frenzySpawnAccumulator: number = 0;
   private floatingTexts: FloatingText[] = [];
 
   constructor(canvas: HTMLCanvasElement) {
@@ -108,6 +110,14 @@ export class FruitFloodScene implements GameScene {
       for (const fruit of sliced) {
         this.score += fruit.points;
         this.addFloatingText(fruit.x, fruit.y, `+${fruit.points}`, fruit.innerColor);
+
+        // If sliced special dragon_frenzy star fruit -> trigger 5s Fruit Flood Frenzy!
+        if (fruit.type === 'dragon_frenzy') {
+          this.isFrenzyActive = true;
+          this.frenzyTimer = 5.0;
+          this.audio.playCombo(4);
+          this.addFloatingText(400, 200, '🌟 5s FRUIT TSUNAMI FRENZY! 🌟', '#FFD700', 2.0);
+        }
       }
       if (this.score > this.highScore) {
         this.highScore = this.score;
@@ -158,9 +168,23 @@ export class FruitFloodScene implements GameScene {
     this.physics.update(dt);
     this.blade.update();
 
+    // Frenzy rush 5 seconds mode: flood screen with endless fruit geysers
+    if (this.isFrenzyActive) {
+      this.frenzyTimer -= dt;
+      this.frenzySpawnAccumulator += dt;
+      if (this.frenzySpawnAccumulator >= 0.12) {
+        this.frenzySpawnAccumulator = 0;
+        this.physics.spawnFruit();
+        this.physics.spawnFruit();
+      }
+      if (this.frenzyTimer <= 0) {
+        this.isFrenzyActive = false;
+      }
+    }
+
     // Spawning wave logic: scaling flood frequency
     this.spawnTimer += dt;
-    const currentInterval = Math.max(0.35, 0.85 - (this.gameTime / 90) * 0.5);
+    const currentInterval = this.isFrenzyActive ? 0.1 : Math.max(0.35, 0.85 - (this.gameTime / 90) * 0.5);
     if (this.spawnTimer >= currentInterval) {
       this.spawnTimer = 0;
       // Spawn batch of 1-4 fruits

@@ -51,17 +51,22 @@ export class SnowballPhysics {
   }
 
   public launchDirect(x: number, y: number, vx: number, vy: number): Snowball {
+    return this.launchCustomBall(x, y, vx, vy, 18);
+  }
+
+  public launchCustomBall(x: number, y: number, vx: number, vy: number, radius: number): Snowball {
     const ball: Snowball = {
       id: this.nextId++,
       x,
       y,
       vx,
       vy,
-      radius: 18,
-      rotation: 0,
+      radius,
+      rotation: Math.random() * Math.PI * 2,
       vRot: (Math.random() - 0.5) * 8,
       alive: true
     };
+
     this.snowballs.push(ball);
     return ball;
   }

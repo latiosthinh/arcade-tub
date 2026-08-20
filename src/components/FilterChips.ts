@@ -5,6 +5,7 @@ import { uiAudio } from '../audio/ui-audio';
 
 const FILTERS = [
   { id: 'all', label: 'All Games' },
+  { id: 'nobrain', label: '🧠 Relax & No-Brain' },
   { id: 'action', label: 'Action & Defense' },
   { id: 'arcade', label: 'Classic Arcade' },
   { id: 'puzzle', label: 'Puzzle & Memory' },

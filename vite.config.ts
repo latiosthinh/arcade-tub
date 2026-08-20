@@ -49,6 +49,7 @@ export default defineConfig({
         'snow-smash': resolve(__dirname, 'games/snow-smash/index.html'),
         'mosquito-swat': resolve(__dirname, 'games/mosquito-swat/index.html'),
         'tic-tac-toe': resolve(__dirname, 'games/tic-tac-toe/index.html'),
+        'koi-pond': resolve(__dirname, 'games/koi-pond/index.html'),
       },
     },
   },

@@ -16,8 +16,9 @@ export class FireworkScene implements GameScene {
   private totalLaunched: number = 0;
   private activeTypeIndex: number = 0;
 
-  // Papercraft mountains / city skyline silhouette
-  private stars: { x: number; y: number; size: number; alpha: number }[] = [];
+  // Papercraft celestial target (Golden Moon / Super Nova Star)
+  private celestialTarget: { x: number; y: number; radius: number; type: 'moon' | 'superstar'; alive: boolean; floatPhase: number } | null = null;
+  private celestialTimer: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -107,6 +108,27 @@ export class FireworkScene implements GameScene {
     const startX = targetX + (Math.random() * 80 - 40);
     const startY = this.height;
 
+    // Check hit on celestial target
+    if (this.celestialTarget && this.celestialTarget.alive) {
+      if (Math.hypot(targetX - this.celestialTarget.x, targetY - this.celestialTarget.y) <= this.celestialTarget.radius + 35) {
+        this.celestialTarget.alive = false;
+        // Trigger mega explosion cluster
+        const cx = this.celestialTarget.x;
+        const cy = this.celestialTarget.y;
+        this.celestialTarget = null;
+        this.celestialTimer = -4.0; // delay next spawn
+
+        setTimeout(() => {
+          this.physics.spawnExplosion(cx, cy, 'double-ring', '#FFD700', 80);
+          this.physics.spawnExplosion(cx, cy, 'crackle', '#FF1493', 70);
+          this.physics.spawnExplosion(cx - 40, cy - 30, 'willow', '#00FFFF', 60);
+          this.physics.spawnExplosion(cx + 40, cy - 30, 'heart', '#FF4500', 60);
+          this.audio.playExplosion('double-ring');
+          this.audio.playExplosion('crackle');
+        }, 200);
+      }
+    }
+
     this.physics.launchRocket(startX, startY, targetX, targetY, chosenType);
     this.audio.playLaunch();
     
@@ -120,6 +142,25 @@ export class FireworkScene implements GameScene {
 
   public update(dt: number): void {
     this.physics.update(dt);
+
+    // Spawn celestial moon/star target every ~8-12s
+    this.celestialTimer += dt;
+    if (this.celestialTimer >= 9.0 && !this.celestialTarget) {
+      this.celestialTimer = 0;
+      this.celestialTarget = {
+        x: Math.random() * (this.width - 240) + 120,
+        y: Math.random() * 120 + 80,
+        radius: 28,
+        type: Math.random() < 0.5 ? 'moon' : 'superstar',
+        alive: true,
+        floatPhase: 0
+      };
+    }
+
+    if (this.celestialTarget && this.celestialTarget.alive) {
+      this.celestialTarget.floatPhase += dt * 2;
+      this.celestialTarget.y += Math.sin(this.celestialTarget.floatPhase) * 0.4;
+    }
 
     // Auto/idle mode: auto-launches random fireworks if inactive > 2.5s
     this.idleTimer += dt;
@@ -142,6 +183,51 @@ export class FireworkScene implements GameScene {
     for (const star of this.stars) {
       ctx.fillStyle = `rgba(248, 250, 252, ${star.alpha})`;
       ctx.fillRect(star.x, star.y, star.size, star.size);
+    }
+
+    // Render Celestial Target if active
+    if (this.celestialTarget && this.celestialTarget.alive) {
+      ctx.save();
+      const ct = this.celestialTarget;
+      ctx.translate(ct.x, ct.y);
+
+      // Glowing aura
+      ctx.fillStyle = ct.type === 'moon' ? 'rgba(255, 235, 59, 0.25)' : 'rgba(0, 240, 255, 0.25)';
+      ctx.beginPath();
+      ctx.arc(0, 0, ct.radius * 1.35, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (ct.type === 'moon') {
+        // Crescent Gold Moon
+        ctx.fillStyle = '#FDE047';
+        ctx.beginPath();
+        ctx.arc(0, 0, ct.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(ct.radius * 0.4, -ct.radius * 0.2, ct.radius * 0.85, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Supernova Star
+        ctx.fillStyle = '#00F0FF';
+        ctx.beginPath();
+        for (let i = 0; i < 8; i++) {
+          const r = i % 2 === 0 ? ct.radius : ct.radius * 0.45;
+          const a = (i * Math.PI) / 4;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('HIT ME!', 0, ct.radius + 14);
+      ctx.restore();
     }
 
     // Render Rockets

@@ -1,4 +1,4 @@
-export type FruitType = 'watermelon' | 'orange' | 'banana' | 'strawberry' | 'kiwi' | 'pineapple' | 'apple';
+export type FruitType = 'watermelon' | 'orange' | 'banana' | 'strawberry' | 'kiwi' | 'pineapple' | 'apple' | 'dragon_frenzy';
 
 export interface FruitDef {
   type: FruitType;
@@ -16,7 +16,8 @@ export const FRUIT_DEFS: Record<FruitType, FruitDef> = {
   strawberry: { type: 'strawberry', name: 'Strawberry', radius: 24, color: '#D32F2F', innerColor: '#FFCDD2', points: 25 },
   kiwi: { type: 'kiwi', name: 'Kiwi', radius: 26, color: '#689F38', innerColor: '#AED581', points: 25 },
   pineapple: { type: 'pineapple', name: 'Pineapple', radius: 38, color: '#FBC02D', innerColor: '#FFEE58', points: 30 },
-  apple: { type: 'apple', name: 'Apple', radius: 30, color: '#C62828', innerColor: '#FFEBEE', points: 15 }
+  apple: { type: 'apple', name: 'Apple', radius: 30, color: '#C62828', innerColor: '#FFEBEE', points: 15 },
+  dragon_frenzy: { type: 'dragon_frenzy', name: 'Golden Dragon Star', radius: 46, color: '#FFD700', innerColor: '#FF1493', points: 100 }
 };
 
 export interface FruitItem {
@@ -93,7 +94,8 @@ export class FruitPhysics {
     }
 
     const types: FruitType[] = ['watermelon', 'orange', 'banana', 'strawberry', 'kiwi', 'pineapple', 'apple'];
-    const chosenType = type || types[Math.floor(Math.random() * types.length)];
+    // 8% chance to spawn special dragon_frenzy star fruit
+    const chosenType = type || (Math.random() < 0.08 ? 'dragon_frenzy' : types[Math.floor(Math.random() * types.length)]);
     const def = FRUIT_DEFS[chosenType];
 
     const posX = x !== undefined ? x : 100 + Math.random() * (this.width - 200);

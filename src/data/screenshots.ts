@@ -1021,5 +1021,45 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
         <line x1="5" y1="5" x2="115" y2="115" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" />
       </g>
     </svg>
+  `,
+
+  'koi-pond': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Water Basin Background -->
+      <rect width="320" height="180" fill="#E0F2FE" />
+
+      <!-- Water Caustics Waves -->
+      <path d="M 0 45 Q 80 35 160 45 T 320 45" fill="none" stroke="#BAE6FD" stroke-width="2" />
+      <path d="M 0 105 Q 80 95 160 105 T 320 105" fill="none" stroke="#BAE6FD" stroke-width="2" />
+      <path d="M 0 155 Q 80 145 160 155 T 320 155" fill="none" stroke="#BAE6FD" stroke-width="2" />
+
+      <!-- Green Lily Pads -->
+      <circle cx="55" cy="45" r="22" fill="#10B981" stroke="#2B2118" stroke-width="2" />
+      <path d="M 55 45 L 75 52" stroke="#2B2118" stroke-width="2" />
+      <circle cx="270" cy="140" r="26" fill="#10B981" stroke="#2B2118" stroke-width="2" />
+      <path d="M 270 140 L 292 148" stroke="#2B2118" stroke-width="2" />
+
+      <!-- Swimming Koi Fish 1 (Orange/Coral) -->
+      <g transform="translate(135, 95) rotate(-30)">
+        <ellipse cx="0" cy="0" rx="20" ry="8" fill="#FF7675" stroke="#2B2118" stroke-width="1.5" />
+        <ellipse cx="-4" cy="-9" rx="6" ry="3" fill="#FAB1A0" stroke="#2B2118" stroke-width="1" />
+        <ellipse cx="-4" cy="9" rx="6" ry="3" fill="#FAB1A0" stroke="#2B2118" stroke-width="1" />
+        <polygon points="-16,0 -24,-6 -20,0 -24,6" fill="#FAB1A0" stroke="#2B2118" stroke-width="1" />
+        <circle cx="12" cy="-3" r="1.5" fill="#2B2118" />
+      </g>
+
+      <!-- Swimming Koi Fish 2 (Golden) -->
+      <g transform="translate(195, 65) rotate(45)">
+        <ellipse cx="0" cy="0" rx="17" ry="7" fill="#FFA502" stroke="#2B2118" stroke-width="1.5" />
+        <polygon points="-14,0 -20,-5 -17,0 -20,5" fill="#FFEAA7" stroke="#2B2118" stroke-width="1" />
+        <circle cx="10" cy="-2.5" r="1.5" fill="#2B2118" />
+      </g>
+
+      <!-- Water Ripple Rings -->
+      <circle cx="180" cy="80" r="18" fill="none" stroke="#38BDF8" stroke-width="1.5" opacity="0.7" />
+      <circle cx="180" cy="80" r="32" fill="none" stroke="#38BDF8" stroke-width="1" opacity="0.4" />
+      <!-- Food Pellet -->
+      <circle cx="180" cy="80" r="3" fill="#B45309" stroke="#2B2118" stroke-width="1" />
+    </svg>
   `
 };

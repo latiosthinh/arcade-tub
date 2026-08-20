@@ -1,0 +1,20 @@
+{
+  "name": "@arcade-carnival/game-koi-pond",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@arcade-carnival/game-engine": "workspace:*",
+    "@arcade-carnival/playables-adapter": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vitest": "^4.0.18"
+  }
+}

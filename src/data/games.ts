@@ -450,6 +450,19 @@ export const GAMES: GameItem[] = [
     themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #DBEAFE 100%)',
     features: ['Paper Notebook Theme & Chalk Dust', 'Local 2-Player Pass & Play', 'Xiaomi Mimo AI & Minimax Engine']
+  },
+  {
+    id: 'koi-pond',
+    title: 'Zen Koi Pond',
+    genre: 'Relaxation / Aquarium',
+    description: 'Relaxing papercraft water garden. Tap to ripple the clear pond surface, scare swimming koi, or sprinkle bread pellets to gather the school.',
+    badge: 'Relax',
+    rating: '4.9 ★',
+    plays: '135K plays',
+    icon: '🐠',
+    themeColor: '#0EA5E9',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E0F2FE 100%)',
+    features: ['Gentle Koi Swarm Flocking', 'Feeding & Water Tap Ripples', 'Tranquil Ambient Zen Audio']
   }
 ];
 
