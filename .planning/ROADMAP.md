@@ -24,7 +24,7 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 |-------|----------------|--------|-----------|
 | 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
 | 49. Player Tank Kinematics & Upgrade Tiers | 2/2 | Complete | 2026-08-20 |
-| 50. Ballistics System & Combat Collisions | 0/2 | Not started | - |
+| 50. Ballistics System & Combat Collisions | 2/2 | Complete | 2026-08-20 |
 | 51. Enemy AI, Wave Spawner & Powerups | 0/2 | Not started | - |
 | 52. Game Flow, State Machine & Tally HUD | 0/2 | Not started | - |
 | 53. Papercraft Visuals & Procedural Audio | 0/2 | Not started | - |
@@ -86,7 +86,10 @@ Plans:
   3. Enemy AI navigates grid intersections with pathing bias towards player/base and zero corner vibration loops.
   4. Flashing tanks drop collectible tactical powerups (Star, Shovel, Grenade, Clock, Helmet, Tank, Gun, Boat).
   5. Shovel powerup temporarily fortifies base perimeter with steel and cleanly restores original undamaged brick state upon 20s timeout.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 51-01-PLAN.md — EnemyTank, EnemySpawner, grid-node steering AI, and flashing tank powerup drop mechanics
+- [ ] 51-02-PLAN.md — PowerUpSystem managing all 8 tactical items, shovel base fortification terrain caching/restoration, and comprehensive Vitest unit test suite
 
 ### Phase 52: Game Flow, State Machine & Tally HUD
 **Goal**: Orchestrate full arcade loop including title screen, stage select, stage intro curtains, active HUD side panel, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
