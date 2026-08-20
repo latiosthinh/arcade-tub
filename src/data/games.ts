@@ -372,6 +372,84 @@ export const GAMES: GameItem[] = [
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
     features: ['45° Angle Reflection Physics', 'White Light Prism Splitting', 'Target Crystal Color Activation'],
     disabled: true
+  },
+  {
+    id: 'rainbow-draw',
+    title: 'Rainbow Draw',
+    genre: 'Creative Physics Drawing',
+    description: 'Draw luminous multi-color glowing rainbow ribbons with smooth Catmull-Rom spline curves. Guide falling paper origami balls and light up goal zones.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '85K plays',
+    icon: '🎨',
+    themeColor: '#EC4899',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE7F3 100%)',
+    features: ['Neon Rainbow Spline Drawing', 'Dynamic Rigid Line Colliders', 'Harmonic Chime Synthesizer Audio']
+  },
+  {
+    id: 'firework-pop',
+    title: 'Firework Pop',
+    genre: 'Rhythm Tap & Burst',
+    description: 'Tap rising papercraft fireworks right at their peak apex for maximum burst combos. Chain colorful paper sparklers in twilight skies.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '92K plays',
+    icon: '🎆',
+    themeColor: '#F59E0B',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FEF3C7 100%)',
+    features: ['Apex Burst Timing Windows', 'Multi-Stage Sparkler Combos', 'Twinkle Spark Particles & Audio']
+  },
+  {
+    id: 'fruit-flood',
+    title: 'Fruit Flood',
+    genre: 'Color Flood Puzzle',
+    description: 'Stepwise color flood fill on an origami fruit orchard grid. Expand your harvest territory within limited moves using crisp papercraft fruit tiles.',
+    badge: 'New',
+    rating: '4.8 ★',
+    plays: '115K plays',
+    icon: '🍓',
+    themeColor: '#EF4444',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FEE2E2 100%)',
+    features: ['BFS Flood Fill Dynamics', '6 Origami Fruit Tile Types', 'Move Limit Par & Star Ratings']
+  },
+  {
+    id: 'snow-smash',
+    title: 'Snow Smash',
+    genre: 'Slingshot Destructive Physics',
+    description: 'Pull back elastic slingshots to launch snowballs and smash fragile cardboard castles, ice towers, and origami snowman fortresses.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '140K plays',
+    icon: '❄️',
+    themeColor: '#06B6D4',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #CFFAFE 100%)',
+    features: ['Slingshot Parabolic Trajectory', 'Multi-Block Cardboard Destruction', 'Explosive Ice Shard Particles']
+  },
+  {
+    id: 'mosquito-swat',
+    title: 'Mosquito Swat',
+    genre: 'Reflex Net Swatter',
+    description: 'Swipe papercraft mosquito swarms and capture buzzing pests with your origami net. Unleash bug spray stuns and electric racket frenzy.',
+    badge: 'New',
+    rating: '4.8 ★',
+    plays: '105K plays',
+    icon: '🦟',
+    themeColor: '#10B981',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D1FAE5 100%)',
+    features: ['Erratic Swarm Flight Dynamics', 'Swipe Net Radius Sweeps', 'Bug Spray & Electric Racket Frenzy']
+  },
+  {
+    id: 'tic-tac-toe',
+    title: 'Paper Tic-Tac-Toe',
+    genre: 'Strategy Board vs AI',
+    description: 'Classic notebook grid Tic-Tac-Toe with chalk-drawn X and O animations. Play locally with a friend or challenge the smart Xiaomi Mimo AI.',
+    badge: 'New',
+    rating: '4.9 ★',
+    plays: '160K plays',
+    icon: '❌',
+    themeColor: '#3B82F6',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #DBEAFE 100%)',
+    features: ['Paper Notebook Theme & Chalk Dust', 'Local 2-Player Pass & Play', 'Xiaomi Mimo AI & Minimax Engine']
   }
 ];
 

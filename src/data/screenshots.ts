@@ -791,5 +791,235 @@ export const GAME_SCREENSHOTS: Record<string, string> = {
       <polygon points="110,152 118,160 110,168 102,160" fill="#06B6D4" stroke="#FAF6EE" stroke-width="1.5" />
       <polygon points="220,152 228,160 220,168 212,160" fill="#A855F7" stroke="#FAF6EE" stroke-width="1.5" />
     </svg>
+  `,
+
+  'rainbow-draw': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Dark Sketchbook Background -->
+      <rect width="320" height="180" fill="#181824" />
+      <circle cx="160" cy="90" r="140" fill="#222232" opacity="0.4" />
+
+      <!-- Glowing Rainbow Ribbon Curve -->
+      <path d="M 30 130 Q 110 40 180 110 T 290 80" fill="none" stroke="#FF5E7E" stroke-width="8" stroke-linecap="round" />
+      <path d="M 30 130 Q 110 40 180 110 T 290 80" fill="none" stroke="#FFA41B" stroke-width="6" stroke-linecap="round" />
+      <path d="M 30 130 Q 110 40 180 110 T 290 80" fill="none" stroke="#00D2D3" stroke-width="4" stroke-linecap="round" />
+      <path d="M 30 130 Q 110 40 180 110 T 290 80" fill="none" stroke="#54A0FF" stroke-width="2" stroke-linecap="round" />
+
+      <!-- Falling Paper Balls -->
+      <circle cx="110" cy="50" r="9" fill="#FFFDF8" stroke="#FF5E7E" stroke-width="2" />
+      <circle cx="110" cy="50" r="4" fill="#FFA41B" />
+      <circle cx="210" cy="85" r="9" fill="#FFFDF8" stroke="#00D2D3" stroke-width="2" />
+
+      <!-- Target Goal Basket -->
+      <path d="M 260 120 L 275 145 L 305 145 L 320 120" fill="none" stroke="#54A0FF" stroke-width="3" stroke-dasharray="4 3" />
+      <polygon points="280,135 290,125 300,135" fill="#FEF08A" />
+    </svg>
+  `,
+
+  'firework-pop': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Midnight Sky Background -->
+      <rect width="320" height="180" fill="#0c1021" />
+
+      <!-- Crescent Moon & Stars -->
+      <path d="M 280 25 A 16 16 0 0 0 295 45 A 18 18 0 1 1 280 25 Z" fill="#FEF08A" />
+      <circle cx="50" cy="40" r="1.5" fill="#FFFDF8" />
+      <circle cx="120" cy="25" r="1.5" fill="#FFFDF8" />
+      <circle cx="230" cy="65" r="1.5" fill="#FFFDF8" />
+
+      <!-- Big Exploded Firework Burst -->
+      <g transform="translate(160, 70)">
+        <circle cx="0" cy="0" r="38" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-dasharray="6 6" />
+        <circle cx="0" cy="0" r="22" fill="none" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4 4" />
+        <line x1="0" y1="-30" x2="0" y2="-45" stroke="#FFE66D" stroke-width="3" stroke-linecap="round" />
+        <line x1="21" y1="-21" x2="32" y2="-32" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round" />
+        <line x1="30" y1="0" x2="45" y2="0" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" />
+        <line x1="21" y1="21" x2="32" y2="32" stroke="#1A535C" stroke-width="3" stroke-linecap="round" />
+        <line x1="-21" y1="-21" x2="-32" y2="-32" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round" />
+        <line x1="-30" y1="0" x2="-45" y2="0" stroke="#FFE66D" stroke-width="3" stroke-linecap="round" />
+        <circle cx="0" cy="0" r="8" fill="#FFFDF8" />
+      </g>
+
+      <!-- Rising Rockets -->
+      <g transform="translate(70, 120)">
+        <polygon points="0,-12 6,8 -6,8" fill="#FF6B6B" stroke="#3E2723" stroke-width="1" />
+        <line x1="0" y1="8" x2="0" y2="28" stroke="#FFE66D" stroke-width="2" stroke-dasharray="4 2" />
+      </g>
+      <g transform="translate(240, 110)">
+        <polygon points="0,-12 6,8 -6,8" fill="#4ECDC4" stroke="#3E2723" stroke-width="1" />
+        <line x1="0" y1="8" x2="0" y2="32" stroke="#FFE66D" stroke-width="2" stroke-dasharray="4 2" />
+      </g>
+    </svg>
+  `,
+
+  'fruit-flood': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Parchment Table Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+
+      <!-- Grid of Fruit Tiles -->
+      <g transform="translate(75, 20)">
+        <!-- Row 0 -->
+        <rect x="0" y="0" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="13" y="18" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="28" y="0" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="41" y="18" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="56" y="0" width="26" height="26" rx="4" fill="#F39C12" stroke="#3E2723" stroke-width="1.5" />
+        <text x="69" y="18" text-anchor="middle" font-size="14">🍊</text>
+        <rect x="84" y="0" width="26" height="26" rx="4" fill="#F1C40F" stroke="#3E2723" stroke-width="1.5" />
+        <text x="97" y="18" text-anchor="middle" font-size="14">🍋</text>
+        <rect x="112" y="0" width="26" height="26" rx="4" fill="#2ECC71" stroke="#3E2723" stroke-width="1.5" />
+        <text x="125" y="18" text-anchor="middle" font-size="14">🥝</text>
+        <rect x="140" y="0" width="26" height="26" rx="4" fill="#9B59B6" stroke="#3E2723" stroke-width="1.5" />
+        <text x="153" y="18" text-anchor="middle" font-size="14">🍇</text>
+
+        <!-- Row 1 -->
+        <rect x="0" y="28" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="13" y="46" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="28" y="28" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="41" y="46" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="56" y="28" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="69" y="46" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="84" y="28" width="26" height="26" rx="4" fill="#3498DB" stroke="#3E2723" stroke-width="1.5" />
+        <text x="97" y="46" text-anchor="middle" font-size="14">🫐</text>
+        <rect x="112" y="28" width="26" height="26" rx="4" fill="#F39C12" stroke="#3E2723" stroke-width="1.5" />
+        <text x="125" y="46" text-anchor="middle" font-size="14">🍊</text>
+        <rect x="140" y="28" width="26" height="26" rx="4" fill="#2ECC71" stroke="#3E2723" stroke-width="1.5" />
+        <text x="153" y="46" text-anchor="middle" font-size="14">🥝</text>
+
+        <!-- Row 2 -->
+        <rect x="0" y="56" width="26" height="26" rx="4" fill="#F1C40F" stroke="#3E2723" stroke-width="1.5" />
+        <text x="13" y="74" text-anchor="middle" font-size="14">🍋</text>
+        <rect x="28" y="56" width="26" height="26" rx="4" fill="#2ECC71" stroke="#3E2723" stroke-width="1.5" />
+        <text x="41" y="74" text-anchor="middle" font-size="14">🥝</text>
+        <rect x="56" y="56" width="26" height="26" rx="4" fill="#9B59B6" stroke="#3E2723" stroke-width="1.5" />
+        <text x="69" y="74" text-anchor="middle" font-size="14">🍇</text>
+        <rect x="84" y="56" width="26" height="26" rx="4" fill="#FF6B6B" stroke="#3E2723" stroke-width="1.5" />
+        <text x="97" y="74" text-anchor="middle" font-size="14">🍎</text>
+        <rect x="112" y="56" width="26" height="26" rx="4" fill="#F1C40F" stroke="#3E2723" stroke-width="1.5" />
+        <text x="125" y="74" text-anchor="middle" font-size="14">🍋</text>
+        <rect x="140" y="56" width="26" height="26" rx="4" fill="#3498DB" stroke="#3E2723" stroke-width="1.5" />
+        <text x="153" y="74" text-anchor="middle" font-size="14">🫐</text>
+      </g>
+
+      <!-- Bottom Palette Buttons -->
+      <g transform="translate(65, 140)">
+        <circle cx="15" cy="15" r="14" fill="#FF6B6B" stroke="#3E2723" stroke-width="2" />
+        <circle cx="50" cy="15" r="14" fill="#F39C12" stroke="#3E2723" stroke-width="2" />
+        <circle cx="85" cy="15" r="14" fill="#F1C40F" stroke="#3E2723" stroke-width="2" />
+        <circle cx="120" cy="15" r="14" fill="#2ECC71" stroke="#3E2723" stroke-width="2" />
+        <circle cx="155" cy="15" r="14" fill="#3498DB" stroke="#3E2723" stroke-width="2" />
+        <circle cx="190" cy="15" r="14" fill="#9B59B6" stroke="#3E2723" stroke-width="2" />
+      </g>
+    </svg>
+  `,
+
+  'snow-smash': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Winter Frost Background -->
+      <rect width="320" height="180" fill="#E8F4F8" />
+      <ellipse cx="160" cy="190" rx="200" ry="50" fill="#FFFFFF" stroke="#3E2723" stroke-width="2" />
+
+      <!-- Cardboard Ice Castle Target -->
+      <g transform="translate(200, 60)">
+        <rect x="0" y="40" width="30" height="60" fill="#C5A880" stroke="#3E2723" stroke-width="2" />
+        <rect x="50" y="40" width="30" height="60" fill="#C5A880" stroke="#3E2723" stroke-width="2" />
+        <rect x="15" y="20" width="50" height="20" fill="#A0D2EB" stroke="#3E2723" stroke-width="2" />
+        <polygon points="40,0 15,20 65,20" fill="#E11D48" stroke="#3E2723" stroke-width="2" />
+        <!-- Origami Snowman Inside -->
+        <circle cx="40" cy="75" r="12" fill="#FFFFFF" stroke="#3E2723" stroke-width="1.5" />
+        <circle cx="40" cy="57" r="8" fill="#FFFFFF" stroke="#3E2723" stroke-width="1.5" />
+        <polygon points="40,57 48,59 40,61" fill="#F39C12" />
+      </g>
+
+      <!-- Slingshot Launcher -->
+      <g transform="translate(45, 90)">
+        <path d="M 0 60 L 15 25 L 30 60" fill="none" stroke="#795548" stroke-width="6" stroke-linecap="round" />
+        <line x1="15" y1="25" x2="15" y2="70" stroke="#5D4037" stroke-width="8" stroke-linecap="round" />
+        <!-- Elastic Band & Snowball -->
+        <line x1="5" y1="25" x2="-20" y2="35" stroke="#D32F2F" stroke-width="2" />
+        <line x1="25" y1="25" x2="-20" y2="35" stroke="#D32F2F" stroke-width="2" />
+        <circle cx="-20" cy="35" r="10" fill="#FFFFFF" stroke="#3E2723" stroke-width="2" />
+      </g>
+
+      <!-- Parabolic Aim Trajectory Dots -->
+      <circle cx="50" cy="110" r="2.5" fill="#0288D1" />
+      <circle cx="85" cy="85" r="2.5" fill="#0288D1" />
+      <circle cx="125" cy="70" r="2.5" fill="#0288D1" />
+      <circle cx="165" cy="65" r="2.5" fill="#0288D1" />
+      <circle cx="205" cy="70" r="2.5" fill="#0288D1" />
+    </svg>
+  `,
+
+  'mosquito-swat': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Graph Paper Background -->
+      <rect width="320" height="180" fill="#FAF6EE" />
+      <line x1="0" y1="45" x2="320" y2="45" stroke="#E8DEC8" stroke-width="1" />
+      <line x1="0" y1="90" x2="320" y2="90" stroke="#E8DEC8" stroke-width="1" />
+      <line x1="0" y1="135" x2="320" y2="135" stroke="#E8DEC8" stroke-width="1" />
+
+      <!-- Buzzing Origami Mosquitoes -->
+      <g transform="translate(60, 60)">
+        <polygon points="12,0 -12,-8 -6,0 -12,8" fill="#34495E" stroke="#2C3E50" stroke-width="1.5" />
+        <ellipse cx="0" cy="-6" rx="8" ry="4" fill="#BDC3C7" opacity="0.8" />
+        <ellipse cx="0" cy="6" rx="8" ry="4" fill="#BDC3C7" opacity="0.8" />
+      </g>
+
+      <g transform="translate(240, 110)">
+        <polygon points="16,0 -16,-10 -8,0 -16,10" fill="#C0392B" stroke="#2C3E50" stroke-width="1.5" />
+        <ellipse cx="0" cy="-8" rx="10" ry="5" fill="#BDC3C7" opacity="0.8" />
+        <ellipse cx="0" cy="8" rx="10" ry="5" fill="#BDC3C7" opacity="0.8" />
+      </g>
+
+      <!-- Paper Net Crosshair Sweep -->
+      <g transform="translate(150, 85)">
+        <circle cx="0" cy="0" r="32" fill="rgba(39, 174, 96, 0.15)" stroke="#27AE60" stroke-width="3" />
+        <line x1="-20" y1="-20" x2="20" y2="20" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="4 2" />
+        <line x1="-20" y1="20" x2="20" y2="-20" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="4 2" />
+        <line x1="22" y1="22" x2="45" y2="45" stroke="#8E44AD" stroke-width="5" stroke-linecap="round" />
+        <!-- Splat Particles -->
+        <circle cx="-10" cy="5" r="3" fill="#E74C3C" />
+        <circle cx="15" cy="-8" r="4" fill="#E74C3C" />
+        <circle cx="2" cy="18" r="3" fill="#E74C3C" />
+      </g>
+    </svg>
+  `,
+
+  'tic-tac-toe': `
+    <svg viewBox="0 0 320 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="ac-game-screenshot">
+      <!-- Notebook Paper Background -->
+      <rect width="320" height="180" fill="#F8F5EB" />
+      <line x1="0" y1="35" x2="320" y2="35" stroke="#D5E1DF" stroke-width="1" />
+      <line x1="0" y1="70" x2="320" y2="70" stroke="#D5E1DF" stroke-width="1" />
+      <line x1="0" y1="105" x2="320" y2="105" stroke="#D5E1DF" stroke-width="1" />
+      <line x1="0" y1="140" x2="320" y2="140" stroke="#D5E1DF" stroke-width="1" />
+      <line x1="45" y1="0" x2="45" y2="180" stroke="#F5B7B1" stroke-width="2" />
+
+      <!-- Chalk 3x3 Grid -->
+      <g transform="translate(105, 30)">
+        <line x1="40" y1="0" x2="40" y2="120" stroke="#2C3E50" stroke-width="3.5" stroke-linecap="round" />
+        <line x1="80" y1="0" x2="80" y2="120" stroke="#2C3E50" stroke-width="3.5" stroke-linecap="round" />
+        <line x1="0" y1="40" x2="120" y2="40" stroke="#2C3E50" stroke-width="3.5" stroke-linecap="round" />
+        <line x1="0" y1="80" x2="120" y2="80" stroke="#2C3E50" stroke-width="3.5" stroke-linecap="round" />
+
+        <!-- X Marks -->
+        <g stroke="#E74C3C" stroke-width="4" stroke-linecap="round">
+          <line x1="8" y1="8" x2="32" y2="32" />
+          <line x1="32" y1="8" x2="8" y2="32" />
+          <line x1="88" y1="88" x2="112" y2="112" />
+          <line x1="112" y1="88" x2="88" y2="112" />
+          <line x1="48" y1="48" x2="72" y2="72" />
+          <line x1="72" y1="48" x2="48" y2="72" />
+        </g>
+
+        <!-- O Marks -->
+        <circle cx="100" cy="20" r="13" fill="none" stroke="#3498DB" stroke-width="4" />
+        <circle cx="20" cy="100" r="13" fill="none" stroke="#3498DB" stroke-width="4" />
+
+        <!-- Winning Strike Line -->
+        <line x1="5" y1="5" x2="115" y2="115" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" />
+      </g>
+    </svg>
   `
 };

@@ -46,7 +46,7 @@ describe('PlatformManager', () => {
 
   it('generates varied platform types at higher altitudes', () => {
     platformManager.reset();
-    platformManager.generateAhead(-10000); // reaches high altitude
+    platformManager.generateAhead(-40000); // reaches high altitude
 
     const types = new Set(platformManager.platforms.map((p) => p.type));
     expect(types.has('standard')).toBe(true);
