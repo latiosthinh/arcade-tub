@@ -60,6 +60,7 @@ export default defineConfig({
         'koi-pond': resolve(__dirname, 'games/koi-pond/index.html'),
         'tank-1990': resolve(__dirname, 'games/tank-1990/index.html'),
         'kirby-adventure': resolve(__dirname, 'games/kirby-adventure/index.html'),
+        'legend-of-kage': resolve(__dirname, 'games/legend-of-kage/index.html'),
       },
     },
   },

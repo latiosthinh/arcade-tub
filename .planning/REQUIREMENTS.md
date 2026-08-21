@@ -43,11 +43,11 @@ Requirements for Milestone v10.0. Each maps to roadmap phases.
 
 ### Visuals, Audio, Controls & Integration
 
-- [ ] **VISL-01**: Origami ninja characters, corrugated cardboard trees/castles, and paper scroll transitions
-- [ ] **VISL-02**: Dynamic weather particles: sakura petals (Spring), pollen (Summer), maple leaves (Autumn), snow (Winter)
-- [ ] **AUDI-01**: Procedural Web Audio SFX for sword clash, shuriken whoosh, jump wind, fire crackle, and victory fanfare
-- [ ] **CTRL-01**: Mobile virtual controls with D-pad + independent Shuriken & Sword action buttons and multi-touch support
-- [ ] **INTG-01**: Standalone packaging under `games/legend-of-kage/`, Vite multi-page config, catalog registration in `retro` category, and Vitest suite
+- [x] **VISL-01**: Origami ninja characters, corrugated cardboard trees/castles, and paper scroll transitions
+- [x] **VISL-02**: Dynamic weather particles: sakura petals (Spring), pollen (Summer), maple leaves (Autumn), snow (Winter)
+- [x] **AUDI-01**: Procedural Web Audio SFX for sword clash, shuriken whoosh, jump wind, fire crackle, and victory fanfare
+- [x] **CTRL-01**: Mobile virtual controls with D-pad + independent Shuriken & Sword action buttons and multi-touch support
+- [x] **INTG-01**: Standalone packaging under `games/legend-of-kage/`, Vite multi-page config, catalog registration in `retro` category, and Vitest suite
 
 ## Future Requirements
 
@@ -100,11 +100,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STAG-04 | Phase 67 | Complete |
 | STAG-05 | Phase 67 | Complete |
 | STAG-06 | Phase 67 | Complete |
-| VISL-01 | Phase 68 | Pending |
-| VISL-02 | Phase 68 | Pending |
-| AUDI-01 | Phase 68 | Pending |
-| CTRL-01 | Phase 68 | Pending |
-| INTG-01 | Phase 68 | Pending |
+| VISL-01 | Phase 68 | Complete |
+| VISL-02 | Phase 68 | Complete |
+| AUDI-01 | Phase 68 | Complete |
+| CTRL-01 | Phase 68 | Complete |
+| INTG-01 | Phase 68 | Complete |
 
 **Coverage:**
 - v10.0 requirements: 22 total (27 mapped IDs)

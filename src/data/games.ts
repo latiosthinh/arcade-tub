@@ -42,7 +42,7 @@ export const GAMES: GameItem[] = [
     genre: 'Papercraft Action Platformer',
     category: 'retro',
     description: "Inhale, copy abilities, float, and battle across 4 papercraft worlds. Master 8 distinct copy abilities, conquer 20 stages, and defeat iconic multi-phase bosses in this tactile retro platformer.",
-    badge: 'New',
+    badge: 'Popular',
     rating: '5.0 ★',
     plays: '10K plays',
     icon: '🌸',
@@ -51,6 +51,22 @@ export const GAMES: GameItem[] = [
     features: ['8 Copy Abilities & Ability Drops', 'Inhale, Float & Slide Physics', '3 Multi-Phase Boss Encounters'],
     controls: 'Left/Right to move, Double-tap to Dash, Up/Z/Space to Jump & Float, Down to Duck/Swallow, X/J/B to Inhale & Attack, Down+Attack to Slide, C to Discard Ability.',
     howToPlay: 'Inhale enemies and press Down to copy their abilities (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle). Press Jump in air to float with puffs. Enter doors with Up to explore rooms and defeat bosses at the end of each world.'
+  },
+  {
+    id: 'legend-of-kage',
+    title: 'The Legend of Kage',
+    genre: 'Ninja Super-Jump Action',
+    category: 'retro',
+    description: 'High-flying papercraft ninja arcade classic. Super-jump through tall bamboo canopies, throw 8-directional shurikens, deflect enemy projectiles with your katana, and rescue Princess Kiri across 4 seasons.',
+    badge: 'New',
+    rating: '5.0 ★',
+    plays: '5K plays',
+    icon: '🥷',
+    themeColor: '#D32F2F',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FFCDD2 100%)',
+    features: ['3-Screen Super-Jump Kinematics', 'Katana Shuriken Deflection', '4-Season Palette & Weather Cycle'],
+    controls: 'Arrow Keys / WASD to move, Space / W / Up to Super-Jump, Z / J to Sword Slash (Deflect), X / K to Throw Shuriken.',
+    howToPlay: 'Leap between high bamboo tree branches and fight enemy ninjas mid-air. Slash with your sword to deflect incoming shurikens. Clear enemy targets in each stage to rescue the princess and advance through Spring, Summer, Autumn, and Winter.'
   },
 
   // --- CLASSIC ARCADE & CASUAL ---
