@@ -3,19 +3,20 @@
 ## Purpose
 Collection of browser-based retro-modern tactile arcade minigames packaged for web embedding, mobile standalone install (PWA), and instant play. Each game lives in its own folder, shares a common Playables/web adapter layer, and launches from the central ArcadeTub hub launcher with zero runtime dependencies.
 
-## Current Milestone: v8.0 — Tank 1990 (Battle City) Retro Papercraft Arcade
+## Current Milestone: v9.0 — Kirby's Adventure: Papercraft Platformer
 
-**Goal:** Faithfully recreate the iconic Tank 1990 / Battle City arcade tactical action game with a tactile papercraft aesthetic, multi-tier tank upgrades, distinct enemy classes, powerups, destructible terrain, base defense, responsive mobile touch controls, and 100% test coverage.
+**Goal:** Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ability mechanics in the ArcadeTub papercraft aesthetic.
 
 **Target Features:**
-1. **Grid Terrain & Destruction Engine:** 13x13 / 26x26 tile grid with destructible brick walls (sub-tile chipping), indestructible steel (destructible only by tier-4 cannon), water barrier, trees/grass camo concealment, ice inertia sliding, and defensible eagle base HQ.
-2. **Combat & Entity Physics:** Player tank with 4 upgrade tiers (Basic, Fast, Heavy Dual-Shot, Armor-Piercing Cannon), smooth grid alignment, bullet vs bullet cancellation, and muzzle flash.
-3. **Enemy AI & Spawner:** Wave-based spawner with 4 distinct enemy types (Basic Tank, Fast Cruiser, Power Tank with bonus flashing item drop, Heavy Armor Tank requiring multiple hits).
-4. **Power-up Item Drops:** Star (tier upgrade), Shovel (temporary steel base fortification), Grenade (clear all screen enemies), Clock (freeze enemy movement), Helmet (temporary invulnerability), Tank (extra life).
-5. **Stage Progression & High Scores:** Authentic multi-stage campaign sequence, score tallying screen, game over / victory flow, and persistent local storage high scores.
-6. **Tactile Papercraft Visuals & 8-Bit Web Audio:** Cardboard cutouts, rolling track animations, paper confetti explosion bursts, procedural chiptune engine hums, shot pops, wall crumbling crunch, and alarm alerts.
-7. **Mobile Virtual Controls & Responsive Viewport:** On-screen virtual 4-way D-Pad + Fire button with haptic/tactile feedback and zero latency.
-8. **Hub & Catalog Integration:** Standalone HTML/TS entry, Vite multi-page config, catalog metadata & SVG screenshot, unit tests, and Playwright verification.
+1. **Platformer Physics Engine:** Gravity, ground/wall/ceiling tile collision, slopes, one-way platforms, scrolling camera with room transitions.
+2. **Kirby Core Mechanics:** Inhale vacuum cone, swallow to copy abilities, spit star projectile, multi-jump float puffs (6 max), ducking slide kick.
+3. **Copy Ability System:** Each ability overrides attack moveset — Sword slash combo, Fire dash, Ice freeze breath, Beam whip, Cutter boomerang, Stone invulnerable drop, Spark electric field, Needle spike burst.
+4. **Enemy AI & Ability Grants:** Waddle Dee (walk), Waddle Doo (beam), Blade Knight (sword), Hot Head (fire), Chilly (ice), Poppy Bros (bomb), Sparky (spark) — each grants corresponding ability on inhale+swallow.
+5. **Boss Encounters:** Whispy Woods (tree shake + apple drop), Kracko (lightning + rain), Meta Knight (sword duel) with multi-phase attack patterns.
+6. **World & Stage Progression:** 4–6 themed worlds (Green Greens, Ice Cream Island, Butter Building, etc.), 4–6 stages per world, hidden bonus rooms, world map navigation.
+7. **Papercraft Visuals & Procedural Audio:** Cardboard Kirby with squash-stretch, origami enemies, corrugated terrain tiles, tissue-paper parallax sky, confetti ability transformations, procedural Web Audio (inhale whoosh, float puff, ability jingles, boss drums).
+8. **Mobile Virtual Controls:** Left-side virtual D-pad, right-side Inhale + Jump buttons, responsive touch with haptic feedback.
+9. **Hub & Catalog Integration:** Standalone HTML/TS entry under `games/kirby-adventure/`, Vite multi-page config, catalog metadata & SVG screenshot, unit tests.
 
 ## Previous Milestones
 - v1.0–v3.0: Foundation, 12 games, Cyber-Arcade UI/UX refactor
@@ -23,6 +24,7 @@ Collection of browser-based retro-modern tactile arcade minigames packaged for w
 - v6.0: CrazyGames Replication (12 games: basket, drift, helix, square bird, etc. -> 27 games total)
 - v6.1: ArcadeTub Rebranding, No-Brain casual pack, Zen Koi Pond, PWA standalone install & mobile fullscreen theater mode (34 games total)
 - v7.0: Sensory Antistress Sandbox (8 games: bubble-pop, soap-carve, sand-zen, fidget-spin, liquid-sort, pop-it, grass-mow, hydraulic-crush -> 42 games total)
+- v8.0: Tank 1990 (Battle City) Retro Papercraft Arcade (43 games total)
 
 ## Tech Stack
 - **Build:** Vite 7 + TypeScript + pnpm workspaces

@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: Complete (Milestone v8.0 shipped)
+Phase: Not started (defining requirements)
 Plan: —
-Status: Milestone v8.0 Complete
-Last activity: 2026-08-20 — Milestone v8.0 complete
+Status: Defining requirements
+Last activity: 2026-08-21 — Milestone v9.0 started
 
 ## Milestone
-- **Milestone:** v8.0 — Tank 1990 (Battle City) Retro Papercraft Arcade (Shipped)
+- **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer
 - **Catalog Size:** 43 games active.
