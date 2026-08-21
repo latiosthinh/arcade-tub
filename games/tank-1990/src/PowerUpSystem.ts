@@ -81,8 +81,8 @@ export class PowerUpSystem {
     const maxX = ARENA_SIZE - POWERUP_SIZE;
     const maxY = ARENA_SIZE - POWERUP_SIZE;
 
-    let posX = x !== undefined ? Math.max(0, Math.min(maxX, x)) : Math.floor(Math.random() * (maxX - 16));
-    let posY = y !== undefined ? Math.max(0, Math.min(maxY, y)) : Math.floor(Math.random() * (maxY - 16));
+    let posX = x !== undefined ? Math.max(0, Math.min(maxX, x)) : Math.floor(Math.random() * maxX);
+    let posY = y !== undefined ? Math.max(0, Math.min(maxY, y)) : Math.floor(Math.random() * maxY);
 
     const item: PowerUpItem = {
       id: this.nextItemId++,
@@ -161,34 +161,12 @@ export class PowerUpSystem {
     }
 
     // 2. AABB collection detection against PlayerTank
-    if (player && !player.isDead) {
-      const playerBounds = player.getBounds();
-
-      for (const item of this.items) {
-        if (!item.alive) continue;
-
-        if (this.checkAABB(playerBounds, item)) {
-          item.alive = false;
-          if (spawner) {
-            this.applyPowerUpEffect(item.type, player, spawner);
-          }
-
-          const event: PowerUpPickupEvent = {
-            type: item.type,
-            points: POWERUP_SCORE,
-            x: item.x,
-            y: item.y,
-          };
-
-          if (this.onPowerUpCollected) {
-            this.onPowerUpCollected(event);
-          }
-        }
-      }
+    if (player && !player.isDead && spawner) {
+      this.checkPlayerCollision(player, spawner);
+    } else {
+      // Clean up dead items if collision wasn't run
+      this.items = this.items.filter((item) => item.alive);
     }
-
-    // 3. Remove collected / dead items
-    this.items = this.items.filter((item) => item.alive);
   }
 
   public checkPlayerCollision(player: PlayerTank, spawner: EnemySpawner): void {

@@ -38,6 +38,7 @@ export class EnemyTank implements CombatTankTarget {
   public readonly isPlayer: boolean = false;
 
   public onBonusDrop?: (tank: EnemyTank) => void;
+  public onFire?: (tank: EnemyTank) => void;
 
   private grid: GridMap;
   private bulletManager?: BulletManager;
@@ -71,6 +72,10 @@ export class EnemyTank implements CombatTankTarget {
 
   public getStats(): EnemyConfig {
     return ENEMY_CONFIGS[this.type];
+  }
+
+  public getConfig(): EnemyConfig {
+    return this.getStats();
   }
 
   public getBounds(x = this.x, y = this.y): Rect {
@@ -203,6 +208,9 @@ export class EnemyTank implements CombatTankTarget {
           },
           this.width
         );
+        if (this.onFire) {
+          this.onFire(this);
+        }
       }
       this.resetFireTimer();
     }

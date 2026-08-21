@@ -269,5 +269,12 @@ describe('TankAudio Unit Tests', () => {
     it('safely no-ops when stopping inactive engine', () => {
       expect(() => tankAudio.stopEngine()).not.toThrow();
     });
+
+    it('cleans up resources on destroy()', () => {
+      mockAudioContextInstance.close = vi.fn();
+      tankAudio.destroy();
+      expect(mockAudioContextInstance.close).toHaveBeenCalled();
+      expect(tankAudio.ctx).toBeNull();
+    });
   });
 });

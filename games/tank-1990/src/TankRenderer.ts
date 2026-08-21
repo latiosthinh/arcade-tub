@@ -127,18 +127,16 @@ export class TankRenderer {
     // Subtle cardboard grid texture / mat seams
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
     ctx.lineWidth = 1;
+    ctx.beginPath();
     for (let c = 0; c <= GRID_COLS; c++) {
-      ctx.beginPath();
       ctx.moveTo(c * CELL_SIZE, 0);
       ctx.lineTo(c * CELL_SIZE, ARENA_HEIGHT);
-      ctx.stroke();
     }
     for (let r = 0; r <= GRID_ROWS; r++) {
-      ctx.beginPath();
       ctx.moveTo(0, r * CELL_SIZE);
       ctx.lineTo(ARENA_WIDTH, r * CELL_SIZE);
-      ctx.stroke();
     }
+    ctx.stroke();
 
     // 2. Render terrain tiles (except TREES which belong in Pass 3)
     const grid = data.grid;
@@ -1061,10 +1059,10 @@ export class TankRenderer {
     ctx.textAlign = 'center';
     ctx.fillText(`STAGE ${result?.stage ?? 1} CLEARED`, ARENA_WIDTH / 2, 48);
 
-    // High Score banner
+    // Score banner
     ctx.fillStyle = '#e74c3c';
     ctx.font = 'bold 12px monospace';
-    ctx.fillText(`HIGH SCORE: ${result?.cumulativeScore ?? 0}`, ARENA_WIDTH / 2, 74);
+    ctx.fillText(`STAGE SCORE: ${result?.cumulativeScore ?? 0}`, ARENA_WIDTH / 2, 74);
 
     const rows = result?.rows ?? [
       { type: EnemyType.BASIC, count: 0, unitPoints: 100, totalPoints: 0 },

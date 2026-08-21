@@ -55,7 +55,7 @@ export class TouchControls {
   public attach(container: HTMLElement | Window): void {
     this.detach();
     this.container = container;
-    const target = container instanceof Window ? container : container;
+    const target = container;
 
     // Apply touch-action: none to container if HTMLElement
     if (container instanceof HTMLElement) {
@@ -72,7 +72,7 @@ export class TouchControls {
 
   public detach(): void {
     if (!this.container) return;
-    const target = this.container instanceof Window ? this.container : this.container;
+    const target = this.container;
     target.removeEventListener('pointerdown', this.onPointerDownBound as EventListener);
     target.removeEventListener('pointermove', this.onPointerMoveBound as EventListener);
     target.removeEventListener('pointerup', this.onPointerUpBound as EventListener);
@@ -214,65 +214,43 @@ export class TouchControls {
     const hysteresis = this.dpadConfig.hysteresisAngleDeg || 10;
     const current = this.lastDirection;
 
+    const getNominalDir = (deg: number): CardinalDirection => {
+      if (deg >= 45 && deg < 135) return 'DOWN';
+      if (deg >= 135 && deg < 225) return 'LEFT';
+      if (deg >= 225 && deg < 315) return 'UP';
+      return 'RIGHT';
+    };
+
     let dir: CardinalDirection;
 
     if (!current) {
-      // Nominal 45-degree sector boundaries without hysteresis
-      if (angle >= 45 && angle < 135) {
-        dir = 'DOWN';
-      } else if (angle >= 135 && angle < 225) {
-        dir = 'LEFT';
-      } else if (angle >= 225 && angle < 315) {
-        dir = 'UP';
-      } else {
-        dir = 'RIGHT';
-      }
+      dir = getNominalDir(angle);
     } else {
-      // Apply hysteresis buffer: Must deviate beyond (nominal boundary + hysteresis) to leave current direction
+      let centerAngle = 0;
       switch (current) {
         case 'RIGHT':
-          // RIGHT nominal: [315, 360) and [0, 45). Hysteresis bounds: [315 - h, 45 + h] -> [305, 55]
-          if (angle > 45 + hysteresis && angle < 180) {
-            dir = 'DOWN';
-          } else if (angle < 315 - hysteresis && angle >= 180) {
-            dir = 'UP';
-          } else {
-            dir = 'RIGHT';
-          }
+          centerAngle = 0;
           break;
-
         case 'DOWN':
-          // DOWN nominal: [45, 135). Hysteresis bounds: [45 - h, 135 + h] -> [35, 145]
-          if (angle < 45 - hysteresis || angle > 315) {
-            dir = 'RIGHT';
-          } else if (angle > 135 + hysteresis) {
-            dir = 'LEFT';
-          } else {
-            dir = 'DOWN';
-          }
+          centerAngle = 90;
           break;
-
         case 'LEFT':
-          // LEFT nominal: [135, 225). Hysteresis bounds: [135 - h, 225 + h] -> [125, 235]
-          if (angle < 135 - hysteresis) {
-            dir = 'DOWN';
-          } else if (angle > 225 + hysteresis) {
-            dir = 'UP';
-          } else {
-            dir = 'LEFT';
-          }
+          centerAngle = 180;
           break;
-
         case 'UP':
-          // UP nominal: [225, 315). Hysteresis bounds: [225 - h, 315 + h] -> [215, 325]
-          if (angle < 225 - hysteresis) {
-            dir = 'LEFT';
-          } else if (angle > 315 + hysteresis || angle < 45) {
-            dir = 'RIGHT';
-          } else {
-            dir = 'UP';
-          }
+          centerAngle = 270;
           break;
+      }
+
+      let diff = Math.abs(angle - centerAngle);
+      if (diff > 180) {
+        diff = 360 - diff;
+      }
+
+      if (diff <= 45 + hysteresis) {
+        dir = current;
+      } else {
+        dir = getNominalDir(angle);
       }
     }
 

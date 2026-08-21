@@ -4,7 +4,11 @@
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@arcade-carnival/playables-adapter": ["../../packages/playables-adapter/src/index.ts"],
+      "@arcade-carnival/game-engine": ["../../packages/game-engine/src/index.ts"]
+    }
   },
   "include": ["src"],
   "references": [

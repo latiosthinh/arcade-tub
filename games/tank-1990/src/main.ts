@@ -4,6 +4,7 @@ import {
   TitleOption,
   CardinalDirection,
   EnemyType,
+  CombatTankTarget,
   RenderSceneData,
   TOTAL_CANVAS_WIDTH,
   TOTAL_CANVAS_HEIGHT,
@@ -109,6 +110,10 @@ enemySpawner.onBonusDrop = (tank) => {
   tankAudio.playPowerUpSpawn();
 };
 
+enemySpawner.onEnemyFire = () => {
+  tankAudio.playEnemyFire();
+};
+
 enemySpawner.onEnemyDestroyed = (tank, points) => {
   scoreManager.recordKill(tank.type, points);
   tankAudio.playTankExplosion();
@@ -172,16 +177,22 @@ canvas.addEventListener('pointerdown', (e) => {
   }
 });
 
+let playerRespawnTimer = 0;
+
 function setupCurrentStage(): void {
   loadStage(grid, gameFlow.currentStage);
   bulletManager.clear();
   particleEmitter.clear();
   playerTank.spawn();
+  playerRespawnTimer = 0;
   enemySpawner.initWave(EnemySpawner.getDefaultWaveQueue());
   tankAudio.playStageStartFanfare();
 }
 
 function startNewCampaign(): void {
+  playerTank.lives = 3;
+  playerTank.tier = 1;
+  playerRespawnTimer = 0;
   gameFlow.restart();
   setupCurrentStage();
 }
@@ -216,6 +227,18 @@ function update(dt: number): void {
 
     if (gameFlow.state !== GameState.PLAYING) {
       return;
+    }
+
+    // Player Dead / Respawn Handling
+    if (playerTank.isDead && !playerTank.isGameOver) {
+      playerRespawnTimer -= dt;
+      if (playerRespawnTimer <= 0) {
+        const respawned = playerTank.respawn();
+        if (!respawned) {
+          gameFlow.triggerGameOver();
+          tankAudio.playGameOverCadence();
+        }
+      }
     }
 
     // Handle Player Input
@@ -266,25 +289,35 @@ function update(dt: number): void {
     }
 
     // Enemy AI, Spawning & Firing
-    enemySpawner.update(dt, playerTank.getState(), (enemyTank) => {
-      const eStats = enemyTank.getConfig();
-      if (bulletManager.canFire('ENEMY', eStats.maxBullets)) {
-        bulletManager.fire(
-          enemyTank.x,
-          enemyTank.y,
-          enemyTank.direction,
-          'ENEMY',
-          {
-            bulletSpeed: eStats.bulletSpeed,
-            canDestroySteel: false,
-            canCutTrees: false,
-            damage: 1,
-          },
-          enemyTank.width
+    const playerTarget: CombatTankTarget = {
+      id: 'player',
+      x: playerTank.x,
+      y: playerTank.y,
+      width: playerTank.width,
+      height: playerTank.height,
+      isPlayer: true,
+      isDead: playerTank.isDead,
+      isInvulnerable: playerTank.isInvulnerable,
+      takeDamage: (_damage: number) => {
+        if (playerTank.isInvulnerable || playerTank.isDead) return false;
+        playerTank.takeDamage();
+        tankAudio.playTankExplosion();
+        particleEmitter.emitExplosion(
+          playerTank.x + playerTank.width / 2,
+          playerTank.y + playerTank.height / 2,
+          true
         );
-        tankAudio.playEnemyFire();
-      }
-    });
+        if (playerTank.lives <= 0) {
+          gameFlow.triggerGameOver();
+          tankAudio.playGameOverCadence();
+        } else {
+          playerRespawnTimer = 1.0;
+        }
+        return true;
+      },
+    };
+
+    enemySpawner.update(dt, playerTank.x, playerTank.y, [playerTarget]);
 
     // Power-up Lifecycle & Player Pickup Collision
     powerUpSystem.update(dt);
@@ -294,31 +327,7 @@ function update(dt: number): void {
 
     // Bullet Ballistics & Combat Ray Collisions
     const combatTargets = [
-      {
-        id: 'player',
-        x: playerTank.x,
-        y: playerTank.y,
-        width: playerTank.width,
-        height: playerTank.height,
-        isPlayer: true,
-        isDead: playerTank.isDead,
-        isInvulnerable: playerTank.isInvulnerable,
-        takeDamage: (_damage: number) => {
-          if (playerTank.isInvulnerable || playerTank.isDead) return false;
-          playerTank.takeDamage();
-          tankAudio.playTankExplosion();
-          particleEmitter.emitExplosion(
-            playerTank.x + playerTank.width / 2,
-            playerTank.y + playerTank.height / 2,
-            true
-          );
-          if (playerTank.lives <= 0) {
-            gameFlow.triggerGameOver();
-            tankAudio.playGameOverCadence();
-          }
-          return true;
-        },
-      },
+      playerTarget,
       ...enemySpawner.getActiveEnemies(),
     ];
 

@@ -188,5 +188,23 @@ describe('EnemyTank Unit Tests', () => {
 
       expect(enemy1.y + enemy1.height).toBeLessThanOrEqual(110);
     });
+
+    it('triggers onFire callback and supports getConfig()', () => {
+      const enemy = new EnemyTank(EnemyType.BASIC, grid, bulletManager, { x: 100, y: 80, direction: 'DOWN' });
+      expect(enemy.getConfig()).toEqual(enemy.getStats());
+
+      let fired = false;
+      enemy.onFire = () => {
+        fired = true;
+      };
+
+      // Advance time enough to trigger shooting
+      for (let i = 0; i < 30; i++) {
+        enemy.update(0.1, 100, 300, []);
+        if (fired) break;
+      }
+
+      expect(fired).toBe(true);
+    });
   });
 });

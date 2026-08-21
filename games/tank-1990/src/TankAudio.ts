@@ -22,6 +22,8 @@ export class TankAudio {
   private engineGain: GainNode | null = null;
   private isEngineRunning: boolean = false;
   private engineIsMoving: boolean = false;
+  private cachedNoiseBuffer: AudioBuffer | null = null;
+  private cachedNoiseDuration: number = 0;
 
   constructor() {
     // AudioContext will be lazily initialized on first user interaction
@@ -119,13 +121,19 @@ export class TankAudio {
    */
   private createNoiseBuffer(duration: number): AudioBuffer | null {
     if (!this.ctx) return null;
+    if (this.cachedNoiseBuffer && this.cachedNoiseDuration >= duration) {
+      return this.cachedNoiseBuffer;
+    }
     const sampleRate = this.ctx.sampleRate || 44100;
-    const frameCount = Math.floor(sampleRate * duration);
+    const targetDuration = Math.max(duration, 1.0);
+    const frameCount = Math.floor(sampleRate * targetDuration);
     const buffer = this.ctx.createBuffer(1, frameCount, sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < frameCount; i++) {
       data[i] = Math.random() * 2 - 1;
     }
+    this.cachedNoiseBuffer = buffer;
+    this.cachedNoiseDuration = targetDuration;
     return buffer;
   }
 
@@ -586,6 +594,45 @@ export class TankAudio {
   }
 
   /**
+   * Sound effect aliases for consistent subsystem naming.
+   */
+  public playPlayerFire(): void {
+    this.playShot(true);
+  }
+
+  public playEnemyFire(): void {
+    this.playShot(false);
+  }
+
+  public playTankExplosion(isBig?: boolean): void {
+    this.playExplosion(isBig);
+  }
+
+  public playBulletHitMetal(): void {
+    this.playSteelHit();
+  }
+
+  public playBrickDestroy(): void {
+    this.playBrickHit();
+  }
+
+  public playBulletCancel(): void {
+    this.playBulletPing();
+  }
+
+  public playGameOverCadence(): void {
+    this.playGameOver();
+  }
+
+  public playPowerUpPickup(): void {
+    this.playPowerupPickup();
+  }
+
+  public playPowerUpSpawn(): void {
+    this.playPowerupSpawn();
+  }
+
+  /**
    * Updates or starts continuous engine hum (idle vs moving).
    */
   public updateEngineSound(isMoving: boolean): void {
@@ -627,6 +674,9 @@ export class TankAudio {
           this.engineOsc.frequency.cancelScheduledValues(now);
           this.engineGain.gain.cancelScheduledValues(now);
 
+          this.engineOsc.frequency.setValueAtTime(this.engineOsc.frequency.value, now);
+          this.engineGain.gain.setValueAtTime(this.engineGain.gain.value, now);
+
           this.engineOsc.frequency.linearRampToValueAtTime(targetFreq, now + 0.05);
           this.engineGain.gain.linearRampToValueAtTime(targetGain, now + 0.05);
           this.engineIsMoving = isMoving;
@@ -654,6 +704,7 @@ export class TankAudio {
       const gain = this.engineGain;
 
       gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
       gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
       osc.stop(now + 0.06);
 
@@ -668,5 +719,23 @@ export class TankAudio {
       this.engineOsc = null;
       this.engineGain = null;
     }
+  }
+
+  /**
+   * Cleans up all audio context resources.
+   */
+  public destroy(): void {
+    this.stopEngine();
+    if (this.ctx && this.ctx.state !== 'closed') {
+      try {
+        this.ctx.close();
+      } catch {
+        // Ignore errors
+      }
+    }
+    this.ctx = null;
+    this.masterGain = null;
+    this.compressor = null;
+    this.cachedNoiseBuffer = null;
   }
 }

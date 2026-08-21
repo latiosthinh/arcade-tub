@@ -89,6 +89,10 @@ export class ParticleEmitter {
     }
   }
 
+  public emitConfettiShower(x: number, y: number, count: number = 25): void {
+    this.emitExplosion(x, y, true);
+  }
+
   /**
    * Spawns small brown/terracotta crumbling squares with downward gravity.
    */

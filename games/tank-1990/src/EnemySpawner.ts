@@ -29,6 +29,7 @@ export class EnemySpawner {
 
   public onBonusDrop?: (tank: EnemyTank) => void;
   public onEnemyDestroyed?: (tank: EnemyTank, points: number) => void;
+  public onEnemyFire?: (tank: EnemyTank) => void;
 
   constructor(
     grid: GridMap,
@@ -248,6 +249,12 @@ export class EnemySpawner {
     newEnemy.onBonusDrop = (tank) => {
       if (this.onBonusDrop) {
         this.onBonusDrop(tank);
+      }
+    };
+
+    newEnemy.onFire = (tank) => {
+      if (this.onEnemyFire) {
+        this.onEnemyFire(tank);
       }
     };
 

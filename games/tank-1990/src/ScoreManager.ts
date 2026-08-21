@@ -70,9 +70,9 @@ export class ScoreManager {
    * Records an enemy kill, adds points according to ENEMY_CONFIGS,
    * increments per-type kill tally, and updates high score.
    */
-  public recordKill(type: EnemyType): number {
+  public recordKill(type: EnemyType, pointsOverride?: number): number {
     const config = ENEMY_CONFIGS[type];
-    const points = config ? config.points : 100;
+    const points = pointsOverride !== undefined ? pointsOverride : (config ? config.points : 100);
 
     if (this.stageKills[type] !== undefined) {
       this.stageKills[type]++;

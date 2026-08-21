@@ -155,5 +155,20 @@ describe('EnemySpawner Unit Tests', () => {
       expect(callbackScore).toBe(700);
       expect(spawner.getActiveEnemies().length).toBe(0);
     });
+
+    it('wires onEnemyFire when newly spawned enemy shoots', () => {
+      let enemyFired = false;
+      spawner.onEnemyFire = () => {
+        enemyFired = true;
+      };
+
+      spawner.initWave([EnemyType.BASIC]);
+      for (let i = 0; i < 30; i++) {
+        spawner.update(0.1, 194, 386, []);
+        if (enemyFired) break;
+      }
+
+      expect(enemyFired).toBe(true);
+    });
   });
 });

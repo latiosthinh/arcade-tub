@@ -208,6 +208,10 @@ export class GridMap {
     return true;
   }
 
+  public destroyEagle(): boolean {
+    return this.damageEagle();
+  }
+
   /**
    * Returns true if Eagle HQ is destroyed.
    */

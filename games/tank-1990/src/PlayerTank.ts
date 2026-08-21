@@ -66,19 +66,20 @@ export class PlayerTank {
     this.slideVelocity = 0;
   }
 
+  public get isInvulnerable(): boolean {
+    return this.shieldTimer > 0;
+  }
+
   /**
    * Respawns player tank after death. Decrements life count and resets tier to TIER_1.
    */
   public respawn(): boolean {
-    if (this.lives <= 0) {
+    if (this.lives <= 1) {
+      this.lives = 0;
       this.isGameOver = true;
       return false;
     }
     this.lives--;
-    if (this.lives <= 0) {
-      this.isGameOver = true;
-      return false;
-    }
     this.tier = TankTier.TIER_1;
     this.spawn();
     return true;
@@ -142,11 +143,15 @@ export class PlayerTank {
 
   public kill(): boolean {
     if (this.isDead) return false;
-    if (this.shieldTimer > 0) return false; // Spawn / helmet invulnerability shield protects tank
+    if (this.isInvulnerable) return false; // Spawn / helmet invulnerability shield protects tank
 
     this.isDead = true;
     this.slideVelocity = 0;
     return true;
+  }
+
+  public takeDamage(damage: number = 1): boolean {
+    return this.kill();
   }
 
   /**

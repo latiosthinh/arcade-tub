@@ -267,6 +267,21 @@ describe('PlayerTank Unit Tests', () => {
       expect(respawned).toBe(false);
       expect(deadTank.isGameOver).toBe(true);
     });
+
+    it('provides takeDamage and isInvulnerable property correctly', () => {
+      const testTank = new PlayerTank(grid, { lives: 3 });
+      expect(testTank.isInvulnerable).toBe(true);
+      expect(testTank.takeDamage(1)).toBe(false);
+      expect(testTank.isDead).toBe(false);
+
+      // Expire shield
+      testTank.update(3.5, null);
+      expect(testTank.isInvulnerable).toBe(false);
+      expect(testTank.takeDamage(1)).toBe(true);
+      expect(testTank.isDead).toBe(true);
+      // Further damage when already dead returns false
+      expect(testTank.takeDamage(1)).toBe(false);
+    });
   });
 
   describe('7. Water Terrain Traversal & Boat Powerup Modifier', () => {
