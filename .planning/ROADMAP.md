@@ -8,7 +8,7 @@ Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ab
 ## Phases
 
 - [x] **Phase 56: Tilemap Engine & Core Platformer Physics** — Tile grid collision (AABB sweep), gravity, jump, one-way platforms, dash, scrolling camera, room transitions via doors.
-- [ ] **Phase 57: Kirby Core Mechanics & Health System** — Inhale vacuum cone, spit star projectile, swallow-to-copy trigger, float puffs (6 max), air bullet exhale, slide attack, 6HP health, lives, invincibility frames.
+- [x] **Phase 57: Kirby Core Mechanics & Health System** — Inhale vacuum cone, spit star projectile, swallow-to-copy trigger, float puffs (6 max), air bullet exhale, slide attack, 6HP health, lives, invincibility frames.
 - [ ] **Phase 58: Copy Ability System** — Strategy-pattern ability interface, 8 unique ability movesets (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle), ability loss on damage with bouncing Ability Star re-inhale window.
 - [ ] **Phase 59: Enemy AI & Ability Grants** — 8 enemy types with state-machine patrol/attack AI (Waddle Dee, Waddle Doo, Blade Knight, Hot Head, Chilly, Sparky, Sir Kibble, Rocky), each granting corresponding copy ability on inhale+swallow.
 - [ ] **Phase 60: Boss Encounters** — 3 multi-phase bosses with HP bars, telegraphed attack patterns, and vulnerability windows (Whispy Woods, Kracko, King Dedede).
@@ -23,7 +23,7 @@ Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ab
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 56. Tilemap Engine & Core Platformer Physics | 2/2 | Complete | 2026-08-21 |
-| 57. Kirby Core Mechanics & Health System | 0/0 | Pending | — |
+| 57. Kirby Core Mechanics & Health System | 2/2 | Complete | 2026-08-21 |
 | 58. Copy Ability System | 0/0 | Pending | — |
 | 59. Enemy AI & Ability Grants | 0/0 | Pending | — |
 | 60. Boss Encounters | 0/0 | Pending | — |

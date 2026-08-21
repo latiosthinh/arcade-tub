@@ -18,11 +18,11 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Kirby Core Mechanics
 
-- [ ] **KRBY-01**: Player can inhale enemies via vacuum cone hitbox that pulls enemies toward Kirby
-- [ ] **KRBY-02**: Player can spit captured enemy as star projectile that damages other enemies
-- [ ] **KRBY-03**: Player can swallow captured enemy to gain their copy ability
-- [ ] **KRBY-04**: Player can float by pressing jump while airborne (up to 6 puffs) and exhale air bullet attack
-- [ ] **KRBY-05**: Player can slide attack by pressing down+attack while grounded, passing under low overhangs
+- [x] **KRBY-01**: Player can inhale enemies via vacuum cone hitbox that pulls enemies toward Kirby
+- [x] **KRBY-02**: Player can spit captured enemy as star projectile that damages other enemies
+- [x] **KRBY-03**: Player can swallow captured enemy to gain their copy ability
+- [x] **KRBY-04**: Player can float by pressing jump while airborne (up to 6 puffs) and exhale air bullet attack
+- [x] **KRBY-05**: Player can slide attack by pressing down+attack while grounded, passing under low overhangs
 
 ### Copy Abilities
 
@@ -64,9 +64,9 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Health & Lives
 
-- [ ] **HLTH-01**: Player has 6 HP segments with damage from enemies and food item healing
-- [ ] **HLTH-02**: Player starts with 3 lives; death respawns at room start; 0 lives triggers Game Over
-- [ ] **HLTH-03**: Player gets invincibility frames (flashing/blinking) for ~1.5s after taking damage
+- [x] **HLTH-01**: Player has 6 HP segments with damage from enemies and food item healing
+- [x] **HLTH-02**: Player starts with 3 lives; death respawns at room start; 0 lives triggers Game Over
+- [x] **HLTH-03**: Player gets invincibility frames (flashing/blinking) for ~1.5s after taking damage
 
 ### Visuals
 
@@ -136,14 +136,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PHYS-04 | Phase 56 | Complete |
 | PHYS-05 | Phase 56 | Complete |
 | PHYS-06 | Phase 56 | Complete |
-| KRBY-01 | Phase 57 | Pending |
-| KRBY-02 | Phase 57 | Pending |
-| KRBY-03 | Phase 57 | Pending |
-| KRBY-04 | Phase 57 | Pending |
-| KRBY-05 | Phase 57 | Pending |
-| HLTH-01 | Phase 57 | Pending |
-| HLTH-02 | Phase 57 | Pending |
-| HLTH-03 | Phase 57 | Pending |
+| KRBY-01 | Phase 57 | Complete |
+| KRBY-02 | Phase 57 | Complete |
+| KRBY-03 | Phase 57 | Complete |
+| KRBY-04 | Phase 57 | Complete |
+| KRBY-05 | Phase 57 | Complete |
+| HLTH-01 | Phase 57 | Complete |
+| HLTH-02 | Phase 57 | Complete |
+| HLTH-03 | Phase 57 | Complete |
 | ABIL-01 | Phase 58 | Pending |
 | ABIL-02 | Phase 58 | Pending |
 | ABIL-03 | Phase 58 | Pending |

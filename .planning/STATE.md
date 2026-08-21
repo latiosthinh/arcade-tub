@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 57 — Kirby Core Mechanics & Health System
+Phase: 58 — Copy Ability System
 Plan: —
 Status: Ready for planning
-Last activity: 2026-08-21 — Phase 56 verified and completed
+Last activity: 2026-08-21 — Phase 57 verified and completed
 
 ## Milestone
 - **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer
