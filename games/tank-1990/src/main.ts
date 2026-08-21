@@ -106,7 +106,7 @@ powerUpSystem.onPowerUpCollected = (event) => {
 };
 
 enemySpawner.onBonusDrop = (tank) => {
-  powerUpSystem.spawnRandomPowerUp();
+  powerUpSystem.spawnRandomPowerUp(tank.x, tank.y);
   tankAudio.playPowerUpSpawn();
 };
 
@@ -178,6 +178,7 @@ canvas.addEventListener('pointerdown', (e) => {
 });
 
 let playerRespawnTimer = 0;
+let playerFireCooldown = 0;
 
 function setupCurrentStage(): void {
   loadStage(grid, gameFlow.currentStage);
@@ -185,6 +186,7 @@ function setupCurrentStage(): void {
   particleEmitter.clear();
   playerTank.spawn();
   playerRespawnTimer = 0;
+  playerFireCooldown = 0;
   enemySpawner.initWave(EnemySpawner.getDefaultWaveQueue());
   tankAudio.playStageStartFanfare();
 }
@@ -193,6 +195,7 @@ function startNewCampaign(): void {
   playerTank.lives = 3;
   playerTank.tier = 1;
   playerRespawnTimer = 0;
+  playerFireCooldown = 0;
   gameFlow.restart();
   setupCurrentStage();
 }
@@ -267,8 +270,12 @@ function update(dt: number): void {
       tankAudio.updateEngineSound(false);
     }
 
+    if (playerFireCooldown > 0) {
+      playerFireCooldown -= dt;
+    }
+
     // Player Weapon Firing
-    if (isFiring && !playerTank.isDead) {
+    if (isFiring && !playerTank.isDead && playerFireCooldown <= 0) {
       const stats = playerTank.getStats();
       if (bulletManager.canFire('PLAYER', stats.maxBullets)) {
         bulletManager.fire(
@@ -284,6 +291,7 @@ function update(dt: number): void {
           },
           playerTank.width
         );
+        playerFireCooldown = 0.15;
         tankAudio.playPlayerFire();
       }
     }
