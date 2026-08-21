@@ -1,121 +1,142 @@
-# Requirements: Milestone v8.0 — Tank 1990 (Battle City) Retro Papercraft Arcade
+# Requirements: ArcadeTub v9.0 — Kirby's Adventure: Papercraft Platformer
 
-## Core Value
-Deliver a faithful, highly responsive browser recreation of the classic Tank 1990 / Battle City arcade tactical shooter featuring distinctive tactile papercraft visuals, procedural 8-bit Web Audio, authentic destructible grid mechanics, 4-tier tank progression, smart enemy AI, stage campaigns, and seamless mobile touch controls with zero external dependencies.
+**Defined:** 2026-08-21
+**Core Value:** Browser-based retro-modern tactile arcade minigames with zero runtime dependencies
 
----
+## v9.0 Requirements
 
-## Active Requirements
+Requirements for Milestone v9.0. Each maps to roadmap phases.
 
-### Grid Terrain & Destruction Engine
-- [x] **GRID-01**: System maintains a 26×26 sub-tile microgrid (16×16px cells on 416×416 field) supporting 6 terrain types: Empty, Brick, Steel, Water, Trees/Grass, and Ice.
-- [x] **GRID-02**: System supports 4-quadrant sub-tile bitmask chipping for Brick walls when hit by projectiles.
-- [x] **GRID-03**: System implements impassable Water barriers that block tank movement but permit projectile flight.
-- [x] **GRID-04**: System supports Trees/Grass canopy tiles rendered above entity layer for visual camouflage concealment.
-- [x] **GRID-05**: System supports Ice tiles causing low-friction sliding drift when tanks navigate over them.
-- [x] **GRID-06**: System manages Eagle Base HQ entity with destructible 2×2 footprint, instant Game Over on destruction, and destroyed papercraft state.
-- [x] **GRID-07**: System encodes and loads 35 authentic stage map layouts into the grid engine.
+### Platformer Physics
 
-### Player Tank Kinematics & Upgrades
-- [x] **TANK-01**: User can steer player tank in 4 cardinal directions with orthogonal corner auto-snapping ($\le 4\text{px}$ deadzone) to smoothly navigate 1-tile corridors without snagging.
-- [x] **TANK-02**: User progresses through 4 distinct tank upgrade tiers: Tier 1 (Basic slow single-shot), Tier 2 (Speed Tank), Tier 3 (Heavy Tank with 2 concurrent rapid bullets), Tier 4 (Armor-Piercing Super Tank capable of destroying Steel walls and mowing Trees).
-- [x] **TANK-03**: System manages spawn invulnerability shield bubble timer on player spawn and respawn.
-- [x] **TANK-04**: System manages player lives counter, extra lives gain, and death/respawn cycle.
+- [ ] **PHYS-01**: Player can walk left/right on flat terrain with gravity pulling downward
+- [ ] **PHYS-02**: Player can jump and land on solid ground, walls, and ceilings via AABB tile collision
+- [ ] **PHYS-03**: Player can jump through one-way platforms from below and land on them from above
+- [ ] **PHYS-04**: Player can dash at 1.5x speed by double-tapping a direction
+- [ ] **PHYS-05**: Camera follows player horizontally with deadzone and clamps at room boundaries
+- [ ] **PHYS-06**: Player can transition between rooms via door entities with fade/wipe
 
-### Ballistics & Combat Collisions
-- [x] **COMBAT-01**: System simulates projectile trajectory with 120Hz sub-stepping or continuous ray-sweep to prevent collision tunneling.
-- [x] **COMBAT-02**: System cancels intersecting opposing projectiles upon collision with micro spark particle burst.
-- [x] **COMBAT-03**: System applies tier-dependent projectile damage to terrain (regular shot chips bricks; tier-4 heavy shot penetrates steel and clears trees).
-- [x] **COMBAT-04**: System detects bullet hits on enemy tanks, dealing damage and accounting for armor hit points.
+### Kirby Core Mechanics
 
-### Enemy AI, Spawner & Powerups
-- [x] **ENEMY-01**: System manages a 20-tank wave queue with up to 4 concurrent enemy tanks spawning at 3 top spawn portals.
-- [x] **ENEMY-02**: System implements 4 distinct enemy archetypes: Basic Tank (slow, low points), Fast Cruiser (high speed), Power Tank (rapid-fire), and Heavy Armor Tank (requires 4 hits to destroy, color changes per hit).
-- [x] **ENEMY-03**: System executes grid-node steering AI with goal-oriented pathing bias (targeting player or Eagle HQ) and anti-oscillation direction locking.
-- [x] **ENEMY-04**: System spawns flashing bonus tanks (4th, 11th, 18th spawns) that drop a random tactical powerup upon taking damage.
-- [x] **ENEMY-05**: User can collect 8 tactical powerup items: Star (upgrade tier), Shovel (fortifies base perimeter with steel for 20s), Grenade (instantly destroys all active enemies on screen), Clock (freezes all enemies for 10s), Helmet (temporary invulnerability shield for 10s), Tank (grants +1 extra life), Gun (instantly promotes to Tier 4), and Boat (enables crossing water terrain).
-- [x] **ENEMY-06**: System manages shovel fortification timeout restoration, caching underlying terrain state without leaving empty voids.
+- [ ] **KRBY-01**: Player can inhale enemies via vacuum cone hitbox that pulls enemies toward Kirby
+- [ ] **KRBY-02**: Player can spit captured enemy as star projectile that damages other enemies
+- [ ] **KRBY-03**: Player can swallow captured enemy to gain their copy ability
+- [ ] **KRBY-04**: Player can float by pressing jump while airborne (up to 6 puffs) and exhale air bullet attack
+- [ ] **KRBY-05**: Player can slide attack by pressing down+attack while grounded, passing under low overhangs
 
-### Stage Progression, Game Flow & HUD
-- [x] **LOOP-01**: System displays title screen with Game Start, Stage Select, and high score display.
-- [x] **LOOP-02**: System renders stage intro curtain transition ("STAGE X") before each round.
-- [x] **LOOP-03**: System renders active HUD side panel showing remaining enemy reserve tank icons, player lives, current stage number, and current score.
-- [x] **LOOP-04**: System presents end-stage kill tally screen breaking down points earned per enemy tank class destroyed.
-- [x] **LOOP-05**: System manages victory sequence (advancing to next stage) and defeat sequence (Game Over banner and restart prompt).
-- [x] **LOOP-06**: System persists personal best high scores in `localStorage`.
+### Copy Abilities
 
-### Tactile Papercraft Visuals & Procedural Web Audio
-- [x] **VISUAL-01**: System renders layered cardboard cutouts with drop shadows, rolling tread trails, and turret recoil animations.
-- [x] **VISUAL-02**: System generates paper confetti burst particles for explosions, brick debris crumbs, and bullet sparks.
-- [x] **VISUAL-03**: System executes multi-pass canvas composition: Ground Layer -> Entities & Powerups -> Grass Canopy Overlay -> Particle FX -> HUD Overlay.
-- [x] **VISUAL-04**: System synthesizes procedural 8-bit Web Audio with zero external audio assets: chiptune engine pitch-shifted hums, sharp shot pops, crunchy wall crumble, metallic steel clangs, explosion booms, item pickup fanfares, and base destruction alarm.
-- [x] **VISUAL-05**: Audio subsystem routes all sounds through a master `DynamicsCompressorNode` to prevent clipping and distortion during high-volume particle explosions.
+- [ ] **ABIL-01**: Sword ability overrides attack with 3-hit combo and aerial spin slash
+- [ ] **ABIL-02**: Fire ability overrides attack with horizontal flame breath and fire dash
+- [ ] **ABIL-03**: Ice/Freeze ability overrides attack with freeze cone and kick frozen enemy
+- [ ] **ABIL-04**: Beam ability overrides attack with whip arc at medium range
+- [ ] **ABIL-05**: Cutter ability overrides attack with boomerang throw that returns to player
+- [ ] **ABIL-06**: Stone ability overrides attack with invulnerable drop and area damage
+- [ ] **ABIL-07**: Spark ability overrides attack with electric field radius on hold
+- [ ] **ABIL-08**: Needle ability overrides attack with spike burst stationary area denial
+- [ ] **ABIL-09**: Taking damage causes current ability to bounce out as Ability Star with brief re-inhale window
 
-### Mobile Virtual Controls & Responsive Viewport
-- [x] **MOBILE-01**: System provides responsive touch controls with 4-way cardinal virtual D-Pad (with angular hysteresis deadzone) and dedicated Fire button.
-- [x] **MOBILE-02**: System scales the 416×416 game arena with pixel-crisp aspect ratio preservation inside mobile and desktop viewports.
-- [x] **MOBILE-03**: Touch input handles multi-touch simultaneously (holding D-Pad direction while tapping Fire) without gesture stutter or screen scrolling.
+### Enemies
 
-### Catalog Registration, Test Suite & Integration
-- [x] **INTEG-01**: Game is packaged in standalone directory `games/tank-1990/` with zero runtime dependencies.
-- [x] **INTEG-02**: Game is registered in `src/data/games.ts` with metadata, tags (`action`, `retro`, `arcade`), and custom SVG screenshot.
-- [x] **INTEG-03**: Game is wired into `vite.config.ts` multi-page input build configuration.
-- [x] **INTEG-04**: System provides comprehensive Vitest unit tests covering grid micro-chipping, kinematics corner-snapping, projectile sweeps, enemy AI node routing, and powerup mechanics with 100% test pass rate.
+- [ ] **ENMY-01**: Waddle Dee walks patrol pattern with no ability grant
+- [ ] **ENMY-02**: Waddle Doo walks and fires beam attack, grants Beam on copy
+- [ ] **ENMY-03**: Blade Knight walks and slashes, grants Sword on copy
+- [ ] **ENMY-04**: Hot Head walks and breathes fire, grants Fire on copy
+- [ ] **ENMY-05**: Chilly stands stationary with freeze aura, grants Freeze on copy
+- [ ] **ENMY-06**: Sparky bounces with electric field, grants Spark on copy
+- [ ] **ENMY-07**: Sir Kibble walks and throws cutter, grants Cutter on copy
+- [ ] **ENMY-08**: Rocky walks and drops stone, grants Stone on copy
 
----
+### Bosses
 
-## Future Requirements (Deferred)
-- **MAP-01**: In-game custom stage construction level editor with export/import capability.
-- **COOP-01**: Local 2-player split-controls co-op base defense mode.
+- [ ] **BOSS-01**: Whispy Woods has multi-phase attacks (apple drop + air blow) with HP bar and vulnerability windows
+- [ ] **BOSS-02**: Kracko has aerial movement with lightning bolts and rain drop attacks
+- [ ] **BOSS-03**: King Dedede has hammer swing, jump slam, and inhale attacks with phase transitions
 
----
+### World & Stages
+
+- [ ] **WRLD-01**: Player can navigate a world map with walkable nodes between stages
+- [ ] **WRLD-02**: Game has 4 themed worlds with 4 stages + 1 boss stage each (20 total)
+- [ ] **WRLD-03**: Each stage contains rooms connected by doors with JSON tilemap data
+- [ ] **WRLD-04**: Completed stages are marked and boss node unlocks after clearing all stages
+- [ ] **WRLD-05**: Hidden bonus rooms accessible through secret doors behind breakable walls
+- [ ] **WRLD-06**: Game progress auto-saves to localStorage (last world unlocked, completion %)
+
+### Health & Lives
+
+- [ ] **HLTH-01**: Player has 6 HP segments with damage from enemies and food item healing
+- [ ] **HLTH-02**: Player starts with 3 lives; death respawns at room start; 0 lives triggers Game Over
+- [ ] **HLTH-03**: Player gets invincibility frames (flashing/blinking) for ~1.5s after taking damage
+
+### Visuals
+
+- [ ] **VISL-01**: Kirby rendered as papercraft cardboard with squash-stretch on inhale/float/land/damage
+- [ ] **VISL-02**: Enemies rendered as origami paper cutouts with crease lines and drop shadows
+- [ ] **VISL-03**: Terrain tiles rendered as corrugated cardboard with per-world themes
+- [ ] **VISL-04**: Multi-layer parallax scrolling background with tissue-paper translucency
+- [ ] **VISL-05**: Confetti particle effects on ability gain, enemy defeat, and boss defeat
+- [ ] **VISL-06**: Ability-specific papercraft hat rendered on Kirby when ability is active
+
+### Audio
+
+- [ ] **AUDI-01**: Procedural Web Audio SFX for inhale, float puff, spit, ability activation, damage, boss theme
+- [ ] **AUDI-02**: Stage clear fanfare and game over jingle via procedural synthesis
+
+### Controls & HUD
+
+- [ ] **CTRL-01**: Mobile virtual controls with left D-pad + right Jump + Inhale/Attack buttons with multi-touch
+- [ ] **CTRL-02**: HUD displays HP bar, lives count, current ability icon, and score
+- [ ] **CTRL-03**: Stage intro splash shows "Stage X-Y" title card before stage loads
+- [ ] **CTRL-04**: Goal game timing minigame at end of each stage for bonus rewards
+
+### Integration
+
+- [ ] **INTG-01**: Game packaged as standalone entry under `games/kirby-adventure/` with Vite multi-page config
+- [ ] **INTG-02**: Game registered in hub catalog with metadata, category tag, and SVG screenshot
+- [ ] **INTG-03**: Unit tests cover core game logic with 100% pass rate
+
+## Future Requirements
+
+Deferred to post-v9.0. Tracked but not in current roadmap.
+
+### Additional Content
+
+- **FUTR-01**: Additional copy abilities beyond initial 8 (Tornado, Hammer, Wheel, etc.)
+- **FUTR-02**: Sub-games (Crane Game, Quick Draw) accessible from world map
+- **FUTR-03**: 100% completion tracking with bonus ending
+- **FUTR-04**: Additional worlds beyond initial 4 (Grape Garden, Yogurt Yard, Orange Ocean)
 
 ## Out of Scope
-- **Online Multiplayer**: Real-time networked multiplayer over WebSockets is out of scope for the static client architecture.
-- **External Sprite Assets**: All tanks, terrain, and icons are rendered procedurally via Canvas 2D / SVG paths to maintain zero-asset design constraint.
 
----
+Explicitly excluded. Documented to prevent scope creep.
 
-## Traceability Matrix
+| Feature | Reason |
+|---------|--------|
+| Full 24-ability roster from NES original | Scope explosion — 8 curated abilities cover all archetypes |
+| 7 worlds / 40+ stages (full NES scope) | Content bloat — 4 worlds × 5 stages = 20 stages sufficient |
+| Physics engine library (Matter.js, Box2D) | Violates zero-dependency constraint, overkill for tile AABB |
+| Sprite sheets / external image assets | Violates zero-dependency constraint — procedural Canvas 2D only |
+| External audio files (MP3/WAV) | Same constraint — procedural Web Audio synthesis only |
+| Online multiplayer / co-op | Server infrastructure complexity, single-player focus |
+| Complex slope physics | Minimal gameplay value vs physics complexity |
+| Mid-bosses (Bonkers, Mr. Frosty) | 3 full bosses sufficient — mid-bosses multiply scope |
+| Swimming / water sections | Doubles physics system complexity for minimal value |
+| Level editor / custom maps | High UI complexity, low engagement for instant-play catalog |
+| WebGL / Three.js / 3D rendering | Violates zero-dependency constraint, overkill for 2D papercraft |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
-|---|---|---|
-| **GRID-01** | Phase 48 | Complete |
-| **GRID-02** | Phase 48 | Complete |
-| **GRID-03** | Phase 48 | Complete |
-| **GRID-04** | Phase 48 | Complete |
-| **GRID-05** | Phase 48 | Complete |
-| **GRID-06** | Phase 48 | Complete |
-| **GRID-07** | Phase 48 | Complete |
-| **TANK-01** | Phase 49 | Complete |
-| **TANK-02** | Phase 49 | Complete |
-| **TANK-03** | Phase 49 | Complete |
-| **TANK-04** | Phase 49 | Complete |
-| **COMBAT-01** | Phase 50 | Complete |
-| **COMBAT-02** | Phase 50 | Complete |
-| **COMBAT-03** | Phase 50 | Complete |
-| **COMBAT-04** | Phase 50 | Complete |
-| **ENEMY-01** | Phase 51 | Complete |
-| **ENEMY-02** | Phase 51 | Complete |
-| **ENEMY-03** | Phase 51 | Complete |
-| **ENEMY-04** | Phase 51 | Complete |
-| **ENEMY-05** | Phase 51 | Complete |
-| **ENEMY-06** | Phase 51 | Complete |
-| **LOOP-01** | Phase 52 | Complete |
-| **LOOP-02** | Phase 52 | Complete |
-| **LOOP-03** | Phase 52 | Complete |
-| **LOOP-04** | Phase 52 | Complete |
-| **LOOP-05** | Phase 52 | Complete |
-| **LOOP-06** | Phase 52 | Complete |
-| **VISUAL-01** | Phase 53 | Complete |
-| **VISUAL-02** | Phase 53 | Complete |
-| **VISUAL-03** | Phase 53 | Complete |
-| **VISUAL-04** | Phase 53 | Complete |
-| **VISUAL-05** | Phase 53 | Complete |
-| **MOBILE-01** | Phase 54 | Complete |
-| **MOBILE-02** | Phase 54 | Complete |
-| **MOBILE-03** | Phase 54 | Complete |
-| **INTEG-01** | Phase 55 | Complete |
-| **INTEG-02** | Phase 55 | Complete |
-| **INTEG-03** | Phase 55 | Complete |
-| **INTEG-04** | Phase 55 | Complete |
+|-------------|-------|--------|
+| *(populated by roadmapper)* | | |
+
+**Coverage:**
+- v9.0 requirements: 48 total
+- Mapped to phases: 0
+- Unmapped: 48 (pending roadmap creation)
+
+---
+*Requirements defined: 2026-08-21*
+*Last updated: 2026-08-21 after initial definition*
