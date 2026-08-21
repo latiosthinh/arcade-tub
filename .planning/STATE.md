@@ -2,17 +2,11 @@
 
 ## Current Position
 
-Phase: Complete (Milestone v9.0 shipped)
+Phase: Not started (defining requirements)
 Plan: —
-Status: Milestone v9.0 Complete
-Last activity: 2026-08-21 — Milestone v9.0 complete
+Status: Defining requirements
+Last activity: 2026-08-21 — Milestone v10.0 started
 
 ## Milestone
-- **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer (Shipped)
+- **Milestone:** v10.0 — The Legend of Kage: Papercraft Ninja Action
 - **Catalog Size:** 44 games active.
-
-## Milestone
-- **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer
-- **Phases:** 56–63 (8 phases)
-- **Requirements:** 48 mapped
-- **Catalog Size:** 43 games active.
