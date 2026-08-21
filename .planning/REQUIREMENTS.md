@@ -34,12 +34,12 @@ Requirements for Milestone v10.0. Each maps to roadmap phases.
 
 ### Stages & Seasonal Progression
 
-- [ ] **STAG-01**: Stage 1 Bamboo Forest features vertical/horizontal scrolling through tall canopy
-- [ ] **STAG-02**: Stage 2 Castle Moat features water hazard below and vertical castle wall climbing
-- [ ] **STAG-03**: Stage 3 Castle Interior features multi-level indoor stairways and corridors
-- [ ] **STAG-04**: Stage 4 Boss Chamber features boss duel arena and Princess Kiri rescue sequence
-- [ ] **STAG-05**: Completing all 4 stages advances the 4-season cycle: Spring (sakura) → Summer (green) → Autumn (maple) → Winter (snow)
-- [ ] **STAG-06**: Game progress, high score, and loop count auto-save to localStorage
+- [x] **STAG-01**: Stage 1 Bamboo Forest features vertical/horizontal scrolling through tall canopy
+- [x] **STAG-02**: Stage 2 Castle Moat features water hazard below and vertical castle wall climbing
+- [x] **STAG-03**: Stage 3 Castle Interior features multi-level indoor stairways and corridors
+- [x] **STAG-04**: Stage 4 Boss Chamber features boss duel arena and Princess Kiri rescue sequence
+- [x] **STAG-05**: Completing all 4 stages advances the 4-season cycle: Spring (sakura) → Summer (green) → Autumn (maple) → Winter (snow)
+- [x] **STAG-06**: Game progress, high score, and loop count auto-save to localStorage
 
 ### Visuals, Audio, Controls & Integration
 
@@ -94,12 +94,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ENMY-04 | Phase 66 | Complete |
 | ENMY-05 | Phase 66 | Complete |
 | ENMY-06 | Phase 66 | Complete |
-| STAG-01 | Phase 67 | Pending |
-| STAG-02 | Phase 67 | Pending |
-| STAG-03 | Phase 67 | Pending |
-| STAG-04 | Phase 67 | Pending |
-| STAG-05 | Phase 67 | Pending |
-| STAG-06 | Phase 67 | Pending |
+| STAG-01 | Phase 67 | Complete |
+| STAG-02 | Phase 67 | Complete |
+| STAG-03 | Phase 67 | Complete |
+| STAG-04 | Phase 67 | Complete |
+| STAG-05 | Phase 67 | Complete |
+| STAG-06 | Phase 67 | Complete |
 | VISL-01 | Phase 68 | Pending |
 | VISL-02 | Phase 68 | Pending |
 | AUDI-01 | Phase 68 | Pending |
