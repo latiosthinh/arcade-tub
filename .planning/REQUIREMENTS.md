@@ -25,12 +25,12 @@ Requirements for Milestone v10.0. Each maps to roadmap phases.
 
 ### Enemy AI & Wave Spawner
 
-- [ ] **ENMY-01**: Red Ninja patrols ground and performs low leaps toward player
-- [ ] **ENMY-02**: Blue Ninja leaps rapidly between tree branches and throws shurikens at player
-- [ ] **ENMY-03**: White Ninja performs high smoke leaps and ambushes with rapid shuriken spread
-- [ ] **ENMY-04**: Fire Monk breathes streams of ground fire and casts fireballs
-- [ ] **ENMY-05**: Sorcerer / Yukinosuke boss teleports across arena and casts tracking magic orbs
-- [ ] **ENMY-06**: Spawner generates continuous enemy waves from off-screen top and side edges
+- [x] **ENMY-01**: Red Ninja patrols ground and performs low leaps toward player
+- [x] **ENMY-02**: Blue Ninja leaps rapidly between tree branches and throws shurikens at player
+- [x] **ENMY-03**: White Ninja performs high smoke leaps and ambushes with rapid shuriken spread
+- [x] **ENMY-04**: Fire Monk breathes streams of ground fire and casts fireballs
+- [x] **ENMY-05**: Sorcerer / Yukinosuke boss teleports across arena and casts tracking magic orbs
+- [x] **ENMY-06**: Spawner generates continuous enemy waves from off-screen top and side edges
 
 ### Stages & Seasonal Progression
 
@@ -88,12 +88,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CMBT-03 | Phase 65 | Complete |
 | CMBT-04 | Phase 65 | Complete |
 | CMBT-05 | Phase 65 | Complete |
-| ENMY-01 | Phase 66 | Pending |
-| ENMY-02 | Phase 66 | Pending |
-| ENMY-03 | Phase 66 | Pending |
-| ENMY-04 | Phase 66 | Pending |
-| ENMY-05 | Phase 66 | Pending |
-| ENMY-06 | Phase 66 | Pending |
+| ENMY-01 | Phase 66 | Complete |
+| ENMY-02 | Phase 66 | Complete |
+| ENMY-03 | Phase 66 | Complete |
+| ENMY-04 | Phase 66 | Complete |
+| ENMY-05 | Phase 66 | Complete |
+| ENMY-06 | Phase 66 | Complete |
 | STAG-01 | Phase 67 | Pending |
 | STAG-02 | Phase 67 | Pending |
 | STAG-03 | Phase 67 | Pending |
