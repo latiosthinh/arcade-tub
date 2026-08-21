@@ -59,6 +59,7 @@ export default defineConfig({
         'grass-mow': resolve(__dirname, 'games/grass-mow/index.html'),
         'koi-pond': resolve(__dirname, 'games/koi-pond/index.html'),
         'tank-1990': resolve(__dirname, 'games/tank-1990/index.html'),
+        'kirby-adventure': resolve(__dirname, 'games/kirby-adventure/index.html'),
       },
     },
   },

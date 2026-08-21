@@ -627,6 +627,20 @@ export const GAMES: GameItem[] = [
     themeColor: '#D97706',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
     features: ['26×26 Destructible Microgrid', '4-Tier Tank Upgrades & 8 Powerups', 'Procedural 8-Bit Web Audio & Confetti FX']
+  },
+  {
+    id: 'kirby-adventure',
+    title: "Kirby's Adventure",
+    genre: 'Papercraft Action Platformer',
+    category: 'arcade',
+    description: "Inhale, copy abilities, float, and battle across 4 papercraft worlds. Master 8 distinct copy abilities, conquer 20 stages, and defeat iconic multi-phase bosses in this tactile retro platformer.",
+    badge: 'New',
+    rating: '5.0 ★',
+    plays: '10K plays',
+    icon: '🌸',
+    themeColor: '#F48FB1',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE4EC 100%)',
+    features: ['8 Copy Abilities & Ability Drops', 'Inhale, Float & Slide Physics', '3 Multi-Phase Boss Encounters']
   }
 ];
 

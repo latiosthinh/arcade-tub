@@ -84,16 +84,16 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Controls & HUD
 
-- [ ] **CTRL-01**: Mobile virtual controls with left D-pad + right Jump + Inhale/Attack buttons with multi-touch
-- [ ] **CTRL-02**: HUD displays HP bar, lives count, current ability icon, and score
-- [ ] **CTRL-03**: Stage intro splash shows "Stage X-Y" title card before stage loads
-- [ ] **CTRL-04**: Goal game timing minigame at end of each stage for bonus rewards
+- [x] **CTRL-01**: Mobile virtual controls with left D-pad + right Jump + Inhale/Attack buttons with multi-touch
+- [x] **CTRL-02**: HUD displays HP bar, lives count, current ability icon, and score
+- [x] **CTRL-03**: Stage intro splash shows "Stage X-Y" title card before stage loads
+- [x] **CTRL-04**: Goal game timing minigame at end of each stage for bonus rewards
 
 ### Integration
 
-- [ ] **INTG-01**: Game packaged as standalone entry under `games/kirby-adventure/` with Vite multi-page config
-- [ ] **INTG-02**: Game registered in hub catalog with metadata, category tag, and SVG screenshot
-- [ ] **INTG-03**: Unit tests cover core game logic with 100% pass rate
+- [x] **INTG-01**: Game packaged as standalone entry under `games/kirby-adventure/` with Vite multi-page config
+- [x] **INTG-02**: Game registered in hub catalog with metadata, category tag, and SVG screenshot
+- [x] **INTG-03**: Unit tests cover core game logic with 100% pass rate
 
 ## Future Requirements
 
@@ -178,13 +178,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VISL-06 | Phase 62 | Complete |
 | AUDI-01 | Phase 62 | Complete |
 | AUDI-02 | Phase 62 | Complete |
-| CTRL-01 | Phase 63 | Pending |
-| CTRL-02 | Phase 63 | Pending |
-| CTRL-03 | Phase 63 | Pending |
-| CTRL-04 | Phase 63 | Pending |
-| INTG-01 | Phase 63 | Pending |
-| INTG-02 | Phase 63 | Pending |
-| INTG-03 | Phase 63 | Pending |
+| CTRL-01 | Phase 63 | Complete |
+| CTRL-02 | Phase 63 | Complete |
+| CTRL-03 | Phase 63 | Complete |
+| CTRL-04 | Phase 63 | Complete |
+| INTG-01 | Phase 63 | Complete |
+| INTG-02 | Phase 63 | Complete |
+| INTG-03 | Phase 63 | Complete |
 
 **Coverage:**
 - v9.0 requirements: 48 total
