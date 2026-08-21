@@ -49,9 +49,9 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Bosses
 
-- [ ] **BOSS-01**: Whispy Woods has multi-phase attacks (apple drop + air blow) with HP bar and vulnerability windows
-- [ ] **BOSS-02**: Kracko has aerial movement with lightning bolts and rain drop attacks
-- [ ] **BOSS-03**: King Dedede has hammer swing, jump slam, and inhale attacks with phase transitions
+- [x] **BOSS-01**: Whispy Woods has multi-phase attacks (apple drop + air blow) with HP bar and vulnerability windows
+- [x] **BOSS-02**: Kracko has aerial movement with lightning bolts and rain drop attacks
+- [x] **BOSS-03**: King Dedede has hammer swing, jump slam, and inhale attacks with phase transitions
 
 ### World & Stages
 
@@ -161,9 +161,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ENMY-06 | Phase 59 | Complete |
 | ENMY-07 | Phase 59 | Complete |
 | ENMY-08 | Phase 59 | Complete |
-| BOSS-01 | Phase 60 | Pending |
-| BOSS-02 | Phase 60 | Pending |
-| BOSS-03 | Phase 60 | Pending |
+| BOSS-01 | Phase 60 | Complete |
+| BOSS-02 | Phase 60 | Complete |
+| BOSS-03 | Phase 60 | Complete |
 | WRLD-01 | Phase 61 | Pending |
 | WRLD-02 | Phase 61 | Pending |
 | WRLD-03 | Phase 61 | Pending |
