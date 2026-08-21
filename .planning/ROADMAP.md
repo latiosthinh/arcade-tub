@@ -1,20 +1,20 @@
-# ROADMAP.md — Milestone v8.0: Tank 1990 (Battle City) Retro Papercraft Arcade
+# ROADMAP.md — Milestone v9.0: Kirby's Adventure — Papercraft Platformer
 
 ## Overview
-Deliver a faithful, highly responsive browser recreation of the classic Tank 1990 / Battle City arcade tactical shooter featuring distinctive tactile papercraft visuals, procedural 8-bit Web Audio, authentic destructible grid mechanics, 4-tier tank progression, smart enemy AI, stage campaigns, and seamless mobile touch controls with zero external dependencies.
+Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ability mechanics, 8 enemy types, 3 multi-phase bosses, 4 themed worlds (20 stages), and full papercraft cardboard visual aesthetic with procedural Web Audio — zero external dependencies.
 
 ---
 
 ## Phases
 
-- [x] **Phase 48: GridMap Engine & Sub-Tile Destruction** - 26×26 microgrid, 4-quadrant sub-tile brick chipping, terrain behaviors, Eagle HQ entity, and 35 authentic stage map loaders.
-- [x] **Phase 49: Player Tank Kinematics & Upgrade Tiers** - 4-way cardinal steering with corridor auto-alignment snapping, 4 upgrade tiers, invulnerability shields, and lives/respawn cycles.
-- [x] **Phase 50: Ballistics System & Combat Collisions** - 120Hz sub-stepping projectile simulation, bullet-vs-bullet cancellation, tier-dependent terrain penetration, and damage resolution.
-- [x] **Phase 51: Enemy AI, Wave Spawner & Power-Up System** - 20-tank wave queue, 4 enemy classes, grid-node steering AI, flashing bonus drops, 8 tactical powerup items, and shovel fortification timers.
-- [x] **Phase 52: Game Flow, State Machine & Tally HUD** - Title screen, stage intro curtains, HUD sidebar, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
-- [x] **Phase 53: Tactile Papercraft Visuals & Procedural Web Audio** - Multi-pass Canvas 2D cardboard rendering, confetti explosion bursts, and zero-asset procedural 8-bit Web Audio synthesis with dynamics compression.
-- [x] **Phase 54: Mobile Virtual Controls & Responsive Viewport** - 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and 416×416 aspect ratio scaling.
-- [x] **Phase 55: Hub Catalog Registration, Test Suite & Integration** - Standalone packaging in `games/tank-1990/`, catalog registration with custom SVG screenshot, Vite multi-page config, and full Vitest suite verification.
+- [ ] **Phase 56: Tilemap Engine & Core Platformer Physics** — Tile grid collision (AABB sweep), gravity, jump, one-way platforms, dash, scrolling camera, room transitions via doors.
+- [ ] **Phase 57: Kirby Core Mechanics & Health System** — Inhale vacuum cone, spit star projectile, swallow-to-copy trigger, float puffs (6 max), air bullet exhale, slide attack, 6HP health, lives, invincibility frames.
+- [ ] **Phase 58: Copy Ability System** — Strategy-pattern ability interface, 8 unique ability movesets (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle), ability loss on damage with bouncing Ability Star re-inhale window.
+- [ ] **Phase 59: Enemy AI & Ability Grants** — 8 enemy types with state-machine patrol/attack AI (Waddle Dee, Waddle Doo, Blade Knight, Hot Head, Chilly, Sparky, Sir Kibble, Rocky), each granting corresponding copy ability on inhale+swallow.
+- [ ] **Phase 60: Boss Encounters** — 3 multi-phase bosses with HP bars, telegraphed attack patterns, and vulnerability windows (Whispy Woods, Kracko, King Dedede).
+- [ ] **Phase 61: World Map, Stage Data & Progression** — 4 themed worlds (Green Greens, Ice Cream Island, Butter Building, Orange Ocean), 4 stages + 1 boss per world, JSON tilemap data, door-connected rooms, world map navigation, hidden bonus rooms, localStorage auto-save.
+- [ ] **Phase 62: Papercraft Visuals & Procedural Audio** — Cardboard Kirby with squash-stretch, origami enemies, corrugated terrain tiles, parallax backgrounds, confetti particles, ability hat visuals, procedural Web Audio SFX and jingles.
+- [ ] **Phase 63: Mobile Controls, HUD, Polish & Catalog Integration** — Virtual D-pad + Jump + Attack buttons with multi-touch, HUD (HP/lives/ability/score), stage intro splash, goal game, standalone `games/kirby-adventure/` packaging, catalog registration, Vitest suite.
 
 ---
 
@@ -22,140 +22,139 @@ Deliver a faithful, highly responsive browser recreation of the classic Tank 199
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 48. GridMap Engine & Sub-Tile Destruction | 2/2 | Complete | 2026-08-20 |
-| 49. Player Tank Kinematics & Upgrade Tiers | 2/2 | Complete | 2026-08-20 |
-| 50. Ballistics System & Combat Collisions | 2/2 | Complete | 2026-08-20 |
-| 51. Enemy AI, Wave Spawner & Powerups | 2/2 | Complete | 2026-08-20 |
-| 52. Game Flow, State Machine & Tally HUD | 2/2 | Complete | 2026-08-20 |
-| 53. Papercraft Visuals & Procedural Audio | 2/2 | Complete | 2026-08-20 |
-| 54. Mobile Virtual Controls & Viewport | 2/2 | Complete | 2026-08-20 |
-| 55. Hub Integration & Milestone Audit | 2/2 | Complete | 2026-08-20 |
+| 56. Tilemap Engine & Core Platformer Physics | 0/0 | Pending | — |
+| 57. Kirby Core Mechanics & Health System | 0/0 | Pending | — |
+| 58. Copy Ability System | 0/0 | Pending | — |
+| 59. Enemy AI & Ability Grants | 0/0 | Pending | — |
+| 60. Boss Encounters | 0/0 | Pending | — |
+| 61. World Map, Stage Data & Progression | 0/0 | Pending | — |
+| 62. Papercraft Visuals & Procedural Audio | 0/0 | Pending | — |
+| 63. Mobile Controls, HUD, Polish & Integration | 0/0 | Pending | — |
 
 ---
 
 ## Phase Details
 
-### Phase 48: GridMap Engine & Sub-Tile Destruction
-**Goal**: System maintains 26×26 microgrid world representation, sub-tile brick chipping bitmasks, terrain modifiers (water, trees, ice), defensible Eagle HQ, and stage loader for 35 campaign maps.
-**Depends on**: Nothing (first phase of v8.0)
-**Requirements**: GRID-01, GRID-02, GRID-03, GRID-04, GRID-05, GRID-06, GRID-07
+### Phase 56: Tilemap Engine & Core Platformer Physics
+**Goal**: Player can walk, run, jump, and dash through scrollable tile-based levels with solid AABB collision, one-way platforms, and room transitions via doors.
+**Depends on**: Nothing (first phase of v9.0)
+**Requirements**: PHYS-01, PHYS-02, PHYS-03, PHYS-04, PHYS-05, PHYS-06
 **Success Criteria** (what must be TRUE):
-  1. 26×26 tile grid correctly models Empty, Brick, Steel, Water, Trees, and Ice terrain cells on a 416×416 arena.
-  2. Brick walls chip away in 4 independent sub-tile quadrants (8×8px) when struck by projectiles.
-  3. Water blocks tank traversal while permitting bullet flight; Trees provide visual camouflage; Ice induces low-friction sliding drift.
-  4. Eagle Base HQ (2×2 footprint) triggers instant defeat/game over when destroyed.
-  5. 35 authentic stage map layouts load accurately into grid memory.
-**Plans**: 2 plans
-Plans:
-- [x] 48-01-PLAN.md — GridMap core engine, tile types, bitmask chipping, terrain query methods, Eagle HQ state
-- [x] 48-02-PLAN.md — 35 authentic stage map data encodings, stage loader, and comprehensive Vitest unit test suite
+  1. Player moves left/right with gravity, lands on solid ground, and cannot pass through walls or ceilings via axis-separated AABB tile collision.
+  2. One-way platforms allow jump-through from below and solid landing from above.
+  3. Double-tap direction triggers dash at 1.5x walk speed affecting jump distance.
+  4. Camera follows player horizontally with deadzone centering and clamps at room boundaries.
+  5. Door entities trigger room transitions with fade/wipe effect when player presses Up.
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 49: Player Tank Kinematics & Upgrade Tiers
-**Goal**: User can steer player tank with smooth corridor auto-alignment snapping, progress through 4 upgrade tiers, gain extra lives, and trigger invulnerability shield bubbles on spawn.
-**Depends on**: Phase 48
-**Requirements**: TANK-01, TANK-02, TANK-03, TANK-04
+### Phase 57: Kirby Core Mechanics & Health System
+**Goal**: Player can inhale enemies, spit stars, swallow to trigger copy, float with puffs, slide attack, and take/heal damage with lives and invincibility frames.
+**Depends on**: Phase 56
+**Requirements**: KRBY-01, KRBY-02, KRBY-03, KRBY-04, KRBY-05, HLTH-01, HLTH-02, HLTH-03
 **Success Criteria** (what must be TRUE):
-  1. User can steer player tank in 4 cardinal directions and smoothly navigate 1-tile corridors via orthogonal corner auto-snapping (≤4px deadzone).
-  2. Player tank progresses through 4 tiers: Tier 1 (Basic), Tier 2 (Fast), Tier 3 (Heavy dual-shot), Tier 4 (Armor-piercing cannon destroying steel/trees).
-  3. Player tank spawns and respawns with active temporary invulnerability shield bubble.
-  4. System tracks player lives counter, awards extra lives, and cycles through player death and respawn.
-**Plans**: 2 plans
-Plans:
-- [x] 49-01-PLAN.md — PlayerTank core class, 4-way kinematics, corner snapping, ice sliding drift, upgrade tiers, shield timer, and lives management
-- [x] 49-02-PLAN.md — Comprehensive Vitest unit test suite covering kinematics, corner snapping, ice drift, upgrade progression, shield expiration, and respawn cycle
+  1. Inhale creates vacuum cone hitbox that pulls enemies toward Kirby; wall blocks suction.
+  2. Spit launches captured enemy as bouncing star projectile that damages other enemies.
+  3. Swallow (Down while mouth full) triggers copy ability grant from enemy's `abilityGrant` field.
+  4. Float allows up to 6 upward puffs while airborne; air bullet exhale ends float and damages enemies.
+  5. Slide attack (Down+Attack grounded) moves Kirby low and fast, passing under overhangs and damaging enemies.
+  6. Player has 6 HP segments; food items heal; Maxim Tomato full heals; damage triggers ~1.5s invincibility frames with sprite blink.
+  7. Player starts with 3 lives; death respawns at room start; 0 lives triggers Game Over flow.
+**Plans**: TBD
+**UI hint**: yes
 
-### Phase 50: Ballistics System & Combat Collisions
-**Goal**: Simulate high-velocity projectiles with continuous sub-stepping collision sweep, mid-air bullet cancellation, tier-dependent terrain destruction, and enemy damage resolution.
-**Depends on**: Phase 48, Phase 49
-**Requirements**: COMBAT-01, COMBAT-02, COMBAT-03, COMBAT-04
+### Phase 58: Copy Ability System
+**Goal**: 8 unique copy abilities override Kirby's attack with distinct movesets, animations, and hitboxes via strategy-pattern composition.
+**Depends on**: Phase 56, Phase 57
+**Requirements**: ABIL-01, ABIL-02, ABIL-03, ABIL-04, ABIL-05, ABIL-06, ABIL-07, ABIL-08, ABIL-09
 **Success Criteria** (what must be TRUE):
-  1. Projectiles travel at high speeds without tunneling through walls or entities via 120Hz sub-stepping.
-  2. Intersecting opposing projectiles collide and cancel each other out in mid-air with spark bursts.
-  3. Bullets deal tier-specific damage to terrain (standard shots chip bricks; tier-4 shots penetrate steel and clear trees).
-  4. Projectiles register accurate hits against enemy tanks, deducting armor hit points.
+  1. Ability interface defines `activate()`, `update()`, `render()`, `getHitbox()` contract; Kirby delegates attack to active ability.
+  2. Sword: 3-hit ground combo + aerial spin slash with distinct hitboxes per swing.
+  3. Fire: horizontal flame breath + fire dash that damages enemies in path.
+  4. Ice/Freeze: freeze cone that encases enemies in ice block; kick frozen enemy as projectile.
+  5. Beam: whip arc at medium range with diagonal coverage.
+  6. Cutter: boomerang throw that travels forward and returns to player.
+  7. Stone: invulnerable transformation + heavy drop with area damage on landing.
+  8. Spark: expanding electric field on hold (B); damages enemies entering radius.
+  9. Needle: spike burst in all directions; stationary area denial.
+  10. Taking damage ejects current ability as bouncing Ability Star; ~3s window to re-inhale before it vanishes.
 **Plans**: TBD
 
-### Phase 51: Enemy AI, Wave Spawner & Power-Up System
-**Goal**: Manage 20-tank wave queue with 4 distinct enemy archetypes, goal-oriented grid-node steering AI, flashing bonus tank drops, 8 tactical powerup items, and base fortification timers.
-**Depends on**: Phase 48, Phase 49, Phase 50
-**Requirements**: ENEMY-01, ENEMY-02, ENEMY-03, ENEMY-04, ENEMY-05, ENEMY-06
+### Phase 59: Enemy AI & Ability Grants
+**Goal**: 8 distinct enemy types with state-machine AI patrol and attack patterns, each mapped to a copy ability grant on inhale+swallow.
+**Depends on**: Phase 56, Phase 57, Phase 58
+**Requirements**: ENMY-01, ENMY-02, ENMY-03, ENMY-04, ENMY-05, ENMY-06, ENMY-07, ENMY-08
 **Success Criteria** (what must be TRUE):
-  1. Spawner manages 20-tank wave queue with up to 4 concurrent active enemy tanks across 3 top portals.
-  2. 4 enemy classes (Basic, Fast Cruiser, Power Tank, Heavy Armor Tank) exhibit distinct speeds, firing rates, and hit points with visual color degradation.
-  3. Enemy AI navigates grid intersections with pathing bias towards player/base and zero corner vibration loops.
-  4. Flashing tanks drop collectible tactical powerups (Star, Shovel, Grenade, Clock, Helmet, Tank, Gun, Boat).
-  5. Shovel powerup temporarily fortifies base perimeter with steel and cleanly restores original undamaged brick state upon 20s timeout.
-**Plans**: 2 plans
-Plans:
-- [x] 51-01-PLAN.md — EnemyTank, EnemySpawner, grid-node steering AI, and flashing tank powerup drop mechanics
-- [x] 51-02-PLAN.md — PowerUpSystem managing all 8 tactical items, shovel base fortification terrain caching/restoration, and comprehensive Vitest unit test suite
+  1. Waddle Dee walks patrol pattern on platforms, turns at edges, grants no ability.
+  2. Waddle Doo walks and periodically fires beam attack toward player; grants Beam on copy.
+  3. Blade Knight walks and slashes when player is in melee range; grants Sword on copy.
+  4. Hot Head walks and breathes fire forward; grants Fire on copy.
+  5. Chilly stands stationary emitting freeze aura that damages nearby player; grants Freeze on copy.
+  6. Sparky bounces erratically with electric field; grants Spark on copy.
+  7. Sir Kibble walks and throws cutter boomerang; grants Cutter on copy.
+  8. Rocky walks slowly and performs stone drop attack; grants Stone on copy.
+**Plans**: TBD
 
-### Phase 52: Game Flow, State Machine & Tally HUD
-**Goal**: Orchestrate full arcade loop including title screen, stage select, stage intro curtains, active HUD side panel, end-stage kill tally screen, victory/defeat sequence, and localStorage high score persistence.
-**Depends on**: Phase 48, Phase 49, Phase 50, Phase 51
-**Requirements**: LOOP-01, LOOP-02, LOOP-03, LOOP-04, LOOP-05, LOOP-06
+### Phase 60: Boss Encounters
+**Goal**: 3 multi-phase bosses with HP bars, telegraphed attack patterns, vulnerability windows, and defeat sequences.
+**Depends on**: Phase 56, Phase 57, Phase 58, Phase 59
+**Requirements**: BOSS-01, BOSS-02, BOSS-03
 **Success Criteria** (what must be TRUE):
-  1. User can navigate title screen with Game Start, Stage Select (1–35), and high score display.
-  2. Stage intro curtain ("STAGE X") displays before each round.
-  3. Active HUD side panel displays remaining enemy reserve tank icons, player lives, current stage number, and real-time score.
-  4. Clearing a stage presents end-stage kill tally screen breaking down points earned per enemy class destroyed.
-  5. Victory advances to next stage; defeat shows Game Over banner and restart prompt; personal best high scores persist in localStorage.
-**Plans**: 2 plans
-Plans:
-- [x] 52-01-PLAN.md — GameFlow manager, ScoreManager, state transitions, stage intro curtain timer, kill tally roll-up, and localStorage high score persistence
-- [x] 52-02-PLAN.md — Comprehensive Vitest unit test suite covering state transitions, stage advancement, score tally calculations, and high score persistence
+  1. Whispy Woods: stationary tree boss with apple drop + air blow attacks; shakes before each attack (telegraph); HP bar visible; drops apples that can be inhaled and spit back.
+  2. Kracko: aerial boss with horizontal movement, lightning bolt strikes, and rain drop attacks; phase transitions at HP thresholds change movement speed and attack frequency.
+  3. King Dedede: ground boss with hammer swing, jump slam, and inhale attacks; hammer swing has wind-up telegraph; jump slam creates shockwave; inhale mirrors Kirby's mechanic.
+  4. All bosses show clear HP bar, have invincibility frames after hits, and trigger victory sequence on defeat.
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 53: Tactile Papercraft Visuals & Procedural Web Audio
-**Goal**: Render tactile 2D papercraft cardboard aesthetic across multi-pass canvas layers, generate confetti explosion bursts, and synthesize procedural 8-bit Web Audio with master dynamics compression.
-**Depends on**: Phase 48, Phase 49, Phase 50, Phase 51, Phase 52
-**Requirements**: VISUAL-01, VISUAL-02, VISUAL-03, VISUAL-04, VISUAL-05
+### Phase 61: World Map, Stage Data & Progression
+**Goal**: 4 themed worlds with navigable world maps, 20 JSON tilemap stages connected by doors, hidden bonus rooms, and localStorage save/load.
+**Depends on**: Phase 56, Phase 57, Phase 58, Phase 59, Phase 60
+**Requirements**: WRLD-01, WRLD-02, WRLD-03, WRLD-04, WRLD-05, WRLD-06
 **Success Criteria** (what must be TRUE):
-  1. Tanks and terrain render as layered cardboard cutouts with drop shadows, rolling tread trails, and turret recoil animations.
-  2. Multi-pass canvas composition correctly orders Ground -> Entities & Powerups -> Grass Canopy Overlay -> Particle FX -> HUD Overlay.
-  3. Explosions, wall chipping, and bullet impacts emit paper confetti particles and muzzle sparks.
-  4. Procedural 8-bit Web Audio synthesizes engine hums, shot pops, wall crumble crunch, steel clangs, explosions, item pickup fanfares, and base destruction alarm without external assets.
-  5. Master DynamicsCompressor routes all audio channels to prevent clipping and distortion during heavy explosion sequences.
-**Plans**: 2 plans
-Plans:
-- [ ] 53-01-PLAN.md — Multi-pass Canvas 2D TankRenderer, cardboard aesthetics, drop shadows, grass canopy camouflage layer, and ParticleEmitter
-- [ ] 53-02-PLAN.md — Zero-asset procedural 8-bit Web Audio TankAudio with DynamicsCompressorNode and comprehensive Vitest unit test suites
+  1. World map displays walkable node graph; player moves between stage nodes; completed stages marked with star.
+  2. 4 themed worlds (Green Greens, Ice Cream Island, Butter Building, Orange Ocean) each have 4 stages + 1 boss stage = 20 total.
+  3. Each stage loads from JSON tilemap data with rooms connected by door entities; entering door transitions to linked room.
+  4. Boss node unlocks after clearing all 4 stages in a world.
+  5. Hidden bonus rooms accessible through secret doors behind breakable walls; contain food caches or 1-Up items.
+  6. Game progress auto-saves to localStorage: last world unlocked, stages completed, completion percentage.
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 54: Mobile Virtual Controls & Responsive Viewport
-**Goal**: Deliver responsive 4-way virtual D-Pad with angular hysteresis, dedicated Fire button, multi-touch isolation, and pixel-crisp 416×416 aspect ratio scaling across mobile and desktop viewports.
-**Depends on**: Phase 49, Phase 52, Phase 53
-**Requirements**: MOBILE-01, MOBILE-02, MOBILE-03
+### Phase 62: Papercraft Visuals & Procedural Audio
+**Goal**: Render full papercraft cardboard aesthetic with squash-stretch Kirby, origami enemies, corrugated terrain, parallax backgrounds, confetti particles, ability hats, and procedural Web Audio SFX.
+**Depends on**: Phase 56, Phase 57, Phase 58, Phase 59, Phase 60, Phase 61
+**Requirements**: VISL-01, VISL-02, VISL-03, VISL-04, VISL-05, VISL-06, AUDI-01, AUDI-02
 **Success Criteria** (what must be TRUE):
-  1. On-screen 4-way virtual D-Pad provides responsive cardinal steering with angular hysteresis deadzone.
-  2. Dedicated touch Fire button enables responsive single-tap and rapid firing.
-  3. Multi-touch handling allows holding D-Pad direction while tapping Fire without gesture stutter or screen scrolling.
-  4. Game arena scales with crisp pixel art aspect ratio preservation across mobile portrait, landscape, and desktop viewports.
-**Plans**: 2 plans
-Plans:
-- [x] 54-01-PLAN.md — TouchControls with angular hysteresis, multi-touch tracking, and ViewportManager aspect-ratio letterbox scaling
-- [x] 54-02-PLAN.md — Comprehensive Vitest unit test suite covering virtual D-Pad directional angles, deadzone clamping, multi-pointer isolation, and viewport coordinate projections
+  1. Kirby renders as cardboard cutout with squash-stretch deformation on inhale (widen), float (round), land (squash), damage (crumple); layered paper shadow.
+  2. Enemies render as origami paper cutouts with crease lines, drop shadows, and rotation wobble; death = unfold/crumple animation.
+  3. Terrain tiles render as corrugated cardboard cross-sections with per-world theme colors (green grass, ice frost, stone grey, ocean blue).
+  4. 2-3 parallax background layers scroll at different speeds with tissue-paper translucency (globalAlpha).
+  5. Confetti paper particles burst on ability gain, enemy defeat, and boss defeat; screen shake on heavy impacts.
+  6. Ability-specific papercraft hat rendered on Kirby's head (Sword = green nightcap, Fire = flame crown, etc.).
+  7. Procedural Web Audio synthesizes inhale whoosh, float puff, spit pop, ability activation jingle, damage yelp, boss theme, stage clear fanfare, game over jingle — zero external assets.
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 55: Hub Catalog Registration, Test Suite & Integration
-**Goal**: Package Tank 1990 in `games/tank-1990/`, register in catalog with custom SVG screenshot, wire Vite multi-page config, and execute 100% passing Vitest test suite.
-**Depends on**: Phase 48, Phase 49, Phase 50, Phase 51, Phase 52, Phase 53, Phase 54
-**Requirements**: INTEG-01, INTEG-02, INTEG-03, INTEG-04
+### Phase 63: Mobile Controls, HUD, Polish & Catalog Integration
+**Goal**: Deliver mobile virtual controls, HUD overlay, stage presentation polish, and full ArcadeTub hub integration with Vite build and test suite.
+**Depends on**: Phase 56, Phase 57, Phase 58, Phase 59, Phase 60, Phase 61, Phase 62
+**Requirements**: CTRL-01, CTRL-02, CTRL-03, CTRL-04, INTG-01, INTG-02, INTG-03
 **Success Criteria** (what must be TRUE):
-  1. Game is packaged in standalone directory `games/tank-1990/` with zero runtime dependencies.
-  2. Game is registered in `src/data/games.ts` with metadata, tags (`action`, `retro`, `arcade`), and custom SVG screenshot.
-  3. Game is wired into `vite.config.ts` multi-page input build configuration.
-  4. Comprehensive Vitest unit tests covering grid micro-chipping, corner-snapping, projectile sweeps, enemy AI node routing, and powerup mechanics achieve 100% pass rate.
-**Plans**: 2 plans
-Plans:
-- [x] 55-01-PLAN.md — Standalone game loop assembly, Vite multi-page input, catalog metadata registration, and SVG screenshot
-- [x] 55-02-PLAN.md — Production bundle audit update, platform regression testing, type check, and build verification
+  1. Left-side virtual D-pad + right-side Jump + Inhale/Attack buttons with multi-touch support; no gesture stutter or screen scrolling.
+  2. HUD overlay displays HP bar (6 segments), lives count, current ability icon, and score.
+  3. Stage intro splash shows "Stage X-Y" title card with world theme art for 1.5s before stage loads.
+  4. Goal game timing minigame at end of each stage determines bonus reward (1-Up, food, nothing).
+  5. Game packaged as standalone entry under `games/kirby-adventure/` with `index.html`, `package.json`, `tsconfig.json`.
+  6. Game registered in `src/data/games.ts` with metadata, category tags (`action`, `arcade`, `platformer`), and custom SVG screenshot.
+  7. Vitest unit tests cover core game logic (physics, abilities, enemies, bosses) with 100% pass rate.
+**Plans**: TBD
 **UI hint**: yes
 
 ---
 
 ## Completed Milestones
+- [Milestone v8.0: Tank 1990 (Battle City)](v8.0-MILESTONE-AUDIT.md) (Completed)
 - [Milestone v7.0: Sensory Antistress Sandbox](v7.0-MILESTONE-AUDIT.md) (Completed)
 - [Milestone v6.0: CrazyGames Minigame Replication](milestones/v6.0-ROADMAP.md) (Archived)
 - [Milestone v5.0: 2D Papercraft Visual Overhaul](milestones/v5.0-ROADMAP.md) (Archived)

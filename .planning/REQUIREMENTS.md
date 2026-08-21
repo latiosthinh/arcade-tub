@@ -130,13 +130,67 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| *(populated by roadmapper)* | | |
+| PHYS-01 | Phase 56 | Pending |
+| PHYS-02 | Phase 56 | Pending |
+| PHYS-03 | Phase 56 | Pending |
+| PHYS-04 | Phase 56 | Pending |
+| PHYS-05 | Phase 56 | Pending |
+| PHYS-06 | Phase 56 | Pending |
+| KRBY-01 | Phase 57 | Pending |
+| KRBY-02 | Phase 57 | Pending |
+| KRBY-03 | Phase 57 | Pending |
+| KRBY-04 | Phase 57 | Pending |
+| KRBY-05 | Phase 57 | Pending |
+| HLTH-01 | Phase 57 | Pending |
+| HLTH-02 | Phase 57 | Pending |
+| HLTH-03 | Phase 57 | Pending |
+| ABIL-01 | Phase 58 | Pending |
+| ABIL-02 | Phase 58 | Pending |
+| ABIL-03 | Phase 58 | Pending |
+| ABIL-04 | Phase 58 | Pending |
+| ABIL-05 | Phase 58 | Pending |
+| ABIL-06 | Phase 58 | Pending |
+| ABIL-07 | Phase 58 | Pending |
+| ABIL-08 | Phase 58 | Pending |
+| ABIL-09 | Phase 58 | Pending |
+| ENMY-01 | Phase 59 | Pending |
+| ENMY-02 | Phase 59 | Pending |
+| ENMY-03 | Phase 59 | Pending |
+| ENMY-04 | Phase 59 | Pending |
+| ENMY-05 | Phase 59 | Pending |
+| ENMY-06 | Phase 59 | Pending |
+| ENMY-07 | Phase 59 | Pending |
+| ENMY-08 | Phase 59 | Pending |
+| BOSS-01 | Phase 60 | Pending |
+| BOSS-02 | Phase 60 | Pending |
+| BOSS-03 | Phase 60 | Pending |
+| WRLD-01 | Phase 61 | Pending |
+| WRLD-02 | Phase 61 | Pending |
+| WRLD-03 | Phase 61 | Pending |
+| WRLD-04 | Phase 61 | Pending |
+| WRLD-05 | Phase 61 | Pending |
+| WRLD-06 | Phase 61 | Pending |
+| VISL-01 | Phase 62 | Pending |
+| VISL-02 | Phase 62 | Pending |
+| VISL-03 | Phase 62 | Pending |
+| VISL-04 | Phase 62 | Pending |
+| VISL-05 | Phase 62 | Pending |
+| VISL-06 | Phase 62 | Pending |
+| AUDI-01 | Phase 62 | Pending |
+| AUDI-02 | Phase 62 | Pending |
+| CTRL-01 | Phase 63 | Pending |
+| CTRL-02 | Phase 63 | Pending |
+| CTRL-03 | Phase 63 | Pending |
+| CTRL-04 | Phase 63 | Pending |
+| INTG-01 | Phase 63 | Pending |
+| INTG-02 | Phase 63 | Pending |
+| INTG-03 | Phase 63 | Pending |
 
 **Coverage:**
 - v9.0 requirements: 48 total
-- Mapped to phases: 0
-- Unmapped: 48 (pending roadmap creation)
+- Mapped to phases: 48
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-08-21*
-*Last updated: 2026-08-21 after initial definition*
+*Last updated: 2026-08-21 after roadmap creation*
