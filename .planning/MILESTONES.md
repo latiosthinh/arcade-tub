@@ -1,5 +1,28 @@
 # Milestones
 
+## v10.0: The Legend of Kage — Papercraft Ninja Action (Shipped 2026-08-21)
+
+**Goal:** Build a Legend of Kage-inspired vertical-scrolling ninja action game with super-jump tree combat, dual shuriken + sword deflection weapons, 4-stage loop with seasonal visual cycle, in the ArcadeTub papercraft aesthetic.
+
+**Shipped:**
+- Super-jump physics engine (~3-screen leap height, apex gravity hang, air drift control, swept one-way branch platform landing, bamboo trunk sliding, castle wall-jumping).
+- Asymmetric velocity-scaled vertical camera with top-biased look-ahead.
+- Dual-weapon combat: 8-directional paper shurikens + 140° katana sword slash with projectile deflection matrix.
+- Power-up pickups: Crystal Balls (invincibility) and Ninjutsu Scrolls (screen-clearing magic).
+- 1-hit kill arcade combat loop with 3 lives and checkpoint respawn.
+- 4 Enemy types (Red Ninja, Blue Ninja, White Ninja, Fire Monk) and multi-phase Sorcerer Boss (Yukinosuke).
+- Continuous wave spawner with off-screen edge drops.
+- 4-Stage progression: Bamboo Forest → Castle Moat → Castle Interior → Boss Chamber with Princess Kiri rescue cutscenes.
+- 4-Season loop cycle: Spring (sakura petals) → Summer (deep green) → Autumn (maple leaves) → Winter (snow).
+- Papercraft visuals with origami ninjas, corrugated cardboard scenery, and dynamic weather particles.
+- Zero-asset procedural Web Audio SFX (sword slash, metallic clash, shuriken whoosh, jump wind, victory fanfare).
+- Multi-touch mobile virtual controls (D-pad + Shuriken + Sword buttons).
+- 23 unit tests passing in `games/legend-of-kage/test/` (111 total across catalog). Production bundle: 7.46 KB gzipped.
+- Central catalog expanded to 45 games under `retro` category.
+- Audit: `.planning/v10.0-MILESTONE-AUDIT.md` (passed).
+
+---
+
 ## v9.0: Kirby's Adventure — Papercraft Platformer (Shipped 2026-08-21)
 
 **Goal:** Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ability mechanics, 8 enemy types, 3 multi-phase bosses, 4 themed worlds (20 stages), and full papercraft cardboard visual aesthetic with procedural Web Audio — zero external dependencies.
