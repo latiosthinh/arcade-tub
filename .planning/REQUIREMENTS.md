@@ -55,12 +55,12 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### World & Stages
 
-- [ ] **WRLD-01**: Player can navigate a world map with walkable nodes between stages
-- [ ] **WRLD-02**: Game has 4 themed worlds with 4 stages + 1 boss stage each (20 total)
-- [ ] **WRLD-03**: Each stage contains rooms connected by doors with JSON tilemap data
-- [ ] **WRLD-04**: Completed stages are marked and boss node unlocks after clearing all stages
-- [ ] **WRLD-05**: Hidden bonus rooms accessible through secret doors behind breakable walls
-- [ ] **WRLD-06**: Game progress auto-saves to localStorage (last world unlocked, completion %)
+- [x] **WRLD-01**: Player can navigate a world map with walkable nodes between stages
+- [x] **WRLD-02**: Game has 4 themed worlds with 4 stages + 1 boss stage each (20 total)
+- [x] **WRLD-03**: Each stage contains rooms connected by doors with JSON tilemap data
+- [x] **WRLD-04**: Completed stages are marked and boss node unlocks after clearing all stages
+- [x] **WRLD-05**: Hidden bonus rooms accessible through secret doors behind breakable walls
+- [x] **WRLD-06**: Game progress auto-saves to localStorage (last world unlocked, completion %)
 
 ### Health & Lives
 
@@ -164,12 +164,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOSS-01 | Phase 60 | Complete |
 | BOSS-02 | Phase 60 | Complete |
 | BOSS-03 | Phase 60 | Complete |
-| WRLD-01 | Phase 61 | Pending |
-| WRLD-02 | Phase 61 | Pending |
-| WRLD-03 | Phase 61 | Pending |
-| WRLD-04 | Phase 61 | Pending |
-| WRLD-05 | Phase 61 | Pending |
-| WRLD-06 | Phase 61 | Pending |
+| WRLD-01 | Phase 61 | Complete |
+| WRLD-02 | Phase 61 | Complete |
+| WRLD-03 | Phase 61 | Complete |
+| WRLD-04 | Phase 61 | Complete |
+| WRLD-05 | Phase 61 | Complete |
+| WRLD-06 | Phase 61 | Complete |
 | VISL-01 | Phase 62 | Pending |
 | VISL-02 | Phase 62 | Pending |
 | VISL-03 | Phase 62 | Pending |
