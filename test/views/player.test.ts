@@ -31,7 +31,7 @@ describe('GameView', () => {
   });
 
   it('mounts with valid game ID, renders title, metadata, features, and high score', () => {
-    const game = GAMES[0]!;
+    const game = GAMES.find(g => g.id === 'safe-cracker')!;
     const view = new GameView(store, game.id);
     view.mount(container);
 
@@ -127,6 +127,7 @@ describe('GameView', () => {
     // Reset explicitly for desktop test environment
     store.setState({ isTheaterMode: false });
     view.update(store.getState());
+    clickSpy.mockClear();
 
     expect(store.getState().isTheaterMode).toBe(false);
     expect(frameWrapper.classList.contains('is-theater')).toBe(false);

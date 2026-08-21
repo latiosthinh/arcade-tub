@@ -27,7 +27,7 @@ export class KirbyRenderer {
     // Parallax mountain layer (0.2x scroll)
     ctx.save();
     ctx.globalAlpha = 0.4;
-    ctx.fillStyle = '#A5D6A7';
+    ctx.fillStyle = theme === 'ice' ? '#80DEEA' : theme === 'butter' ? '#FFE082' : '#A5D6A7';
     const offsetX = (camera.x * 0.2) % 120;
     for (let x = -120; x < camera.viewportWidth + 120; x += 120) {
       ctx.beginPath();
@@ -63,18 +63,24 @@ export class KirbyRenderer {
       scaleX *= 1.25;
       scaleY = 0.9;
     } else if (actions.isFloating) {
-      scaleX *= 1.2;
-      scaleY = 1.2;
+      scaleX *= 1.25;
+      scaleY = 1.25;
     } else if (actions.isSliding) {
       scaleX *= 1.4;
+      scaleY = 0.55;
+    } else if (actions.isDucking) {
+      scaleX *= 1.35;
       scaleY = 0.6;
+    } else if (actions.mouthContent) {
+      scaleX *= 1.2;
+      scaleY = 1.15;
     }
 
     ctx.scale(scaleX, scaleY);
 
     // Cardboard drop shadow
     ctx.save();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
     ctx.beginPath();
     ctx.ellipse(0, 10, 8, 4, 0, 0, Math.PI * 2);
     ctx.fill();
@@ -97,11 +103,21 @@ export class KirbyRenderer {
     ctx.fill();
 
     // Kirby eyes
-    ctx.fillStyle = '#0D47A1';
-    ctx.beginPath();
-    ctx.ellipse(2, -2, 1.5, 3, 0, 0, Math.PI * 2);
-    ctx.ellipse(6, -2, 1.5, 3, 0, 0, Math.PI * 2);
-    ctx.fill();
+    if (actions.isDucking) {
+      // Squinting / happy closed eyes when ducking
+      ctx.strokeStyle = '#211832';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(2, 0, 2.5, Math.PI * 0.2, Math.PI * 0.8, true);
+      ctx.arc(6, 0, 2.5, Math.PI * 0.2, Math.PI * 0.8, true);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = '#0D47A1';
+      ctx.beginPath();
+      ctx.ellipse(2, -2, 1.5, 3, 0, 0, Math.PI * 2);
+      ctx.ellipse(6, -2, 1.5, 3, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     // Blush cheeks
     ctx.fillStyle = '#FF4081';
@@ -113,6 +129,8 @@ export class KirbyRenderer {
     // Ability Hat
     if (ability) {
       ctx.fillStyle = ability.hatColor;
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(0, -9, 5, Math.PI, 0); // Hat dome
       ctx.fill();
@@ -122,25 +140,38 @@ export class KirbyRenderer {
     ctx.restore();
   }
 
-  renderHUD(ctx: CanvasRenderingContext2D, health: HealthSystem, ability: CopyAbility | null): void {
+  renderHUD(
+    ctx: CanvasRenderingContext2D,
+    health: HealthSystem,
+    ability: CopyAbility | null,
+    score = 0,
+    stageName = 'Stage 1-1'
+  ): void {
     // HUD background bar
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-    ctx.fillRect(8, 6, 140, 24);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+    ctx.fillRect(8, 6, 220, 28);
+    ctx.strokeStyle = '#2B2118';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(8, 6, 220, 28);
 
     // HP Pips
     ctx.fillStyle = '#FFFFFF';
     ctx.font = '10px monospace';
-    ctx.fillText('HP:', 14, 22);
+    ctx.fillText('HP:', 14, 24);
 
     for (let i = 0; i < health.maxHp; i++) {
-      ctx.fillStyle = i < health.hp ? '#FFEB3B' : '#616161';
-      ctx.fillRect(36 + i * 10, 12, 8, 12);
+      ctx.fillStyle = i < health.hp ? '#FFEB3B' : '#424242';
+      ctx.fillRect(36 + i * 10, 14, 8, 12);
       ctx.strokeStyle = '#000000';
-      ctx.strokeRect(36 + i * 10, 12, 8, 12);
+      ctx.strokeRect(36 + i * 10, 14, 8, 12);
     }
 
     // Ability Name
     ctx.fillStyle = ability ? ability.hatColor : '#E0E0E0';
-    ctx.fillText(ability ? ability.displayName.toUpperCase() : 'NORMAL', 104, 22);
+    ctx.fillText(ability ? ability.displayName.toUpperCase() : 'NORMAL', 104, 24);
+
+    // Lives
+    ctx.fillStyle = '#FF80AB';
+    ctx.fillText(`★x${health.lives}`, 174, 24);
   }
 }

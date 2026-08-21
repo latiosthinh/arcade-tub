@@ -8,11 +8,14 @@ export const INHALE_REACH = 80;
 export const INHALE_WIDTH = 40;
 export const SLIDE_DURATION = 0.3; // 300ms
 export const SLIDE_SPEED = 220;
+export const NORMAL_HEIGHT = 20;
+export const DUCK_HEIGHT = 12;
 
 export class KirbyActions {
   isInhaling = false;
   isFloating = false;
   isSliding = false;
+  isDucking = false;
   floatPuffCount = 0;
   slideTimer = 0;
   mouthContent: MouthContent | null = null;
@@ -57,6 +60,7 @@ export class KirbyActions {
   startInhale(): void {
     if (this.mouthContent || this.isFloating || this.isSliding) return;
     this.isInhaling = true;
+    this.isDucking = false;
   }
 
   stopInhale(): void {
@@ -66,6 +70,7 @@ export class KirbyActions {
   captureInMouth(content: MouthContent): void {
     this.mouthContent = content;
     this.isInhaling = false;
+    this.isDucking = false;
   }
 
   spit(physics: KirbyPhysics, projectiles: ProjectileManager): void {
@@ -80,12 +85,14 @@ export class KirbyActions {
     if (!this.mouthContent) return null;
     const content = this.mouthContent;
     this.mouthContent = null;
+    this.isDucking = false;
     return content;
   }
 
   puffFloat(physics: KirbyPhysics): boolean {
     if (this.floatPuffCount >= MAX_FLOAT_PUFFS) return false;
     this.isFloating = true;
+    this.isDucking = false;
     this.floatPuffCount += 1;
     physics.vy = -160;
     return true;
@@ -105,10 +112,29 @@ export class KirbyActions {
       return false;
     }
     this.isSliding = true;
+    this.isDucking = false;
     this.slideTimer = SLIDE_DURATION;
-    physics.height = 12; // Lower profile for sliding
+    physics.height = DUCK_HEIGHT; // Lower profile for sliding
     physics.vx = physics.facing * SLIDE_SPEED;
     return true;
+  }
+
+  setDucking(ducking: boolean, physics: KirbyPhysics): void {
+    if (this.isSliding || this.isFloating) {
+      this.isDucking = false;
+      return;
+    }
+
+    if (ducking && physics.grounded) {
+      this.isDucking = true;
+      physics.height = DUCK_HEIGHT;
+      physics.vx = 0;
+    } else {
+      if (this.isDucking) {
+        this.isDucking = false;
+        physics.height = NORMAL_HEIGHT;
+      }
+    }
   }
 
   update(dt: number, physics: KirbyPhysics): void {
@@ -117,7 +143,7 @@ export class KirbyActions {
       physics.vx = physics.facing * SLIDE_SPEED;
       if (this.slideTimer <= 0) {
         this.isSliding = false;
-        physics.height = 20; // Restore height
+        physics.height = this.isDucking ? DUCK_HEIGHT : NORMAL_HEIGHT;
       }
     }
 

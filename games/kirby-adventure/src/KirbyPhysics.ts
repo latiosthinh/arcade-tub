@@ -161,8 +161,13 @@ export class KirbyPhysics {
     }
 
     // Horizontal movement
+    const isDucking = input.down && this.grounded && !input.left && !input.right;
     const targetSpeed = this.isDashing ? DASH_SPEED : RUN_SPEED;
-    if (input.right && !input.left) {
+
+    if (isDucking) {
+      this.vx = 0;
+      this.isDashing = false;
+    } else if (input.right && !input.left) {
       this.vx = targetSpeed;
       this.facing = 1;
     } else if (input.left && !input.right) {

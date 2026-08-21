@@ -33,15 +33,17 @@ describe('FilterChips Component (src/components/FilterChips.ts)', () => {
     expect(chips.element.classList.contains('ac-chips-bar')).toBe(true);
 
     const buttons = chips.element.querySelectorAll<HTMLButtonElement>('.ac-chip');
-    expect(buttons.length).toBe(6);
+    expect(buttons.length).toBe(7);
 
     const allChip = chips.element.querySelector('[data-filter="all"]');
+    const retroChip = chips.element.querySelector('[data-filter="retro"]');
     const actionChip = chips.element.querySelector('[data-filter="action"]');
     const arcadeChip = chips.element.querySelector('[data-filter="arcade"]');
     const puzzleChip = chips.element.querySelector('[data-filter="puzzle"]');
     const casualChip = chips.element.querySelector('[data-filter="casual"]');
 
     expect(allChip).toBeTruthy();
+    expect(retroChip).toBeTruthy();
     expect(actionChip).toBeTruthy();
     expect(arcadeChip).toBeTruthy();
     expect(puzzleChip).toBeTruthy();

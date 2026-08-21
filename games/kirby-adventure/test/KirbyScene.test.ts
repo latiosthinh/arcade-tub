@@ -70,12 +70,54 @@ describe('KirbyScene', () => {
     expect(scene.roomManager.activeRoom?.id).toBe('stage-1-cave');
   });
 
+  it('handles down ducking state when grounded', () => {
+    scene.physics.grounded = true;
+    scene.setCustomInput({
+      left: false,
+      right: false,
+      up: false,
+      down: true,
+      jump: false,
+      jumpJustPressed: false,
+      jumpJustReleased: false,
+    });
+
+    scene.update(0.016);
+    expect(scene.actions.isDucking).toBe(true);
+    expect(scene.physics.height).toBe(12); // Crouched height
+    expect(scene.physics.vx).toBe(0);
+
+    // Release down
+    scene.setCustomInput({
+      left: false,
+      right: false,
+      up: false,
+      down: false,
+      jump: false,
+      jumpJustPressed: false,
+      jumpJustReleased: false,
+    });
+
+    scene.update(0.016);
+    expect(scene.actions.isDucking).toBe(false);
+    expect(scene.physics.height).toBe(20); // Normal height
+  });
+
   it('renders canvas elements without crashing', () => {
+    const mockGradient = {
+      addColorStop: vi.fn(),
+    };
+
     const mockCtx = {
       fillStyle: '',
       strokeStyle: '',
       lineWidth: 1,
       font: '',
+      globalAlpha: 1,
+      createLinearGradient: vi.fn(() => mockGradient),
+      scale: vi.fn(),
+      translate: vi.fn(),
+      rotate: vi.fn(),
       fillRect: vi.fn(),
       strokeRect: vi.fn(),
       clearRect: vi.fn(),

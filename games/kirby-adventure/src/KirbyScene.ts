@@ -1,23 +1,56 @@
 import { Camera } from './Camera';
 import { RoomManager, RoomData, DoorEntity } from './RoomManager';
 import { KirbyPhysics } from './KirbyPhysics';
+import { KirbyActions } from './KirbyActions';
+import { KirbyRenderer } from './KirbyRenderer';
+import { KirbyAudio } from './KirbyAudio';
+import { HealthSystem } from './HealthSystem';
+import { ProjectileManager } from './Projectile';
+import { EnemyManager } from './enemies/EnemyManager';
+import { FoodItemManager } from './FoodItem';
+import { ParticleEmitter } from './ParticleEmitter';
+import { AbilityRegistry } from './abilities/AbilityRegistry';
+import { AbilityStar } from './abilities/AbilityStar';
+import { CopyAbility } from './abilities/AbilityTypes';
 import { TileMap } from './TileMap';
-import { TileType, InputState, GameScene, SimpleInputManager } from './types';
+import { TileType, InputState, GameScene, SimpleInputManager, AbilityType } from './types';
 
 export class KirbyScene implements GameScene {
   input: SimpleInputManager;
   camera: Camera;
   physics: KirbyPhysics;
+  actions: KirbyActions;
+  renderer: KirbyRenderer;
+  audio: KirbyAudio;
+  health: HealthSystem;
+  projectiles: ProjectileManager;
+  enemyManager: EnemyManager;
+  foodManager: FoodItemManager;
+  particles: ParticleEmitter;
   roomManager: RoomManager;
+
+  currentAbility: CopyAbility | null = null;
+  abilityStars: AbilityStar[] = [];
 
   private customInput: InputState | null = null;
   private prevJumpDown = false;
+  private prevAttackDown = false;
+  private prevDownDown = false;
+  private prevDiscardDown = false;
   private isInitialized = false;
 
   constructor(input?: SimpleInputManager) {
     this.input = input ?? new SimpleInputManager();
     this.camera = new Camera({ viewportWidth: 800, viewportHeight: 600 });
     this.physics = new KirbyPhysics({ x: 100, y: 100, width: 24, height: 24 });
+    this.actions = new KirbyActions();
+    this.renderer = new KirbyRenderer();
+    this.audio = new KirbyAudio();
+    this.health = new HealthSystem();
+    this.projectiles = new ProjectileManager();
+    this.enemyManager = new EnemyManager();
+    this.foodManager = new FoodItemManager();
+    this.particles = new ParticleEmitter();
     this.roomManager = new RoomManager();
 
     this.setupRooms();
@@ -52,7 +85,7 @@ export class KirbyScene implements GameScene {
     ];
     const outdoorRoom: RoomData = {
       id: 'stage-1-1',
-      name: 'Green Greens - Zone 1',
+      name: 'Vegetable Valley - Zone 1',
       tileMap: outdoorMap,
       doors: outdoorDoors,
       defaultSpawn: { x: 64, y: 400 },
@@ -86,7 +119,7 @@ export class KirbyScene implements GameScene {
     ];
     const caveRoom: RoomData = {
       id: 'stage-1-cave',
-      name: 'Crystal Underground',
+      name: 'Crystal Cavern',
       tileMap: caveMap,
       doors: caveDoors,
       defaultSpawn: { x: 128, y: 350 },
@@ -104,7 +137,30 @@ export class KirbyScene implements GameScene {
     this.physics.x = spawnPos.x;
     this.physics.y = spawnPos.y;
     this.camera.snapTo(this.physics.x, this.physics.y);
+
+    this.spawnRoomEntities(room.id);
     this.isInitialized = true;
+  }
+
+  private spawnRoomEntities(roomId: string): void {
+    this.enemyManager.clear();
+    this.foodManager.clear();
+
+    if (roomId === 'stage-1-1') {
+      this.enemyManager.spawn('waddle_dee', 250, 420);
+      this.enemyManager.spawn('waddle_doo', 450, 420);
+      this.enemyManager.spawn('blade_knight', 650, 420);
+      this.enemyManager.spawn('hot_head', 950, 420);
+      this.enemyManager.spawn('sir_kibble', 1250, 420);
+
+      this.foodManager.addItem('food', 400, 320);
+      this.foodManager.addItem('maxim_tomato', 1100, 320);
+    } else if (roomId === 'stage-1-cave') {
+      this.enemyManager.spawn('sparky', 250, 360);
+      this.enemyManager.spawn('chilly', 450, 360);
+      this.enemyManager.spawn('rocky', 600, 200);
+      this.foodManager.addItem('food', 350, 280);
+    }
   }
 
   setCustomInput(input: InputState | null): void {
@@ -121,10 +177,22 @@ export class KirbyScene implements GameScene {
     const up = this.input.isDown('ArrowUp') || this.input.isDown('KeyW');
     const down = this.input.isDown('ArrowDown') || this.input.isDown('KeyS');
     const jumpDown = this.input.isDown('Space') || this.input.isDown('KeyZ') || this.input.isDown('KeyK');
+    const attackDown = this.input.isDown('KeyX') || this.input.isDown('KeyJ') || this.input.isDown('KeyB');
+    const discardDown = this.input.isDown('KeyC') || this.input.isDown('KeyV');
 
     const jumpJustPressed = jumpDown && !this.prevJumpDown;
     const jumpJustReleased = !jumpDown && this.prevJumpDown;
     this.prevJumpDown = jumpDown;
+
+    const attackJustPressed = attackDown && !this.prevAttackDown;
+    const attackJustReleased = !attackDown && this.prevAttackDown;
+    this.prevAttackDown = attackDown;
+
+    const downJustPressed = down && !this.prevDownDown;
+    this.prevDownDown = down;
+
+    const discardJustPressed = discardDown && !this.prevDiscardDown;
+    this.prevDiscardDown = discardDown;
 
     return {
       left,
@@ -134,6 +202,10 @@ export class KirbyScene implements GameScene {
       jump: jumpDown,
       jumpJustPressed,
       jumpJustReleased,
+      attack: attackDown,
+      attackJustPressed,
+      attackJustReleased,
+      discard: discardJustPressed,
     };
   }
 
@@ -142,9 +214,9 @@ export class KirbyScene implements GameScene {
       this.init();
     }
 
-    // Clamp dt inside update to not skip transition phases
     const updateDt = dt;
     const inputState = this.pollInput();
+    const activeRoom = this.roomManager.activeRoom;
 
     if (this.roomManager.isTransitioning()) {
       this.roomManager.updateTransition(updateDt, (newRoom, spawnPos) => {
@@ -154,17 +226,182 @@ export class KirbyScene implements GameScene {
         this.physics.vx = 0;
         this.physics.vy = 0;
         this.camera.snapTo(this.physics.x, this.physics.y);
+        this.spawnRoomEntities(newRoom.id);
       });
+      return;
+    }
+
+    if (!activeRoom) return;
+
+    // 1. Door Interaction
+    const door = this.roomManager.checkDoorInteraction(this.physics.getBounds(), inputState.up);
+    if (door) {
+      this.roomManager.startTransition(door);
+      return;
+    }
+
+    // 2. Kirby Core Action Handling
+    // Ducking / Down State
+    if (inputState.down && this.physics.grounded && !inputState.left && !inputState.right) {
+      if (this.actions.mouthContent && inputState.down) {
+        // Swallow
+        const swallowed = this.actions.swallow();
+        if (swallowed?.abilityGrant) {
+          this.setAbility(swallowed.abilityGrant);
+        }
+      } else {
+        this.actions.setDucking(true, this.physics);
+      }
     } else {
-      const door = this.roomManager.checkDoorInteraction(this.physics.getBounds(), inputState.up);
-      if (door) {
-        this.roomManager.startTransition(door);
-      } else if (this.roomManager.activeRoom) {
-        const clampedPhysicsDt = Math.min(updateDt, 0.05);
-        this.physics.update(clampedPhysicsDt, inputState, this.roomManager.activeRoom.tileMap);
+      this.actions.setDucking(false, this.physics);
+    }
+
+    // Slide Attack (Down + Attack or Down + Jump)
+    if (inputState.down && (inputState.attackJustPressed || (inputState.jumpJustPressed && this.physics.grounded))) {
+      this.actions.startSlide(this.physics);
+    }
+
+    // Float Puffs & Exhale
+    if (inputState.jumpJustPressed && !this.physics.grounded) {
+      this.actions.puffFloat(this.physics);
+      this.audio.playJump();
+    }
+
+    // Inhale / Attack
+    if (this.currentAbility) {
+      if (inputState.attackJustPressed) {
+        this.currentAbility.activate(this.physics, this.projectiles);
+      }
+    } else {
+      if (this.actions.mouthContent) {
+        if (inputState.attackJustPressed) {
+          this.actions.spit(this.physics, this.projectiles);
+          this.audio.playSpit();
+        }
+      } else {
+        if (inputState.attack) {
+          this.actions.startInhale();
+          this.audio.playInhale();
+        } else {
+          this.actions.stopInhale();
+        }
       }
     }
 
+    // Discard Ability
+    if (inputState.discard && this.currentAbility) {
+      this.dropAbility();
+    }
+
+    // Exhale if floating and attack pressed
+    if (this.actions.isFloating && inputState.attackJustPressed) {
+      this.actions.exhaleAirBullet(this.physics, this.projectiles);
+      this.audio.playSpit();
+    }
+
+    // 3. Physics & Actions Tick
+    const clampedPhysicsDt = Math.min(updateDt, 0.05);
+    this.physics.update(clampedPhysicsDt, inputState, activeRoom.tileMap);
+    this.actions.update(clampedPhysicsDt, this.physics);
+    this.health.update(clampedPhysicsDt);
+    this.particles.update(clampedPhysicsDt);
+
+    // 4. Inhale Target Detection
+    if (this.actions.isInhaling) {
+      const cone = this.actions.getInhaleCone(this.physics);
+      for (const enemy of this.enemyManager.getEnemies()) {
+        if (enemy.canBeInhaled() && this.actions.isInInhaleCone(cone, enemy.getBounds(), activeRoom.tileMap)) {
+          enemy.isBeingInhaled = true;
+          // Pull toward mouth
+          const dx = (this.physics.x + this.physics.width / 2) - (enemy.x + enemy.width / 2);
+          const dy = (this.physics.y + this.physics.height / 2) - (enemy.y + enemy.height / 2);
+          enemy.x += dx * 0.15;
+          enemy.y += dy * 0.15;
+
+          if (Math.hypot(dx, dy) < 16) {
+            enemy.isDead = true;
+            this.actions.captureInMouth({
+              type: 'enemy',
+              enemyType: enemy.type,
+              abilityGrant: enemy.abilityGrant,
+            });
+            break;
+          }
+        }
+      }
+    }
+
+    // 5. Ability Star Updates & Capture
+    for (const star of this.abilityStars) {
+      star.update(clampedPhysicsDt, activeRoom.tileMap);
+      if (!star.isDead && this.actions.isInhaling) {
+        const cone = this.actions.getInhaleCone(this.physics);
+        if (this.actions.isInInhaleCone(cone, star.getBounds(), activeRoom.tileMap)) {
+          star.isDead = true;
+          this.actions.captureInMouth({
+            type: 'ability_star',
+            abilityGrant: star.ability,
+          });
+        }
+      }
+    }
+    this.abilityStars = this.abilityStars.filter((s) => !s.isDead);
+
+    // 6. Active Ability Update & Attack Hit Resolution
+    if (this.currentAbility) {
+      const attack = this.currentAbility.update(clampedPhysicsDt, this.physics, this.projectiles);
+      if (attack && attack.hitboxes.length > 0) {
+        for (const hitbox of attack.hitboxes) {
+          const hitEnemy = this.enemyManager.checkCollision(hitbox);
+          if (hitEnemy) {
+            const killed = hitEnemy.takeDamage(attack.damage);
+            this.particles.burst(hitEnemy.x, hitEnemy.y, 12);
+            if (killed) {
+              this.health.addScore(100);
+            }
+          }
+        }
+      }
+    }
+
+    // 7. Projectiles Update & Collision
+    this.projectiles.update(clampedPhysicsDt, activeRoom.tileMap);
+    for (const p of this.projectiles.getProjectiles()) {
+      const hitEnemy = this.enemyManager.checkCollision({ x: p.x, y: p.y, width: p.width, height: p.height });
+      if (hitEnemy) {
+        const killed = hitEnemy.takeDamage(p.damage);
+        this.particles.burst(hitEnemy.x, hitEnemy.y, 14);
+        if (!p.piercing) {
+          p.isDead = true;
+        }
+        if (killed) {
+          this.health.addScore(100);
+        }
+      }
+    }
+
+    // 8. Enemy Updates & Player Damage Collision
+    this.enemyManager.update(clampedPhysicsDt, activeRoom.tileMap, this.physics.getBounds());
+    if (!this.health.isInvulnerable() && !this.actions.isSliding) {
+      const collidingEnemy = this.enemyManager.checkCollision(this.physics.getBounds());
+      if (collidingEnemy && !collidingEnemy.isBeingInhaled) {
+        this.takeDamage(1);
+      }
+    }
+
+    // 9. Food Pickup Collision
+    const food = this.foodManager.checkCollision(this.physics.getBounds());
+    if (food) {
+      if (food.type === 'maxim_tomato') {
+        this.health.healFull();
+      } else {
+        this.health.heal(2);
+      }
+      this.particles.burst(food.x, food.y, 8, ['#FFEB3B', '#FF4081']);
+      this.health.addScore(50);
+    }
+
+    // 10. Camera Update
     this.camera.update(
       this.physics.x + this.physics.width / 2,
       this.physics.y + this.physics.height / 2,
@@ -175,6 +412,40 @@ export class KirbyScene implements GameScene {
     this.input.update();
   }
 
+  setAbility(type: AbilityType): void {
+    if (this.currentAbility) {
+      this.currentAbility.dispose();
+    }
+    this.currentAbility = AbilityRegistry.create(type);
+    this.audio.playAbilityGain();
+    this.particles.burst(this.physics.x, this.physics.y, 20, ['#FFD700', '#FF4081', '#00E676', '#00B0FF']);
+  }
+
+  dropAbility(): void {
+    if (!this.currentAbility) return;
+    const type = this.currentAbility.type;
+    this.currentAbility.dispose();
+    this.currentAbility = null;
+    this.abilityStars.push(new AbilityStar(this.physics.x, this.physics.y - 10, type, this.physics.facing));
+  }
+
+  takeDamage(amount = 1): void {
+    const res = this.health.takeDamage(amount);
+    if (res.tookDamage) {
+      this.audio.playDamage();
+      this.particles.burst(this.physics.x, this.physics.y, 10, ['#E91E63', '#BDBDBD']);
+
+      if (this.currentAbility) {
+        this.dropAbility();
+      }
+
+      if (res.knockedBack) {
+        this.physics.vy = -140;
+        this.physics.vx = -this.physics.facing * 120;
+      }
+    }
+  }
+
   render(ctx: CanvasRenderingContext2D): void {
     const activeRoom = this.roomManager.activeRoom;
     if (!activeRoom) return;
@@ -182,32 +453,10 @@ export class KirbyScene implements GameScene {
     const { viewportWidth, viewportHeight } = this.camera;
     const tileSize = activeRoom.tileMap.tileSize;
 
-    // 1. Clear / Sky background
-    ctx.fillStyle = activeRoom.id === 'stage-1-1' ? '#70c5ff' : '#181425';
-    ctx.fillRect(0, 0, viewportWidth, viewportHeight);
+    // 1. Clear / Background with parallax
+    this.renderer.renderBackground(ctx, this.camera, 'green');
 
-    // 2. Parallax background scenery
-    if (activeRoom.id === 'stage-1-1') {
-      ctx.fillStyle = '#a3e0ff';
-      const cloudScroll = (this.camera.x * 0.2) % 400;
-      for (let cx = -cloudScroll; cx < viewportWidth + 400; cx += 300) {
-        ctx.beginPath();
-        ctx.arc(cx, 120, 45, 0, Math.PI * 2);
-        ctx.arc(cx + 35, 110, 55, 0, Math.PI * 2);
-        ctx.arc(cx + 70, 120, 40, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      ctx.fillStyle = '#62b57b';
-      const hillScroll = (this.camera.x * 0.4) % 600;
-      for (let hx = -hillScroll; hx < viewportWidth + 600; hx += 400) {
-        ctx.beginPath();
-        ctx.arc(hx, viewportHeight + 50, 200, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // 3. Render Culled Tiles
+    // 2. Render Culled Tiles
     const bounds = this.camera.getVisibleTileBounds(
       tileSize,
       activeRoom.tileMap.cols,
@@ -223,10 +472,9 @@ export class KirbyScene implements GameScene {
 
         switch (tileType) {
           case TileType.SOLID:
-            ctx.fillStyle = activeRoom.id === 'stage-1-1' ? '#4d8a35' : '#3f3851';
+            ctx.fillStyle = '#4d8a35';
             ctx.fillRect(screenPos.x, screenPos.y, tileSize, tileSize);
-            // Grass topper on outdoor solid tiles
-            if (activeRoom.id === 'stage-1-1' && activeRoom.tileMap.getTile(c, r - 1) === TileType.AIR) {
+            if (activeRoom.tileMap.getTile(c, r - 1) === TileType.AIR) {
               ctx.fillStyle = '#7ac943';
               ctx.fillRect(screenPos.x, screenPos.y, tileSize, 6);
             }
@@ -235,8 +483,6 @@ export class KirbyScene implements GameScene {
           case TileType.ONE_WAY:
             ctx.fillStyle = '#b07842';
             ctx.fillRect(screenPos.x, screenPos.y, tileSize, 8);
-            ctx.fillStyle = '#8f5727';
-            ctx.fillRect(screenPos.x, screenPos.y + 6, tileSize, 2);
             break;
 
           case TileType.HAZARD:
@@ -252,14 +498,12 @@ export class KirbyScene implements GameScene {
           case TileType.BREAKABLE:
             ctx.fillStyle = '#fbb829';
             ctx.fillRect(screenPos.x + 2, screenPos.y + 2, tileSize - 4, tileSize - 4);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(screenPos.x + tileSize / 2 - 2, screenPos.y + tileSize / 2 - 2, 4, 4);
             break;
         }
       }
     }
 
-    // 4. Render Doors
+    // 3. Render Doors
     for (const door of activeRoom.doors) {
       const doorScreen = this.camera.worldToScreen(door.col * tileSize, door.row * tileSize);
       ctx.fillStyle = '#6a4023';
@@ -268,62 +512,83 @@ export class KirbyScene implements GameScene {
       ctx.beginPath();
       ctx.arc(doorScreen.x + tileSize / 2, doorScreen.y + 8, tileSize / 2 - 4, Math.PI, 0);
       ctx.fill();
-      ctx.fillStyle = '#111111';
-      ctx.fillRect(doorScreen.x + 8, doorScreen.y + 8, tileSize - 16, tileSize - 8);
     }
 
-    // 5. Render Kirby Proxy Character
-    const kirbyScreen = this.camera.worldToScreen(this.physics.x, this.physics.y);
-    const centerX = kirbyScreen.x + this.physics.width / 2;
-    const centerY = kirbyScreen.y + this.physics.height / 2;
-    const radius = this.physics.width / 2;
+    // 4. Render Food Pickups
+    for (const food of this.foodManager.getItems()) {
+      const s = this.camera.worldToScreen(food.x, food.y);
+      ctx.fillStyle = food.type === 'maxim_tomato' ? '#E53935' : '#FFB300';
+      ctx.beginPath();
+      ctx.arc(s.x + 7, s.y + 7, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
 
-    // Body
-    ctx.fillStyle = '#ff7b9c';
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = '#e04875';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    // 5. Render Ability Stars
+    for (const star of this.abilityStars) {
+      if (star.isFlashing()) continue;
+      const s = this.camera.worldToScreen(star.x, star.y);
+      ctx.fillStyle = '#FFD700';
+      ctx.beginPath();
+      ctx.arc(s.x + 8, s.y + 8, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#FF6D00';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
 
-    // Eyes
-    const eyeOffset = this.physics.facing * 3;
-    ctx.fillStyle = '#211832';
-    ctx.beginPath();
-    ctx.ellipse(centerX + eyeOffset - 2, centerY - 2, 2, 4, 0, 0, Math.PI * 2);
-    ctx.ellipse(centerX + eyeOffset + 4, centerY - 2, 2, 4, 0, 0, Math.PI * 2);
-    ctx.fill();
+    // 6. Render Enemies
+    for (const enemy of this.enemyManager.getEnemies()) {
+      const s = this.camera.worldToScreen(enemy.x, enemy.y);
+      ctx.fillStyle = enemy.abilityGrant ? '#FF7043' : '#FFB74D';
+      ctx.beginPath();
+      ctx.arc(s.x + enemy.width / 2, s.y + enemy.height / 2, enemy.width / 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#2B2118';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
 
-    // Cheeks
-    ctx.fillStyle = '#ff3366';
-    ctx.beginPath();
-    ctx.arc(centerX + eyeOffset - 6, centerY + 3, 2, 0, Math.PI * 2);
-    ctx.arc(centerX + eyeOffset + 8, centerY + 3, 2, 0, Math.PI * 2);
-    ctx.fill();
+    // 7. Render Projectiles
+    for (const p of this.projectiles.getProjectiles()) {
+      const s = this.camera.worldToScreen(p.x, p.y);
+      ctx.fillStyle = p.type === 'star' ? '#FFEB3B' : '#81D4FA';
+      ctx.beginPath();
+      ctx.arc(s.x + p.width / 2, s.y + p.height / 2, p.width / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
-    // Feet
-    ctx.fillStyle = '#d62246';
-    ctx.beginPath();
-    ctx.ellipse(centerX - 6, centerY + radius - 2, 5, 3, 0, 0, Math.PI * 2);
-    ctx.ellipse(centerX + 6, centerY + radius - 2, 5, 3, 0, 0, Math.PI * 2);
-    ctx.fill();
+    // 8. Render Inhale Cone
+    if (this.actions.isInhaling) {
+      const cone = this.actions.getInhaleCone(this.physics);
+      const s = this.camera.worldToScreen(cone.originX, cone.originY);
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.x + cone.reach * cone.direction, s.y - cone.width / 2);
+      ctx.lineTo(s.x + cone.reach * cone.direction, s.y + cone.width / 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
 
-    // 6. Transition Overlay (Fade)
+    // 9. Render Kirby Character
+    this.renderer.renderKirby(ctx, this.camera, this.physics, this.actions, this.health, this.currentAbility);
+
+    // 10. Render Particles
+    this.particles.render(ctx, this.camera);
+
+    // 11. Room Transition Overlay
     if (this.roomManager.isTransitioning()) {
       const alpha = this.roomManager.getTransitionAlpha();
       ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
       ctx.fillRect(0, 0, viewportWidth, viewportHeight);
     }
 
-    // 7. HUD / Debug Stats
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '12px monospace';
-    ctx.fillText(`Room: ${activeRoom.name}`, 12, 20);
-    ctx.fillText(
-      `Pos: (${Math.round(this.physics.x)}, ${Math.round(this.physics.y)}) | Grounded: ${this.physics.grounded}`,
-      12,
-      36,
-    );
+    // 12. HUD Overlay
+    this.renderer.renderHUD(ctx, this.health, this.currentAbility, this.health.score, activeRoom.name);
   }
 }
