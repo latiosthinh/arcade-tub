@@ -80,9 +80,9 @@ const STAGE_1_ROWS: string[] = [
   "..##..##..........##..##..",
   "..##..##..........##..##..",
   "........##......##........",
-  ".......####....####.......",
-  ".......#EE#....#EE#.......",
-  ".......#EE#....#EE#......."
+  "...........####...........",
+  "...........#EE#...........",
+  "...........#EE#..........."
 ];
 
 // Stage 2 (Steel & Trees focus)
@@ -332,8 +332,12 @@ export function loadStage(gridMap: GridMap, stageNumber: number): boolean {
           gridMap.setCell(c, r, TileType.ICE, SubTileMask.FULL);
           break;
         case 'E':
-          // Eagle cell
-          gridMap.setCell(c, r, TileType.EAGLE, SubTileMask.FULL);
+          // Eagle cell - only allowed at Eagle HQ footprint (12..13, 24..25)
+          if ((r === 24 || r === 25) && (c === 12 || c === 13)) {
+            gridMap.setCell(c, r, TileType.EAGLE, SubTileMask.FULL);
+          } else {
+            gridMap.setCell(c, r, TileType.EMPTY, SubTileMask.EMPTY);
+          }
           break;
         case '.':
         case ' ':

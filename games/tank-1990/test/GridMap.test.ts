@@ -279,5 +279,29 @@ describe('GridMap & Sub-Tile Destruction Engine', () => {
       expect(loadStage(grid, -10)).toBe(true);
       expect(loadStage(grid, NaN)).toBe(true);
     });
+
+    it('ensures exactly one 2x2 Eagle HQ per stage and player spawn is clear', () => {
+      for (let s = 1; s <= TOTAL_STAGES; s++) {
+        loadStage(grid, s);
+
+        let eagleCount = 0;
+        for (let r = 0; r < GRID_ROWS; r++) {
+          for (let c = 0; c < GRID_COLS; c++) {
+            if (grid.getCell(c, r)?.type === TileType.EAGLE) {
+              eagleCount++;
+              expect(c === 12 || c === 13).toBe(true);
+              expect(r === 24 || r === 25).toBe(true);
+            }
+          }
+        }
+        expect(eagleCount).toBe(4);
+
+        // Player spawn area at (col 8, row 24) must NOT have Eagle
+        expect(grid.getCell(8, 24)?.type).not.toBe(TileType.EAGLE);
+        expect(grid.getCell(8, 25)?.type).not.toBe(TileType.EAGLE);
+        expect(grid.getCell(9, 24)?.type).not.toBe(TileType.EAGLE);
+        expect(grid.getCell(9, 25)?.type).not.toBe(TileType.EAGLE);
+      }
+    });
   });
 });
