@@ -2,10 +2,14 @@
 
 ## Current Position
 
-Phase: Complete (Milestone v9.0 ready for lifecycle)
+Phase: Complete (Milestone v9.0 shipped)
 Plan: —
-Status: Milestone v9.0 all phases complete
-Last activity: 2026-08-21 — Phase 63 verified and completed
+Status: Milestone v9.0 Complete
+Last activity: 2026-08-21 — Milestone v9.0 complete
+
+## Milestone
+- **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer (Shipped)
+- **Catalog Size:** 44 games active.
 
 ## Milestone
 - **Milestone:** v9.0 — Kirby's Adventure: Papercraft Platformer
