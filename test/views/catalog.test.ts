@@ -100,6 +100,17 @@ describe('GameGrid Component (src/components/GameGrid.ts)', () => {
     expect(nobrainIds).toContain('grass-mow');
     expect(nobrainIds).toContain('hydraulic-crush');
 
+    // retro filter
+    store.setState({ activeFilter: 'retro' });
+    grid.update(store.getState());
+
+    const retroCards = grid.element.querySelectorAll<HTMLElement>('.ac-card:not(.is-hidden)');
+    const expectedRetroCount = GAMES.filter(g => g.category === 'retro' && !g.disabled).length;
+    expect(retroCards.length).toBe(expectedRetroCount);
+    const retroIds = Array.from(retroCards).map(c => c.getAttribute('data-game-id'));
+    expect(retroIds).toContain('tank-1990');
+    expect(retroIds).toContain('kirby-adventure');
+
     grid.destroy();
   });
 

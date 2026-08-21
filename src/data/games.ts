@@ -4,7 +4,7 @@ export interface GameItem {
   id: string;
   title: string;
   genre: string;
-  category: 'nobrain' | 'action' | 'arcade' | 'puzzle' | 'casual';
+  category: 'nobrain' | 'action' | 'arcade' | 'puzzle' | 'casual' | 'retro';
   description: string;
   badge?: string;
   rating: string;
@@ -13,10 +13,46 @@ export interface GameItem {
   themeColor: string;
   bannerBg: string;
   features: string[];
+  controls?: string;
+  howToPlay?: string;
   disabled?: boolean;
 }
 
 export const GAMES: GameItem[] = [
+  // --- 👾 RETRO CLASSICS ---
+  {
+    id: 'tank-1990',
+    title: 'Tank 1990',
+    genre: 'Tactical Retro Tank Combat',
+    category: 'retro',
+    description: 'Authentic 2D papercraft Battle City arcade shooter. Defend your cardboard Eagle HQ, blast through destructible microgrids, upgrade your tank across 4 tiers, collect tactical powerups, and battle 20-tank enemy waves across 35 classic stages.',
+    badge: 'Retro',
+    rating: '5.0 ★',
+    plays: '150K plays',
+    icon: '🛡️',
+    themeColor: '#D97706',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['26×26 Destructible Microgrid', '4-Tier Tank Upgrades & 8 Powerups', 'Procedural 8-Bit Web Audio & Confetti FX'],
+    controls: 'WASD / Arrow Keys to drive, Space / J to shoot, Enter to pause / start.',
+    howToPlay: 'Defend your Eagle Base from enemy tanks. Shoot bricks to open fire lanes. Collect Stars to upgrade your cannon, Shovels to fortify base walls with steel, and Helmets for shield invulnerability. Clear all 20 enemy tanks to advance.'
+  },
+  {
+    id: 'kirby-adventure',
+    title: "Kirby's Adventure",
+    genre: 'Papercraft Action Platformer',
+    category: 'retro',
+    description: "Inhale, copy abilities, float, and battle across 4 papercraft worlds. Master 8 distinct copy abilities, conquer 20 stages, and defeat iconic multi-phase bosses in this tactile retro platformer.",
+    badge: 'New',
+    rating: '5.0 ★',
+    plays: '10K plays',
+    icon: '🌸',
+    themeColor: '#F48FB1',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE4EC 100%)',
+    features: ['8 Copy Abilities & Ability Drops', 'Inhale, Float & Slide Physics', '3 Multi-Phase Boss Encounters'],
+    controls: 'Left/Right to move, Double-tap to Dash, Up/Z/Space to Jump & Float, Down to Duck/Swallow, X/J/B to Inhale & Attack, Down+Attack to Slide, C to Discard Ability.',
+    howToPlay: 'Inhale enemies and press Down to copy their abilities (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle). Press Jump in air to float with puffs. Enter doors with Up to explore rooms and defeat bosses at the end of each world.'
+  },
+
   // --- CLASSIC ARCADE & CASUAL ---
   {
     id: 'safe-cracker',
@@ -30,7 +66,9 @@ export const GAMES: GameItem[] = [
     icon: '🔐',
     themeColor: '#F59E0B',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Precision Angular Collision', 'Dynamic Speed Ramp', 'Time Bonus Extensions']
+    features: ['Precision Angular Collision', 'Dynamic Speed Ramp', 'Time Bonus Extensions'],
+    controls: 'Click / Tap / Spacebar to lock tumbler when pointer aligns.',
+    howToPlay: 'Watch the rotating lock dial. Tap when the needle enters the highlighted tumbler target zone to crack the combination before time expires.'
   },
   {
     id: 'brick-blitz',
@@ -44,7 +82,9 @@ export const GAMES: GameItem[] = [
     icon: '🧱',
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Multi-Stage Layouts', 'Angle Deflection Math', 'Extra Life Blocks']
+    features: ['Multi-Stage Layouts', 'Angle Deflection Math', 'Extra Life Blocks'],
+    controls: 'Mouse / Touch Drag or Left/Right Arrow Keys to steer paddle.',
+    howToPlay: 'Deflect the ball into the brick grid. Don\'t let the ball fall past your paddle. Clear all breakable bricks to complete the stage.'
   },
   {
     id: 'sky-hopper',
@@ -58,7 +98,9 @@ export const GAMES: GameItem[] = [
     icon: '🚀',
     themeColor: '#10B981',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Story & Infinite Modes', 'Shiv Combat Throw', 'Rocket Booster Flight']
+    features: ['Story & Infinite Modes', 'Shiv Combat Throw', 'Rocket Booster Flight'],
+    controls: 'Left/Right or A/D to steer, Space to throw shiv weapon.',
+    howToPlay: 'Bounce automatically on green cardboard platforms to climb higher. Avoid broken platforms and flying origami hazards. Collect rockets for supersonic boosts.'
   },
   {
     id: 'crate-catch',
@@ -72,7 +114,9 @@ export const GAMES: GameItem[] = [
     icon: '📦',
     themeColor: '#C85A32',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Two-Lane Switching', 'Physics Tilt Wobble', 'Multiplier Banking']
+    features: ['Two-Lane Switching', 'Physics Tilt Wobble', 'Multiplier Banking'],
+    controls: 'Left/Right to switch conveyor lanes, Down / Space to bank crate stack.',
+    howToPlay: 'Catch falling numbered crates on your cart. As your stack grows, multiplier points rise. Bank points into the chute before you catch a bomb hazard.'
   },
   {
     id: 'type-strike',
@@ -86,7 +130,9 @@ export const GAMES: GameItem[] = [
     icon: '⌨️',
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Streak Multipliers', 'Laser Target Locking', '60-Second Challenge']
+    features: ['Streak Multipliers', 'Laser Target Locking', '60-Second Challenge'],
+    controls: 'Keyboard letter keys or Arrow keys (Arrow Mode) to type incoming words.',
+    howToPlay: 'Type the words attached to incoming missile targets as fast as possible to lock on and obliterate them before they breach your base.'
   },
   {
     id: 'memory-cards',
@@ -100,7 +146,9 @@ export const GAMES: GameItem[] = [
     icon: '🃏',
     themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Craft Glyph Pairs', 'Streak Multipliers', 'Round Timer & High Score']
+    features: ['Craft Glyph Pairs', 'Streak Multipliers', 'Round Timer & High Score'],
+    controls: 'Click / Tap any face-down card to reveal its symbol.',
+    howToPlay: 'Flip two cards at a time. Match identical paper glyphs to clear them from the board. Find all pairs in the fewest moves and fastest time.'
   },
   {
     id: 'memory-boxes',
@@ -114,7 +162,9 @@ export const GAMES: GameItem[] = [
     icon: '🔲',
     themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Expanding Sequences', 'Harmonic Audio Tones', '3-Strike Life System']
+    features: ['Expanding Sequences', 'Harmonic Audio Tones', '3-Strike Life System'],
+    controls: 'Click / Tap the colored boxes in exact sequence order.',
+    howToPlay: 'Memorize the flashing sequence of colored sound tiles. Repeat the pattern in order as the sequence grows longer each round.'
   },
   {
     id: 'pop-balloon',
@@ -128,7 +178,9 @@ export const GAMES: GameItem[] = [
     icon: '🎈',
     themeColor: '#EC4899',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Ascending Float Math', 'Color Streak Bonuses', 'Hazard Spike Bombs']
+    features: ['Ascending Float Math', 'Color Streak Bonuses', 'Hazard Spike Bombs'],
+    controls: 'Click / Tap rising balloons to pop them.',
+    howToPlay: 'Pop ascending balloons before they float off the screen. Chain consecutive pops of the same color for multiplier bonuses. Never touch the black spike bombs!'
   },
   {
     id: 'space-racer',
@@ -142,240 +194,274 @@ export const GAMES: GameItem[] = [
     icon: '🛸',
     themeColor: '#00F0FF',
     bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Inertial Thruster Physics', 'Hazard Splinter Asteroids', 'Stardust Pickups']
+    features: ['Inertial Thruster Physics', 'Hazard Splinter Asteroids', 'Stardust Pickups'],
+    controls: 'Mouse Move / Touch Drag or Left/Right Arrow Keys to steer spaceship.',
+    howToPlay: 'Pilot your origami rocket through deep space. Steer clear of asteroid debris and enemy laser gates. Grab glowing star fuel cells to stay powered.'
   },
   {
     id: 'virus-defense',
     title: 'Virus Defense',
     genre: 'Radial Turret Defense',
     category: 'action',
-    description: 'Rotate cardboard laser turret to defend the central papercut cell nucleus from origami pathogen swarms.',
-    badge: 'Action',
-    rating: '4.9 ★',
-    plays: '340K plays',
+    description: '360-degree cardboard antibody cannon. Rotate your turret, fire plasma beads, and eliminate invading geometric microbe waves.',
+    badge: 'Defense',
+    rating: '4.8 ★',
+    plays: '390K plays',
     icon: '🦠',
     themeColor: '#10B981',
-    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Radial Angular Rotation', 'Antibody Powerups', 'Boss Virus Waves']
+    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
+    features: ['Radial Orbit Aiming', 'Chain Reaction Splatters', 'Antibody Power Pellets'],
+    controls: 'Move cursor / touch around center core to aim, Click / Space to fire.',
+    howToPlay: 'Defend your central organic cell core from 360-degree incoming viral microbes. Match shot angles and trigger chain reactions before they reach your shield.'
   },
   {
     id: 'flappy-fish',
     title: 'Flappy Fish',
-    genre: 'One-Button Flopper',
+    genre: 'Flappy Arcade',
     category: 'casual',
-    description: 'Underwater origami fish flap. Steer through cardboard coral pipes, pick up pearls, and survive the paper depths.',
-    badge: 'Casual',
-    rating: '4.8 ★',
-    plays: '780K plays',
-    icon: '🐠',
-    themeColor: '#00D2D3',
-    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
-    features: ['Buoyancy Physics', 'Procedural Coral Pipes', 'Pearl Streak Banking']
+    description: 'Paper origami carp stream swimmer. Tap to swim upward, navigate coral paper pillars, and ride river currents.',
+    badge: 'Challenging',
+    rating: '4.7 ★',
+    plays: '620K plays',
+    icon: '🐟',
+    themeColor: '#06B6D4',
+    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
+    features: ['Buoyancy Wave Physics', 'Narrow Paper Gateways', 'Bubble Speed Boosters'],
+    controls: 'Click / Tap / Spacebar to flap and swim upward.',
+    howToPlay: 'Tap rhythmically to maintain altitude and guide your origami fish through tight gaps between cardboard coral pipes without crashing.'
   },
   {
     id: 'game-2048',
     title: '2048 Paper',
     genre: 'Sliding Tile Puzzle',
     category: 'puzzle',
-    description: 'Slide layered craft number tiles across parchment grids. Combine matching origami values to reach the coveted 2048 tile.',
-    badge: 'Brain',
+    description: 'Warm textured cardboard sliding tile puzzle. Merge matching numbered tiles to craft the legendary 2048 origami master cube.',
+    badge: 'Classic',
     rating: '4.9 ★',
-    plays: '620K plays',
+    plays: '740K plays',
     icon: '🔢',
     themeColor: '#F59E0B',
-    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #E8DEC8 100%)',
-    features: ['Smooth Slide Interpolation', 'Score Tile Merges', 'Local High Score Tracking']
+    bannerBg: 'linear-gradient(135deg, #F4EAD4 0%, #D8C3A5 100%)',
+    features: ['Fluid Sliding Animations', 'Cardboard Tile Textures', 'Dynamic Merge Haptics'],
+    controls: 'Swipe in 4 directions or use Arrow Keys / WASD.',
+    howToPlay: 'Slide tiles across the 4x4 grid. When two tiles with the same number touch, they merge into one with double the value. Build up to tile 2048!'
   },
   {
     id: 'snake-eat',
     title: 'Snake Eat',
-    genre: 'Classic Grid Snake',
+    genre: 'Grid Nibbler',
     category: 'arcade',
-    description: 'Folded paper serpent crawling on graph paper. Eat craft apples, grow your origami segment body, and dodge grid borders.',
-    badge: 'Classic',
+    description: 'Grid-crawling origami dragon. Eat paper pellets to lengthen your segmented accordion body while dodging perimeter walls and your own tail.',
+    badge: 'Retro',
     rating: '4.9 ★',
-    plays: '490K plays',
+    plays: '810K plays',
     icon: '🐍',
     themeColor: '#10B981',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Grid-Based Movement', 'Speed Increments', 'Food Multipliers']
+    features: ['Accordion Body Segment Physics', 'Golden Berry Multipliers', 'Speed Scaling Modes'],
+    controls: 'Arrow Keys / WASD or swipe gestures to steer cardinal direction.',
+    howToPlay: 'Guide your snake to eat glowing pellets. Each pellet extends your body and increases score. Avoid colliding with border walls and your own tail.'
   },
   {
     id: 'bug-climb',
     title: 'Bug Climb Tree',
-    genre: 'Vertical Climber',
+    genre: 'Vertical Tree Climber',
     category: 'casual',
-    description: 'Cardboard bark climbing beetle. Jump branches, dodge falling origami drops, and climb the ancient craft tree.',
-    badge: 'Casual',
+    description: 'Furious beetle tree trunk ascent. Tap Left/Right to dodge thorny branches, snatch paper dew drops, and race the rising floodline.',
+    badge: 'Quick Reflex',
     rating: '4.8 ★',
-    plays: '230K plays',
-    icon: '🐞',
-    themeColor: '#E11D48',
+    plays: '430K plays',
+    icon: '🪲',
+    themeColor: '#84CC16',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['Branch Hop Physics', 'Branch Obstacle Generation', 'Sap Drop Multipliers']
+    features: ['Split-Trunk Branch Dodge', 'Urgent Rising Water Line', 'Golden Dewdrop Streaks'],
+    controls: 'Left/Right Arrow Keys, A/D, or Tap Left/Right halves of screen.',
+    howToPlay: 'Tap Left or Right to switch tree trunk sides instantly. Dodge overhead thorn branches while grabbing dewdrops to keep your climb timer charged.'
   },
   {
     id: 'car-race',
     title: 'Cardboard Highway',
-    genre: '2-Lane Speed Racer',
+    genre: 'Multi-Lane Highway Racer',
     category: 'action',
-    description: 'High-speed top-down cardboard racer. Dodge slower paper traffic, weave between lanes, and catch slipstream turbo boosts.',
-    badge: 'Speed',
+    description: 'Cardboard stock car highway speedway. Shift lanes, draft behind big origami trucks, and rocket through rush hour traffic.',
+    badge: 'Speedway',
     rating: '4.9 ★',
-    plays: '610K plays',
-    icon: '🚗',
-    themeColor: '#3B82F6',
+    plays: '670K plays',
+    icon: '🏎️',
+    themeColor: '#EF4444',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Lane Shift Response', 'Traffic Spawn Waves', 'Turbo Boost Multipliers']
+    features: ['Drafting Slipstream Boosts', 'Dynamic 4-Lane AI Traffic', 'Nitro Fireball Mode'],
+    controls: 'Left/Right / A/D to change lanes, Up / W to accelerate, Down / S to brake.',
+    howToPlay: 'Weave through dense traffic lanes at high speeds. Draft closely behind other vehicles to charge your nitro meter, then trigger slipstream boosts.'
   },
   {
     id: 'drift-boss',
     title: 'Cardboard Drift',
-    genre: 'One-Touch Isometric Drift',
+    genre: 'One-Touch Drifter',
     category: 'arcade',
-    description: 'Hold to drift right, release to drift left. Navigate narrow papercraft zigzag highways and collect gold craft coins.',
-    badge: 'Trending',
+    description: 'Precision one-touch sling drifter. Hold to whip around hairpin cardboard corners, clip apex markers, and conquer endless tracks.',
+    badge: 'Addictive',
     rating: '4.9 ★',
-    plays: '380K plays',
-    icon: '🏎️',
-    themeColor: '#D97706',
+    plays: '920K plays',
+    icon: '🛞',
+    themeColor: '#F59E0B',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['One-Touch Drift Mechanics', 'Dynamic Zigzag Track Generation', 'Cardboard Vehicle Customization']
+    features: ['One-Touch Drift Physics', 'Apex Proximity Multipliers', 'Coin Magnet Pickups'],
+    controls: 'Hold Mouse / Screen / Spacebar to drift right, release to steer straight/left.',
+    howToPlay: 'Time your press and release precisely to drift around sharp turns on the narrow track. Don\'t drift too early or late, or your car will plunge into the void.'
   },
   {
     id: 'helix-jump',
     title: 'Helix Jump',
-    genre: 'Cardboard Tower Spiral Drop',
+    genre: 'Spiral Tower Descent',
     category: 'casual',
-    description: 'Rotate the circular cardboard tower to guide your bouncing paper ball through stage openings, smash through tiered paper rings, and avoid red danger paper zones.',
+    description: '3D cardboard spiral tower drop. Rotate the central pillar, drop through floor openings, and smash through consecutive levels.',
     badge: 'Disabled',
-    rating: '4.9 ★',
-    plays: '510K plays',
-    icon: '🌀',
-    themeColor: '#059669',
+    rating: '4.7 ★',
+    plays: '340K plays',
+    icon: '🧬',
+    themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Tower Rotation Physics', 'Bouncing Splatter Trails', 'Speedy Multi-Tier Smash Drops'],
+    features: ['3D Spiral Column Math', 'Consecutive Level Smash', 'Hazard Slice Avoidance'],
+    controls: 'Drag Left/Right or use A/D to rotate tower.',
+    howToPlay: 'Rotate the helix tower to align openings so the bouncing ball drops down layers. Avoid landing on colored hazard zones.',
     disabled: true
   },
   {
     id: 'square-bird',
     title: 'Square Bird',
-    genre: 'Stacking Platformer',
+    genre: 'Stack Runner',
     category: 'casual',
-    description: 'Tap to lay square cardboard egg blocks, build stairs over deadly craft spikes, and hit fever mode for unstoppable papercraft flight.',
-    badge: 'New',
-    rating: '4.9 ★',
-    plays: '420K plays',
-    icon: '🐥',
-    themeColor: '#F59E0B',
-    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Square Egg Stacking', 'Precision Height Obstacle Clearance', 'Fever Dash Destruction Mode']
+    description: 'Geometric cardboard clucker. Tap to lay square eggs, build tall egg towers to surmount obstacles, and trigger fever shoot mode.',
+    badge: 'Popular',
+    rating: '4.8 ★',
+    plays: '580K plays',
+    icon: '🐤',
+    themeColor: '#EAB308',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
+    features: ['Egg Stack Stomp Physics', 'Fever Shoot Blast Mode', 'Perfect Landing Bonuses'],
+    controls: 'Click / Tap / Spacebar to lay an egg block under your bird.',
+    howToPlay: 'Lay square eggs to elevate your bird to the exact height needed to clear terrain walls. Build perfect stacks to activate Fever shooting mode.'
   },
   {
     id: 'layers-roll',
     title: 'Layers Roll',
-    genre: 'Paper Ribbon Roll-and-Peel',
+    genre: 'Ribbon Roller',
     category: 'casual',
-    description: 'Roll your origami cylinder across vibrant color paper rolls, peel layered sheets, avoid cutting scissors, and carve giant cardboard statues at the finish line.',
+    description: 'Craft paper ribbon collector. Roll along the wooden workshop desk, pick up colored paper layers, and avoid obstacle cutters.',
     badge: 'Disabled',
-    rating: '4.8 ★',
-    plays: '330K plays',
-    icon: '📜',
-    themeColor: '#3B82F6',
+    rating: '4.6 ★',
+    plays: '210K plays',
+    icon: '🧻',
+    themeColor: '#EC4899',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['Multi-Layer Paper Ribbon Stacking', 'Obstacle Trimming Dynamics', 'Finish Line Sculpting Multipliers'],
+    features: ['Expanding Roll Radius', 'Color Layer Stripping', 'Obstacle Scissor Avoidance'],
+    controls: 'Drag Left/Right to steer rolling spool.',
+    howToPlay: 'Roll over paper strips of the same color to grow your ribbon roll. Avoid scissors and razor cutters that slice off your layers.',
     disabled: true
   },
   {
     id: 'mini-battles',
     title: '12 MiniBattles',
-    genre: 'Local 2-Player Paper Party',
+    genre: '2-Player Party Duel',
     category: 'action',
-    description: 'Chaotic head-to-head 2-player cardboard arcade duel collection. Battle friends in quick-draw showdowns, paper tank duels, soccer, and boxing with 1-button controls.',
+    description: 'Local 2-player papercraft showdown. Battle your friends in single-button duels: gunslingers, soccer, tank arena, and air combat.',
     badge: 'Disabled',
     rating: '4.9 ★',
-    plays: '670K plays',
+    plays: '490K plays',
     icon: '⚔️',
-    themeColor: '#E11D48',
+    themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['12 Diverse Party Minigames', 'Single-Button Local 2-Player', 'Scoreboard & Tournament Mode'],
+    features: ['1-Button Party Gameplay', '12 Rapid-Fire Game Modes', 'Local 2-Player Versus'],
+    controls: 'Player 1: W or A key; Player 2: Up Arrow or L key.',
+    howToPlay: 'Compete in fast-paced minigame duels using a single button. First player to win the required round points claims the party crown.',
     disabled: true
   },
   {
     id: 'dino-runner',
     title: 'Dino T-Rex Runner',
-    genre: 'Prehistoric Cardboard Runner',
+    genre: 'Endless Obstacle Runner',
     category: 'arcade',
-    description: 'The beloved offline craft dinosaur adventure. Jump over cardboard desert cacti, duck under origami pterodactyls, and survive day-and-night parchment cycles.',
+    description: 'Craftboard desert dinosaur sprint. Jump over origami cacti, duck under cardboard pterodactyls, and survive the day-night cycle.',
     badge: 'Classic',
     rating: '4.9 ★',
-    plays: '890K plays',
+    plays: '1.1M plays',
     icon: '🦖',
-    themeColor: '#4A6D56',
+    themeColor: '#6B7280',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['Cardboard Jump & Duck Controls', 'Day / Night Parchment Cycles', 'Dynamic Cactus & Pterodactyl Hazards']
+    features: ['Day/Night Desert Themes', 'Cactus & Pterodactyl Hazards', 'Speed Curve Acceleration'],
+    controls: 'Space / Up Arrow to jump, Down Arrow to duck low.',
+    howToPlay: 'Time your jumps over cacti and duck beneath low-flying pterodactyls as the runner speeds up over time.'
   },
   {
     id: 'snow-rider',
     title: 'Snow Rider',
-    genre: '3D Cardboard Sledding Slope',
+    genre: '3D Sled Obstacle Runner',
     category: 'action',
-    description: 'Downhill 3D papercraft bobsled rush. Steer through snowy cardboard pine forests, leap off frozen ramps, and dodge origami snowmen and rolling snowballs.',
+    description: 'Downhill wooden sleigh slalom. Steer down snowy cardboard slopes, weave through pine trees, leap over ice chasms, and collect candy canes.',
     badge: 'Disabled',
-    rating: '4.9 ★',
-    plays: '460K plays',
+    rating: '4.8 ★',
+    plays: '380K plays',
     icon: '🛷',
-    themeColor: '#0284C7',
-    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E0F2FE 100%)',
-    features: ['Pseudo-3D Downhill Slope Kinematics', 'Cardboard Pine Tree & Rock Dodging', 'Gift Box Pickups & Sled Unlocks'],
+    themeColor: '#06B6D4',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
+    features: ['Pseudo-3D Perspective Slalom', 'Jump Over Icy Chasms', 'Candy Cane Shop Currency'],
+    controls: 'Left/Right to steer sled, Space / Up to jump.',
+    howToPlay: 'Steer your toboggan down the mountain. Dodge snowdrifts, rocks, and trees while grabbing candy canes for bonus score.',
     disabled: true
   },
   {
     id: 'paper-basket',
     title: 'Paper Basket',
-    genre: 'Tap-Tap Arcade Shooter',
+    genre: 'Arcade Physics Toss',
     category: 'arcade',
-    description: 'Parabolic paper basketball shots. Tap to flap into alternating cardboard hoops, beat the shot clock, and chain clean swishes.',
-    badge: 'New',
-    rating: '4.9 ★',
-    plays: '110K plays',
-    icon: '🏀',
-    themeColor: '#D97706',
-    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['Upward Flap Kinematics', 'Swish Streak Multipliers', 'Dynamic Shot Clock & Moving Rims']
+    description: 'Office trash can paper toss championship. Account for desk fan wind gusts, adjust trajectory angles, and sink crumpled paper balls.',
+    badge: 'Physics',
+    rating: '4.8 ★',
+    plays: '460K plays',
+    icon: '🗑️',
+    themeColor: '#C85A32',
+    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
+    features: ['Dynamic Desk Fan Wind Vector', 'Arc Trajectory Drag', 'Combo Swish Streaks'],
+    controls: 'Click & drag paper ball to aim trajectory arc, release to shoot.',
+    howToPlay: 'Calculate the wind strength and direction from the desk fan. Drag back to aim your shot into the cardboard recycling bin.'
   },
   {
     id: 'potion-merge',
     title: 'Gem Merge',
-    genre: 'Physics Merge / Jewels',
+    genre: 'Drop & Merge 2048',
     category: 'puzzle',
-    description: 'Suika-style alchemical gem vault drop-and-merge. Drop sparkling papercraft faceted gems, merge matching crystals to craft the Grand Diamond Crown.',
-    badge: 'New',
+    description: 'Suika-style container merge physics. Drop faceted paper gems into the wooden display box and merge identical stones into the Grand Diamond.',
+    badge: 'Suika',
     rating: '4.9 ★',
-    plays: '95K plays',
+    plays: '780K plays',
     icon: '💎',
     themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['11-Tier Gem Crystal Crafting', 'Elastic Faceted Collision Physics', 'Dropper Aiming & Sparkle Merges']
+    features: ['Elastic Gem Circle Collisions', '11 Merge Growth Tiers', 'Danger Overflow Line'],
+    controls: 'Move cursor / touch horizontally to position drop lane, click to drop gem.',
+    howToPlay: 'Drop gems into the jar. When two gems of the same type touch, they fuse into the next larger gemstone. Keep the jar from overflowing.'
   },
   {
     id: 'mahjong-paper',
     title: 'Mahjong Paper',
-    genre: 'Solitaire Tile Matching',
+    genre: 'Tile Solitaire',
     category: 'puzzle',
-    description: 'Layered cardstock mahjong solitaire. Clear multi-tiered origami animals, paper flowers, and dragon crests with free-edge matching.',
-    badge: 'New',
+    description: 'Tactile layered cardstock Mahjong Solitaire. Clear open tile pairs, reveal concealed lower tiers, and solve classic pyramid layouts.',
+    badge: 'Zen',
     rating: '4.8 ★',
-    plays: '130K plays',
+    plays: '320K plays',
     icon: '🀄',
-    themeColor: '#E11D48',
+    themeColor: '#10B981',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
-    features: ['Layered Cardstock Solitaire', 'Free-Edge Checking Algorithm', 'Hint, Shuffle & Undo Support']
+    features: ['Multi-Tier Layer Stacking', 'Free Edge Matching Logic', 'Shuffle & Undo Aids'],
+    controls: 'Click / Tap unblocked matching pairs of mahjong tiles.',
+    howToPlay: 'Select two matching tiles that have at least one side (left or right) completely free and no tile on top. Clear all tiles to solve the board.'
   },
   {
     id: 'subway-runner',
     title: 'Subway Surfer',
-    genre: 'Endless 3-Lane Runner',
+    genre: '3-Lane Endless Runner',
     category: 'action',
     description: 'Endless 3-lane papercraft runner. Swipe to dodge cardboard commuter trains, jump over road barriers, slide under high signal boards, and surf on origami hoverboards.',
     badge: 'Disabled',
@@ -385,6 +471,8 @@ export const GAMES: GameItem[] = [
     themeColor: '#E11D48',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E8DEC8 100%)',
     features: ['3-Lane Perspective Kinematics', 'Jump & Slide Mechanics', 'Hoverboard Shield & Coin Magnets'],
+    controls: 'Arrow keys / swipe to switch lanes, jump, and roll.',
+    howToPlay: 'Dodge oncoming train cars and barriers across 3 tracks while grabbing coins and power-ups.',
     disabled: true
   },
   {
@@ -400,6 +488,8 @@ export const GAMES: GameItem[] = [
     themeColor: '#8B5CF6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
     features: ['45° Angle Reflection Physics', 'White Light Prism Splitting', 'Target Crystal Color Activation'],
+    controls: 'Click and drag prisms/mirrors to rotate and reposition beam paths.',
+    howToPlay: 'Direct colored laser beams into their corresponding target crystals by strategically placing and angling optical components.',
     disabled: true
   },
 
@@ -416,7 +506,9 @@ export const GAMES: GameItem[] = [
     icon: '🫧',
     themeColor: '#38BDF8',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E0F2FE 100%)',
-    features: ['Infinite Bubble Matrix Sweep', 'Micro-Plop Harmonizer Synthesizer', 'Rainbow Golden Chords']
+    features: ['Infinite Bubble Matrix Sweep', 'Micro-Plop Harmonizer Synthesizer', 'Rainbow Golden Chords'],
+    controls: 'Click / Tap / Drag mouse or finger across bubbles.',
+    howToPlay: 'Swipe across bubble sheets to pop bubbles with instant acoustic haptic feedback. Pop rapidly to build color chord combos.'
   },
   {
     id: 'pop-it',
@@ -430,7 +522,9 @@ export const GAMES: GameItem[] = [
     icon: '🟡',
     themeColor: '#F472B6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE7F3 100%)',
-    features: ['4 Geometric Board Shapes', '2-Way Reversible Dimple Physics', 'Satisfying 3D Board Flip']
+    features: ['4 Geometric Board Shapes', '2-Way Reversible Dimple Physics', 'Satisfying 3D Board Flip'],
+    controls: 'Tap bubbles to push them through. Click Flip button to reverse board.',
+    howToPlay: 'Push all bubbles on the board down with satisfying pops, then flip the board over and pop them back!'
   },
   {
     id: 'soap-carve',
@@ -444,7 +538,9 @@ export const GAMES: GameItem[] = [
     icon: '🧼',
     themeColor: '#A78BFA',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #EDE9FE 100%)',
-    features: ['Layered Heightfield Shaving', 'Curly Shaving Physics', 'Collectible Figurine Reveals']
+    features: ['Layered Heightfield Shaving', 'Curly Shaving Physics', 'Collectible Figurine Reveals'],
+    controls: 'Click and drag carving blade across the soap block.',
+    howToPlay: 'Drag the peeler blade back and forth across the soap surface to shave off ribbon curls and uncover hidden treasure figurines.'
   },
   {
     id: 'hydraulic-crush',
@@ -458,7 +554,9 @@ export const GAMES: GameItem[] = [
     icon: '🔨',
     themeColor: '#EA580C',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FFEDD5 100%)',
-    features: ['Piston Hydraulic Pressure Math', 'Elastic Accordion Squash', 'Item Splatter Particle Burst']
+    features: ['Piston Hydraulic Pressure Math', 'Elastic Accordion Squash', 'Item Splatter Particle Burst'],
+    controls: 'Hold Mouse / Finger down on the press lever to lower piston.',
+    howToPlay: 'Hold down the pressure lever to crush toys, fruits, and electronics under hydraulic force with particle confetti explosions.'
   },
   {
     id: 'sand-zen',
@@ -472,7 +570,9 @@ export const GAMES: GameItem[] = [
     icon: '⏳',
     themeColor: '#D97706',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FEF3C7 100%)',
-    features: ['Falling Granular Sand Automaton', 'Zen Rake Ripple Carving', 'Color Sand Hopper Dispenser']
+    features: ['Falling Granular Sand Automaton', 'Zen Rake Ripple Carving', 'Color Sand Hopper Dispenser'],
+    controls: 'Click/drag to pour sand or switch to Zen Rake tool to draw waves.',
+    howToPlay: 'Pour multi-colored streams of falling physics sand into patterns, carve soothing ripple lines with the wooden zen rake, and relax.'
   },
   {
     id: 'liquid-sort',
@@ -486,7 +586,9 @@ export const GAMES: GameItem[] = [
     icon: '🧪',
     themeColor: '#06B6D4',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #CFFAFE 100%)',
-    features: ['Satisfying Water Glug Synthesizer', 'Solvable Level Progression', 'Unlimited Free Undo Stack']
+    features: ['Satisfying Water Glug Synthesizer', 'Solvable Level Progression', 'Unlimited Free Undo Stack'],
+    controls: 'Tap a vial to select, then tap another vial to pour.',
+    howToPlay: 'Pour water between tubes. You can only pour if the top color matches and the target tube has room. Group each pure color into its own vial.'
   },
   {
     id: 'fidget-spin',
@@ -500,7 +602,9 @@ export const GAMES: GameItem[] = [
     icon: '🌀',
     themeColor: '#10B981',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D1FAE5 100%)',
-    features: ['Inertial Angular Deceleration', 'Harmonic Pitch Bearing Hum', 'Neon Blade Light Trails']
+    features: ['Inertial Angular Deceleration', 'Harmonic Pitch Bearing Hum', 'Neon Blade Light Trails'],
+    controls: 'Swipe across the spinner blades in a continuous circular flick.',
+    howToPlay: 'Swipe repeatedly to accelerate the spinner to maximum RPM tachometer speeds. Watch hypnotic color blends and light trails.'
   },
   {
     id: 'grass-mow',
@@ -514,7 +618,9 @@ export const GAMES: GameItem[] = [
     icon: '🌱',
     themeColor: '#22C55E',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #DCFCE7 100%)',
-    features: ['Spatial Grid Cutting Physics', 'Grass Ribbon Confetti Particles', '2-Stroke Engine Acoustic Audio']
+    features: ['Spatial Grid Cutting Physics', 'Grass Ribbon Confetti Particles', '2-Stroke Engine Acoustic Audio'],
+    controls: 'Arrow keys / WASD or swipe to steer mower direction.',
+    howToPlay: 'Drive the lawn mower across overgrown spiral grass patches. Mow every single blade of paper grass to complete the clean yard sweep.'
   },
   {
     id: 'koi-pond',
@@ -528,7 +634,9 @@ export const GAMES: GameItem[] = [
     icon: '🐠',
     themeColor: '#0EA5E9',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #E0F2FE 100%)',
-    features: ['Color-Matched Koi Feeding Diet', 'Water Surface Ripple Physics', 'Left/Right & Mobile Touch Gestures']
+    features: ['Color-Matched Koi Feeding Diet', 'Water Surface Ripple Physics', 'Left/Right & Mobile Touch Gestures'],
+    controls: 'Left Click to splash water, Right Click / Long Press to drop fish food.',
+    howToPlay: 'Watch papercraft koi swim calmly in the pond. Splash water to create gentle ripple physics and drop food pellets to feed the school.'
   },
   {
     id: 'rainbow-draw',
@@ -542,7 +650,9 @@ export const GAMES: GameItem[] = [
     icon: '🎨',
     themeColor: '#EC4899',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE7F3 100%)',
-    features: ['Neon Rainbow Spline Drawing', 'Dynamic Rigid Line Colliders', 'Harmonic Chime Synthesizer Audio']
+    features: ['Neon Rainbow Spline Drawing', 'Dynamic Rigid Line Colliders', 'Harmonic Chime Synthesizer Audio'],
+    controls: 'Click & Drag to draw glowing rainbow slope lines.',
+    howToPlay: 'Draw curved ramp ribbons on the canvas to guide bouncy paper balls into star goal targets.'
   },
   {
     id: 'firework-pop',
@@ -556,7 +666,9 @@ export const GAMES: GameItem[] = [
     icon: '🎆',
     themeColor: '#F59E0B',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FEF3C7 100%)',
-    features: ['Tap Anywhere Rocket Launcher', 'Celestial Star & Moon Targets', 'Mega Multi-Burst Clusters']
+    features: ['Tap Anywhere Rocket Launcher', 'Celestial Star & Moon Targets', 'Mega Multi-Burst Clusters'],
+    controls: 'Click / Tap anywhere in the night sky to launch firework shells.',
+    howToPlay: 'Tap the screen to launch rockets that explode into brilliant colorful bursts. Target floating celestial stars to trigger cascade chains.'
   },
   {
     id: 'fruit-flood',
@@ -570,7 +682,9 @@ export const GAMES: GameItem[] = [
     icon: '🍓',
     themeColor: '#EF4444',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FEE2E2 100%)',
-    features: ['Blade Slice Physics & Juice Drops', 'Golden Dragon Star Frenzy Mode', 'Combo Streaks & Splatters']
+    features: ['Blade Slice Physics & Juice Drops', 'Golden Dragon Star Frenzy Mode', 'Combo Streaks & Splatters'],
+    controls: 'Swipe / drag cursor across flying fruits to slice.',
+    howToPlay: 'Slice flying watermelons, strawberries, and pineapples in mid-air. Chain multi-fruit combos and slice Golden Stars for bonus frenzy modes.'
   },
   {
     id: 'snow-smash',
@@ -584,7 +698,9 @@ export const GAMES: GameItem[] = [
     icon: '❄️',
     themeColor: '#06B6D4',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #CFFAFE 100%)',
-    features: ['Scrub to Grow Giant Snowballs', 'Rapid-Fire Snowball Gun Mode', 'Destructible Cardboard Physics']
+    features: ['Scrub to Grow Giant Snowballs', 'Rapid-Fire Snowball Gun Mode', 'Destructible Cardboard Physics'],
+    controls: 'Pull back slingshot and release to launch snowballs.',
+    howToPlay: 'Aim and launch heavy snowballs at stacked cardboard fortresses and snowmen to topple them with realistic physics.'
   },
   {
     id: 'mosquito-swat',
@@ -598,7 +714,9 @@ export const GAMES: GameItem[] = [
     icon: '🦟',
     themeColor: '#10B981',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D1FAE5 100%)',
-    features: ['Erratic Swarm Flight Dynamics', 'Swipe Net Radius Sweeps', 'Bug Spray & Electric Racket Frenzy']
+    features: ['Erratic Swarm Flight Dynamics', 'Swipe Net Radius Sweeps', 'Bug Spray & Electric Racket Frenzy'],
+    controls: 'Swipe / click on buzzing mosquitoes with net.',
+    howToPlay: 'Swat buzzing mosquitoes before they bite. Use electric swatter power-ups for area clearing.'
   },
   {
     id: 'tic-tac-toe',
@@ -612,35 +730,9 @@ export const GAMES: GameItem[] = [
     icon: '❌',
     themeColor: '#3B82F6',
     bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #DBEAFE 100%)',
-    features: ['Paper Notebook Theme & Chalk Dust', 'Local 2-Player Pass & Play', 'Xiaomi Mimo AI & Minimax Engine']
-  },
-  {
-    id: 'tank-1990',
-    title: 'Tank 1990',
-    genre: 'Tactical Retro Tank Combat',
-    category: 'action',
-    description: 'Authentic 2D papercraft Battle City arcade shooter. Defend your cardboard Eagle HQ, blast through destructible microgrids, upgrade your tank across 4 tiers, collect tactical powerups, and battle 20-tank enemy waves across 35 classic stages.',
-    badge: 'Retro',
-    rating: '5.0 ★',
-    plays: '150K plays',
-    icon: '🛡️',
-    themeColor: '#D97706',
-    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #D8C3A5 100%)',
-    features: ['26×26 Destructible Microgrid', '4-Tier Tank Upgrades & 8 Powerups', 'Procedural 8-Bit Web Audio & Confetti FX']
-  },
-  {
-    id: 'kirby-adventure',
-    title: "Kirby's Adventure",
-    genre: 'Papercraft Action Platformer',
-    category: 'arcade',
-    description: "Inhale, copy abilities, float, and battle across 4 papercraft worlds. Master 8 distinct copy abilities, conquer 20 stages, and defeat iconic multi-phase bosses in this tactile retro platformer.",
-    badge: 'New',
-    rating: '5.0 ★',
-    plays: '10K plays',
-    icon: '🌸',
-    themeColor: '#F48FB1',
-    bannerBg: 'linear-gradient(135deg, #FAF6EE 0%, #FCE4EC 100%)',
-    features: ['8 Copy Abilities & Ability Drops', 'Inhale, Float & Slide Physics', '3 Multi-Phase Boss Encounters']
+    features: ['Paper Notebook Theme & Chalk Dust', 'Local 2-Player Pass & Play', 'Xiaomi Mimo AI & Minimax Engine'],
+    controls: 'Click any empty grid square to place your mark.',
+    howToPlay: 'Place X or O marks on the 3x3 grid. Form a line of 3 matching symbols horizontally, vertically, or diagonally to win.'
   }
 ];
 

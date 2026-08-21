@@ -30,6 +30,6 @@ describe('Mobile Controls, HUD & Hub Integration', () => {
     const kirby = GAMES.find((g) => g.id === 'kirby-adventure');
     expect(kirby).toBeDefined();
     expect(kirby?.title).toBe("Kirby's Adventure");
-    expect(kirby?.category).toBe('arcade');
+    expect(kirby?.category).toBe('retro');
   });
 });

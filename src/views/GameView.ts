@@ -122,6 +122,12 @@ export class GameView extends BaseComponent<AppState> {
               <span>${game.rating}</span> • <span>Verified Arcade</span> • <span>${game.plays}</span>
             </div>
             <p class="ac-details-desc">${game.description}</p>
+            ${game.howToPlay || game.controls ? `
+            <div class="ac-guide-box">
+              <div class="ac-guide-header">📖 How to Play & Controls</div>
+              ${game.howToPlay ? `<div class="ac-guide-text">${game.howToPlay}</div>` : ''}
+              ${game.controls ? `<div class="ac-controls-text">🎮 <strong>Controls:</strong> ${game.controls}</div>` : ''}
+            </div>` : ''}
             <div class="ac-features-tags">
               ${game.features.map(f => `<span class="ac-tag">✓ ${f}</span>`).join('')}
             </div>
