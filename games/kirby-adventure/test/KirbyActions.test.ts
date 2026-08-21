@@ -60,10 +60,26 @@ describe('KirbyActions', () => {
     physics.grounded = true;
     expect(actions.startSlide(physics)).toBe(true);
     expect(actions.isSliding).toBe(true);
-    expect(physics.height).toBe(12);
 
     actions.update(0.35, physics);
     expect(actions.isSliding).toBe(false);
-    expect(physics.height).toBe(20);
+  });
+
+  it('handles stable ducking and mid-air inhale', () => {
+    physics.grounded = true;
+    actions.setDucking(true, physics);
+    expect(actions.isDucking).toBe(true);
+    expect(physics.vx).toBe(0);
+
+    actions.setDucking(false, physics);
+    expect(actions.isDucking).toBe(false);
+
+    // Mid-air inhale
+    physics.grounded = false;
+    actions.startInhale();
+    expect(actions.isInhaling).toBe(true);
+
+    actions.update(0.1, physics);
+    expect(physics.vy).toBeLessThanOrEqual(100);
   });
 });

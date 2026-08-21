@@ -8,8 +8,6 @@ export const INHALE_REACH = 80;
 export const INHALE_WIDTH = 40;
 export const SLIDE_DURATION = 0.3; // 300ms
 export const SLIDE_SPEED = 220;
-export const NORMAL_HEIGHT = 20;
-export const DUCK_HEIGHT = 12;
 
 export class KirbyActions {
   isInhaling = false;
@@ -58,7 +56,7 @@ export class KirbyActions {
   }
 
   startInhale(): void {
-    if (this.mouthContent || this.isFloating || this.isSliding) return;
+    if (this.mouthContent || this.isSliding) return;
     this.isInhaling = true;
     this.isDucking = false;
   }
@@ -93,6 +91,7 @@ export class KirbyActions {
     if (this.floatPuffCount >= MAX_FLOAT_PUFFS) return false;
     this.isFloating = true;
     this.isDucking = false;
+    this.isInhaling = false;
     this.floatPuffCount += 1;
     physics.vy = -160;
     return true;
@@ -114,26 +113,19 @@ export class KirbyActions {
     this.isSliding = true;
     this.isDucking = false;
     this.slideTimer = SLIDE_DURATION;
-    physics.height = DUCK_HEIGHT; // Lower profile for sliding
     physics.vx = physics.facing * SLIDE_SPEED;
     return true;
   }
 
   setDucking(ducking: boolean, physics: KirbyPhysics): void {
-    if (this.isSliding || this.isFloating) {
+    if (this.isSliding || this.isFloating || !physics.grounded) {
       this.isDucking = false;
       return;
     }
 
-    if (ducking && physics.grounded) {
-      this.isDucking = true;
-      physics.height = DUCK_HEIGHT;
+    this.isDucking = ducking;
+    if (ducking) {
       physics.vx = 0;
-    } else {
-      if (this.isDucking) {
-        this.isDucking = false;
-        physics.height = NORMAL_HEIGHT;
-      }
     }
   }
 
@@ -143,7 +135,6 @@ export class KirbyActions {
       physics.vx = physics.facing * SLIDE_SPEED;
       if (this.slideTimer <= 0) {
         this.isSliding = false;
-        physics.height = this.isDucking ? DUCK_HEIGHT : NORMAL_HEIGHT;
       }
     }
 
@@ -154,6 +145,11 @@ export class KirbyActions {
         this.isFloating = false;
         this.floatPuffCount = 0;
       }
+    }
+
+    // While inhaling in mid-air, gentle fall
+    if (this.isInhaling && !physics.grounded) {
+      physics.vy = Math.min(physics.vy, 100);
     }
   }
 }

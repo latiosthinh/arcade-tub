@@ -84,7 +84,6 @@ describe('KirbyScene', () => {
 
     scene.update(0.016);
     expect(scene.actions.isDucking).toBe(true);
-    expect(scene.physics.height).toBe(12); // Crouched height
     expect(scene.physics.vx).toBe(0);
 
     // Release down
@@ -100,7 +99,26 @@ describe('KirbyScene', () => {
 
     scene.update(0.016);
     expect(scene.actions.isDucking).toBe(false);
-    expect(scene.physics.height).toBe(20); // Normal height
+  });
+
+  it('allows mid-air inhale vacuum while jumping or falling', () => {
+    scene.physics.grounded = false;
+    scene.setCustomInput({
+      left: false,
+      right: false,
+      up: false,
+      down: false,
+      jump: false,
+      jumpJustPressed: false,
+      jumpJustReleased: false,
+      attack: true,
+      attackJustPressed: true,
+      attackJustReleased: false,
+    });
+
+    scene.update(0.016);
+    expect(scene.actions.isInhaling).toBe(true);
+    expect(scene.actions.isFloating).toBe(false);
   });
 
   it('renders canvas elements without crashing', () => {

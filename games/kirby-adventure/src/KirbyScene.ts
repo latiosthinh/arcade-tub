@@ -242,44 +242,57 @@ export class KirbyScene implements GameScene {
 
     // 2. Kirby Core Action Handling
     // Ducking / Down State
-    if (inputState.down && this.physics.grounded && !inputState.left && !inputState.right) {
-      if (this.actions.mouthContent && inputState.down) {
+    if (inputState.down) {
+      if (this.actions.mouthContent) {
         // Swallow
         const swallowed = this.actions.swallow();
         if (swallowed?.abilityGrant) {
           this.setAbility(swallowed.abilityGrant);
         }
-      } else {
+      } else if (this.actions.isFloating) {
+        // Cancel float and fast fall
+        this.actions.isFloating = false;
+        this.actions.floatPuffCount = 0;
+      } else if (this.physics.grounded && !inputState.left && !inputState.right) {
         this.actions.setDucking(true, this.physics);
       }
     } else {
       this.actions.setDucking(false, this.physics);
     }
 
-    // Slide Attack (Down + Attack or Down + Jump)
-    if (inputState.down && (inputState.attackJustPressed || (inputState.jumpJustPressed && this.physics.grounded))) {
+    // Slide Attack (Down + Attack or Down + Jump while grounded)
+    if (inputState.down && this.physics.grounded && (inputState.attackJustPressed || inputState.jumpJustPressed)) {
       this.actions.startSlide(this.physics);
     }
 
-    // Float Puffs & Exhale
-    if (inputState.jumpJustPressed && !this.physics.grounded) {
-      this.actions.puffFloat(this.physics);
-      this.audio.playJump();
+    // Float Puffs (Up in air, or Jump in air when not inhaling)
+    if ((inputState.up || (inputState.jumpJustPressed && !inputState.attack)) && !this.physics.grounded) {
+      if (!this.actions.isInhaling && !this.actions.mouthContent) {
+        const puffed = this.actions.puffFloat(this.physics);
+        if (puffed) {
+          this.audio.playJump();
+        }
+      }
     }
 
-    // Inhale / Attack
+    // Inhale / Ability Attack
     if (this.currentAbility) {
       if (inputState.attackJustPressed) {
         this.currentAbility.activate(this.physics, this.projectiles);
       }
     } else {
-      if (this.actions.mouthContent) {
+      if (this.actions.isFloating) {
+        if (inputState.attackJustPressed) {
+          this.actions.exhaleAirBullet(this.physics, this.projectiles);
+          this.audio.playSpit();
+        }
+      } else if (this.actions.mouthContent) {
         if (inputState.attackJustPressed) {
           this.actions.spit(this.physics, this.projectiles);
           this.audio.playSpit();
         }
       } else {
-        if (inputState.attack) {
+        if (inputState.attack && !this.actions.isSliding && !this.actions.isDucking) {
           this.actions.startInhale();
           this.audio.playInhale();
         } else {
@@ -291,12 +304,6 @@ export class KirbyScene implements GameScene {
     // Discard Ability
     if (inputState.discard && this.currentAbility) {
       this.dropAbility();
-    }
-
-    // Exhale if floating and attack pressed
-    if (this.actions.isFloating && inputState.attackJustPressed) {
-      this.actions.exhaleAirBullet(this.physics, this.projectiles);
-      this.audio.playSpit();
     }
 
     // 3. Physics & Actions Tick
