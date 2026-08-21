@@ -9,11 +9,11 @@ Requirements for Milestone v10.0. Each maps to roadmap phases.
 
 ### Physics & Traversal
 
-- [ ] **PHYS-01**: Player can super-jump ~2.5–3 screen heights with piecewise gravity arc and apex hang
-- [ ] **PHYS-02**: Player can steer horizontally mid-air during jump with responsive air control
-- [ ] **PHYS-03**: Player can land on one-way tree branch platforms and slide down bamboo trunks
-- [ ] **PHYS-04**: Player can cling to vertical castle walls and wall-jump upward in Stage 2
-- [ ] **PHYS-05**: Vertical camera follows player with asymmetric upward velocity scaling and look-ahead deadzone
+- [x] **PHYS-01**: Player can super-jump ~2.5–3 screen heights with piecewise gravity arc and apex hang
+- [x] **PHYS-02**: Player can steer horizontally mid-air during jump with responsive air control
+- [x] **PHYS-03**: Player can land on one-way tree branch platforms and slide down bamboo trunks
+- [x] **PHYS-04**: Player can cling to vertical castle walls and wall-jump upward in Stage 2
+- [x] **PHYS-05**: Vertical camera follows player with asymmetric upward velocity scaling and look-ahead deadzone
 
 ### Dual Weapon Combat
 
@@ -78,11 +78,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PHYS-01 | Phase 64 | Pending |
-| PHYS-02 | Phase 64 | Pending |
-| PHYS-03 | Phase 64 | Pending |
-| PHYS-04 | Phase 64 | Pending |
-| PHYS-05 | Phase 64 | Pending |
+| PHYS-01 | Phase 64 | Complete |
+| PHYS-02 | Phase 64 | Complete |
+| PHYS-03 | Phase 64 | Complete |
+| PHYS-04 | Phase 64 | Complete |
+| PHYS-05 | Phase 64 | Complete |
 | CMBT-01 | Phase 65 | Pending |
 | CMBT-02 | Phase 65 | Pending |
 | CMBT-03 | Phase 65 | Pending |

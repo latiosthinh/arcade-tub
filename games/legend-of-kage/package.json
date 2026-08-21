@@ -1,0 +1,20 @@
+{
+  "name": "@arcade-carnival/legend-of-kage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@arcade-carnival/game-engine": "workspace:*",
+    "@arcade-carnival/playables-adapter": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.10"
+  }
+}

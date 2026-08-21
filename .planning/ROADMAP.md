@@ -7,7 +7,7 @@ Recreate the 1985 Taito arcade classic *The Legend of Kage* with high-flying sup
 
 ## Phases
 
-- [ ] **Phase 64: Super-Jump Kinematics, Tree Traversal & Vertical Camera** — 3-screen super-jump physics with apex hang, one-way tree branch landing, bamboo trunk sliding, castle wall-jumping, and velocity-scaled asymmetric vertical camera.
+- [x] **Phase 64: Super-Jump Kinematics, Tree Traversal & Vertical Camera** — 3-screen super-jump physics with apex hang, one-way tree branch landing, bamboo trunk sliding, castle wall-jumping, and velocity-scaled asymmetric vertical camera.
 - [ ] **Phase 65: Dual Weapon Combat, Shuriken Engine & Sword Deflection** — 8-way paper shuriken projectiles, 140° katana sword slash, projectile deflection matrix, crystal ball/scroll power-ups, and single-hit death/respawn loop.
 - [ ] **Phase 66: Enemy AI Hierarchy, Wave Spawner & Boss Encounters** — Red/Blue/White ninjas, Fire Monks, Sorcerer boss (Yukinosuke), continuous edge wave spawner.
 - [ ] **Phase 67: 4-Stage Progression, Seasonal Loop & Cutscenes** — Bamboo Forest, Castle Moat, Castle Interior, Boss Chamber, 4-season palette loop (Spring/Summer/Autumn/Winter), Princess Kiri rescue cutscenes, localStorage persistence.
@@ -19,7 +19,7 @@ Recreate the 1985 Taito arcade classic *The Legend of Kage* with high-flying sup
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 64. Super-Jump Kinematics & Vertical Camera | 0/0 | Pending | — |
+| 64. Super-Jump Kinematics & Vertical Camera | 2/2 | Complete | 2026-08-21 |
 | 65. Dual Weapon Combat & Deflection | 0/0 | Pending | — |
 | 66. Enemy AI & Wave Spawner | 0/0 | Pending | — |
 | 67. Stage Progression & Seasonal Loop | 0/0 | Pending | — |
