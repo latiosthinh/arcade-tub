@@ -9,12 +9,12 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Platformer Physics
 
-- [ ] **PHYS-01**: Player can walk left/right on flat terrain with gravity pulling downward
-- [ ] **PHYS-02**: Player can jump and land on solid ground, walls, and ceilings via AABB tile collision
-- [ ] **PHYS-03**: Player can jump through one-way platforms from below and land on them from above
-- [ ] **PHYS-04**: Player can dash at 1.5x speed by double-tapping a direction
-- [ ] **PHYS-05**: Camera follows player horizontally with deadzone and clamps at room boundaries
-- [ ] **PHYS-06**: Player can transition between rooms via door entities with fade/wipe
+- [x] **PHYS-01**: Player can walk left/right on flat terrain with gravity pulling downward
+- [x] **PHYS-02**: Player can jump and land on solid ground, walls, and ceilings via AABB tile collision
+- [x] **PHYS-03**: Player can jump through one-way platforms from below and land on them from above
+- [x] **PHYS-04**: Player can dash at 1.5x speed by double-tapping a direction
+- [x] **PHYS-05**: Camera follows player horizontally with deadzone and clamps at room boundaries
+- [x] **PHYS-06**: Player can transition between rooms via door entities with fade/wipe
 
 ### Kirby Core Mechanics
 
@@ -130,12 +130,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PHYS-01 | Phase 56 | Pending |
-| PHYS-02 | Phase 56 | Pending |
-| PHYS-03 | Phase 56 | Pending |
-| PHYS-04 | Phase 56 | Pending |
-| PHYS-05 | Phase 56 | Pending |
-| PHYS-06 | Phase 56 | Pending |
+| PHYS-01 | Phase 56 | Complete |
+| PHYS-02 | Phase 56 | Complete |
+| PHYS-03 | Phase 56 | Complete |
+| PHYS-04 | Phase 56 | Complete |
+| PHYS-05 | Phase 56 | Complete |
+| PHYS-06 | Phase 56 | Complete |
 | KRBY-01 | Phase 57 | Pending |
 | KRBY-02 | Phase 57 | Pending |
 | KRBY-03 | Phase 57 | Pending |
