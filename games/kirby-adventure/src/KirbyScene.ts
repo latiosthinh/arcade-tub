@@ -14,8 +14,8 @@ export class KirbyScene implements GameScene {
   private prevJumpDown = false;
   private isInitialized = false;
 
-  constructor() {
-    this.input = new SimpleInputManager();
+  constructor(input?: SimpleInputManager) {
+    this.input = input ?? new SimpleInputManager();
     this.camera = new Camera({ viewportWidth: 800, viewportHeight: 600 });
     this.physics = new KirbyPhysics({ x: 100, y: 100, width: 24, height: 24 });
     this.roomManager = new RoomManager();
