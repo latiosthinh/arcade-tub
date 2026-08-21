@@ -26,15 +26,15 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Copy Abilities
 
-- [ ] **ABIL-01**: Sword ability overrides attack with 3-hit combo and aerial spin slash
-- [ ] **ABIL-02**: Fire ability overrides attack with horizontal flame breath and fire dash
-- [ ] **ABIL-03**: Ice/Freeze ability overrides attack with freeze cone and kick frozen enemy
-- [ ] **ABIL-04**: Beam ability overrides attack with whip arc at medium range
-- [ ] **ABIL-05**: Cutter ability overrides attack with boomerang throw that returns to player
-- [ ] **ABIL-06**: Stone ability overrides attack with invulnerable drop and area damage
-- [ ] **ABIL-07**: Spark ability overrides attack with electric field radius on hold
-- [ ] **ABIL-08**: Needle ability overrides attack with spike burst stationary area denial
-- [ ] **ABIL-09**: Taking damage causes current ability to bounce out as Ability Star with brief re-inhale window
+- [x] **ABIL-01**: Sword ability overrides attack with 3-hit combo and aerial spin slash
+- [x] **ABIL-02**: Fire ability overrides attack with horizontal flame breath and fire dash
+- [x] **ABIL-03**: Ice/Freeze ability overrides attack with freeze cone and kick frozen enemy
+- [x] **ABIL-04**: Beam ability overrides attack with whip arc at medium range
+- [x] **ABIL-05**: Cutter ability overrides attack with boomerang throw that returns to player
+- [x] **ABIL-06**: Stone ability overrides attack with invulnerable drop and area damage
+- [x] **ABIL-07**: Spark ability overrides attack with electric field radius on hold
+- [x] **ABIL-08**: Needle ability overrides attack with spike burst stationary area denial
+- [x] **ABIL-09**: Taking damage causes current ability to bounce out as Ability Star with brief re-inhale window
 
 ### Enemies
 
@@ -144,15 +144,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HLTH-01 | Phase 57 | Complete |
 | HLTH-02 | Phase 57 | Complete |
 | HLTH-03 | Phase 57 | Complete |
-| ABIL-01 | Phase 58 | Pending |
-| ABIL-02 | Phase 58 | Pending |
-| ABIL-03 | Phase 58 | Pending |
-| ABIL-04 | Phase 58 | Pending |
-| ABIL-05 | Phase 58 | Pending |
-| ABIL-06 | Phase 58 | Pending |
-| ABIL-07 | Phase 58 | Pending |
-| ABIL-08 | Phase 58 | Pending |
-| ABIL-09 | Phase 58 | Pending |
+| ABIL-01 | Phase 58 | Complete |
+| ABIL-02 | Phase 58 | Complete |
+| ABIL-03 | Phase 58 | Complete |
+| ABIL-04 | Phase 58 | Complete |
+| ABIL-05 | Phase 58 | Complete |
+| ABIL-06 | Phase 58 | Complete |
+| ABIL-07 | Phase 58 | Complete |
+| ABIL-08 | Phase 58 | Complete |
+| ABIL-09 | Phase 58 | Complete |
 | ENMY-01 | Phase 59 | Pending |
 | ENMY-02 | Phase 59 | Pending |
 | ENMY-03 | Phase 59 | Pending |

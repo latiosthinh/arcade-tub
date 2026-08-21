@@ -9,7 +9,7 @@ Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ab
 
 - [x] **Phase 56: Tilemap Engine & Core Platformer Physics** — Tile grid collision (AABB sweep), gravity, jump, one-way platforms, dash, scrolling camera, room transitions via doors.
 - [x] **Phase 57: Kirby Core Mechanics & Health System** — Inhale vacuum cone, spit star projectile, swallow-to-copy trigger, float puffs (6 max), air bullet exhale, slide attack, 6HP health, lives, invincibility frames.
-- [ ] **Phase 58: Copy Ability System** — Strategy-pattern ability interface, 8 unique ability movesets (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle), ability loss on damage with bouncing Ability Star re-inhale window.
+- [x] **Phase 58: Copy Ability System** — Strategy-pattern ability interface, 8 unique ability movesets (Sword, Fire, Ice, Beam, Cutter, Stone, Spark, Needle), ability loss on damage with bouncing Ability Star re-inhale window.
 - [ ] **Phase 59: Enemy AI & Ability Grants** — 8 enemy types with state-machine patrol/attack AI (Waddle Dee, Waddle Doo, Blade Knight, Hot Head, Chilly, Sparky, Sir Kibble, Rocky), each granting corresponding copy ability on inhale+swallow.
 - [ ] **Phase 60: Boss Encounters** — 3 multi-phase bosses with HP bars, telegraphed attack patterns, and vulnerability windows (Whispy Woods, Kracko, King Dedede).
 - [ ] **Phase 61: World Map, Stage Data & Progression** — 4 themed worlds (Green Greens, Ice Cream Island, Butter Building, Orange Ocean), 4 stages + 1 boss per world, JSON tilemap data, door-connected rooms, world map navigation, hidden bonus rooms, localStorage auto-save.
@@ -24,7 +24,7 @@ Build a Kirby's Adventure-inspired side-scrolling platformer with inhale/copy-ab
 |-------|----------------|--------|-----------|
 | 56. Tilemap Engine & Core Platformer Physics | 2/2 | Complete | 2026-08-21 |
 | 57. Kirby Core Mechanics & Health System | 2/2 | Complete | 2026-08-21 |
-| 58. Copy Ability System | 0/0 | Pending | — |
+| 58. Copy Ability System | 2/2 | Complete | 2026-08-21 |
 | 59. Enemy AI & Ability Grants | 0/0 | Pending | — |
 | 60. Boss Encounters | 0/0 | Pending | — |
 | 61. World Map, Stage Data & Progression | 0/0 | Pending | — |
