@@ -17,11 +17,11 @@ Requirements for Milestone v10.0. Each maps to roadmap phases.
 
 ### Dual Weapon Combat
 
-- [ ] **CMBT-01**: Player can throw paper shuriken stars in 8 directions (grounded and mid-air)
-- [ ] **CMBT-02**: Player can perform rapid short-range sword melee slash with 140° frontal arc
-- [ ] **CMBT-03**: Sword slash destroys/deflects incoming enemy shuriken with clash sound and paper scrap burst
-- [ ] **CMBT-04**: Player can collect Red/Blue crystal balls and Ninjutsu scrolls for invincibility and screen-clear
-- [ ] **CMBT-05**: Player dies in single hit on unblocked enemy contact or projectile with 3 lives pool and checkpoint respawn
+- [x] **CMBT-01**: Player can throw paper shuriken stars in 8 directions (grounded and mid-air)
+- [x] **CMBT-02**: Player can perform rapid short-range sword melee slash with 140° frontal arc
+- [x] **CMBT-03**: Sword slash destroys/deflects incoming enemy shuriken with clash sound and paper scrap burst
+- [x] **CMBT-04**: Player can collect Red/Blue crystal balls and Ninjutsu scrolls for invincibility and screen-clear
+- [x] **CMBT-05**: Player dies in single hit on unblocked enemy contact or projectile with 3 lives pool and checkpoint respawn
 
 ### Enemy AI & Wave Spawner
 
@@ -83,11 +83,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PHYS-03 | Phase 64 | Complete |
 | PHYS-04 | Phase 64 | Complete |
 | PHYS-05 | Phase 64 | Complete |
-| CMBT-01 | Phase 65 | Pending |
-| CMBT-02 | Phase 65 | Pending |
-| CMBT-03 | Phase 65 | Pending |
-| CMBT-04 | Phase 65 | Pending |
-| CMBT-05 | Phase 65 | Pending |
+| CMBT-01 | Phase 65 | Complete |
+| CMBT-02 | Phase 65 | Complete |
+| CMBT-03 | Phase 65 | Complete |
+| CMBT-04 | Phase 65 | Complete |
+| CMBT-05 | Phase 65 | Complete |
 | ENMY-01 | Phase 66 | Pending |
 | ENMY-02 | Phase 66 | Pending |
 | ENMY-03 | Phase 66 | Pending |
