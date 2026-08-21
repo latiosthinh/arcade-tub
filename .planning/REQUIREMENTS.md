@@ -78,13 +78,39 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| *(populated by roadmapper)* | | |
+| PHYS-01 | Phase 64 | Pending |
+| PHYS-02 | Phase 64 | Pending |
+| PHYS-03 | Phase 64 | Pending |
+| PHYS-04 | Phase 64 | Pending |
+| PHYS-05 | Phase 64 | Pending |
+| CMBT-01 | Phase 65 | Pending |
+| CMBT-02 | Phase 65 | Pending |
+| CMBT-03 | Phase 65 | Pending |
+| CMBT-04 | Phase 65 | Pending |
+| CMBT-05 | Phase 65 | Pending |
+| ENMY-01 | Phase 66 | Pending |
+| ENMY-02 | Phase 66 | Pending |
+| ENMY-03 | Phase 66 | Pending |
+| ENMY-04 | Phase 66 | Pending |
+| ENMY-05 | Phase 66 | Pending |
+| ENMY-06 | Phase 66 | Pending |
+| STAG-01 | Phase 67 | Pending |
+| STAG-02 | Phase 67 | Pending |
+| STAG-03 | Phase 67 | Pending |
+| STAG-04 | Phase 67 | Pending |
+| STAG-05 | Phase 67 | Pending |
+| STAG-06 | Phase 67 | Pending |
+| VISL-01 | Phase 68 | Pending |
+| VISL-02 | Phase 68 | Pending |
+| AUDI-01 | Phase 68 | Pending |
+| CTRL-01 | Phase 68 | Pending |
+| INTG-01 | Phase 68 | Pending |
 
 **Coverage:**
-- v10.0 requirements: 22 total
-- Mapped to phases: 0
-- Unmapped: 22 (pending roadmap creation)
+- v10.0 requirements: 22 total (27 mapped IDs)
+- Mapped to phases: 27
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-08-21*
-*Last updated: 2026-08-21 after initial definition*
+*Last updated: 2026-08-21 after roadmap creation*
