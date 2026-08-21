@@ -70,17 +70,17 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Visuals
 
-- [ ] **VISL-01**: Kirby rendered as papercraft cardboard with squash-stretch on inhale/float/land/damage
-- [ ] **VISL-02**: Enemies rendered as origami paper cutouts with crease lines and drop shadows
-- [ ] **VISL-03**: Terrain tiles rendered as corrugated cardboard with per-world themes
-- [ ] **VISL-04**: Multi-layer parallax scrolling background with tissue-paper translucency
-- [ ] **VISL-05**: Confetti particle effects on ability gain, enemy defeat, and boss defeat
-- [ ] **VISL-06**: Ability-specific papercraft hat rendered on Kirby when ability is active
+- [x] **VISL-01**: Kirby rendered as papercraft cardboard with squash-stretch on inhale/float/land/damage
+- [x] **VISL-02**: Enemies rendered as origami paper cutouts with crease lines and drop shadows
+- [x] **VISL-03**: Terrain tiles rendered as corrugated cardboard with per-world themes
+- [x] **VISL-04**: Multi-layer parallax scrolling background with tissue-paper translucency
+- [x] **VISL-05**: Confetti particle effects on ability gain, enemy defeat, and boss defeat
+- [x] **VISL-06**: Ability-specific papercraft hat rendered on Kirby when ability is active
 
 ### Audio
 
-- [ ] **AUDI-01**: Procedural Web Audio SFX for inhale, float puff, spit, ability activation, damage, boss theme
-- [ ] **AUDI-02**: Stage clear fanfare and game over jingle via procedural synthesis
+- [x] **AUDI-01**: Procedural Web Audio SFX for inhale, float puff, spit, ability activation, damage, boss theme
+- [x] **AUDI-02**: Stage clear fanfare and game over jingle via procedural synthesis
 
 ### Controls & HUD
 
@@ -170,14 +170,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WRLD-04 | Phase 61 | Complete |
 | WRLD-05 | Phase 61 | Complete |
 | WRLD-06 | Phase 61 | Complete |
-| VISL-01 | Phase 62 | Pending |
-| VISL-02 | Phase 62 | Pending |
-| VISL-03 | Phase 62 | Pending |
-| VISL-04 | Phase 62 | Pending |
-| VISL-05 | Phase 62 | Pending |
-| VISL-06 | Phase 62 | Pending |
-| AUDI-01 | Phase 62 | Pending |
-| AUDI-02 | Phase 62 | Pending |
+| VISL-01 | Phase 62 | Complete |
+| VISL-02 | Phase 62 | Complete |
+| VISL-03 | Phase 62 | Complete |
+| VISL-04 | Phase 62 | Complete |
+| VISL-05 | Phase 62 | Complete |
+| VISL-06 | Phase 62 | Complete |
+| AUDI-01 | Phase 62 | Complete |
+| AUDI-02 | Phase 62 | Complete |
 | CTRL-01 | Phase 63 | Pending |
 | CTRL-02 | Phase 63 | Pending |
 | CTRL-03 | Phase 63 | Pending |
