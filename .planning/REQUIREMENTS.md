@@ -38,14 +38,14 @@ Requirements for Milestone v9.0. Each maps to roadmap phases.
 
 ### Enemies
 
-- [ ] **ENMY-01**: Waddle Dee walks patrol pattern with no ability grant
-- [ ] **ENMY-02**: Waddle Doo walks and fires beam attack, grants Beam on copy
-- [ ] **ENMY-03**: Blade Knight walks and slashes, grants Sword on copy
-- [ ] **ENMY-04**: Hot Head walks and breathes fire, grants Fire on copy
-- [ ] **ENMY-05**: Chilly stands stationary with freeze aura, grants Freeze on copy
-- [ ] **ENMY-06**: Sparky bounces with electric field, grants Spark on copy
-- [ ] **ENMY-07**: Sir Kibble walks and throws cutter, grants Cutter on copy
-- [ ] **ENMY-08**: Rocky walks and drops stone, grants Stone on copy
+- [x] **ENMY-01**: Waddle Dee walks patrol pattern with no ability grant
+- [x] **ENMY-02**: Waddle Doo walks and fires beam attack, grants Beam on copy
+- [x] **ENMY-03**: Blade Knight walks and slashes, grants Sword on copy
+- [x] **ENMY-04**: Hot Head walks and breathes fire, grants Fire on copy
+- [x] **ENMY-05**: Chilly stands stationary with freeze aura, grants Freeze on copy
+- [x] **ENMY-06**: Sparky bounces with electric field, grants Spark on copy
+- [x] **ENMY-07**: Sir Kibble walks and throws cutter, grants Cutter on copy
+- [x] **ENMY-08**: Rocky walks and drops stone, grants Stone on copy
 
 ### Bosses
 
@@ -153,14 +153,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ABIL-07 | Phase 58 | Complete |
 | ABIL-08 | Phase 58 | Complete |
 | ABIL-09 | Phase 58 | Complete |
-| ENMY-01 | Phase 59 | Pending |
-| ENMY-02 | Phase 59 | Pending |
-| ENMY-03 | Phase 59 | Pending |
-| ENMY-04 | Phase 59 | Pending |
-| ENMY-05 | Phase 59 | Pending |
-| ENMY-06 | Phase 59 | Pending |
-| ENMY-07 | Phase 59 | Pending |
-| ENMY-08 | Phase 59 | Pending |
+| ENMY-01 | Phase 59 | Complete |
+| ENMY-02 | Phase 59 | Complete |
+| ENMY-03 | Phase 59 | Complete |
+| ENMY-04 | Phase 59 | Complete |
+| ENMY-05 | Phase 59 | Complete |
+| ENMY-06 | Phase 59 | Complete |
+| ENMY-07 | Phase 59 | Complete |
+| ENMY-08 | Phase 59 | Complete |
 | BOSS-01 | Phase 60 | Pending |
 | BOSS-02 | Phase 60 | Pending |
 | BOSS-03 | Phase 60 | Pending |
